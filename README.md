@@ -1,24 +1,49 @@
-# README
+# 要件定義
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### 全体として
 
-Things you may want to cover:
+・プライベートなメモモード（コア機能）
 
-* Ruby version
+<!-- ・パブリックな記事モード -->
 
-* System dependencies
+### ログイン機能関連(Gem 使用) かねぞう
 
-* Configuration
+・メールアドレス、パスワード認証（マスト）
+・Twitter 認証（優先度高）
+・GitHub 認証（優先度高）
 
-* Database creation
+・Google アカウント認証（優先度中）
 
-* Database initialization
+・Instagram 認証（優先度低）
+・FaceBook 認証（優先度低）
 
-* How to run the test suite
+### メモ機能関連 OGO
 
-* Services (job queues, cache servers, search engines, etc.)
+・メモ作成機能（マークダウン）
+・メモ編集機能
+・メモ削除機能
+・メモ管理機能
 
-* Deployment instructions
+### 言語実行機能関連 ロピタル
 
-* ...
+・コード実行機能
+・コード保存機能？
+
+#### 実装方法
+
+create アクションなどにとばして、そこで 1.入力されたコードをファイル(code.rb)に保存
+2.Dockerfile に書き込む(code.rb をコンテナ内に持っていく) 3.コンテナ起動（volume オプションをつけて起動） 4.コンテナ上でコード実行（実行結果をファイル(result.txt)に書き込む（リダイレクトと言う） 5.コンテナとイメージ破棄 6.ホスト側に保存された実行結果をインスタンス変数に格納して画面に出力する
+
+# Docker コンテナ起動方法
+
+## コンテナのビルド
+
+`docker-compose build`
+
+## コンテナの立ち上げ
+
+`docker-compose up`
+
+## web コンテナの中に入る
+
+`docker-compose run web sh`
