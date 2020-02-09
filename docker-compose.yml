@@ -1,0 +1,38 @@
+version: "2"
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: root
+    ports:
+      - "3306:3306"
+
+  web:
+    build: .
+    command: bundle exec puma -C /languageMemoApp/config/puma.rb
+    volumes:
+      - .:/languageMemoApp
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    tty: true
+    # environment:
+    #   RAILS_ENV: 'production'
+    environment:
+      - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
+
+  selenium_chrome:
+    image: selenium/standalone-chrome-debug
+    logging:
+      driver: none
+
+  nginx:
+    build: containers/nginx
+    ports:
+      - "80:80"
+    volumes_from:
+      - web
+    depends_on:
+      - web
