@@ -4,35 +4,36 @@
 #
 version: 2
 jobs:
-  # buildという名前のタスク定義
   build:
     docker:
       # specify the version you desire here
       - image: circleci/ruby:2.5.3-node-browsers
-
-
+        environment:
+          - BUNDLER_VERSION: 2.0.2
+          - RAILS_ENV: 'test'
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
+      - image: circleci/mysql:5.7
+        environment:
+          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+          - MYSQL_ROOT_HOST: '%'
 
-    working_directory: ~/repo
+    working_directory: ~/languageMemoApp
 
-    # 実際の処理内容
     steps:
       - checkout
 
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      # runのたびに実行
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
       - run:
           name: install dependencies
           command: |
-            gem install bundler -v 2.0.2
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
       - save_cache:
@@ -40,16 +41,24 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
+      - run: mv config/database.yml.ci config/database.yml
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+
       # Database setup
       - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+      - run: bundle exec rake db:migrate
 
-      # run tests
-      - run:
-          name: run tests
-          command: |
-            DISABLE_SPRING=true bundle exec rspec
-
+      # run tests!
+      - type: shell
+        command: |
+          bundle exec rspec --profile 10 \
+                            --format RspecJunitFormatter \
+                            --out test_results/rspec.xml \
+                            --format progress \
+                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
       # collect reports
       - store_test_results:
@@ -57,3 +66,8 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+
+      # run rubocop
+      # - run:
+      #     name: run rubocop
+      #     command: bundle exec rubocop
