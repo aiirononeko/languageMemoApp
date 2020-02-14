@@ -9,15 +9,15 @@ jobs:
       # specify the version you desire here
       - image: circleci/ruby:2.5.3-node-browsers
         environment:
-          RAILS_ENV: test
-          DB_HOST: db
-          DB_USERNAME: root
-          DB_PASSWORD: password
-
+          - BUNDLER_VERSION: 2.0.2
+          - RAILS_ENV: 'test'
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/mysql:5.7
+        environment:
+          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+          - MYSQL_ROOT_HOST: '%'
 
     working_directory: ~/languageMemoApp
 
@@ -40,6 +40,8 @@ jobs:
           paths:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run: mv config/database.yml.ci config/database.yml
 
       - run:
           name: Wait for DB
