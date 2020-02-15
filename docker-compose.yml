@@ -24,7 +24,6 @@ services:
       - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
 
   frontend:
-    container_name: frontend
     build:
       context: .
       dockerfile: ./frontend/Dockerfile
@@ -36,9 +35,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
     volumes:
-      - ./frontend/src:/src:cached
-      # exclude volumes
-      - /src/app/node_module
+      - .:/frontend
 
   selenium_chrome:
     image: selenium/standalone-chrome-debug
