@@ -23,6 +23,22 @@ services:
     environment:
       - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
 
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    ports:
+      - 3002:3000
+    links:
+      - web
+    tty: true
+    stdin_open: true
+    # Hot Module Replacement (HMR) is enable for virtual box.
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - .:/frontend
+
   selenium_chrome:
     image: selenium/standalone-chrome-debug
     logging:
