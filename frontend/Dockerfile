@@ -5,7 +5,8 @@ WORKDIR /frontend
 RUN apk update && \
     npm install -g npm && \
     npm install -g @vue/cli && \
-    npm install -g @vue/cli-init
+    npm install -g @vue/cli-init \
+    npm install -g @nuxtjs/axios
 
 ADD frontend ./frontend
 COPY frontend ./frontend

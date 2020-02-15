@@ -29,6 +29,8 @@ services:
       dockerfile: ./frontend/Dockerfile
     ports:
       - 3002:3000
+    links:
+      - web
     tty: true
     stdin_open: true
     # Hot Module Replacement (HMR) is enable for virtual box.
