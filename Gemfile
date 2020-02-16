@@ -33,6 +33,12 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# デバイス関連
+gem 'devise'
+gem 'devise_token_auth'
+# クロスオリジン対策
+gem 'rack-cors'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
@@ -49,6 +55,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rspec-rails'
+  # メール送信確認
+  gem 'letter_opener_web', '~> 1.0'
 end
 
 group :test do
