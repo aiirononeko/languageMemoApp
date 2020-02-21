@@ -21,7 +21,8 @@ module.exports = {
   ** modules
   */
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/vuetify'
   ],
   axios: { 
   },
