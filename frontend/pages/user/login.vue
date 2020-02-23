@@ -17,7 +17,7 @@
                     @click:append="showPassword = !showPassword" />
 
                     <v-card-actions>
-                         <v-btn class="info" large block>ログイン</v-btn>
+                         <v-btn v-on:click="login" class="info" large block>ログイン</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card-text>
@@ -35,6 +35,20 @@ export default {
           required: value => { return !!value || 'Required.'  },
           min: value => { return value.length >= 8 || 'Min 8 characters'} ,
         },
-    })
+    }),
+    methods: {
+        async login() {
+            try {
+                await this.$auth.loginWith('local', {
+                    data: {
+                            email: this.email,
+                            password: this.password
+                    }
+                })
+            } catch (e) {
+                window.console.log(e)
+            }
+        }
+  }
 };
 </script>
