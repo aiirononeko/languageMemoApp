@@ -8,6 +8,10 @@ RUN apk update && \
     npm install -g @vue/cli-init \
     npm install -g @nuxtjs/axios
 
+RUN apk update && \
+    apk add python && \
+    apk add python make g++
+
 ADD frontend ./frontend
 COPY frontend ./frontend
 
