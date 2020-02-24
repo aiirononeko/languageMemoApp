@@ -40,4 +40,15 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "validates length" do
+    context "パスワードが８文字以下の場合" do
+      let(:user) { build(:user, password: 'aaaa') }
+
+      it "エラーになる" do
+        user.valid?
+        expect(user.errors.messages[:password]).to include "is too short (minimum is 8 characters)"
+      end
+    end
+  end
 end
