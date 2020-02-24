@@ -13,6 +13,23 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
     end
   end
 
+  describe "DELETE /api/v1/auth" do
+    subject {post(api_v1_user_session_path, params: login_params) 
+      delete(api_v1_user_registration_path, headers: {
+        uid: response.headers["uid"],
+        client: response.headers["client"],
+        "access-token": response.headers["access-token"]
+      }) }
+      let(:user) { create(:confirmed_user) }
+      let(:login_params) { {email: user.email, password: user.password } }
+    it "ユーザー削除できる" do
+      subject
+      res = JSON.parse(response.body)
+      expect(res["status"]).to eq "success"
+      expect(User.all.size).to eq 0
+    end
+  end
+
   describe "POST /api/v1/auth/sign_in" do
     subject { post(api_v1_user_session_path, params: params) }
 
@@ -89,4 +106,35 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
       end
     end
   end
+  describe "PUT /api/v1/auth" do
+    subject { post(api_v1_user_session_path, params: login_params) 
+      put(api_v1_user_registration_path, params: params, headers: {
+        uid: response.headers["uid"],
+        client: response.headers["client"],
+        "access-token": response.headers["access-token"]
+      }) }
+    context "渡す値が正しいとき" do
+      let(:user) { create(:confirmed_user) }
+      let(:params) { {name: 'テスト太郎', nickname: 'テストマン', image: 'https://image_url' } }
+      let(:login_params) { {email: user.email, password: user.password } }
+      it "値を変更できる" do
+        subject
+        res = JSON.parse(response.body)
+        expect(res["data"]["attributes"]["name"]).to eq('テスト太郎')
+        expect(res["data"]["attributes"]["nickname"]).to eq('テストマン')
+        expect(res["data"]["attributes"]["image"]).to eq('https://image_url')
+      end
+    end
+    context "渡す値が正しくないとき" do
+      let(:user) { create(:confirmed_user) }
+      let(:params) { { id: '3' } }
+      let(:login_params) { {email: user.email, password: user.password } }
+      it "値を変更できない" do
+        subject
+        res = JSON.parse(response.body)
+        expect(res["success"]).to eq(false)
+        expect(res["errors"]).to include("Please submit proper account update data in request body.")
+      end
+    end
+  end   
 end
