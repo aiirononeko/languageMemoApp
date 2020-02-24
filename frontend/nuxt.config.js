@@ -28,17 +28,17 @@ module.exports = {
   axios: { 
     baseURL: 'http://localhost:3000/'
   },
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: 'api/v1/auth/sign_in', method: 'post', propertyName: 'token' },
-          user: false,
-          logout: false
-        }
-      }
-    }
-  },
+  // auth: {
+  //   strategies: {
+  //     local: {
+  //       endpoints: {
+  //         login: { url: 'api/v1/auth/sign_in', method: 'post', propertyName: 'token' },
+  //         user: false,
+  //         logout: false
+  //       }
+  //     }
+  //   }
+  // },
   /*
   ** Build configuration
   */
