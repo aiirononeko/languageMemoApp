@@ -1,5 +1,7 @@
 Prefix Verb   URI Pattern             Controller#Action
 
+api_v1_user GET /api/v1/users/:id(.:format) api/v1/users#show マイページ
+
 api_v1_user_registration  PATCH  /api/v1/auth(.:format)    api/v1/auth/registrations#update   ユーザー情報更新(認可) name,nickname,image
                         　PUT    /api/v1/auth(.:format)    api/v1/auth/registrations#update   上と同じ
                         　DELETE /api/v1/auth(.:format)    api/v1/auth/registrations#destroy  ユーザー削除(認可) jsonを渡す必要はない(リクエストヘッダでユーザを識別しているため)
@@ -19,6 +21,7 @@ api_v1_user_password PATCH  /api/v1/auth/password(.:format)            devise_to
              rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
       update_rails_disk_service PUT    /rails/active_storage/disk/:encoded_token(.:format)                                      active_storage/disk#update
            rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
+
 
 
 
