@@ -8,7 +8,7 @@ api_v1_user_registration  PATCH  /api/v1/auth(.:format)    api/v1/auth/registrat
                         　POST   /api/v1/auth(.:format)    api/v1/auth/registrations#create   ユーザー登録 email,password
 
 api_v1_user_session POST   /api/v1/auth/sign_in(.:format)             devise_token_auth/sessions#create ログイン email, password
-destroy_api_v1_user_session DELETE /api/v1/auth/sign_out(.:format)            devise_token_auth/sessions#destroy ログアウト (認可) jsonを渡す必要はない(リクエストヘッダでユーザを識別しているため)
+destroy_api_v1_user_session DELETE /api/v1/auth/sign_out(.:format)    devise_token_auth/sessions#destroy ログアウト (認可) jsonを渡す必要はない(リクエストヘッダでユーザを識別しているため)
 
 api_v1_user_password PATCH  /api/v1/auth/password(.:format)            devise_token_auth/passwords#update パスワード変更(認可) password,password_confirmation
                     　PUT    /api/v1/auth/password(.:format)            devise_token_auth/passwords#update 上と同じ
