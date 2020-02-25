@@ -6,6 +6,7 @@ api_v1_user_registration  PATCH  /api/v1/auth(.:format)    api/v1/auth/registrat
                         　PUT    /api/v1/auth(.:format)    api/v1/auth/registrations#update   上と同じ
                         　DELETE /api/v1/auth(.:format)    api/v1/auth/registrations#destroy  ユーザー削除(認可) jsonを渡す必要はない(リクエストヘッダでユーザを識別しているため)
                         　POST   /api/v1/auth(.:format)    api/v1/auth/registrations#create   ユーザー登録 email,password
+edit_api_v1_user_registration GET    /api/v1/auth/edit(.:format)   api/v1/auth/registrations#edit ユーザー編集画面(認可)
 
 api_v1_user_session POST   /api/v1/auth/sign_in(.:format)             devise_token_auth/sessions#create ログイン email, password
 destroy_api_v1_user_session DELETE /api/v1/auth/sign_out(.:format)    devise_token_auth/sessions#destroy ログアウト (認可) jsonを渡す必要はない(リクエストヘッダでユーザを識別しているため)
@@ -38,7 +39,6 @@ new_api_v1_user_password GET    /api/v1/auth/password/new(.:format) devise_token
 cancel_api_v1_user_registration GET    /api/v1/auth/cancel(.:format)  api/v1/auth/registrations#cancel
 edit_api_v1_user_password GET    /api/v1/auth/password/edit(.:format)       devise_token_auth/passwords#edit
    new_api_v1_user_registration GET    /api/v1/auth/sign_up(.:format)             api/v1/auth/registrations#new
-  edit_api_v1_user_registration GET    /api/v1/auth/edit(.:format)                api/v1/auth/registrations#edit
     new_api_v1_user_confirmation GET    /api/v1/auth/confirmation/new(.:format)    devise_token_auth/confirmations#new
        api_v1_user_confirmation GET    /api/v1/auth/confirmation(.:format)        devise_token_auth/confirmations#show
                                 POST   /api/v1/auth/confirmation(.:format)        devise_token_auth/confirmations#create 
