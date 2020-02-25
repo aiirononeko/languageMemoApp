@@ -28,6 +28,7 @@
 <script>
 const Cookie = process.client ? require('js-cookie') : undefined
 
+
 export default {
     data: () => ({
         showPassword: false,
@@ -47,7 +48,7 @@ export default {
                   password: this.password
                 })
                 Cookie.set("access-token", this.$store.state.access_token)
-                this.$router.push(`/`)
+                this.$router.push(`/user/${this.$store.state.id}`)
             } catch (e) {
                 this.formError = e.message
                 console.log(this.formError)
