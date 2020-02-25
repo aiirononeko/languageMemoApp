@@ -26,7 +26,6 @@ module.exports = {
     '@nuxtjs/auth'
   ],
   axios: { 
-    baseURL: 'http://localhost:3000/'
   },
   // auth: {
   //   strategies: {
