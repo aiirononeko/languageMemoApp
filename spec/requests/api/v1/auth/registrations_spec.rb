@@ -137,4 +137,23 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
       end
     end
   end   
+
+  describe "GET /api/v1/auth/edit" do
+    context "ユーザーがログインしているとき" do
+      let(:confirmed_user) { create(:confirmed_user) }
+      let(:params) { { email: confirmed_user.email, password: confirmed_user.password } }
+      it "ユーザーの情報を返す" do
+        post(api_v1_user_session_path, params: params)
+        get(edit_api_v1_user_registration_path, { headers: {
+          uid: response.headers["uid"],
+          client: response.headers["client"],
+          "access-token": response.headers["access-token"]
+        }})
+        res = JSON.parse(response.body)
+        expect(res["data"]["id"]).to eq(User.last.id.to_s)
+        expect(res["data"]["attributes"]["name"]).to eq(User.last.name)
+        expect(response).to have_http_status(200)
+      end
+    end
+  end
 end
