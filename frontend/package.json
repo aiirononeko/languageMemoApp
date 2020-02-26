@@ -26,6 +26,7 @@
     "eslint-loader": "^2.1.1",
     "eslint-plugin-vue": "^4.0.0",
     "node-sass": "^4.13.1",
+    "nuxt-sass-resources-loader": "^2.0.5",
     "sass-loader": "^8.0.2"
   }
 }
