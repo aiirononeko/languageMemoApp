@@ -48,6 +48,8 @@ export default {
                   password: this.password
                 })
                 Cookie.set("access-token", this.$store.state.access_token)
+                Cookie.set("client", this.$store.state.client)
+                Cookie.set('uid', this.$store.state.uid)
                 this.$router.push(`/user/${this.$store.state.id}`)
             } catch (e) {
                 this.formError = e.message
