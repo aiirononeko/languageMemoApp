@@ -1,5 +1,8 @@
 <template>
     <v-app>
+        <div class="title">
+            <h2 class="main-title">ログイン</h2>
+        </div>
         <v-card width="600px" class="mx-auto mt-5">
             <v-card-text>
                 <v-form>
@@ -59,3 +62,18 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss">
+    .title {
+        text-align: center;
+
+        .main-title {
+            margin-bottom: 20px;
+        }
+
+        .sub-title {
+            margin-bottom: 5px;
+        }
+    }
+    
+</style>
