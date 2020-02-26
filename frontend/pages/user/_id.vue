@@ -1,12 +1,17 @@
 <template>
-    <section>
-        <h1>マイページ</h1>
-        <p>{{ data }}</p>
-        <hr>
-        <h3>名前： {{ data.data.attributes.name }}</h3>
-        <h3>ユーザID： {{ $store.state.id }}</h3>
-        <nuxt-link to="/">Home</nuxt-link>
-    </section>
+    <v-app>
+        <div class="top">
+            <h3 class="name">{{ data.data.attributes.name }}</h3>
+
+        </div>
+        <div class="cards">
+            <div class="card">
+
+            </div>
+        </div>
+        <!-- <h3>ユーザID： {{ $store.state.id }}</h3> -->
+        <!-- <nuxt-link to="/">Home</nuxt-link> -->
+    </v-app>
 </template>
 
 <script>
@@ -21,3 +26,26 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+    .top {
+        background: #f9f9f9;
+        height: 100px;
+        position: relative;
+
+        .name {
+            position: absolute;
+            left: 40px;
+            top: 10px;
+        }
+    }
+    
+    .cards {
+        margin: 20px auto;
+        width: 80%;
+        height: 600px;
+        border: 1px solid #b2bec3;
+    }
+    
+
+</style>
