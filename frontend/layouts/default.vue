@@ -1,53 +1,124 @@
 <template>
-  <div>
-    <nuxt/>
-  </div>
+  <v-app id="inspire" >
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    >
+      <v-list dense>
+        <nuxt-link to="/">
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>ホーム</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="/user/login">
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-arrow-right</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>ログイン</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="/user/sign_up">
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-plus</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>新規登録</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="/user/1">
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-details</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>マイページ</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        </nuxt-link>
+        <nuxt-link to="#">
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-book-open-variant</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>メモ一覧</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        </nuxt-link>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-aspect-ratio</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>コード実行</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+  <v-card class="overflow-hidden header">
+    <v-app-bar
+      absolute
+      elevate-on-scroll
+      app
+      color="white"
+      scroll-target="#scrolling-techniques-7"
+    >
+      <v-app-bar-nav-icon @click="drawer = !drawer" />
+      <v-toolbar-title>Application</v-toolbar-title>
+    </v-app-bar>
+    <v-sheet
+      id="scrolling-techniques-7"
+      class="overflow-y-auto"
+      max-height="100vh"
+    >
+    <v-content>
+      <!-- <v-container
+          class="main"
+          fluid
+          style="height: 120vh;"
+      > -->
+        <nuxt/>
+      <!-- </v-container> -->
+    </v-content>
+      <!-- <v-footer
+        color="indigo"
+        app
+      >
+        <span class="white--text">&copy; San Bruno</span>
+      </v-footer> -->
+    </v-sheet>
+  </v-card>
+  </v-app>
 </template>
 
-<style>
-html {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
+<script>
+  export default {
+    props: {
+      source: String,
+    },
+    data: () => ({
+      drawer: null,
+    }),
+  }
+</script>
 
-*, *:before, *:after {
-  box-sizing: border-box;
-  margin: 0;
-}
+<style scoped>
+  a {
+    text-decoration: none;
+  }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
-}
+  .main {
+    margin-top: 10px;
+  }
 </style>
-
