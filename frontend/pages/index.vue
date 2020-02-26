@@ -2,7 +2,6 @@
   <section class="container">
     <div>
       <p>{{ $store.state.uid }} : {{ $store.state.access_token }}</p>
-      <p>{{ getCookie() }}</p>
       <app-logo/>
       <h1 class="title">
         frontend
@@ -33,9 +32,6 @@ export default {
     AppLogo
   },
   methods: {
-    getCookie() {
-      return Cookie.get("access-token")
-    }
   }
 }
 </script>
