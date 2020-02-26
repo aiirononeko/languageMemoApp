@@ -29,7 +29,7 @@ module.exports = {
     ]],
   ],
   css: [
-    { src: '~/assets/sass/common.scss', lang: 'scss' },
+    { src: '~/assets/sass/common.scss', lang: 'scss' }
   ],
   axios: { 
   },
