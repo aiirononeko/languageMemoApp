@@ -23,7 +23,13 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/vuetify',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    ['nuxt-sass-resources-loader', [
+      '~/assets/sass/variable.scss',
+    ]],
+  ],
+  css: [
+    { src: '~/assets/sass/common.scss', lang: 'scss' },
   ],
   axios: { 
   },
