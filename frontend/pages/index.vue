@@ -1,6 +1,8 @@
 <template>
   <section class="container">
     <div>
+      <p>{{ $store.state.uid }} : {{ $store.state.access_token }}</p>
+      <p>{{ getCookie() }}</p>
       <app-logo/>
       <h1 class="title">
         frontend
@@ -23,11 +25,17 @@
 </template>
 
 <script>
+const Cookie = process.client ? require('js-cookie') : undefined
 import AppLogo from '~/components/AppLogo.vue'
 
 export default {
   components: {
     AppLogo
+  },
+  methods: {
+    getCookie() {
+      return Cookie.get("access-token")
+    }
   }
 }
 </script>
