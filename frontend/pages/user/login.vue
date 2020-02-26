@@ -64,16 +64,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .title {
-        text-align: center;
-
-        .main-title {
-            margin-bottom: 20px;
-        }
-
-        .sub-title {
-            margin-bottom: 5px;
-        }
-    }
     
 </style>
