@@ -29,7 +29,7 @@
                     @click:append="showPassword = !showPassword" />
 
                     <v-card-actions>
-                         <v-btn v-on:click="signUp" class="info" large block>ログイン</v-btn>
+                         <v-btn :disabled="isNotValid" v-on:click="signUp" class="info" large block>新規登録</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card-text>
@@ -43,12 +43,13 @@ import axios from 'axios'
 export default {
     data: () => ({
         showPassword: false,
+        isNotValid: true,
         name: "",
         email: "",
         password: "",
         rules: {
-          required: value => { return !!value || 'Required.'  },
-          min: value => { return value.length >= 8 || 'Min 8 characters'} ,
+          required: value => { return !!value || '入力してください.'  },
+          min: value => { return value.length >= 8 || '８文字以上入力してください'} ,
         },
     }),
     methods: {
@@ -59,8 +60,34 @@ export default {
                 password: this.password
             })
             this.$router.push(`/user/confirm`)
+        },
+        checkPassword() {
+            return this.password.length>=8 && this.password;
         }
-  }
+    },
+   watch: {
+        email: function(e) {
+            if ( this.email&&this.checkPassword()&&this.name ) {
+                this.isNotValid = false;
+            }else {
+                this.isNotValid = true;
+            }
+        },
+        password: function(e) {
+            if ( this.email&&this.checkPassword()&&this.name ) {
+                this.isNotValid = false;
+            }else {
+                this.isNotValid = true;
+            }
+        },
+        name: function(e) {
+            if ( this.email&&this.checkPassword()&&this.name ) {
+                this.isNotValid = false;
+            }else {
+                this.isNotValid = true;
+            }
+        },
+    }
 };
 </script>
 
