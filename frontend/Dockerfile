@@ -1,21 +1,19 @@
 FROM node:8.15.0-alpine
 
-WORKDIR /frontend
+WORKDIR /language_memo_app/frontend
 
 RUN apk update && \
     npm install -g npm && \
     npm install -g @vue/cli && \
     npm install -g @vue/cli-init \
-    npm install -g @nuxtjs/axios
+    npm install -g @nuxtjs/axios \
+    npm install -g @nuxtjs/auth
 
 RUN apk update && \
     apk add python && \
     apk add python make g++
 
-ADD frontend ./frontend
-COPY frontend ./frontend
+COPY frontend .
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
-
-CMD ["/bin/ash"]
