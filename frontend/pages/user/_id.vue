@@ -1,21 +1,20 @@
 <template>
     <v-app>
+        <showNotification></showNotification>
         <div class="top">
             <h3 class="name">{{ data.data.attributes.name }}</h3>
-
         </div>
         <div class="cards">
             <div class="card">
 
             </div>
         </div>
-        <!-- <h3>ユーザID： {{ $store.state.id }}</h3> -->
-        <!-- <nuxt-link to="/">Home</nuxt-link> -->
     </v-app>
 </template>
 
 <script>
 import axios from 'axios'
+import showNotification from '~/components/material/show-notification'
 
 export default {
     asyncData({ $axios, params }) {
@@ -23,6 +22,9 @@ export default {
         .then((res) => {
             return {data: res}
         })
+    },
+    components: {
+      showNotification
     }
 }
 </script>
