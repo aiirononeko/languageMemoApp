@@ -6,6 +6,10 @@
 
 <script>
 export default {
-    middleware: ['isAuthenticated']
+    middleware({ store, redirect }) {
+        if(!store.state.isAuthenticated) {
+            redirect('/user/login');
+        }
+    },
 }
 </script>
