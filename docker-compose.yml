@@ -1,5 +1,7 @@
-version: "2"
+version: "3"
 services:
+
+  # ローカル用DBコンテナ
   db:
     image: mysql:5.7
     environment:
@@ -8,29 +10,28 @@ services:
     ports:
       - "3306:3306"
 
-  web:
+  api:
     build: .
-    command: bundle exec puma -C /languageMemoApp/config/puma.rb
+    command: rails s -p 3000 -b '0.0.0.0'
     volumes:
       - .:/languageMemoApp
     ports:
       - "3000:3000"
-    links:
+    depends_on:
       - db
     tty: true
-    # environment:
-    #   RAILS_ENV: 'production'
     environment:
       - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
 
-  frontend:
+  front:
     build:
       context: .
       dockerfile: ./frontend/Dockerfile
+    command: npm run dev
     ports:
-      - 3002:3000
-    links:
-      - web
+      - 3001:3000
+    depends_on:
+      - api
     tty: true
     stdin_open: true
     # Hot Module Replacement (HMR) is enable for virtual box.
@@ -43,12 +44,3 @@ services:
     image: selenium/standalone-chrome-debug
     logging:
       driver: none
-
-  nginx:
-    build: containers/nginx
-    ports:
-      - "80:80"
-    volumes_from:
-      - web
-    depends_on:
-      - web
