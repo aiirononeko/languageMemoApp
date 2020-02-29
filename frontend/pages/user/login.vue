@@ -7,6 +7,7 @@
             <v-card-text>
                 <v-form>
                     <v-text-field  
+                    v-bind:rules="[rules.required]"
                     v-model="email"
                     label="メール" />
 
@@ -20,7 +21,7 @@
                     @click:append="showPassword = !showPassword" />
 
                     <v-card-actions>
-                         <v-btn v-on:click="login" class="info" large block>ログイン</v-btn>
+                         <v-btn :disabled="isNotValid" v-on:click="login" class="info" large block>ログイン</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card-text>
@@ -31,19 +32,20 @@
 <script>
 const Cookie = process.client ? require('js-cookie') : undefined
 
-
 export default {
     data: () => ({
         showPassword: false,
+        isNotValid: true,
         password: "",
         email: "",
+        error: [],
         rules: {
-          required: value => { return !!value || 'Required.'  },
-          min: value => { return value.length >= 8 || 'Min 8 characters'} ,
+          required: value => { return !!value || '入力してください' },
+          min: value => { return value.length >= 8 || '８文字以上入力してください'} ,
         }
     }),
     methods: {
-        async login() {
+        async login(e) {
             try {
                 console.log("vrav")
                 await this.$store.dispatch('login', {
@@ -55,11 +57,26 @@ export default {
                 Cookie.set('uid', this.$store.state.uid)
                 this.$router.push(`/user/${this.$store.state.id}`)
             } catch (e) {
-                this.formError = e.message
                 console.log(this.formError)
             }
         },
-  }
+    },
+    watch: {
+        email: function(e) {
+            if ( this.email&&this.password&&this.password.length>=8 ) {
+                this.isNotValid = false;
+            }else {
+                this.isNotValid = true;
+            }
+        },
+        password: function(e) {
+            if ( this.email&&this.password&&this.password.length>=8 ) {
+                this.isNotValid = false;
+            }else {
+                this.isNotValid = true;
+            }
+        }
+    }
 };
 </script>
 
