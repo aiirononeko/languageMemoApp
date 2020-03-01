@@ -7,7 +7,7 @@ phases:
       ruby: 2.6
   pre_build:
     commands:
-      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - $aws ecr get-login --no-include-email
   build:
     commands:
       - docker-compose build
