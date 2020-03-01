@@ -7,8 +7,6 @@ services:
       - .:/languageMemoApp
     ports:
       - "3000:3000"
-    depends_on:
-      - db
     tty: true
     environment:
       RAILS_ENV: production
