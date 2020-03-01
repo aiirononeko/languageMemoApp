@@ -27,6 +27,10 @@ development:
 test:
   <<: *default
   database: languageMemoApp_test
+  host: db
+  username: root
+  password: password
+  socket: /tmp/mysql.sock
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
