@@ -7,7 +7,7 @@ phases:
       ruby: 2.6
   pre_build:
     commands:
-      - (aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
       - docker-compose -f docker-compose.production.yml build
