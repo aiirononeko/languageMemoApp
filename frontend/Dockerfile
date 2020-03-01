@@ -1,8 +1,8 @@
-FROM node:8.15.0
+FROM node:8.15.0-alpine
 
 WORKDIR /language_memo_app/frontend
 
-RUN apt-get update -qq && \
+RUN apk update && \
     npm install -g npm && \
     npm install -g @vue/cli && \
     npm install -g @vue/cli-init \
