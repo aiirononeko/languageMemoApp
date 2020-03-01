@@ -1,73 +1,125 @@
 # Ruby CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
-version: 2
+
+version: 2.1
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/ruby:2.5.3-node-browsers
-        environment:
-          - BUNDLER_VERSION: 2.0.2
-          - RAILS_ENV: 'test'
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      - image: circleci/mysql:5.7
-        environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-          - MYSQL_ROOT_HOST: '%'
-
-    working_directory: ~/languageMemoApp
-
+  test:
+    machine: true
+    working_directory: ~/language_memo_app
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
       - run:
-          name: install dependencies
+          name: Install Docker Compose
           command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-
-      - run: mv config/database.yml.ci config/database.yml
-
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
-
-      # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:migrate
-
-      # run tests!
-      - type: shell
-        command: |
-          bundle exec rspec --profile 10 \
-                            --format RspecJunitFormatter \
-                            --out test_results/rspec.xml \
-                            --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-
-      # collect reports
+          name: docker-compose build
+          command: |
+            set -x
+            docker-compose build
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up -d
+      - run:
+          name: test
+          command: |
+            mkdir /tmp/test-results
+            docker-compose run api bundle install
+            docker-compose run api bundle exec rake db:create RAILS_ENV=test
+            docker-compose run api bundle exec rake db:migrate RAILS_ENV=test
+            TEST_FILES="$(circleci tests glob 'spec/**/*_spec.rb' | circleci tests split --split-by=timings)"
+            docker-compose run api bundle exec rspec --format progress \
+            --out /tmp/test-results/rspec.xml \
+            $TEST_FILES
+      - run:
+          name: docker-compose stop
+          command: |
+            set -x
+            docker-compose stop
+      - run:
+          name: docker-compose down
+          command: docker-compose down
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
 
-      # run rubocop
-      # - run:
-      #     name: run rubocop
-      #     command: bundle exec rubocop
+  staging_deploy:
+    docker:
+      - image: hashicorp/terraform:0.12.18
+    steps:
+      - checkout
+      - run:
+          command: |
+            GIT_SSH_COMMAND='ssh -i ~/.ssh/id_rsa'
+            git clone git@github.com:mr-myself/terraform_ecs.git ~/terraform_ecs
+      - run:
+          name: Get terraform
+          command: terraform get ~/terraform_ecs/staging
+      - run:
+          name: Init terraform
+          command: terraform init ~/terraform_ecs/staging
+      - run:
+          name: Apply terraform
+          command: terraform apply -input=false -auto-approve -var "staging_database_password=${STAGING_DATABASE_PASSWORD}" -var "staging_secret_key_base=${SECRET_KEY_BASE}" -var "repository_tag=${CIRCLE_SHA1}" -var-file=/root/terraform_ecs/staging/terraform.tfvars ~/terraform_ecs/staging
+
+  production_deploy:
+    docker:
+      - image: hashicorp/terraform:0.12.6
+    steps:
+      - checkout
+      - run:
+          command: |
+            GIT_SSH_COMMAND='ssh -i ~/.ssh/id_rsa'
+            git clone git@github.com:mr-myself/terraform_ecs.git ~/terraform_ecs
+      - run:
+          name: Get terraform
+          command: terraform get ~/terraform_ecs/production
+      - run:
+          name: Init terraform
+          command: terraform init ~/terraform_ecs/production
+      - run:
+          name: Apply terraform
+          command: terraform apply -input=false -auto-approve -var "production_database_password=${PRODUCTION_DATABASE_PASSWORD}" -var "production_secret_key_base=${SECRET_KEY_BASE}" -var-file=/root/terraform_ecs/production/terraform.tfvars ~/terraform_ecs/production
+
+orbs:
+  aws-ecr: circleci/aws-ecr@6.6.0
+  aws-ecs: circleci/aws-ecs@1.0.4
+
+workflows:
+  test-and-deploy:
+    jobs:
+      - test
+      - aws-ecr/build-and-push-image:
+          filters:
+            branches:
+              only: master
+          account-url: AWS_ACCOUNT_URL
+          repo: your_repository_name
+          region: AWS_DEFAULT_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          tag: "${CIRCLE_SHA1}"
+          extra-build-args: "--build-arg RAILS_MASTER_KEY=${RAILS_MASTER_KEY} --build-arg MYSQL_HOST=${STAGING_DATABASE_HOST} --build-arg MYSQL_PASSWORD=${STAGING_DATABASE_PASSWORD}"
+      - staging_deploy:
+          requires:
+              - test
+              - aws-ecr/build-and-push-image
+          filters:
+            branches:
+              only: master
+      - production_deploy:
+          requires:
+              - test
+          filters:
+            tags:
+              only: /^v*/
+            branches:
+              ignore: /.*/
+              
