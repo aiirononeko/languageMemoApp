@@ -15,6 +15,7 @@ phases:
       # - docker-compose -f docker-compose.production.yml run --rm api rake assets:precompile RAILS_ENV=production
       - docker build -t $API_REPO_NAME:$IMAGE_TAG .
       - docker tag $API_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$API_REPO_NAME:$IMAGE_TAG
+      - cd frontend
       - docker build -t $FRONT_REPO_NAME:$IMAGE_TAG .
       - docker tag $FRONT_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$FRONT_REPO_NAME:$IMAGE_TAG
   post_build:
