@@ -3,12 +3,6 @@
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
 version: 2.1
-
-orbs:
-  aws-ecr: circleci/aws-ecr@0.0.2
-  aws-ecs: circleci/aws-ecs@0.0.3
-
-# workflows:
 jobs:
   build:
     docker:
@@ -78,6 +72,11 @@ jobs:
       #     name: run rubocop
       #     command: bundle exec rubocop
 
+orbs:
+  aws-ecr: circleci/aws-ecr@0.0.2
+  aws-ecs: circleci/aws-ecs@0.0.3
+  
+workflows:
   build-and-deploy:
     jobs:
       - aws-ecr/build_and_push_image:
