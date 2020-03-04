@@ -115,13 +115,14 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
       }) }
     context "渡す値が正しいとき" do
       let(:user) { create(:confirmed_user) }
-      let(:params) { {name: 'テスト太郎', nickname: 'テストマン', image: 'https://image_url' } }
+      let(:params) { {name: 'テスト太郎', profile: 'テストマンだよ', address: 'テス都', image: 'https://image_url' } }
       let(:login_params) { {email: user.email, password: user.password } }
       it "値を変更できる" do
         subject
         res = JSON.parse(response.body)
         expect(res["data"]["attributes"]["name"]).to eq('テスト太郎')
-        expect(res["data"]["attributes"]["nickname"]).to eq('テストマン')
+        expect(res["data"]["attributes"]["profile"]).to eq('テストマンだよ')
+        expect(res["data"]["attributes"]["address"]).to eq('テス都')
         expect(res["data"]["attributes"]["image"]).to eq('https://image_url')
       end
     end
