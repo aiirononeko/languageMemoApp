@@ -76,7 +76,7 @@ version: 2.1
 jobs:
   build:
     machine: true
-    working_directory: ~/repo
+    working_directory: ~/languageMemoApp
     steps:
       - checkout
       - run:
