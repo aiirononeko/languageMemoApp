@@ -2,75 +2,123 @@
 #
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
-version: 2
-jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/ruby:2.5.3-node-browsers
-        environment:
-          - BUNDLER_VERSION: 2.0.2
-          - RAILS_ENV: 'test'
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      - image: circleci/mysql:5.7
-        environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-          - MYSQL_ROOT_HOST: '%'
+# version: 2
+# jobs:
+#   build:
+#     docker:
+#       # specify the version you desire here
+#       - image: circleci/ruby:2.5.3-node-browsers
+#         environment:
+#           - BUNDLER_VERSION: 2.0.2
+#           - RAILS_ENV: 'test'
+#       # Specify service dependencies here if necessary
+#       # CircleCI maintains a library of pre-built images
+#       # documented at https://circleci.com/docs/2.0/circleci-images/
+#       - image: circleci/mysql:5.7
+#         environment:
+#           - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+#           - MYSQL_ROOT_HOST: '%'
 
-    working_directory: ~/languageMemoApp
+#     working_directory: ~/languageMemoApp
 
-    steps:
-      - checkout
+#     steps:
+#       - checkout
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+#       # Download and cache dependencies
+#       - restore_cache:
+#           keys:
+#           - v1-dependencies-{{ checksum "Gemfile.lock" }}
+#           # fallback to using the latest cache if no exact match is found
+#           - v1-dependencies-
 
-      - run:
-          name: install dependencies
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
+#       - run:
+#           name: install dependencies
+#           command: |
+#             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+#       - save_cache:
+#           paths:
+#             - ./vendor/bundle
+#           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
-      - run: mv config/database.yml.ci config/database.yml
+#       - run: mv config/database.yml.ci config/database.yml
 
-      - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+#       - run:
+#           name: Wait for DB
+#           command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
 
-      # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:migrate
+#       # Database setup
+#       - run: bundle exec rake db:create
+#       - run: bundle exec rake db:migrate
 
-      # run tests!
-      - type: shell
-        command: |
-          bundle exec rspec --profile 10 \
-                            --format RspecJunitFormatter \
-                            --out test_results/rspec.xml \
-                            --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+#       # run tests!
+#       - type: shell
+#         command: |
+#           bundle exec rspec --profile 10 \
+#                             --format RspecJunitFormatter \
+#                             --out test_results/rspec.xml \
+#                             --format progress \
+#                             $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+#       # collect reports
+#       - store_test_results:
+#           path: /tmp/test-results
+#       - store_artifacts:
+#           path: /tmp/test-results
+#           destination: test-results
 
       # run rubocop
       # - run:
       #     name: run rubocop
       #     command: bundle exec rubocop
+
+version: 2.1
+jobs:
+  test:
+    machine: true
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: docker-compose build
+          command: |
+            set -x
+            docker-compose build
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up -d
+      - run:
+          name: test
+          command: |
+            mkdir /tmp/test-results
+            docker-compose run rails bundle install
+            docker-compose run rails bundle exec rake db:create RAILS_ENV=test
+            docker-compose run rails bundle exec rake db:migrate RAILS_ENV=test
+            TEST_FILES="$(circleci tests glob 'spec/**/*_spec.rb' | circleci tests split --split-by=timings)"
+            docker-compose run rails bundle exec rspec --format progress \
+            --out /tmp/test-results/rspec.xml \
+            $TEST_FILES
+      - run:
+          name: docker-compose stop
+          command: |
+            set -x
+            docker-compose stop
+      - run:
+          name: docker-compose down
+          command: docker-compose down
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
 
 orbs:
   aws-ecr: circleci/aws-ecr@0.0.2
