@@ -72,9 +72,9 @@ jobs:
       #     name: run rubocop
       #     command: bundle exec rubocop
 
-orbs:
-  aws-ecr: circleci/aws-ecr@0.0.2
-  aws-ecs: circleci/aws-ecs@0.0.3
+# orbs:
+#   aws-ecr: circleci/aws-ecr@0.0.2
+#   aws-ecs: circleci/aws-ecs@0.0.3
 
 # workflows:
 #   build-and-deploy:
