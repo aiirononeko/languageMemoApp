@@ -74,7 +74,7 @@
 
 version: 2.1
 jobs:
-  test:
+  build:
     machine: true
     working_directory: ~/repo
     steps:
@@ -145,3 +145,37 @@ workflows:
           cluster-name: "${AWS_RESOURCE_NAME_PREFIX}-cluster"
           container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX_API}-service,tag=${CIRCLE_SHA1}"
       
+# orbs:
+#   aws-ecr: circleci/aws-ecr@6.6.0
+#   aws-ecs: circleci/aws-ecs@1.0.4
+
+# workflows:
+#   test-and-deploy:
+#     jobs:
+#       - test
+#       - aws-ecr/build-and-push-image:
+#           filters:
+#             branches:
+#               only: master
+#           account-url: AWS_ACCOUNT_URL
+#           repo: poeta-api
+#           region: AWS_DEFAULT_REGION
+#           aws-access-key-id: AWS_ACCESS_KEY_ID
+#           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+#           tag: "${CIRCLE_SHA1}"
+#           extra-build-args: "--build-arg RAILS_MASTER_KEY=${RAILS_MASTER_KEY} --build-arg MYSQL_HOST=${STAGING_DATABASE_HOST} --build-arg MYSQL_PASSWORD=${STAGING_DATABASE_PASSWORD}"
+#       - staging_deploy:
+#           requires:
+#               - test
+#               - aws-ecr/build-and-push-image
+#           filters:
+#             branches:
+#               only: master
+#       - production_deploy:
+#           requires:
+#               - test
+#           filters:
+#             tags:
+#               only: /^v*/
+#             branches:
+#               ignore: /.*/
