@@ -142,13 +142,11 @@ workflows:
             - aws-ecr/build_and_push_image_api
             - aws-ecr/build_and_push_image_front
           aws-region: ${AWS_DEFAULT_REGION}
-          family: 
-            - "${AWS_RESOURCE_NAME_PREFIX}-service"
+          family: "${AWS_RESOURCE_NAME_PREFIX}-service"
             # - "${AWS_RESOURCE_NAME_PREFIX_API}-service"
             # - "${AWS_RESOURCE_NAME_PREFIX_FRONT}-service"
           cluster-name: "${AWS_RESOURCE_NAME_PREFIX}-cluster"
-          container-image-name-updates: 
-            - "container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}"
+          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}"
             # - "container=${AWS_RESOURCE_NAME_PREFIX_API}-service,tag=${CIRCLE_SHA1}"
             # - "container=${AWS_RESOURCE_NAME_PREFIX_FRONT}-service,tag=${CIRCLE_SHA1}"
       
