@@ -127,23 +127,23 @@ orbs:
 workflows:
   build-and-deploy:
     jobs:
-      - aws-ecr/build_and_push_image:
+      - aws-ecr/build_and_push_image_api:
           account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
           repo: "${AWS_RESOURCE_NAME_PREFIX_API}"
           region: ${AWS_DEFAULT_REGION}
           tag: "${CIRCLE_SHA1}"
-      # - aws-ecr/build_and_push_image_front:
-      #     account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
-      #     repo: "${AWS_RESOURCE_NAME_PREFIX_FRONT}"
-      #     region: ${AWS_DEFAULT_REGION}
-      #     tag: "${CIRCLE_SHA1}"
-      - aws-ecs/deploy-service-update:
-          requires:
-            - aws-ecr/build_and_push_image
-          aws-region: ${AWS_DEFAULT_REGION}
-          family: "${AWS_RESOURCE_NAME_PREFIX}-service"
-          cluster-name: "${AWS_RESOURCE_NAME_PREFIX}-cluster"
-          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX_API}-service,tag=${CIRCLE_SHA1}"
+      - aws-ecr/build_and_push_image_front:
+          account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+          repo: "${AWS_RESOURCE_NAME_PREFIX_FRONT}"
+          region: ${AWS_DEFAULT_REGION}
+          tag: "${CIRCLE_SHA1}"
+      # - aws-ecs/deploy-service-update:
+      #     requires:
+      #       - aws-ecr/build_and_push_image
+      #     aws-region: ${AWS_DEFAULT_REGION}
+      #     family: "${AWS_RESOURCE_NAME_PREFIX}-service"
+      #     cluster-name: "${AWS_RESOURCE_NAME_PREFIX}-cluster"
+      #     container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX_API}-service,tag=${CIRCLE_SHA1}"
       
 # orbs:
 #   aws-ecr: circleci/aws-ecr@6.6.0
