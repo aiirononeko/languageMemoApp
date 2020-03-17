@@ -29,13 +29,13 @@ ActiveRecord::Schema.define(version: 2020_03_04_024010) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.string "name"
+    t.string "name", limit: 50, null: false
     t.string "image"
     t.string "email"
     t.text "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "address"
+    t.string "address", limit: 30
     t.string "profile"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
