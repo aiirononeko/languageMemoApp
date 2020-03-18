@@ -1,6 +1,6 @@
 FROM node:8.15.0-alpine
 
-WORKDIR /language_memo_app/frontend
+WORKDIR /frontend
 
 RUN apk update && \
     npm install -g npm && \
