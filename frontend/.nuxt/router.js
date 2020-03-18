@@ -3,12 +3,13 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _01f7c646 = () => interopDefault(import('../pages/memos/write.vue' /* webpackChunkName: "pages/memos/write" */))
-const _708e2298 = () => interopDefault(import('../pages/user/confirm.vue' /* webpackChunkName: "pages/user/confirm" */))
-const _5e14027e = () => interopDefault(import('../pages/user/login.vue' /* webpackChunkName: "pages/user/login" */))
-const _2a9585b5 = () => interopDefault(import('../pages/user/sign_up.vue' /* webpackChunkName: "pages/user/sign_up" */))
-const _51997edc = () => interopDefault(import('../pages/user/_id.vue' /* webpackChunkName: "pages/user/_id" */))
-const _aa49d534 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
+const _724968dc = () => interopDefault(import('../pages/memos/write.vue' /* webpackChunkName: "pages/memos/write" */))
+const _b8c66afa = () => interopDefault(import('../pages/user/confirm.vue' /* webpackChunkName: "pages/user/confirm" */))
+const _efe7fb52 = () => interopDefault(import('../pages/user/edit.vue' /* webpackChunkName: "pages/user/edit" */))
+const _f658b528 = () => interopDefault(import('../pages/user/login.vue' /* webpackChunkName: "pages/user/login" */))
+const _5da42da0 = () => interopDefault(import('../pages/user/sign_up.vue' /* webpackChunkName: "pages/user/sign_up" */))
+const _e5ded406 = () => interopDefault(import('../pages/user/_id.vue' /* webpackChunkName: "pages/user/_id" */))
+const _96d6a04a = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -28,27 +29,31 @@ export const routerOptions = {
 
   routes: [{
     path: "/memos/write",
-    component: _01f7c646,
+    component: _724968dc,
     name: "memos-write"
   }, {
     path: "/user/confirm",
-    component: _708e2298,
+    component: _b8c66afa,
     name: "user-confirm"
   }, {
+    path: "/user/edit",
+    component: _efe7fb52,
+    name: "user-edit"
+  }, {
     path: "/user/login",
-    component: _5e14027e,
+    component: _f658b528,
     name: "user-login"
   }, {
     path: "/user/sign_up",
-    component: _2a9585b5,
+    component: _5da42da0,
     name: "user-sign_up"
   }, {
     path: "/user/:id?",
-    component: _51997edc,
+    component: _e5ded406,
     name: "user-id"
   }, {
     path: "/",
-    component: _aa49d534,
+    component: _96d6a04a,
     name: "index"
   }],
 
