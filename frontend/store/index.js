@@ -24,11 +24,11 @@ export const mutations = {
     state.access_token = header['access-token']
     state.uid = header['uid']
     state.client = header['client']
-    state.isAuthenticated = true
+    state.isAuthenticated = false
   },
   logoutUser (state) {
     state.access_token = null;
-    state.isAuthenticated = null;
+    state.isAuthenticated = false;
     state.uid = null;
     state.client = null;
     state.id = null;
