@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <div class="title">
-            <h2 class="main-title">ログインaabbccdd</h2>
+            <h2 class="main-title">ログイン</h2>
         </div>
         <v-card width="600px" class="mx-auto mt-5">
             <v-card-text>
