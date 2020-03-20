@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '~/plugins/axios'
 import showNotification from '~/components/material/show-notification'
 
 export default {
@@ -24,7 +24,7 @@ export default {
         }
     },
     asyncData({ $axios, params }) {
-        return $axios.$get(`http://localhost:3000/api/v1/users/${params.id}`)
+        return $axios.$get(process.env.baseUrl+`/api/v1/users/${params.id}`)
         .then((res) => {
             return {data: res}
         })

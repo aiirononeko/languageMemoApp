@@ -18,11 +18,11 @@
                     label="都道府県" />
 
                     <v-textarea  
-                    v-model="selfIntroduction"
+                    v-model="profile"
                     label="プロフィール文" />
 
                     <v-card-actions>
-                         <v-btn :disabled="isNotValid"  class="info" large block>保存</v-btn>
+                         <v-btn :disabled="isNotValid" v-on:click="store"  class="info" large block>保存</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card-text>
@@ -32,42 +32,49 @@
 
 <script>
 const Cookie = process.client ? require('js-cookie') : undefined
+import axios from '~/plugins/axios'
 
 export default {
     data: () => ({
         showPassword: false,
         isNotValid: true,
         name: "",
-        email: "",
         address: "",
-        password: "",
-        selfIntroduction: "",
+        profile: "",
         rules: {
           required: value => { return !!value || '入力してください.'  },
           min: value => { return value.length >= 8 || '８文字以上入力してください'} ,
         },
     }),
     mounted() {
-        console.log(this.info.data.attributes.name)
+        // console.log(this.info.data.attributes.name)
         this.name = this.info.data.attributes.name
+        this.profile = this.info.data.attributes.profile
+        this.address = this.info.data.attributes.address
+    },
+    methods: {
+        store: function() {
+            axios.put(process.env.baseUrl+`/api/v1/auth`, 
+                {
+                  headers: {
+                    access_token: Cookie.get("access-token"),
+                    client: Cookie.get("client"),
+                    uid: Cookie.get('uid'),
+                    "Content-Type": "application/json"
+                  },
+                  body: {
+                    name: name,
+                    profile: "va",
+                    address: "vea",
+                  }
+                }
+            )
+
+        }
     },
     watch: {
-        email: function(e) {
-            if ( this.email&&this.checkPassword()&&this.name ) {
-                this.isNotValid = false;
-            }else {
-                this.isNotValid = true;
-            }
-        },
-        password: function(e) {
-            if ( this.email&&this.checkPassword()&&this.name ) {
-                this.isNotValid = false;
-            }else {
-                this.isNotValid = true;
-            }
-        },
         name: function(e) {
-            if ( this.email&&this.checkPassword()&&this.name ) {
+            if ( this.name ) {
                 this.isNotValid = false;
             }else {
                 this.isNotValid = true;
@@ -75,7 +82,7 @@ export default {
         },
     },
     asyncData({ $axios, params }) {
-        return $axios.$get(`http://localhost:3000/api/v1/auth/edit`,
+        return $axios.$get(process.env.baseUrl + `/api/v1/auth/edit`,
             { headers: {
                 access_token: Cookie.get("access-token"),
                client: Cookie.get("client"),

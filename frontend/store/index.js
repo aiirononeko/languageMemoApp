@@ -1,5 +1,5 @@
 
-import axios from 'axios'
+import axios from '~/plugins/axios'
 const cookieparser = process.server ? require('cookieparser') : undefined
 
 export const state = () => {
@@ -41,7 +41,7 @@ export const mutations = {
 export const actions = {
     async login ({ commit }, { email, password }) {
       try {
-        await axios.post('http://localhost:3000/api/v1/auth/sign_in', { email, password }
+        await axios.post(process.env.baseUrl+'/api/v1/auth/sign_in', { email, password }
         ).then(res => {
             // console.log(res)
             // console.log(res.data.data.uid)
@@ -56,7 +56,7 @@ export const actions = {
     },
     async logout ({ commit }, {access_token, client, uid}) {
       try {
-        await  axios.delete('http://localhost:3000/api/v1/auth/sign_out', {
+        await  axios.delete(process.env.baseUrl+'/api/v1/auth/sign_out', {
           headers: {
             "access-token": access_token,
             client: client,
