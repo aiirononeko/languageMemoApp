@@ -1,0 +1,223 @@
+FORMAT: 1A
+HOST: http://localhost/api/v1
+
+# poeta API
+poetaのAPI仕様書
+
+## ユーザー登録関連API [/auth]
+
+### ユーザー登録 [POST]
+新規ユーザーを登録する。
+
++ Request
+  + Attributes
+      + name: `poeta` (string) - ユーザー名
+      + email: `poeta@example.com` (string, required) - メールアドレス
+      + password: `password` (string, required) - パスワード
+
++ Response 200 (application/json)
+  + Attributes
+        + data
+            + id: 1,
+            + type: users,
+            + attributes
+                + name: `poeta`,
+                + profile: `null`,
+                + address: `null`,
+                + image: `null`,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
++ Response 422 (application/json)
+    + Attributes
+          + status: error
+          + errors
+              + email: ["can't be blank"]
+              + full_messages: ["Email can't be blank"] 
+
+### ユーザー削除 [DELETE]
+ユーザーを削除する。
+
++ Request (application/json)
+
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
++ Response 200 (application/json)
+    + Attributes
+        + status: success,
+        + message: Account with UID 'poeta@example.com' has been destroyed.
+
+
+### ユーザー情報編集 [PUT]
+ユーザーの情報を編集する。
+
++ Request 
+
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+    + Attributes
+        + name: ``
+        + profile:``
+        + address:``
+        + image:``
+
++ Response 200 (application/json)
+    + Attributes
+        + name: `変更後の値`
+        + profile: `変更後の値`
+        + address: `変更後の値`
+        + image: `変更後の値`
+        + created_at: `登録時の日時`,
+        + updated_at": `変更時の日時`
+
+
+### ユーザーの情報編集画面表示 [GET /auth/edit]
+ユーザーの情報の編集画面を表示する。
+
+
++ Request 
+
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
++ Response 200 (application/json)
+    + Attributes
+        + name: `現在の値`
+        + profile: `現在の値`
+        + address: `現在の値`
+        + image: `現在の値`
+        + created_at: `登録時の日時`,
+        + updated_at": `変更時の日時`
+
+## ユーザー関連API [/users]
+
+### ユーザーのマイページ表示 [GET /user/{id}]
+ユーザーのマイページを取得する。
+
++ Parameters
+    + id: 1 (ユーザーID)
+
++ Response 200 (application/json)
+  + Attributes
+        + data
+            + id: 1,
+            + type: users,
+            + attributes
+                + name: `poeta`,
+                + profile: `null`,
+                + address: `null`,
+                + image: `null`,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
+
+## セッション関連API [/auth/sign_in]
+
+### ログイン　[POST /auth/sign_in]
+ログインする。
+
++ Request
+    + Attributes
+        + email: `poeta@example.com` (string, required)
+        + password: `password` (string, required)
+
++ Response 200 (application/json)
+
+      + Headers
+
+            uid: `poeta@example.com`
+            client: `ランダムな文字列`
+            access_token: `ランダムな文字列`
+
+    + Attributes 
+        + data
+            + id: 1,
+            + type: users,
+            + attributes 
+                + name: null,
+                + profile: null,
+                + address: null,
+                + image: null,
+                + created_at: ``,
+                + updated_at: ``
+
+
++ Response 401 (application/json)
+    + Attributes
+        + success: false
+        + errors: [
+            "A confirmation email was sent to your account at 'poeta@example.com'. You must follow the instructions in the email before your account can be activated"
+        ]
+
+### ログアウト [DELETE /auth/sign_out]
+現在ログインしているアカウントからログアウトする。
+
++ Request 
+
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
++ Response 200 (application/json)
+  + Attributes
+      + success: true
+
+## パスワード変更関連API [/auth/password]
+
+### パスワード変更用メール送信 [POST]
+パスワード変更用のリンクを含むメールを送信する。
+
++ Request
+  + Attributes
+      + email: `poeta@example.com` (string, required) - メールアドレス
+      + redirect_url: `http://localhost:3000/~` (string, required) - リンクを踏んだ際のリダイレクト先URL
+
++ Response 200 (application/json)
+  + Attributes
+      + success: true
+      + message: An email has been sent to 'poeta@example.com' containing instructions for resetting your password.
+
+### パスワード変更 [PUT]
+パスワードを変更する。
+
++ Request
+  + Attributes
+      + password: `password`
+      + password_confirmation: `password`
+
++ Response 200 (application/json)
+  + Attributes
+      + success: true
+      + data
+              + id: 1,
+              + type: users,
+              + attributes 
+                  + name: null,
+                  + profile: null,
+                  + address: null,
+                  + image: null,
+                  + created_at: ``,
+                  + updated_at: ``
+      + message: Your password has been successfully updated.
+
++ Response 422 (application/json)
+  + Attributes
+      + success: false
+      + errors
+          + password_confirmation: ["doesn't match Password"]
+          + full_messages: [
+              "Password confirmation doesn't match Password"
+          ]
