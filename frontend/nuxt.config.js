@@ -28,22 +28,13 @@ module.exports = {
       '~/assets/sass/variable.scss',
     ]],
   ],
+  plugins: [
+  ],
   css: [
     { src: '~/assets/sass/common.scss', lang: 'scss' }
   ],
   axios: { 
   },
-  // auth: {
-  //   strategies: {
-  //     local: {
-  //       endpoints: {
-  //         login: { url: 'api/v1/auth/sign_in', method: 'post', propertyName: 'token' },
-  //         user: false,
-  //         logout: false
-  //       }
-  //     }
-  //   }
-  // },
   /*
   ** Build configuration
   */
