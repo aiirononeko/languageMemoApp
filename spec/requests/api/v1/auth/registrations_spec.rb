@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::Auth::Registrations", type: :request do
   describe "POST /api/v1/auth" do
-    subject { post(api_v1_user_registration_path, params: params) }
+    subject(:call_api) { post(api_v1_user_registration_path, params: params) }
     let(:params) { attributes_for(:user) }
     it "ユーザー登録できる" do
       subject
       res = JSON.parse(response.body)
       expect(res["data"]["id"]).to eq(User.last.id.to_s)
       expect(res["data"]["attributes"]["name"]).to eq(User.last.name)
-      expect(response).to have_http_status(200)
+      expect(response.status).to eq 200
     end
   end
 
@@ -36,7 +36,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         expect(response.headers["uid"]).to be_present
         expect(response.headers["access-token"]).to be_present
         expect(response.headers["client"]).to be_present
-        expect(response).to have_http_status(200)
+        expect(response.status).to eq 200
       end
     end 
 
@@ -51,7 +51,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         expect(response.headers["uid"]).to be_blank
         expect(response.headers["access-token"]).to be_blank
         expect(response.headers["client"]).to be_blank
-        expect(response).to have_http_status(401)
+        expect(response.status).to eq 401
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         expect(response.headers["uid"]).to be_blank
         expect(response.headers["access-token"]).to be_blank
         expect(response.headers["client"]).to be_blank
-        expect(response).to have_http_status(401)
+        expect(response.status).to eq 401
       end
     end
 
@@ -79,7 +79,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         expect(response.headers["uid"]).not_to be_present
         expect(response.headers["access-token"]).not_to be_present
         expect(response.headers["client"]).not_to be_present
-        expect(response).not_to have_http_status(200)
+        expect(response.status).to_not eq 200
       end
     end
   end
@@ -91,7 +91,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         delete(destroy_api_v1_user_session_path, headers: headers)
         res = JSON.parse(response.body)
         expect(res["success"]).to be_truthy
-        expect(response).to have_http_status(200)
+        expect(response.status).to eq 200
       end
     end
   end
@@ -130,7 +130,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         res = JSON.parse(response.body)
         expect(res["data"]["id"]).to eq(User.last.id.to_s)
         expect(res["data"]["attributes"]["name"]).to eq(User.last.name)
-        expect(response).to have_http_status(200)
+        expect(response.status).to eq 200
       end
     end
   end
