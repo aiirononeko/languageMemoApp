@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <p>{{ $store.state.uid }} : {{ $store.state.access_token }}</p>
+      <p>{{ $store.state.uid }} : {{ $store.state.access_token }} : {{ $store.state.isAuthenticated ? "true" : "false" }}</p>
       <app-logo/>
       <h1 class="title">
         frontend
@@ -31,7 +31,10 @@ export default {
   components: {
     AppLogo
   },
-  methods: {
+  mounted() {
+    if(Cookie.get("access-token")) {
+      // this.$store.state.isAuthenticated = true
+    }
   }
 }
 </script>
