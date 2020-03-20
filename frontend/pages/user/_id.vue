@@ -3,6 +3,7 @@
         <showNotification></showNotification>
         <div class="top">
             <h3 class="name">{{ data.data.attributes.name }}</h3>
+            <nuxt-link to="/user/edit/1"><p>編集する</p></nuxt-link>
         </div>
         <div class="cards">
             <div class="card">
@@ -17,7 +18,7 @@ import axios from 'axios'
 import showNotification from '~/components/material/show-notification'
 
 export default {
-     middleware({ store, redirect }) {
+    middleware({ store, redirect }) {
         if(!store.state.isAuthenticated) {
             redirect('/user/login');
         }
