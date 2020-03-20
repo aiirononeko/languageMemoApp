@@ -34,6 +34,14 @@
 const Cookie = process.client ? require('js-cookie') : undefined
 import axios from '~/plugins/axios'
 
+axios.interceptors.request.use( config => {
+    console.log(config)
+    config.headers.common["access-token"] = Cookie.get("access-token")
+    config.headers.common["client"] = Cookie.get("client")
+    config.headers.common["uid"] = Cookie.get("uid")
+    return config
+})
+
 export default {
     data: () => ({
         showPassword: false,
@@ -56,20 +64,11 @@ export default {
         store: function() {
             axios.put(process.env.baseUrl+`/api/v1/auth`, 
                 {
-                  headers: {
-                    access_token: Cookie.get("access-token"),
-                    client: Cookie.get("client"),
-                    uid: Cookie.get('uid'),
-                    "Content-Type": "application/json"
-                  },
-                  body: {
-                    name: name,
-                    profile: "va",
-                    address: "vea",
-                  }
+                    name: this.name,
+                    profile: this.profile,
+                    address: this.address,
                 }
             )
-
         }
     },
     watch: {

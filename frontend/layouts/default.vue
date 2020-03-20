@@ -151,7 +151,7 @@ const Cookie = process.client ? require('js-cookie') : undefined
               Cookie.remove('uid')
               this.$router.push(`/user/login`)
           } catch (e) {
-              console.log(this.formError)
+              console.error(e)
           }
       }
     }
