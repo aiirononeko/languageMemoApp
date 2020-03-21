@@ -27,7 +27,7 @@ services:
     build:
       context: .
       dockerfile: ./frontend/Dockerfile
-    # command: npm run dev
+    command: npm run dev
     ports:
       - 3001:3000
     depends_on:
