@@ -70,13 +70,17 @@ poetaのAPI仕様書
         + image:``
 
 + Response 200 (application/json)
-    + Attributes
-        + name: `変更後の値`
-        + profile: `変更後の値`
-        + address: `変更後の値`
-        + image: `変更後の値`
-        + created_at: `登録時の日時`,
-        + updated_at": `変更時の日時`
+  + Attributes
+        + data
+            + id: 1,
+            + type: users,
+            + attributes
+                + name: `poeta`,
+                + profile: `null`,
+                + address: `null`,
+                + image: `null`,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
 
 
 ### ユーザーの情報編集画面表示 [GET /auth/edit]
@@ -92,13 +96,45 @@ poetaのAPI仕様書
             access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
 
 + Response 200 (application/json)
+
+  + Attributes
+        + data
+            + id: 1,
+            + type: users,
+            + attributes
+                + name: `poeta`,
+                + profile: `null`,
+                + address: `null`,
+                + image: `null`,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
+### トークンの有効性を検証 [GET /auth/validate_token]
+リクエストヘッダを見てユーザーがログイン状態かどうか判定する。
+
++ Request 
+
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
++ Response 200 (application/json)
     + Attributes
-        + name: `現在の値`
-        + profile: `現在の値`
-        + address: `現在の値`
-        + image: `現在の値`
-        + created_at: `登録時の日時`,
-        + updated_at": `変更時の日時`
+        + success: true,
+        + data
+            + id: 1,
+            + type: users,
+            + attributes
+                + name: `poeta`,
+                + profile: `null`,
+                + address: `null`,
+                + image: `null`,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
+
 
 ## ユーザー関連API [/users]
 
