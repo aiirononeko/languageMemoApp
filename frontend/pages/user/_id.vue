@@ -18,11 +18,7 @@ import axios from '~/plugins/axios'
 import showNotification from '~/components/material/show-notification'
 
 export default {
-    middleware({ store, redirect }) {
-        if(!store.state.isAuthenticated) {
-            redirect('/user/login');
-        }
-    },
+    middleware: 'authenticated',
     asyncData({ $axios, params }) {
         return $axios.$get(process.env.baseUrl+`/api/v1/users/${params.id}`)
         .then((res) => {
