@@ -76,11 +76,8 @@ export const actions = {
       if (req.headers.cookie) {
         const parsed = cookieparser.parse(req.headers.cookie)
         try {
-          let auth_flag = false
-          if(parsed.uid) {
-            auth_flag = true
-          }
-          commit('setHeader',  { header :parsed, auth_flag: auth_flag } )
+          const auth_flag = parsed.uid ? true : false
+          commit('setHeader',  { header :parsed, auth_flag })
         } catch (err) {
           // No valid cookie found
         }
