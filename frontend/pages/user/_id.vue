@@ -3,6 +3,7 @@
         <showNotification></showNotification>
         <div class="top">
             <h3 class="name">{{ data.data.attributes.name }}</h3>
+            <nuxt-link to="/user/edit/1"><p>編集する</p></nuxt-link>
         </div>
         <div class="cards">
             <div class="card">
@@ -13,17 +14,13 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '~/plugins/axios'
 import showNotification from '~/components/material/show-notification'
 
 export default {
-     middleware({ store, redirect }) {
-        if(!store.state.isAuthenticated) {
-            redirect('/user/login');
-        }
-    },
+    middleware: 'authenticated',
     asyncData({ $axios, params }) {
-        return $axios.$get(`http://localhost:3000/api/v1/users/${params.id}`)
+        return $axios.$get(`${process.env.baseUrl}/api/v1/users/${params.id}`)
         .then((res) => {
             return {data: res}
         })

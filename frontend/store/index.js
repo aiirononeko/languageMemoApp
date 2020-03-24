@@ -1,5 +1,5 @@
 
-import axios from 'axios'
+import axios from '~/plugins/axios'
 const cookieparser = process.server ? require('cookieparser') : undefined
 
 export const state = () => {
@@ -20,11 +20,11 @@ export const mutations = {
     state.id = res.data.data.id
     state.isAuthenticated = true
   },
-  setHeader (state, header) {
+  setHeader (state, { header, auth_flag }) {
     state.access_token = header['access-token']
     state.uid = header['uid']
     state.client = header['client']
-    state.isAuthenticated = false
+    state.isAuthenticated = auth_flag
   },
   logoutUser (state) {
     state.access_token = null;
@@ -41,7 +41,7 @@ export const mutations = {
 export const actions = {
     async login ({ commit }, { email, password }) {
       try {
-        await axios.post('http://localhost:3000/api/v1/auth/sign_in', { email, password }
+        await axios.post(process.env.baseUrl+'/api/v1/auth/sign_in', { email, password }
         ).then(res => {
             // console.log(res)
             // console.log(res.data.data.uid)
@@ -56,7 +56,7 @@ export const actions = {
     },
     async logout ({ commit }, {access_token, client, uid}) {
       try {
-        await  axios.delete('http://localhost:3000/api/v1/auth/sign_out', {
+        await  axios.delete(process.env.baseUrl+'/api/v1/auth/sign_out', {
           headers: {
             "access-token": access_token,
             client: client,
@@ -76,8 +76,8 @@ export const actions = {
       if (req.headers.cookie) {
         const parsed = cookieparser.parse(req.headers.cookie)
         try {
-          console.log(parsed)
-          commit('setHeader', parsed)
+          const auth_flag = parsed.uid ? true : false
+          commit('setHeader',  { header :parsed, auth_flag })
         } catch (err) {
           // No valid cookie found
         }
