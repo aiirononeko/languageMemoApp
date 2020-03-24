@@ -3,6 +3,8 @@ export default axios.create({
  baseURL: process.env.baseUrl
 })
 
+// TODO: 現状「pages>user>_id.vue」でヘッダーをセットしているので、どのリクエストでもセットするようにする
+
 // const Cookie = process.client ? require('js-cookie') : undefined
 
 // export default function({$axios}) {
