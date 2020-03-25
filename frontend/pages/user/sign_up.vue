@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     data: () => ({
@@ -54,7 +53,7 @@ export default {
     }),
     methods: {
         async signUp() {
-            axios.post('http://localhost:3000/api/v1/auth', {
+            this.$axios.post('http://localhost:3000/api/v1/auth', {
                 name: this.name,
                 email: this.email,
                 password: this.password
