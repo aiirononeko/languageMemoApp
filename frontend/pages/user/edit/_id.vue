@@ -36,15 +36,6 @@
 
 <script>
 const Cookie = process.client ? require("js-cookie") : undefined;
-import axios from "~/plugins/axios";
-
-axios.interceptors.request.use(config => {
-  console.log(config);
-  config.headers.common["access-token"] = Cookie.get("access-token");
-  config.headers.common["client"] = Cookie.get("client");
-  config.headers.common["uid"] = Cookie.get("uid");
-  return config;
-});
 
 export default {
   data: () => ({
@@ -70,7 +61,7 @@ export default {
   },
   methods: {
     store: function() {
-      axios.put(process.env.baseUrl + `/api/v1/auth`, {
+      this.$axios.put(`${this.$axios.defaults.baseURL}/api/v1/auth`, {
         name: this.name,
         profile: this.profile,
         address: this.address
@@ -88,13 +79,7 @@ export default {
   },
   asyncData({ $axios, params }) {
     return $axios
-      .$get(process.env.baseUrl + `/api/v1/auth/edit`, {
-        headers: {
-          access_token: Cookie.get("access-token"),
-          client: Cookie.get("client"),
-          uid: Cookie.get("uid")
-        }
-      })
+      .$get(`${$axios.defaults.baseURL}/api/v1/auth/edit`)
       .then(res => {
         return { info: res };
       });
