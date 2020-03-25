@@ -27,6 +27,9 @@ module.exports = {
   axios: {
     baseURL: "http://localhost:3000"
   },
+  plugins: [
+    '~/plugins/axios'
+  ],
   css: [{ src: "~/assets/sass/common.scss", lang: "scss" }],
   /*
    ** Build configuration
