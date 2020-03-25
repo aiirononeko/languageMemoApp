@@ -28,13 +28,12 @@ module.exports = {
       '~/assets/sass/variable.scss',
     ]],
   ],
-  plugins: [
-  ],
+  axios: {
+    baseURL: "http://localhost:3000"
+  },
   css: [
     { src: '~/assets/sass/common.scss', lang: 'scss' }
   ],
-  axios: { 
-  },
   /*
   ** Build configuration
   */
