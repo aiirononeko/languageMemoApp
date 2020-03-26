@@ -47,3 +47,16 @@ create アクションなどにとばして、そこで 1.入力されたコー�
 ## web コンテナの中に入る
 
 `docker-compose run web sh`
+
+# 環境構築
+
+
+``` shell
+cd frontend && npm i
+
+docker-compose up -d
+
+docker-compose exec api rails db:create
+
+docker-compose exec api rails db:migrate
+```
