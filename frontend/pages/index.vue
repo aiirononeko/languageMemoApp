@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <div class="container">
     <div>
       <p>{{ $store.state.uid }} : {{ $store.state.access_token }} : {{ $store.state.isAuthenticated }}</p>
       <app-logo/>
@@ -20,7 +20,7 @@
           class="button--grey">GitHub</a>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>

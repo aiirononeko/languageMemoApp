@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <div class="title">
       <h2 class="main-title">ユーザ登録</h2>
       <p class="sub-title">ぽえたのサービスをご利用いただくには、</p>
@@ -44,7 +44,7 @@
         </v-form>
       </v-card-text>
     </v-card>
-  </v-app>
+  </div>
 </template>
 
 <script>
