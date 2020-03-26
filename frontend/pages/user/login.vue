@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <div class="title">
       <h2 class="main-title">ログイン</h2>
     </div>
@@ -35,7 +35,7 @@
         </v-form>
       </v-card-text>
     </v-card>
-  </v-app>
+  </div>
 </template>
 
 <script>
