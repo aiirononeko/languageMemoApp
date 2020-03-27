@@ -26,7 +26,7 @@
 
         <v-list-item
           link
-          v-on:click="logout"
+          @click="logout"
           v-if="$store.state.isAuthenticated"
         >
           <v-list-item-action>
