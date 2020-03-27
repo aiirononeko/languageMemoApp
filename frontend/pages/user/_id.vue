@@ -18,7 +18,7 @@ export default {
   middleware: "authenticated",
   asyncData({ $axios, params }) {
     return $axios
-      .$get(`${$axios.defaults.baseURL}/api/v1/users/${params.id}`)
+      .$get(`/api/v1/users/${params.id}`)
       .then(res => {
         return { data: res };
       });
