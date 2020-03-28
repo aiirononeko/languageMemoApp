@@ -2,7 +2,7 @@
   <div>
     <showNotification></showNotification>
     <div class="top">
-      <h3 class="name">{{ data.data.attributes.name }}</h3>
+      <h3 class="name">{{ data.attributes.name }}</h3>
       <nuxt-link to="/user/edit/1"><p>編集する</p></nuxt-link>
     </div>
     <div class="cards">
@@ -16,12 +16,13 @@ import showNotification from "~/components/material/show-notification";
 
 export default {
   middleware: "authenticated",
-  asyncData({ $axios, params }) {
-    return $axios
-      .$get(`/api/v1/users/${params.id}`)
-      .then(res => {
-        return { data: res };
-      });
+  async asyncData({ $axios, params }) {
+    try {
+      const { data } = await $axios.$get(`/api/v1/users/${params.id}`);
+      return { data };
+    } catch (e) {
+      console.error(e);
+    }
   },
   components: {
     showNotification

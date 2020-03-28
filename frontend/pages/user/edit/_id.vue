@@ -50,9 +50,9 @@ export default {
     }
   }),
   created() {
-    this.name = this.info.data.attributes.name;
-    this.profile = this.info.data.attributes.profile;
-    this.address = this.info.data.attributes.address;
+    this.name = this.info.attributes.name;
+    this.profile = this.info.attributes.profile;
+    this.address = this.info.attributes.address;
   },
   methods: {
     async store() {
@@ -76,10 +76,13 @@ export default {
       }
     }
   },
-  asyncData({ $axios, params }) {
-    return $axios.$get(`/api/v1/auth/edit`).then(res => {
-      return { info: res };
-    });
+  async asyncData({ $axios, params }) {
+    try {
+      const { data } = await $axios.$get(`/api/v1/auth/edit`);
+      return { info: data };
+    } catch (e) {
+      console.error(e);
+    }
   }
 };
 </script>
