@@ -8,11 +8,7 @@
     <v-card width="600px" class="mx-auto mt-5">
       <v-card-text>
         <v-form>
-          <v-text-field
-            v-model="name"
-            :rules="[rules.required]"
-            label="名前"
-          />
+          <v-text-field v-model="name" :rules="[rules.required]" label="名前" />
 
           <v-text-field v-model="address" label="都道府県" />
 
@@ -59,12 +55,16 @@ export default {
     this.address = this.info.data.attributes.address;
   },
   methods: {
-    store: function() {
-      this.$axios.put(`/api/v1/auth`, {
-        name: this.name,
-        profile: this.profile,
-        address: this.address
-      });
+    async store() {
+      try {
+        await this.$axios.put(`/api/v1/auth`, {
+          name: this.name,
+          profile: this.profile,
+          address: this.address
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
   watch: {
@@ -77,11 +77,9 @@ export default {
     }
   },
   asyncData({ $axios, params }) {
-    return $axios
-      .$get(`/api/v1/auth/edit`)
-      .then(res => {
-        return { info: res };
-      });
+    return $axios.$get(`/api/v1/auth/edit`).then(res => {
+      return { info: res };
+    });
   }
 };
 </script>
