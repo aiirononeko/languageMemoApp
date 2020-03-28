@@ -4,7 +4,7 @@
     :class="[`elevation-${elevation}`]"
     :value="value"
     class="v-alert--notification"
->
+  >
     <slot />
   </v-alert>
 </template>
