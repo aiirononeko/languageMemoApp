@@ -54,7 +54,6 @@ export default {
     }
   }),
   mounted() {
-    // console.log(this.info.data.attributes.name)
     this.name = this.info.data.attributes.name;
     this.profile = this.info.data.attributes.profile;
     this.address = this.info.data.attributes.address;
