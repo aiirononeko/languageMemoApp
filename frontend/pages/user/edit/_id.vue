@@ -9,8 +9,8 @@
       <v-card-text>
         <v-form>
           <v-text-field
-            v-bind:rules="[rules.required]"
             v-model="name"
+            :rules="[rules.required]"
             label="名前"
           />
 
@@ -21,7 +21,7 @@
           <v-card-actions>
             <v-btn
               :disabled="isNotValid"
-              v-on:click="store"
+              @click="store"
               class="info"
               large
               block
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     store: function() {
-      this.$axios.put(`${this.$axios.defaults.baseURL}/api/v1/auth`, {
+      this.$axios.put(`/api/v1/auth`, {
         name: this.name,
         profile: this.profile,
         address: this.address
@@ -79,7 +79,7 @@ export default {
   },
   asyncData({ $axios, params }) {
     return $axios
-      .$get(`${$axios.defaults.baseURL}/api/v1/auth/edit`)
+      .$get(`/api/v1/auth/edit`)
       .then(res => {
         return { info: res };
       });

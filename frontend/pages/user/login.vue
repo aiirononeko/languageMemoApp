@@ -7,16 +7,16 @@
       <v-card-text>
         <v-form>
           <v-text-field
-            v-bind:rules="[rules.required]"
             v-model="email"
+            :rules="[rules.required]"
             label="メール"
           />
 
           <v-text-field
-            v-bind:rules="[rules.required, rules.min]"
             v-model="password"
-            v-bind:type="showPassword ? 'text' : 'password'"
-            v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="showPassword ? 'text' : 'password'"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             label="パスワード"
             counter
             @click:append="showPassword = !showPassword"
@@ -25,7 +25,7 @@
           <v-card-actions>
             <v-btn
               :disabled="isNotValid"
-              v-on:click="login"
+              @click="login"
               class="info"
               large
               block
