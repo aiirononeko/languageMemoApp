@@ -24,7 +24,7 @@ export const mutations = {
     state.client = header["client"];
     state.isAuthenticated = auth_flag;
   },
-  logoutUser(state) {
+  clearUser(state) {
     state.access_token = null;
     state.isAuthenticated = false;
     state.uid = null;
@@ -66,7 +66,7 @@ export const actions = {
           }
         }
       );
-      commit("logoutUser");
+      commit("clearUser");
     } catch (error) {
       if (error.response && error.response.status === 401) {
         throw new Error("Bad credentials");
