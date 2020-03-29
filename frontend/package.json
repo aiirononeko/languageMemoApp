@@ -19,7 +19,10 @@
     "@nuxtjs/axios": "^5.9.5",
     "axios-cookiejar-support": "^0.5.1",
     "cookieparser": "^0.1.0",
-    "nuxt": "^2.0.0"
+    "minimist": "^1.2.5",
+    "nuxt": "^2.0.0",
+    "vuetify": "^2.2.19",
+    "webpack": "^4.42.1"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.0",
@@ -33,6 +36,7 @@
     "eslint-loader": "^2.1.1",
     "eslint-plugin-vue": "^4.0.0",
     "jest": "^25.2.3",
+    "minimatch": "^3.0.4",
     "node-sass": "^4.13.1",
     "nuxt-sass-resources-loader": "^2.0.5",
     "sass-loader": "^8.0.2",
