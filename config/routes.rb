@@ -4,7 +4,8 @@ Rails.application.routes.draw do
       resources :users, only: [:show]
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {
         registrations: 'api/v1/auth/registrations',
-        sessions: 'api/v1/auth/sessions'
+        sessions: 'api/v1/auth/sessions',
+        omniauth_callbacks: "api/v1/auth/omniauth_callbacks"
       }
     end
   end
