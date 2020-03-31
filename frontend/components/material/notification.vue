@@ -40,7 +40,6 @@ export default {
     }
   },
   mounted() {
-    const self = this
     setTimeout( () => {
       this.hidden = true
     }, 3000);
