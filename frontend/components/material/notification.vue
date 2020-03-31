@@ -6,7 +6,7 @@
     color="info"
     class="v-alert--notification mb-3"
     v-if="!hidden"
->
+  >
   {{ text }}
     <slot />
   </v-alert>
