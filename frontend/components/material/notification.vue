@@ -3,8 +3,11 @@
     v-bind="$attrs"
     :class="[`elevation-${elevation}`]"
     :value="value"
-    class="v-alert--notification"
+    color="info"
+    class="v-alert--notification mb-3"
+    v-if="!hidden"
 >
+  {{ text }}
     <slot />
   </v-alert>
 </template>
@@ -21,7 +24,26 @@ export default {
     value: {
       type: Boolean,
       default: true
+    },
+    text: {
+        type: String,
+        default: ''
     }
+  },
+  data: () => ({
+      hidden: false
+  }),
+  methods: {
+    //TODO: ボタンを押したらフラッシュを消すようにする
+    del() {
+      this.hidden = true
+    }
+  },
+  mounted() {
+    const self = this
+    setTimeout( () => {
+      this.hidden = true
+    }, 3000);
   }
 }
 </script>
