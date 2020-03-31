@@ -9,3 +9,7 @@ npm-debug.log
 
 # # Nuxt generate
 dist
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
