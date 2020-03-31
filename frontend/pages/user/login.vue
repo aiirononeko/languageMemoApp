@@ -40,7 +40,6 @@
 
 <script>
 const Cookie = process.client ? require("js-cookie") : undefined;
-import { mapActions } from "vuex";
 
 export default {
   data: () => ({
@@ -59,8 +58,6 @@ export default {
     }
   }),
   methods: {
-    ...mapActions({
-      showFlashMessage: "showFlashMessage",
       async login(e) {
         try {
           await this.$store.dispatch("login", {
@@ -75,7 +72,6 @@ export default {
           console.log(this.formError);
         }
       }
-    })
   },
   watch: {
     email: function(e) {
