@@ -70,7 +70,6 @@ export default {
           Cookie.set("access-token", this.$store.state.access_token);
           Cookie.set("client", this.$store.state.client);
           Cookie.set("uid", this.$store.state.uid);
-          this.showFlashMessage({ text: "投稿完了" });
           this.$router.push(`/user/${this.$store.state.id}`);
         } catch (e) {
           console.log(this.formError);

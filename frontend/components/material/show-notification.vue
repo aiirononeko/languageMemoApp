@@ -3,9 +3,9 @@
   <notification
     class="mb-3"
     color="info"
-    v-if="$store.state.text"
+    v-if="text"
     >
-    {{ $store.state.text }}
+    {{ text }}
   </notification>  
   <!-- <button v-on:click="del">隠す</button> -->
 </div>
@@ -18,15 +18,21 @@ import notification from '~/components/material/notification'
     components: {
       notification
     },
+    props: {
+      text: {
+        type: String,
+        default: ''
+      }
+    },
     methods: {
         del() {
-          this.$store.dispatch('showFlashMessage', {text: null})
+          this.text = null
         }
     },
     mounted() {
       const self = this
       setTimeout( () => {
-        self.$store.dispatch('showFlashMessage',{text: null})
+        this.text = null
       }, 3000);
     }
   }
