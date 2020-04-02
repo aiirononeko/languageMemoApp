@@ -17,6 +17,13 @@ jest.mock('axios', () => ({
     }
 
     return Promise.resolve(mockAxiosGetResult);
+  }),
+  delete: jest.fn(() => {
+    if (mockAxiosError) {
+      return Promise.reject(mockAxiosGetResult);
+    }
+
+    return Promise.resolve(mockAxiosGetResult);
   })
 }));
 
@@ -85,6 +92,7 @@ describe('store/index.js', () => {
 
     beforeEach(() => {
       store.$axios = axios; // @nuxtjs/axiosの代わりにaxiosを注入
+      mockAxiosError = false; // テストをする前に、falseに戻す。
     });
 
     it('loginできる(正常系)', async () => {
@@ -129,6 +137,68 @@ describe('store/index.js', () => {
 
       await expect(
         store.dispatch('login', { email: 'hoge@example.com', password: 'password'})
+      ).rejects.toThrow("Bad credentials");
+    })
+
+    it('logoutできる(正常系)', async () => {
+      const res = {
+        headers: {
+          "access-token": "2RvvBof6HGQ-C__vaMQ5Wq",
+          uid: "hoge@example.com",
+          client: "NQqnvItfl_4F9V_l2gzIla",
+        },
+        data: { data: { id: "1" } }
+      };
+      store.commit('setUser', res);
+
+      mockAxiosGetResult = {
+        success: "true"
+      };
+
+      await store.dispatch('logout', {
+        access_token: "2RvvBof6HGQ-C__vaMQ5Wq",
+        client: "NQqnvItfl_4F9V_l2gzIla",
+        uid: 'hoge@example.com'
+      });
+
+      expect(store.getters.access_token).toBeNull();
+      expect(store.getters.client).toBeNull();
+      expect(store.getters.id).toBeNull();
+      expect(store.getters.uid).toBeNull();
+      expect(store.getters.isAuthenticated).toBeFalsy();
+    })
+
+    it('logoutできない(異常系:Internal Server Error)', async () => {
+      mockAxiosError = true;
+      mockAxiosGetResult= {
+        reponse: {
+          status: 500
+        }
+      };
+
+      await expect(
+        store.dispatch('logout', {
+          access_token: "2RvvBof6HGQ-C__vaMQ5Wq",
+          client: "NQqnvItfl_4F9V_l2gzIla",
+          uid: 'hoge@example.com'
+        })
+      ).rejects.toThrow("Internal Server Error");
+    })
+
+    it('logoutできない(異常系:Bad credentials)', async () => {
+      mockAxiosError = true;
+      mockAxiosGetResult= {
+        response: {
+          status: 401
+        }
+      };
+
+      await expect(
+        store.dispatch('logout', {
+          access_token: "2RvvBof6HGQ-C__vaMQ5Wq",
+          client: "NQqnvItfl_4F9V_l2gzIla",
+          uid: 'hoge@example.com'
+        })
       ).rejects.toThrow("Bad credentials");
     })
   })
