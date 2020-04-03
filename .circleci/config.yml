@@ -58,7 +58,25 @@ jobs:
           path: /tmp/test-results
           destination: test-results
 
-      # run rubocop
       - run:
-          name: run rubocop
+          name: rubocopで静的解析
           command: bundle exec rubocop
+
+      - run:
+        name: Docker Compose をインストール
+        command: |
+          curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+          chmod +x ~/docker-compose
+          sudo mv ~/docker-compose /usr/local/bin/docker-compose
+
+      - run:
+        name: コンテナ起動＆動作確認
+        command: |
+          set -x
+          docker-compose up -d
+
+      # - run:
+      #   name: Dockerイメージビルド＆タグ付け
+      #   command: |
+      #     TAG="latest"
+      #     docker build -t 629313446087.dkr.ecr.ap-northeast-1.amazonaws.com/poeta_api:$TAG .
