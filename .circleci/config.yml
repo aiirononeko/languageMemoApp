@@ -1,19 +1,11 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/ruby:2.5.3-node-browsers
         environment:
           - BUNDLER_VERSION: 2.0.2
           - RAILS_ENV: 'test'
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/mysql:5.7
         environment:
           - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
@@ -24,7 +16,6 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
@@ -68,6 +59,6 @@ jobs:
           destination: test-results
 
       # run rubocop
-      # - run:
-      #     name: run rubocop
-      #     command: bundle exec rubocop
+      - run:
+          name: run rubocop
+          command: bundle exec rubocop
