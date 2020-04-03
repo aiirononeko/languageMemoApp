@@ -62,6 +62,8 @@ jobs:
       #     name: rubocopで静的解析
       #     command: bundle exec rubocop
 
+      - setup_remote_docker
+
       - run:
           name: Install Docker client
           command: |
