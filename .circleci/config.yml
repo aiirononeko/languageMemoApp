@@ -64,16 +64,16 @@ jobs:
 
       - run:
         name: Docker Compose をインストール
-        command: |
-          curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-          chmod +x ~/docker-compose
-          sudo mv ~/docker-compose /usr/local/bin/docker-compose
+        command:
+          - curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+          - chmod +x ~/docker-compose
+          - sudo mv ~/docker-compose /usr/local/bin/docker-compose
 
       - run:
         name: コンテナ起動＆動作確認
-        command: |
-          set -x
-          docker-compose up -d
+        command:
+          - set -x
+          - docker-compose up -d
 
       # - run:
       #   name: Dockerイメージビルド＆タグ付け
