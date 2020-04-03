@@ -58,9 +58,9 @@ jobs:
           path: /tmp/test-results
           destination: test-results
 
-      - run:
-          name: rubocopで静的解析
-          command: bundle exec rubocop
+      # - run:
+      #     name: rubocopで静的解析
+      #     command: bundle exec rubocop
 
       - run:
           name: Install Docker Compose
