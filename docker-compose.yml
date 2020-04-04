@@ -1,7 +1,5 @@
 version: "3"
 services:
-
-  # ローカル用DBコンテナ
   db:
     image: mysql:5.7
     environment:
