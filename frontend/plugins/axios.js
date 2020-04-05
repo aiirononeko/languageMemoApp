@@ -1,18 +1,7 @@
-import axios from 'axios'
-export default axios.create({
- baseURL: process.env.baseUrl
-})
-
-// TODO: 現状「pages>user>_id.vue」でヘッダーをセットしているので、どのリクエストでもセットするようにする
-
-// const Cookie = process.client ? require('js-cookie') : undefined
-
-// export default function({$axios}) {
-//     $axios.interceptors.request.use( config => {
-//         console.log(config)
-//         config.headers.common["access-token"] = Cookie.get("access-token")
-//         config.headers.common["client"] = Cookie.get("client")
-//         config.headers.common["uid"] = Cookie.get("uid")
-//         return config
-//     })
-// }
+export default function({ app: { $axios }, store }) {
+  $axios.onRequest(config => {
+    $axios.setHeader("access-token", store.state.access_token);
+    $axios.setHeader("uid", store.state.uid);
+    $axios.setHeader("client", store.state.client);
+  })
+}
