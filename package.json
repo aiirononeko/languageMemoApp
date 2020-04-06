@@ -1,7 +1,0 @@
-{
-  "name": "languageMemoApp",
-  "private": true,
-  "dependencies": {
-    "@nuxtjs/axios": "^5.9.5"
-  }
-}
