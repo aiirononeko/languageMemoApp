@@ -52,28 +52,28 @@ RSpec.describe User, type: :model do
   end
 
   describe "validates length" do
-    context "パスワードが８文字以下の場合" do
+    context "パスワードが8文字未満の場合" do
       let(:user) { build(:user, password: 'aaaa') }
       it "エラーになる" do
         user.valid?
         expect(user.errors.messages[:password]).to include "is too short (minimum is 8 characters)"
       end
     end
-    context "名前が50文字以上の場合" do
+    context "名前が51文字以上の場合" do
       let(:user) { build(:user, name: 'a' * 51) }
       it "エラーになる" do
         user.valid?
         expect(user.errors.messages[:name]).to include "is too long (maximum is 50 characters)"
       end
     end
-    context "住所が30文字以上の場合" do
+    context "住所が31文字以上の場合" do
       let(:user) { build(:user, address: 'a' * 31) }
       it "エラーになる" do
         user.valid?
         expect(user.errors.messages[:address]).to include "is too long (maximum is 30 characters)"
       end
     end
-    context "ユーザーネームが30文字以上の場合" do
+    context "ユーザーネームが31文字以上の場合" do
       let(:user) { build(:user, username: 'a' * 31) }
       it "エラーになる" do
         user.valid?
@@ -83,7 +83,7 @@ RSpec.describe User, type: :model do
   end
   describe "validates regular expression" do
     context "パスワードが半角英数字とアンダーバーのみの場合" do
-      let(:user) { build(:user, password: 'aaa_aaaa') }
+      let(:user) { build(:user, password: 'pass_word') }
       it "正常に保存できる" do
         expect(user).to be_valid
       end
@@ -100,7 +100,7 @@ RSpec.describe User, type: :model do
     context "ユーザーネームが半角英数字とアンダーバーのみの場合" do
       let(:user) { create(:user) }
       it "正常に更新できる" do
-        user.update(username: 'aaa_aaaa')
+        user.update(username: 'test_name')
         expect(user).to be_valid
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe User, type: :model do
     context "ユーザーネームが半角英数字とアンダーバー以外を含む場合" do
       let(:user) { create(:user) }
       it "正常に更新できない" do
-        user.update(username: 'aaaあaaaa')
+        user.update(username: 'a' * 7 + 'あ')
         expect(user.errors.messages[:username]).to include "is invalid"
       end
     end
