@@ -62,23 +62,23 @@ jobs:
       #     name: rubocopで静的解析
       #     command: bundle exec rubocop
 
-      - setup_remote_docker
-
-      - run:
-          name: Install Docker client
-          command: |
-            set -x
-            VER="17.03.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            chmod +x /tmp/docker-$VER.tgz
-            sudo mv /tmp/docker/* /usr/bin
-
       - run: cd frontend
 
       - run:
           name: フロントエンドのテスト(Jest)
           command: npm run test
+
+      # - setup_remote_docker
+
+      # - run:
+      #     name: Install Docker client
+      #     command: |
+      #       set -x
+      #       VER="17.03.0-ce"
+      #       curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+      #       tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+      #       chmod +x /tmp/docker-$VER.tgz
+      #       sudo mv /tmp/docker/* /usr/bin
 
       # - run:
       #     name: Install Docker Compose
