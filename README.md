@@ -71,5 +71,4 @@ docker-compose exec api rails db:migrate
 npm install -g aglio (aglioがインストールされていなければ)  
 aglio -i poeta_api.apib -o poeta_api.html (html形式に整形)
 ~~~  
-- DB関連の変更でmigrateやrollbackの必要があれば、具体的にコマンドを示してslackでメンバーに共有する。
 - ブランチをmasterにpush、レビューはslackでバックエンド担当の別メンバーにお願いする。
