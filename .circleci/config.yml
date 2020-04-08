@@ -74,6 +74,14 @@ jobs:
             chmod +x /tmp/docker-$VER.tgz
             sudo mv /tmp/docker/* /usr/bin
 
+    working_directory: ~/languageMemoApp/frontend
+    steps:
+      - checkout
+
+      - run:
+          name: フロントエンドのテスト(Jest)
+          command: npm run test
+
       # - run:
       #     name: Install Docker Compose
       #     command: |
