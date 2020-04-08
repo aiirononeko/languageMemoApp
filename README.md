@@ -1,4 +1,4 @@
-# 要件定義
+# README
 
 ### 全体として
 
@@ -17,7 +17,7 @@
 ・Instagram 認証（優先度低）
 ・FaceBook 認証（優先度低）
 
-### メモ機能関連 OGO
+### 投稿機能関連 クレヘイ
 
 ・メモ作成機能（マークダウン）
 ・メモ編集機能
@@ -33,6 +33,7 @@
 
 create アクションなどにとばして、そこで 1.入力されたコードをファイル(code.rb)に保存
 2.Dockerfile に書き込む(code.rb をコンテナ内に持っていく) 3.コンテナ起動（volume オプションをつけて起動） 4.コンテナ上でコード実行（実行結果をファイル(result.txt)に書き込む（リダイレクトと言う） 5.コンテナとイメージ破棄 6.ホスト側に保存された実行結果をインスタンス変数に格納して画面に出力する
+
 
 # Docker コンテナ起動方法
 
@@ -60,3 +61,15 @@ docker-compose exec api rails db:create
 
 docker-compose exec api rails db:migrate
 ```
+## バックエンド開発フロー
+
+- Repsonaに実行するタスクを貼る
+- タスクごとにブランチを切って作業する
+- その作業でエンドポイントが増えたらその都度API仕様書に追記する、記法が独特なので既存コードをコピペして
+文面や値だけ変えるのが分かりやすい。追記が終わったら最後にHTML形式に整形する。
+~~~  
+npm install -g aglio (aglioがインストールされていなければ)  
+aglio -i poeta_api.apib -o poeta_api.html (html形式に整形)
+~~~  
+- DB関連の変更でmigrateやrollbackの必要があれば、具体的にコマンドを示してslackでメンバーに共有する。
+- ブランチをmasterにpush、レビューはslackでバックエンド担当の別メンバーにお願いする。
