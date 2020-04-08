@@ -74,9 +74,7 @@ jobs:
             chmod +x /tmp/docker-$VER.tgz
             sudo mv /tmp/docker/* /usr/bin
 
-    working_directory: ~/languageMemoApp/frontend
-    steps:
-      - checkout
+      - run: cd frontend
 
       - run:
           name: フロントエンドのテスト(Jest)
