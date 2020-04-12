@@ -82,14 +82,14 @@ RSpec.describe User, type: :model do
     end
   end
   describe "validates regular expression" do
-    context "パスワードが半角英数字とアンダーバーのみの場合" do
-      let(:user) { build(:user, password: 'pass_word') }
+    context "パスワードが制御文字と半角を除いたASCII文字の場合" do
+      let(:user) { build(:user, password: 'pass_*&^%word') }
       it "正常に保存できる" do
         expect(user).to be_valid
       end
     end
 
-    context "パスワードが半角英数字とアンダーバー以外を含む場合" do
+    context "パスワードが制御文字と半角を除いたASCII文字以外を含む場合" do
       let(:user) { build(:user, password: 'a' * 7 + 'あ') }
       it "エラーになる" do
         user.valid?
