@@ -1,19 +1,11 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/ruby:2.5.3-node-browsers
         environment:
           - BUNDLER_VERSION: 2.0.2
           - RAILS_ENV: 'test'
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/mysql:5.7
         environment:
           - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
@@ -24,7 +16,6 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
@@ -67,7 +58,38 @@ jobs:
           path: /tmp/test-results
           destination: test-results
 
-      # run rubocop
       # - run:
-      #     name: run rubocop
+      #     name: rubocopで静的解析
       #     command: bundle exec rubocop
+
+      - setup_remote_docker
+
+      - run:
+          name: Install Docker client
+          command: |
+            set -x
+            VER="17.03.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            chmod +x /tmp/docker-$VER.tgz
+            sudo mv /tmp/docker/* /usr/bin
+
+      # - run:
+      #     name: Install Docker Compose
+      #     command: |
+      #       curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+      #       chmod +x ~/docker-compose
+      #       sudo mv ~/docker-compose /usr/local/bin/docker-compose
+
+      # - run:
+      #     name: docker-compose up
+      #     command: |
+      #       set -x
+      #       docker-compose up --build -d
+
+      # - run:
+      #     name: docker-compose stop
+      #     command: |
+      #       set -x
+      #       docker-compose stop
+
