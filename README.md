@@ -76,7 +76,8 @@ docker-compose exec api rails db:create
 docker-compose exec api rails db:migrate
 ```
 
-※失敗したとき、環境構築中に失敗したときは以下を参照、追記することを推奨
+※環境構築中に失敗したときは以下を参照、追記することを推奨  
+
 [Windows Home環境でのDocker](https://github.com/aiirononeko/languageMemoApp/issues/80)
 
 ## バックエンド開発フロー
