@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <p>{{ uid }} : {{ access_token }} : {{ isAuthenticated }}</p>
+      <p>{{ uid }} : {{ accessToken }} : {{ isAuthenticated }}</p>
       <app-logo/>
       <h1 class="title">
         frontend
@@ -32,8 +32,8 @@ export default {
   },
 
   computed: {
-    access_token() {
-      return this.$store.getters["authentication/access_token"];
+    accessToken() {
+      return this.$store.getters["authentication/accessToken"];
     },
 
     isAuthenticated() {
