@@ -18,7 +18,7 @@ describe('store/index.js', () => {
 
     it('nuxtServerInit(正常系)', () => {
       // TODO: cookieparserのテストを書く
-      store.dispatch('nuxtServerInit', { req: null })
+      // store.dispatch('nuxtServerInit', { req: null })
     })
   })
 });
