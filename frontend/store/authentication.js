@@ -54,9 +54,11 @@ export const actions = {
       commit("setUser", res);
 
       // Cookieにセット
-      Cookie.set("access-token", getters.accessToken);
-      Cookie.set("client", getters.client);
-      Cookie.set("uid", getters.uid);
+      if (Cookie !== undefined) {
+        Cookie.set("access-token", getters.accessToken);
+        Cookie.set("client", getters.client);
+        Cookie.set("uid", getters.uid);
+      }
 
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -67,11 +69,11 @@ export const actions = {
   },
 
   // ログアウト
-  async logout ({ commit }) {
+  async logout ({ commit, getters }) {
     try {
-      const accessToken = Cookie.get("access-token");
-      const client = Cookie.get("client");
-      const uid = Cookie.get("uid");
+      const accessToken = getters.accessToken;
+      const client = getters.client;
+      const uid = getters.uid;
 
       await this.$axios.delete(
         `/api/v1/auth/sign_out`,
@@ -85,9 +87,12 @@ export const actions = {
       );
 
       commit("clearUser");
-      Cookie.remove("access-token");
-      Cookie.remove("client");
-      Cookie.remove("uid");
+
+      if (Cookie !== undefined) {
+        Cookie.remove("access-token");
+        Cookie.remove("client");
+        Cookie.remove("uid");
+      }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         throw new Error("Bad credentials");
