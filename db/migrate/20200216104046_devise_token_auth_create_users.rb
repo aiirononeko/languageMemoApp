@@ -36,7 +36,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.2]
       # t.datetime :locked_at
 
       ## User Info
-      t.string :name, null: false, limit: 50
+      t.string :name, limit: 50
       t.string :nickname
       t.string :image
       t.string :email
