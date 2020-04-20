@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_03_28_162340) do
     t.bigint "user_id", null: false
     t.string "name", null: false
     t.text "content", null: false
-    t.boolean "public", default: false, null: false, comment: "公開or非公開"
+    t.boolean "public", default: true, null: false, comment: "公開or非公開"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
