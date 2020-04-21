@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2020_03_28_162340) do
 
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "name", null: false
+    t.string "name", limit: 100, null: false
     t.text "content", null: false
     t.boolean "public", default: true, null: false, comment: "公開or非公開"
     t.datetime "created_at", null: false
