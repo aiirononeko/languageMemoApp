@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <p>{{ $store.state.uid }} : {{ $store.state.access_token }} : {{ $store.state.isAuthenticated }}</p>
+      <p>{{ uid }} : {{ accessToken }} : {{ isAuthenticated }}</p>
       <app-logo/>
       <h1 class="title">
         frontend
@@ -24,13 +24,26 @@
 </template>
 
 <script>
-const Cookie = process.client ? require('js-cookie') : undefined
 import AppLogo from '~/components/AppLogo.vue'
 
 export default {
   components: {
     AppLogo
   },
+
+  computed: {
+    accessToken() {
+      return this.$store.getters["authentication/accessToken"];
+    },
+
+    isAuthenticated() {
+      return this.$store.getters["authentication/isAuthenticated"];
+    },
+
+    uid() {
+      return this.$store.getters["authentication/uid"];
+    },
+  }
 }
 </script>
 
