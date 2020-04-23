@@ -21,3 +21,16 @@ $ npm run generate
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
 
+## Storybook
+
+``` bash
+# serve with hot reload at localhost:6006
+$ npm run storybook
+```
+
+## Test
+
+``` bash
+# jest test
+$ npm run test
+```
