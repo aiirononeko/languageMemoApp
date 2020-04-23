@@ -30,7 +30,7 @@ export const getExt = (p) => extname(basename(p)) || null
  * @param { String } p パス
  * @returns { String|null }
  */
-export const getDirname = (p) => isDir(p) ? getLastname(p) : null
+export const getDirname = (p) => isDir(p) ? basename(p) : null
 
 /**
  * ファイル名を取得する
@@ -39,16 +39,7 @@ export const getDirname = (p) => isDir(p) ? getLastname(p) : null
  * @returns { String }
  * @example index.html index.php dist.js .gitignore
  */
-export const getFilename = (p) => isFile(p) ? getLastname(p) : null
-
-/**
- * pathの最後の部分を取得する
- *
- * @param { String } p パス
- * @returns { String }
- * @example index.html index.php dist.js .gitignore dir hogehoge
- */
-export const getLastname = (p) => basename(p)
+export const getFilename = (p) => isFile(p) ? basename(p) : null
 
 /**
  * フォルダであるか
