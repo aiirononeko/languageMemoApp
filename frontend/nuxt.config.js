@@ -1,4 +1,10 @@
+require('dotenv').config();
+
 module.exports = {
+  env: {
+    baseUrl: process.env.BASE_URL || "http://localhost:3000"
+  },
+
   /*
    ** Headers of the page
    */
@@ -11,10 +17,12 @@ module.exports = {
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
+
   /*
    ** Customize the progress bar color
    */
   loading: { color: "#3B8070" },
+
   /*
    ** modules
    */
@@ -24,13 +32,18 @@ module.exports = {
     "@nuxtjs/auth",
     ["nuxt-sass-resources-loader", ["~/assets/sass/variable.scss"]]
   ],
-  axios: {
-    baseURL: "http://localhost:3000"
-  },
-  plugins: [
-    '~/plugins/axios'
-  ],
+
+  buildModules: ["@nuxtjs/dotenv"],
+
+  plugins: ["~/plugins/axios"],
+
   css: [{ src: "~/assets/sass/common.scss", lang: "scss" }],
+
+  axios: {
+    // axios options
+    baseURL: process.env.BASE_URL || "http://localhost:3000"
+  },
+
   /*
    ** Build configuration
    */
@@ -48,8 +61,5 @@ module.exports = {
         });
       }
     }
-  },
-  env: {
-    baseUrl: process.env.BASE_URL || "http://localhost:3000"
   }
 };

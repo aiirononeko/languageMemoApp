@@ -11,7 +11,6 @@ poetaのAPI仕様書
 
 + Request
   + Attributes
-      + name: `poeta` (string) - ユーザー名
       + email: `poeta@example.com` (string, required) - メールアドレス
       + password: `password` (string, required) - パスワード
 
@@ -21,9 +20,10 @@ poetaのAPI仕様書
             + id: 1,
             + type: users,
             + attributes
-                + name: `poeta`,
+                + name: `null`,
                 + profile: `null`,
                 + address: `null`,
+                + username: `null`,
                 + image: `null`,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
@@ -66,6 +66,7 @@ poetaのAPI仕様書
     + Attributes
         + name: ``
         + profile:``
+        + username:``
         + address:``
         + image:``
 
@@ -78,6 +79,7 @@ poetaのAPI仕様書
                 + name: `poeta`,
                 + profile: `null`,
                 + address: `null`,
+                + username: `null`,
                 + image: `null`,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
@@ -105,6 +107,7 @@ poetaのAPI仕様書
                 + name: `poeta`,
                 + profile: `null`,
                 + address: `null`,
+                + username: `null`,
                 + image: `null`,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
@@ -130,6 +133,7 @@ poetaのAPI仕様書
                 + name: `poeta`,
                 + profile: `null`,
                 + address: `null`,
+                + username: `null`,
                 + image: `null`,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
@@ -153,6 +157,7 @@ poetaのAPI仕様書
                 + name: `poeta`,
                 + profile: `null`,
                 + address: `null`,
+                + username: `null`,
                 + image: `null`,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
@@ -184,6 +189,7 @@ poetaのAPI仕様書
                 + name: null,
                 + profile: null,
                 + address: null,
+                + username: null,
                 + image: null,
                 + created_at: ``,
                 + updated_at: ``
@@ -245,6 +251,7 @@ poetaのAPI仕様書
                   + profile: null,
                   + address: null,
                   + image: null,
+                  + username: null,
                   + created_at: ``,
                   + updated_at: ``
       + message: Your password has been successfully updated.
