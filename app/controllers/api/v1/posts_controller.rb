@@ -17,7 +17,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.save
       render json: @post, serializer: PostSerializer
     else
-      render json: { success: false, errors: @post.errors }
+      render json: { status: error, errors: @post.errors }
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.update(post_params)
       render json: @post, serializer: PostSerializer
     else
-      render json: { sucess: false, errors: @post.errors }
+      render json: { status: error, errors: @post.errors }
     end
   end
 
@@ -37,7 +37,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.destroy
       render json: @post, serializer: PostSerializer
     else
-      render json: { sucess: false, errors: @post.errors }
+      render json: { status: error, errors: @post.errors }
     end
   end
 
@@ -53,7 +53,7 @@ class Api::V1::PostsController < ApplicationController
 
   def correct_user?
     return if current_api_v1_user == @post.user
-    render json: { sucess: false,
-                   error: "You don't have the right to access this resource" }
+    render json: { success: false,
+                   errors: ["You don't have the right to access this resource"] }
   end
 end
