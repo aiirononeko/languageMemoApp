@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
 
   validates :name, length: { maximum: 50 }
   validates :address, length: { maximum: 30 }
+
+  has_many :posts, dependent: :destroy
+
   validates :username, length: { maximum: 30 }, uniqueness: true, allow_nil: true, presence: true, format: { with: VALID_USERNAME_REGEX }
   validates :password, presence: true, format: { with: VALID_PASSWORD_REGEX }, allow_nil: true
 end
