@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import BaseContainer from '~/components/organisms/containers/BaseContainer'
+import BaseContainer from '~/components/molecules/containers/BaseContainer'
 
 export default {
   components: {
