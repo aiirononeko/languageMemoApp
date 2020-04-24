@@ -27,4 +27,36 @@ module OmniauthMocks
       }
     })
   end
+
+  def github_mock
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
+      "provider" => "github",
+      "uid" => "123434",
+      "info" => {
+        "name" => "Mock Github",
+        "image" => "http://mock_image_url.com",
+        "location" => "",
+        "urls" => {
+          "Github" => "https://github.com/MockUser1234",
+          "Website" => ""
+        }
+      }
+    })
+  end
+
+  def google_mock
+    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+      "provider" => "google_oauth2",
+      "uid" => "123478",
+      "info" => {
+        "name" => "Mock Google",
+        "image" => "http://mock_image_url.com",
+        "location" => "",
+        "urls" => {
+          "Google" => "https://google.com/MockUser1234",
+          "Website" => ""
+        }
+      }
+    })
+  end
 end
