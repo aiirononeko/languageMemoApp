@@ -1,10 +1,14 @@
 <template>
-  <h1>今日学んだことを記録しよう</h1>
+  <about-index-template />
 </template>
 
 <script>
-export default {
+import AboutIndexTemplate from '~/components/templates/AboutIndexTemplate'
 
+export default {
+  components: {
+    AboutIndexTemplate
+  }
 }
 </script>
 
