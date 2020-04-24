@@ -1,9 +1,17 @@
 <template>
-  <h1>ユーザーIDを変更してください。</h1>
+  <div>
+    <signin-enterusername-template />
+  </div>
 </template>
 
 <script>
+import SigninEnterusernameTemplate from '~/components/templates/SigninEnterusernameTemplate'
+
 export default {
+  components: {
+    SigninEnterusernameTemplate
+  },
+
   middleware: "authenticated"
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <!-- fileのバリデーションを追加したい -->
+  <!-- TODO: 画像のバリデーションを追加したい -->
   <v-file-input />
 </template>
 
