@@ -1,7 +1,7 @@
 <template>
   <base-container>
     <v-row justify="center">
-      <v-col>
+      <v-col cols="12">
         <slot />
       </v-col>
     </v-row>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import BaseContainer from '~/components/organisms/containers/BaseContainer'
+import BaseContainer from '~/components/molecules/containers/BaseContainer'
 
 export default {
   components: {
