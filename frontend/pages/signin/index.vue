@@ -1,10 +1,16 @@
 <template>
-  <h1>ログイン</h1>
+  <div>
+    <signin-template />
+  </div>
 </template>
 
 <script>
-export default {
+import SigninTemplate from '~/components/templates/SigninTemplate'
 
+export default {
+  components: {
+    SigninTemplate
+  }
 }
 </script>
 
