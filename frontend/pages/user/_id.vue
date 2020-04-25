@@ -6,13 +6,13 @@
       <nuxt-link to="/user/edit/1"><p>編集する</p></nuxt-link>
     </div>
     <div class="cards">
-      <div class="card"></div>
+      <div class="card"/>
     </div>
   </div>
 </template>
 
 <script>
-import LoginSuccessNotification from "~/components/organisms/notifications/LoginSuccessNotification";
+import LoginSuccessNotification from "~/components/organisms/notifications/LoginSuccessNotification"
 
 export default {
   components: {
@@ -23,13 +23,13 @@ export default {
 
   async asyncData({ $axios, params }) {
     try {
-      const { data } = await $axios.$get(`/api/v1/users/${params.id}`);
-      return { data };
+      const { data } = await $axios.$get(`/api/v1/users/${params.id}`)
+      return { data }
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
   },
-};
+}
 </script>
 
 <style scoped lang="scss">

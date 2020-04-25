@@ -12,7 +12,7 @@ export default {
         padding: '3px 10px',
         margin: 10,
       },
-    };
+    }
   },
 
   template: `
@@ -23,7 +23,7 @@ export default {
 
   methods: {
     onClick() {
-      this.$emit('click');
+      this.$emit('click')
     },
   },
-};
+}
