@@ -1,9 +1,17 @@
 <template>
-  <h1>プロフィール編集</h1>
+  <div>
+    <setting-profile-template />
+  </div>
 </template>
 
 <script>
+import SettingProfileTemplate from '~/components/templates/SettingProfileTemplate'
+
 export default {
+  components: {
+    SettingProfileTemplate
+  },
+
   middleware: "authenticated"
 }
 </script>
