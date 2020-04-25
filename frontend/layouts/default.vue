@@ -131,15 +131,15 @@ export default {
   methods: {
     async logout() {
       try {
-        await this.$store.dispatch("authentication/logout");
+        await this.$store.dispatch("authentication/logout")
 
-        this.$router.push(`/user/login`);
+        this.$router.push(`/user/login`)
       } catch (e) {
-        console.error(e);
+        console.error(e)
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>
