@@ -1,13 +1,13 @@
-import Vuex from 'vuex';
-import * as index from '~/store/index';
-import { createLocalVue } from '@vue/test-utils';
-import cloneDeep from 'lodash.clonedeep';
+import Vuex from 'vuex'
+import * as index from '~/store/index'
+import { createLocalVue } from '@vue/test-utils'
+import cloneDeep from 'lodash.clonedeep'
 
-const localVue = createLocalVue();
-localVue.use(Vuex);
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe('store/index.js', () => {
-  let store;
+  let store
 
   // mockのVueインスタンスを生成
   beforeEach(() => {
@@ -21,4 +21,4 @@ describe('store/index.js', () => {
       // store.dispatch('nuxtServerInit', { req: null })
     })
   })
-});
+})

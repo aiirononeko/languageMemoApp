@@ -1,34 +1,34 @@
-import Vuex from 'vuex';
-import axios from 'axios';
-import * as authentication from '~/store/authentication';
-import { createLocalVue } from '@vue/test-utils';
-import cloneDeep from 'lodash.clonedeep';
+import Vuex from 'vuex'
+import axios from 'axios'
+import * as authentication from '~/store/authentication'
+import { createLocalVue } from '@vue/test-utils'
+import cloneDeep from 'lodash.clonedeep'
 
-const localVue = createLocalVue();
-localVue.use(Vuex);
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 // axiosのmock
-let mockAxiosGetResult; // Axiosで発生させる戻り値
-let mockAxiosError = false; // Errorを発生させるかどうか
+let mockAxiosGetResult // Axiosで発生させる戻り値
+let mockAxiosError = false // Errorを発生させるかどうか
 jest.mock('axios', () => ({
   post: jest.fn(() => {
     if (mockAxiosError) {
-      return Promise.reject(mockAxiosGetResult);
+      return Promise.reject(mockAxiosGetResult)
     }
 
-    return Promise.resolve(mockAxiosGetResult);
+    return Promise.resolve(mockAxiosGetResult)
   }),
   delete: jest.fn(() => {
     if (mockAxiosError) {
-      return Promise.reject(mockAxiosGetResult);
+      return Promise.reject(mockAxiosGetResult)
     }
 
-    return Promise.resolve(mockAxiosGetResult);
+    return Promise.resolve(mockAxiosGetResult)
   })
-}));
+}))
 
 describe('store/authentication.js', () => {
-  let store;
+  let store
 
   // mockのVueインスタンスを生成
   beforeEach(() => {
@@ -37,31 +37,31 @@ describe('store/authentication.js', () => {
 
   describe('mutaions', () => {
     it('setHeaderの正常系', () => {
-      expect(store.getters.accessToken).toBeNull();
-      expect(store.getters.client).toBeNull();
-      expect(store.getters.uid).toBeNull();
-      expect(store.getters.isAuthenticated).toBeFalsy();
+      expect(store.getters.accessToken).toBeNull()
+      expect(store.getters.client).toBeNull()
+      expect(store.getters.uid).toBeNull()
+      expect(store.getters.isAuthenticated).toBeFalsy()
 
       const parsedCookie = {
         "access-token": "2RvvBof6HGQ-C__vaMQ5Wq",
         uid: "hoge@example.com",
         client: "NQqnvItfl_4F9V_l2gzIla",
-      };
+      }
 
-      store.commit('setHeader', { header: parsedCookie, auth_flag: true });
+      store.commit('setHeader', { header: parsedCookie, auth_flag: true })
 
-      expect(store.getters.accessToken).toBe("2RvvBof6HGQ-C__vaMQ5Wq");
-      expect(store.getters.client).toBe("NQqnvItfl_4F9V_l2gzIla");
-      expect(store.getters.uid).toBe("hoge@example.com");
-      expect(store.getters.isAuthenticated).toBeTruthy();
+      expect(store.getters.accessToken).toBe("2RvvBof6HGQ-C__vaMQ5Wq")
+      expect(store.getters.client).toBe("NQqnvItfl_4F9V_l2gzIla")
+      expect(store.getters.uid).toBe("hoge@example.com")
+      expect(store.getters.isAuthenticated).toBeTruthy()
     })
 
     it('setUserとclearUserの正常系', () => {
-      expect(store.getters.accessToken).toBeNull();
-      expect(store.getters.client).toBeNull();
-      expect(store.getters.id).toBeNull();
-      expect(store.getters.uid).toBeNull();
-      expect(store.getters.isAuthenticated).toBeFalsy();
+      expect(store.getters.accessToken).toBeNull()
+      expect(store.getters.client).toBeNull()
+      expect(store.getters.id).toBeNull()
+      expect(store.getters.uid).toBeNull()
+      expect(store.getters.isAuthenticated).toBeFalsy()
 
       const res = {
         headers: {
@@ -70,30 +70,30 @@ describe('store/authentication.js', () => {
           client: "NQqnvItfl_4F9V_l2gzIla",
         },
         data: { data: { id: "1" } }
-      };
-      store.commit('setUser', res);
+      }
+      store.commit('setUser', res)
 
-      expect(store.getters.accessToken).toBe("2RvvBof6HGQ-C__vaMQ5Wq");
-      expect(store.getters.client).toBe("NQqnvItfl_4F9V_l2gzIla");
-      expect(store.getters.id).toBe("1");
-      expect(store.getters.uid).toBe("hoge@example.com");
-      expect(store.getters.isAuthenticated).toBeTruthy();
+      expect(store.getters.accessToken).toBe("2RvvBof6HGQ-C__vaMQ5Wq")
+      expect(store.getters.client).toBe("NQqnvItfl_4F9V_l2gzIla")
+      expect(store.getters.id).toBe("1")
+      expect(store.getters.uid).toBe("hoge@example.com")
+      expect(store.getters.isAuthenticated).toBeTruthy()
 
-      store.commit('clearUser');
-      expect(store.getters.accessToken).toBeNull();
-      expect(store.getters.client).toBeNull();
-      expect(store.getters.id).toBeNull();
-      expect(store.getters.uid).toBeNull();
-      expect(store.getters.isAuthenticated).toBeFalsy();
+      store.commit('clearUser')
+      expect(store.getters.accessToken).toBeNull()
+      expect(store.getters.client).toBeNull()
+      expect(store.getters.id).toBeNull()
+      expect(store.getters.uid).toBeNull()
+      expect(store.getters.isAuthenticated).toBeFalsy()
     })
   })
 
   describe('actions', () => {
 
     beforeEach(() => {
-      store.$axios = axios; // @nuxtjs/axiosの代わりにaxiosを注入
-      mockAxiosError = false; // テストをする前に、falseに戻す。
-    });
+      store.$axios = axios // @nuxtjs/axiosの代わりにaxiosを注入
+      mockAxiosError = false // テストをする前に、falseに戻す。
+    })
 
     it('loginできる(正常系)', async () => {
       mockAxiosGetResult = {
@@ -103,41 +103,41 @@ describe('store/authentication.js', () => {
           client: "NQqnvItfl_4F9V_l2gzIla",
         },
         data: { data: { id: "1" } }
-      };
+      }
 
-      await store.dispatch('login', { email: 'hoge@example.com', password: 'password' });
+      await store.dispatch('login', { email: 'hoge@example.com', password: 'password' })
 
-      expect(store.getters.accessToken).toBe("2RvvBof6HGQ-C__vaMQ5Wq");
-      expect(store.getters.client).toBe("NQqnvItfl_4F9V_l2gzIla");
-      expect(store.getters.id).toBe("1");
-      expect(store.getters.uid).toBe("hoge@example.com");
-      expect(store.getters.isAuthenticated).toBeTruthy();
+      expect(store.getters.accessToken).toBe("2RvvBof6HGQ-C__vaMQ5Wq")
+      expect(store.getters.client).toBe("NQqnvItfl_4F9V_l2gzIla")
+      expect(store.getters.id).toBe("1")
+      expect(store.getters.uid).toBe("hoge@example.com")
+      expect(store.getters.isAuthenticated).toBeTruthy()
     })
 
     it('loginできない(異常系:Internal Server Error)', async () => {
-      mockAxiosError = true;
+      mockAxiosError = true
       mockAxiosGetResult = {
         reponse: {
           status: 500
         }
-      };
+      }
 
       await expect(
         store.dispatch('login', { email: 'hoge@example.com', password: 'password' })
-      ).rejects.toThrow("Internal Server Error");
+      ).rejects.toThrow("Internal Server Error")
     })
 
     it('loginできない(異常系:Bad credentials)', async () => {
-      mockAxiosError = true;
+      mockAxiosError = true
       mockAxiosGetResult = {
         response: {
           status: 401
         }
-      };
+      }
 
       await expect(
         store.dispatch('login', { email: 'hoge@example.com', password: 'password' })
-      ).rejects.toThrow("Bad credentials");
+      ).rejects.toThrow("Bad credentials")
     })
 
     it('logoutできる(正常系)', async () => {
@@ -148,46 +148,46 @@ describe('store/authentication.js', () => {
           client: "NQqnvItfl_4F9V_l2gzIla",
         },
         data: { data: { id: "1" } }
-      };
-      store.commit('setUser', res);
+      }
+      store.commit('setUser', res)
 
       mockAxiosGetResult = {
         success: "true"
-      };
+      }
 
-      await store.dispatch('logout');
+      await store.dispatch('logout')
 
-      expect(store.getters.accessToken).toBeNull();
-      expect(store.getters.client).toBeNull();
-      expect(store.getters.id).toBeNull();
-      expect(store.getters.uid).toBeNull();
-      expect(store.getters.isAuthenticated).toBeFalsy();
+      expect(store.getters.accessToken).toBeNull()
+      expect(store.getters.client).toBeNull()
+      expect(store.getters.id).toBeNull()
+      expect(store.getters.uid).toBeNull()
+      expect(store.getters.isAuthenticated).toBeFalsy()
     })
 
     it('logoutできない(異常系:Internal Server Error)', async () => {
-      mockAxiosError = true;
+      mockAxiosError = true
       mockAxiosGetResult = {
         reponse: {
           status: 500
         }
-      };
+      }
 
       await expect(
         store.dispatch('logout')
-      ).rejects.toThrow("Internal Server Error");
+      ).rejects.toThrow("Internal Server Error")
     })
 
     it('logoutできない(異常系:Bad credentials)', async () => {
-      mockAxiosError = true;
+      mockAxiosError = true
       mockAxiosGetResult = {
         response: {
           status: 401
         }
-      };
+      }
 
       await expect(
         store.dispatch('logout')
-      ).rejects.toThrow("Bad credentials");
+      ).rejects.toThrow("Bad credentials")
     })
   })
-});
+})

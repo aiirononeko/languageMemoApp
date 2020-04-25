@@ -33,15 +33,15 @@ export default {
 
   computed: {
     accessToken() {
-      return this.$store.getters["authentication/accessToken"];
+      return this.$store.getters["authentication/accessToken"]
     },
 
     isAuthenticated() {
-      return this.$store.getters["authentication/isAuthenticated"];
+      return this.$store.getters["authentication/isAuthenticated"]
     },
 
     uid() {
-      return this.$store.getters["authentication/uid"];
+      return this.$store.getters["authentication/uid"]
     },
   }
 }
