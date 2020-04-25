@@ -48,10 +48,10 @@ export default {
     error: [],
     rules: {
       required: value => {
-        return !!value || "入力してください";
+        return !!value || "入力してください"
       },
       min: value => {
-        return value.length >= 8 || "８文字以上入力してください";
+        return value.length >= 8 || "８文字以上入力してください"
       }
     }
   }),
@@ -61,31 +61,31 @@ export default {
           await this.$store.dispatch("authentication/login", {
             email: this.email,
             password: this.password
-          });
+          })
 
-          this.$router.push(`/user/${this.$store.getters["authentication/id"]}`);
+          this.$router.push(`/user/${this.$store.getters["authentication/id"]}`)
         } catch (e) {
-          console.log(this.formError);
+          console.log(this.formError)
         }
       }
   },
   watch: {
     email: function(e) {
       if (this.email && this.password && this.password.length >= 8) {
-        this.isNotValid = false;
+        this.isNotValid = false
       } else {
-        this.isNotValid = true;
+        this.isNotValid = true
       }
     },
     password: function(e) {
       if (this.email && this.password && this.password.length >= 8) {
-        this.isNotValid = false;
+        this.isNotValid = false
       } else {
-        this.isNotValid = true;
+        this.isNotValid = true
       }
     }
   }
-};
+}
 </script>
 
 <style scoped lang="scss"></style>

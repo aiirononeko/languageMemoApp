@@ -66,7 +66,7 @@ export default {
   mounted() {
     setTimeout( () => {
       this.del()
-    }, this.time);
+    }, this.time)
   }
 }
 </script>

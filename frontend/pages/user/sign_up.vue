@@ -57,10 +57,10 @@ export default {
     password: "",
     rules: {
       required: value => {
-        return !!value || "入力してください.";
+        return !!value || "入力してください."
       },
       min: value => {
-        return value.length >= 8 || "８文字以上入力してください";
+        return value.length >= 8 || "８文字以上入力してください"
       }
     }
   }),
@@ -71,41 +71,41 @@ export default {
           name: this.name,
           email: this.email,
           password: this.password
-        });
+        })
 
-        this.$router.push(`/user/confirm`);
+        this.$router.push(`/user/confirm`)
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     },
     checkPassword() {
-      return this.password.length >= 8 && this.password;
+      return this.password.length >= 8 && this.password
     }
   },
   watch: {
     email: function(e) {
       if (this.email && this.checkPassword() && this.name) {
-        this.isNotValid = false;
+        this.isNotValid = false
       } else {
-        this.isNotValid = true;
+        this.isNotValid = true
       }
     },
     password: function(e) {
       if (this.email && this.checkPassword() && this.name) {
-        this.isNotValid = false;
+        this.isNotValid = false
       } else {
-        this.isNotValid = true;
+        this.isNotValid = true
       }
     },
     name: function(e) {
       if (this.email && this.checkPassword() && this.name) {
-        this.isNotValid = false;
+        this.isNotValid = false
       } else {
-        this.isNotValid = true;
+        this.isNotValid = true
       }
     }
   }
-};
+}
 </script>
 
 <style scoped lang="scss"></style>
