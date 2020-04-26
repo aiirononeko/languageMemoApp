@@ -40,17 +40,17 @@ export default {
     profile: "",
     rules: {
       required: value => {
-        return !!value || "入力してください.";
+        return !!value || "入力してください."
       },
       min: value => {
-        return value.length >= 8 || "８文字以上入力してください";
+        return value.length >= 8 || "８文字以上入力してください"
       }
     }
   }),
   created() {
-    this.name = this.info.attributes.name;
-    this.profile = this.info.attributes.profile;
-    this.address = this.info.attributes.address;
+    this.name = this.info.attributes.name
+    this.profile = this.info.attributes.profile
+    this.address = this.info.attributes.address
   },
   methods: {
     async store() {
@@ -59,28 +59,28 @@ export default {
           name: this.name,
           profile: this.profile,
           address: this.address
-        });
+        })
       } catch (e) {
-        console.error(e);
+        console.error(e)
       }
     }
   },
   watch: {
     name: function(e) {
       if (this.name) {
-        this.isNotValid = false;
+        this.isNotValid = false
       } else {
-        this.isNotValid = true;
+        this.isNotValid = true
       }
     }
   },
   async asyncData({ $axios, params }) {
     try {
-      const { data } = await $axios.$get(`/api/v1/auth/edit`);
-      return { info: data };
+      const { data } = await $axios.$get(`/api/v1/auth/edit`)
+      return { info: data }
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
   }
-};
+}
 </script>

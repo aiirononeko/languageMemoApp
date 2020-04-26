@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
+import AppLogo from '~/components/atoms/icons/AppLogo.vue'
 
 export default {
   components: {
@@ -33,15 +33,15 @@ export default {
 
   computed: {
     accessToken() {
-      return this.$store.getters["authentication/accessToken"];
+      return this.$store.getters["authentication/accessToken"]
     },
 
     isAuthenticated() {
-      return this.$store.getters["authentication/isAuthenticated"];
+      return this.$store.getters["authentication/isAuthenticated"]
     },
 
     uid() {
-      return this.$store.getters["authentication/uid"];
+      return this.$store.getters["authentication/uid"]
     },
   }
 }
