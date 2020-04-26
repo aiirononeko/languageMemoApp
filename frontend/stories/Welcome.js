@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-console
-const log = () => console.log('Welcome to storybook!');
+const log = () => console.log('Welcome to storybook!')
 
 export default {
   name: 'welcome',
@@ -44,7 +44,7 @@ export default {
       note: {
         opacity: 0.5,
       },
-    };
+    }
   },
 
   template: `
@@ -114,8 +114,8 @@ export default {
 
   methods: {
     onClick(event) {
-      event.preventDefault();
-      this.showApp();
+      event.preventDefault()
+      this.showApp()
     },
   },
-};
+}

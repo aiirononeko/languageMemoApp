@@ -11,7 +11,7 @@ import { dirname, extname, basename } from 'path'
  */
 export const getDirArr = (p) => {
   p = p.startsWith("/") ? p.slice(1) : p
-  return dirname(p).split("/");
+  return dirname(p).split("/")
 }
 
 /**
