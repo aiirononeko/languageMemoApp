@@ -43,11 +43,11 @@ jobs:
           command: |
             set -x
             docker-compose exec api rspec
-      - run:
-          name: rubocop
-          command: |
-            set -x
-            docker-compose exec api rubocop
+      # - run:
+      #     name: rubocop
+      #     command: |
+      #       set -x
+      #       docker-compose exec api rubocop
       - run:
           name: jest
           command: |
