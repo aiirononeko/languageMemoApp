@@ -15,5 +15,8 @@ RUN apk update && \
 
 ADD frontend .
 
+ADD ./package.json .
+ADD ./package-lock.json .
+
 ENV HOST 0.0.0.0
 EXPOSE 3000
