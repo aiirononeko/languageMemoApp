@@ -42,7 +42,6 @@ jobs:
           command: |
             set -x
             docker-compose exec api rubocop
-    working_directory: ~/languageMemoApp/frontend
       - run:
           name: jest
           command: |
