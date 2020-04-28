@@ -1,36 +1,38 @@
 <template>
-  <header-container>
-    <common-header>
-      <guest-header v-if="isGuset" />
+  <header-container @click="onClick">
+    <v-spacer />
 
-      <login-header v-if="isLogin" />
-    </common-header>
+    <keep-alive>
+      <component :is="getComponentName" />
+    </keep-alive>
   </header-container>
 </template>
 
 <script>
-import CommonHeader from '~/components/organisms/header/CommonHeader'
-import GuestHeader from '~/components/organisms/header/GuestHeader'
+const GuestHeader = () => import('~/components/organisms/header/GuestHeader')
 import HeaderContainer from '~/components/organisms/header/HeaderContainer'
-import LoginHeader from '~/components/organisms/header/LoginHeader'
+const LoginHeader = () => import('~/components/organisms/header/LoginHeader')
 
 export default {
   components: {
-    CommonHeader,
     GuestHeader,
     HeaderContainer,
     LoginHeader
   },
 
   computed: {
-    isLogin() {
-      // TODO: Login済みか判定
-      return false
+    getComponentName() {
+      return this.isLogin ? 'LoginHeader' : 'GuestHeader'
     },
 
-    isGuset() {
-      // TODO: Loginしていないか判定
-      return true
+    isLogin() {
+      return this.$store.getters["authentication/isAuthenticated"]
+    }
+  },
+
+  methods: {
+    onClick() {
+      return this.$emit('click')
     }
   },
 }
