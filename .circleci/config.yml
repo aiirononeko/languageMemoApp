@@ -2,17 +2,45 @@ version: 2
 jobs:
   build:
     docker:
-      # - image: circleci/ruby:2.5.3-node-browsers
-      #   environment:
-      #     - BUNDLER_VERSION: 2.0.2
-      #     - RAILS_ENV: 'test'
-      # - image: circleci/mysql:5.7
-      #   environment:
-      #     - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-      #     - MYSQL_ROOT_HOST: '%'
-      - image: circleci/node:8.15.0-alpine
+      - image: circleci/ruby:2.5.3-node-browsers
+        environment:
+          - BUNDLER_VERSION: 2.0.2
+          - RAILS_ENV: 'test'
+      - image: circleci/mysql:5.7
+        environment:
+          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+          - MYSQL_ROOT_HOST: '%'
+      - image: circleci/node:8.15.0
 
-    # working_directory: ~/languageMemoApp
+    working_directory: ~/languageMemoApp
+
+    steps:
+      - checkout
+
+      - run:
+        name: Install Docker Compose
+        command: |
+          curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+          chmod +x ~/docker-compose
+          sudo mv ~/docker-compose /usr/local/bin/docker-compose
+
+      - run:
+        name: docker-compose up
+        command: |
+          set -x
+          docker-compose up --build -d
+
+      - run:
+        name: testing api
+        command: |
+          mkdir /tmp/test-results
+          TEST_FILES="$(circleci tests glob 'spec/**/*_spec.rb' | circleci tests split --split-by=timings)"
+          docker-compose exec rails_api bin/rspec --format progress \
+                                                                --format RspecJunitFormatter \
+                                                                --out /tmp/test-results/rspec.xml \
+                                                                $TEST_FILES
+
+    # working_directory: ~/languageMemoApp/frontend
 
     # steps:
     #   - checkout
@@ -63,27 +91,6 @@ jobs:
     #   #     name: rubocopで静的解析
     #   #     command: bundle exec rubocop
 
-    # フロントエンドのフロー
-    working_directory: ~/languageMemoApp/frontend
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
-
-      - run: npm install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run: npm test
-
-      # デプロイのフロー
       # - setup_remote_docker
 
       # - run:
