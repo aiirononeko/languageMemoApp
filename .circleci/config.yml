@@ -64,7 +64,7 @@ jobs:
     #   #     command: bundle exec rubocop
 
     # フロントエンドのフロー
-    working_directory: ~/languageMemoApp/frontend
+    working_directory: languageMemoApp/frontend
 
     steps:
       - checkout
