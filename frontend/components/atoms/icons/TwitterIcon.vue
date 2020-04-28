@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <!-- twitter icon  png?? -->
+  <div class="icon-container">
+    <i class="fab fa-twitter icon" />
   </div>
 </template>
 
@@ -10,6 +10,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  .icon-container {
+    height: 28px;
+    width: 28px;
+  }
 
+  .icon {
+    font-size: 28px;
+  }
 </style>
