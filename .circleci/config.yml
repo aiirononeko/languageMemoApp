@@ -3,7 +3,7 @@ jobs:
   build:
     machine:
       image: circleci/classic:edge
-    working_directory: ~/repo
+    working_directory: ~/languageMemoApp
     steps:
       - checkout
       - run:
@@ -36,12 +36,13 @@ jobs:
           name: rspec
           command: |
             set -x
-            docker-compose exec api bin/rspec
+            docker-compose exec api rspec
       - run:
           name: rubocop
           command: |
             set -x
-            docker-compose exec api bin/bundle exec rubocop
+            docker-compose exec api rubocop
+    working_directory: ~/languageMemoApp/frontend
       - run:
           name: jest
           command: |
