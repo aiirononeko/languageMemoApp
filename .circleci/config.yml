@@ -3,7 +3,7 @@ jobs:
   build:
     machine:
       image: circleci/classic:edge
-    working_directory: ~/languageMemoApp
+    working_directory: ~/repo
     steps:
       - checkout
       - run:
@@ -48,6 +48,11 @@ jobs:
       #     command: |
       #       set -x
       #       docker-compose exec api rubocop
+      - run:
+          name: npm install
+          command: |
+            set -x
+            docker-compose exec front npm install
       - run:
           name: jest
           command: |
