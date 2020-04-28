@@ -18,5 +18,6 @@ export default {
 
   .icon {
     font-size: 28px;
+    color: white;
   }
 </style>
