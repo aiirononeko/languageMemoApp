@@ -10,7 +10,7 @@ jobs:
       #   environment:
       #     - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
       #     - MYSQL_ROOT_HOST: '%'
-      - image: circleci/node:8.15.0
+      - image: circleci/node:8.15.0-alpine
 
     # working_directory: ~/languageMemoApp
 
