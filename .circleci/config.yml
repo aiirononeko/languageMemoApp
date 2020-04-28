@@ -64,7 +64,7 @@ jobs:
     #   #     command: bundle exec rubocop
 
       # フロントエンドのフロー
-      working_directory: ~/languageMemoApp/frontend/
+      working_directory: ~/languageMemoApp/frontend
 
       steps:
         - checkout
@@ -84,17 +84,17 @@ jobs:
         - run: npm test
 
       # デプロイのフロー
-      - setup_remote_docker
+      # - setup_remote_docker
 
-      - run:
-          name: Install Docker client
-          command: |
-            set -x
-            VER="17.03.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            chmod +x /tmp/docker-$VER.tgz
-            sudo mv /tmp/docker/* /usr/bin
+      # - run:
+      #     name: Install Docker client
+      #     command: |
+      #       set -x
+      #       VER="17.03.0-ce"
+      #       curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+      #       tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+      #       chmod +x /tmp/docker-$VER.tgz
+      #       sudo mv /tmp/docker/* /usr/bin
 
       # - run:
       #     name: Install Docker Compose
