@@ -63,25 +63,25 @@ jobs:
     #   #     name: rubocopで静的解析
     #   #     command: bundle exec rubocop
 
-      # フロントエンドのフロー
-      working_directory: ~/languageMemoApp/frontend
+    # フロントエンドのフロー
+    working_directory: ~/languageMemoApp/frontend
 
-      steps:
-        - checkout
+    steps:
+      - checkout
 
-        - restore_cache:
-            keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
 
-        - run: npm install
+      - run: npm install
 
-        - save_cache:
-            paths:
-              - node_modules
-            key: v1-dependencies-{{ checksum "package.json" }}
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
 
-        - run: npm test
+      - run: npm test
 
       # デプロイのフロー
       # - setup_remote_docker
