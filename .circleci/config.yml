@@ -51,19 +51,18 @@ jobs:
       - run:
           name: npm install
           command: |
-            cd frontend
             set -x
-            docker-compose exec front npm install
+            docker-compose run front npm install
       - run:
           name: jest
           command: |
             set -x
-            docker-compose exec front npm test
+            docker-compose run front npm test
       - run:
           name: lint
           command: |
             set -x
-            docker-compose exec front npm run lintfix
+            docker-compose run front npm run lintfix
       - run:
           name: docker-compose down
           command: docker-compose down
