@@ -62,6 +62,30 @@ jobs:
       #     name: rubocopで静的解析
       #     command: bundle exec rubocop
 
+      # フロントエンドのフロー
+      docker:
+        - image: circleci/node:8.15.0
+
+      working_directory: ~/languageMemoApp/frontend/
+
+      steps:
+        - checkout
+
+        - restore_cache:
+            keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+
+        - run: npm install
+
+        - save_cache:
+            paths:
+              - node_modules
+            key: v1-dependencies-{{ checksum "package.json" }}
+
+        - run: npm test
+
+      # デプロイのフロー
       - setup_remote_docker
 
       - run:
