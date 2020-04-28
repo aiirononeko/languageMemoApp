@@ -1,95 +1,68 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: circleci/ruby:2.5.3-node-browsers
-        environment:
-          - BUNDLER_VERSION: 2.0.2
-          - RAILS_ENV: 'test'
-      - image: circleci/mysql:5.7
-        environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-          - MYSQL_ROOT_HOST: '%'
-
-    working_directory: ~/languageMemoApp
-
+    machine:
+      image: circleci/classic:edge
+    working_directory: ~/repo
     steps:
       - checkout
-
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
       - run:
-          name: install dependencies
+          name: Install Docker Compose
           command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-
-      - run: mv config/database.yml.ci config/database.yml
-
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
-
-      # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:migrate
-
-      # run tests!
-      - type: shell
-        command: |
-          bundle exec rspec --profile 10 \
-                            --format RspecJunitFormatter \
-                            --out test_results/rspec.xml \
-                            --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
-
-      # - run:
-      #     name: rubocopで静的解析
-      #     command: bundle exec rubocop
-
-      - setup_remote_docker
-
-      - run:
-          name: Install Docker client
+          name: docker-compose up
           command: |
             set -x
-            VER="17.03.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            chmod +x /tmp/docker-$VER.tgz
-            sudo mv /tmp/docker/* /usr/bin
-
+            docker-compose up --build -d
+      - run:
+          name: docker-compose stop
+          command: |
+            set -x
+            docker-compose stop
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up -d
+      - run:
+          name: bundle Install
+          command: |
+            set -x
+            docker-compose exec api bin/bundle install --path=vendor/bundle
+      - run:
+          name: database migration
+          command: |
+            set -x
+            docker-compose exec api bin/rails db:create
+            docker-compose exec api bin/rails db:migrate
+      - run:
+          name: rspec
+          command: |
+            set -x
+            docker-compose exec api rspec
       # - run:
-      #     name: Install Docker Compose
-      #     command: |
-      #       curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-      #       chmod +x ~/docker-compose
-      #       sudo mv ~/docker-compose /usr/local/bin/docker-compose
-
-      # - run:
-      #     name: docker-compose up
+      #     name: rubocop
       #     command: |
       #       set -x
-      #       docker-compose up --build -d
-
-      # - run:
-      #     name: docker-compose stop
-      #     command: |
-      #       set -x
-      #       docker-compose stop
-
+      #       docker-compose exec api rubocop
+      - run:
+          name: npm install
+          command: |
+            set -x
+            docker-compose run front npm install
+      - run:
+          name: jest
+          command: |
+            set -x
+            docker-compose run front npm test
+      - run:
+          name: lint
+          command: |
+            set -x
+            docker-compose run front npm run lintfix
+      - run:
+          name: docker-compose down
+          command: docker-compose down
