@@ -13,7 +13,7 @@ RUN apk update && \
     apk add python && \
     apk add python make g++
 
-COPY frontend .
+ADD frontend .
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
