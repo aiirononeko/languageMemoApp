@@ -1,15 +1,18 @@
 <template>
   <div>
     <!-- ログインしていないユーザーに見せるもの -->
+    <header-action-btn text="ログイン" to="/user/login" />
   </div>
 </template>
 
 <script>
-export default {
+const HeaderActionBtn = () => import('~/components/molecules/btns/HeaderActionBtn')
 
+export default {
+  components: {
+    HeaderActionBtn
+  }
 }
 </script>
 
-<style>
 
-</style>
