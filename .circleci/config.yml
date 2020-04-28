@@ -70,16 +70,16 @@ jobs:
       - checkout
 
       - restore_cache:
-        keys:
+          keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
 
       - run: npm install
 
       - save_cache:
-        paths:
-          - node_modules
-        key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
 
       - run: npm test
 
