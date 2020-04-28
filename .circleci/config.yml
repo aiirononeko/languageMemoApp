@@ -10,6 +10,7 @@ jobs:
         environment:
           - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
           - MYSQL_ROOT_HOST: '%'
+      - image: circleci/node:8.15.0
 
     working_directory: ~/languageMemoApp
 
@@ -63,9 +64,6 @@ jobs:
       #     command: bundle exec rubocop
 
       # フロントエンドのフロー
-      docker:
-        - image: circleci/node:8.15.0
-
       working_directory: ~/languageMemoApp/frontend/
 
       steps:
