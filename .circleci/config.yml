@@ -67,7 +67,7 @@ jobs:
       working_directory: ~/languageMemoApp/frontend/
 
       steps:
-        - checkout
+        - checkout2
 
         - restore_cache:
             keys:
