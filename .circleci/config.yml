@@ -28,19 +28,30 @@ jobs:
             set -x
             docker-compose up -d
       - run:
+          name: bundle Install
+          command: |
+            set -x
+            docker-compose exec api bin/bundle install --path=vendor/bundle
+      - run:
           name: rspec
           command: |
-            mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests glob 'spec/**/*_spec.rb' | circleci tests split --split-by=timings)"
-            docker-compose exec api bin/rspec --format progress \
-                                                                  --format RspecJunitFormatter \
-                                                                  --out /tmp/test-results/rspec.xml \
-                                                                  $TEST_FILES
+            set -x
+            docker-compose exec api bin/rspec
+      - run:
+          name: rubocop
+          command: |
+            set -x
+            docker-compose exec api bin/bundle exec rubocop
       - run:
           name: jest
           command: |
+            set -x
             docker-compose exec front npm test
-      
+      - run:
+          name: lint
+          command: |
+            set -x
+            docker-compose exec front npm run lintfix
       - run:
           name: docker-compose down
           command: docker-compose down
