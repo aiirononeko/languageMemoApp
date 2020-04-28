@@ -1,22 +1,17 @@
-FROM node:8.15.0-alpine
+FROM node:8.15.0
 
 WORKDIR /frontend
 
-RUN apk update && \
-    npm install -g npm && \
+RUN rm -rf /node_modules
+
+RUN npm install && \
     npm install -g @vue/cli && \
-    npm install -g @vue/cli-init \
-    npm install -g @nuxtjs/axios \
-    npm install -g @nuxtjs/auth
+    npm install -g @vue/cli-init && \
+    npm install -g @nuxtjs/axios && \
+    npm install -g @nuxtjs/auth && \
+    npm install -g @nuxtjs/dotenv
 
-RUN apk update && \
-    apk add python && \
-    apk add python make g++
-
-ADD frontend .
-
-ADD ./package.json .
-ADD ./package-lock.json .
+ADD . .
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
