@@ -51,6 +51,7 @@ jobs:
       - run:
           name: npm install
           command: |
+            cd frontend
             set -x
             docker-compose exec front npm install
       - run:
