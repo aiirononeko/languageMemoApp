@@ -28,14 +28,19 @@ jobs:
             set -x
             docker-compose up -d
       - run:
-          name: test
+          name: rspec
           command: |
             mkdir /tmp/test-results
             TEST_FILES="$(circleci tests glob 'spec/**/*_spec.rb' | circleci tests split --split-by=timings)"
-            docker-compose exec rails_api bin/rspec --format progress \
+            docker-compose exec api bin/rspec --format progress \
                                                                   --format RspecJunitFormatter \
                                                                   --out /tmp/test-results/rspec.xml \
                                                                   $TEST_FILES
+      - run:
+          name: jest
+          command: |
+            docker-compose exec front npm test
+      
       - run:
           name: docker-compose down
           command: docker-compose down
