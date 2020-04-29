@@ -1,6 +1,8 @@
 <template>
   <v-list>
-    <component v-for="(data, key) in datas" :is="getComponentName(data)" :key="key" :data="data" />
+    <v-list-item-group color="primary">
+      <component v-for="(data, key) in datas" :is="getComponentName(data)" :key="key" :data="data" />
+    </v-list-item-group>
   </v-list>
 </template>
 
