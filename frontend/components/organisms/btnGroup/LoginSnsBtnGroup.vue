@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex flex-column">
-    <twitter-btn class="mb-4">Twitter</twitter-btn> 
-    <google-btn class="mb-4">Google</google-btn>
-    <github-btn>Github</github-btn>
+    <twitter-btn class="mb-4" to="#">Twitter</twitter-btn> 
+    <google-btn class="mb-4" to="#">Google</google-btn>
+    <github-btn to="#">Github</github-btn>
   </div>
 </template>
 
