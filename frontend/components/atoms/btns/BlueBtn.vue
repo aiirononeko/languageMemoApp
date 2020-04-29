@@ -1,5 +1,5 @@
 <template>
-    <v-btn depressed color="blue accent-4" class="btn" to="to">
+    <v-btn depressed color="blue accent-4" class="btn" :to="to">
         <slot/>
     </v-btn>
 </template>
