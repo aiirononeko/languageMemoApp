@@ -1,6 +1,6 @@
 <template>
   <!-- validationの処理もここに含めたい -->
-  <v-text-filed v-model="valueModel" />
+  <v-text-field v-model="valueModel" />
 </template>
 
 <script>
