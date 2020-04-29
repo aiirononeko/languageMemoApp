@@ -1,5 +1,5 @@
 <template>
-  <v-card width="800" height="300">
+  <v-card width="800" height="300" class="mx-auto">
     <v-row class="d-flex flex-row justify-center align-center">
       <div class="mr-10">
         <signin-form />
