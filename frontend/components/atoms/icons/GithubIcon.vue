@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <!-- github icon  png?? -->
-  </div>
+  <v-icon color="white">mdi-github</v-icon>
 </template>
 
 <script>
+
 export default {
 
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>
