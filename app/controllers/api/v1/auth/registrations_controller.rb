@@ -29,13 +29,10 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
   end
 
   def sign_up_params
-    params.permit(*params_for_resource(:sign_up)).merge(username: set_default_username)
+    params.permit(*params_for_resource(:sign_up)).merge(username: default_username)
   end
 
-  def set_default_username
-    loop do 
-      default_username = SecureRandom.alphanumeric(15)
-      return default_username unless User.find_by(username: default_username)
-    end
+  def default_username
+    default_username = SecureRandom.alphanumeric(15)
   end
 end
