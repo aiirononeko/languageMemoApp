@@ -1,5 +1,5 @@
 <template>
-  <v-btn :dark="dark" :href="href" :to="to" @click="onClick" color="#00AEEF" class="white--text">
+  <v-btn :dark="dark" :href="href" :to="to" @click="onClick" :fab="fab" :x-small="xSmall" color="#00AEEF" class="white--text">
     <twitter-icon />
     <slot />
   </v-btn>
@@ -27,6 +27,11 @@ export default {
     href: {
       type: String,
       default: undefined
+    },
+
+    fab: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -35,11 +40,14 @@ export default {
       return this.$emit('click')
     }
   },
+
+  computed: {
+    xSmall() {
+      return this.fab ? true : false
+    }
+  }
 }
 </script>
 
-<style>
-  .v-icon {
-    margin-right: 4px;
-  }
+<style scoped>
 </style>
