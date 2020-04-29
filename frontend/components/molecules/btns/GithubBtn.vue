@@ -1,6 +1,7 @@
 <template>
-  <v-btn :dark="dark" :href="href" :to="to" @click="onClick">
+  <v-btn :dark="dark" :href="href" :to="to" @click="onClick" color="#171515" class="white--text">
     <github-icon />
+    <slot />
   </v-btn>
 </template>
 
@@ -15,7 +16,7 @@ export default {
   props: {
     dark: {
       type: Boolean,
-      default: true
+      default: false
     },
 
     to: {
@@ -38,5 +39,7 @@ export default {
 </script>
 
 <style>
-
+  .v-icon {
+    margin-right: 4px;
+  }
 </style>
