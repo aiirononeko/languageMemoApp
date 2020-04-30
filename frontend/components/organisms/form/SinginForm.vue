@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form">
+  <v-form ref="form" @submit.prevent="login">
     <email-text-field @input="setEmailValue" :value="email" />
     <password-text-field @input="setPasswordValue" :value="password" />
 
