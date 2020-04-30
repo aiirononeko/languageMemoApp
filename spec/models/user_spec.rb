@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
 
       it "エラーになる" do
         user.valid?
-        expect(user.errors.messages[:email]).to include "can't be blank"
+        expect(user.errors.messages[:email]).to include "を入力してください"
       end
     end
 
@@ -24,7 +24,7 @@ RSpec.describe User, type: :model do
 
       it "エラーになる" do
         user.valid?
-        expect(user.errors.messages[:password]).to include "can't be blank"
+        expect(user.errors.messages[:password]).to include "を入力してください"
       end
     end
   end
@@ -36,7 +36,7 @@ RSpec.describe User, type: :model do
 
       it "エラーになる" do
         user2.valid?
-        expect(user2.errors.messages[:email]).to include "has already been taken"
+        expect(user2.errors.messages[:email]).to include "はすでに存在します"
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
 
       it "エラーになる" do
         user2.valid?
-        expect(user2.errors.messages[:username]).to include "has already been taken"
+        expect(user2.errors.messages[:username]).to include "はすでに存在します"
       end
     end
   end
@@ -56,28 +56,28 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, password: 'aaaa') }
       it "エラーになる" do
         user.valid?
-        expect(user.errors.messages[:password]).to include "is too short (minimum is 8 characters)"
+        expect(user.errors.messages[:password]).to include "は8文字以上で入力してください"
       end
     end
     context "名前が51文字以上の場合" do
       let(:user) { build(:user, name: 'a' * 51) }
       it "エラーになる" do
         user.valid?
-        expect(user.errors.messages[:name]).to include "is too long (maximum is 50 characters)"
+        expect(user.errors.messages[:name]).to include "は50文字以内で入力してください"
       end
     end
     context "住所が31文字以上の場合" do
       let(:user) { build(:user, address: 'a' * 31) }
       it "エラーになる" do
         user.valid?
-        expect(user.errors.messages[:address]).to include "is too long (maximum is 30 characters)"
+        expect(user.errors.messages[:address]).to include "は30文字以内で入力してください"
       end
     end
     context "ユーザーネームが31文字以上の場合" do
       let(:user) { build(:user, username: 'a' * 31) }
       it "エラーになる" do
         user.valid?
-        expect(user.errors.messages[:username]).to include "is too long (maximum is 30 characters)"
+        expect(user.errors.messages[:username]).to include "は30文字以内で入力してください"
       end
     end
   end
@@ -93,7 +93,7 @@ RSpec.describe User, type: :model do
       let(:user) { build(:user, password: 'a' * 7 + 'あ') }
       it "エラーになる" do
         user.valid?
-        expect(user.errors.messages[:password]).to include "is invalid"
+        expect(user.errors.messages[:password]).to include "は不正な値です"
       end
     end
 
@@ -109,7 +109,7 @@ RSpec.describe User, type: :model do
       let(:user) { create(:user) }
       it "正常に更新できない" do
         user.update(username: 'a' * 7 + 'あ')
-        expect(user.errors.messages[:username]).to include "is invalid"
+        expect(user.errors.messages[:username]).to include "は不正な値です"
       end
     end
   end

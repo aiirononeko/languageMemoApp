@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <!-- twitter icon  png?? -->
-  </div>
+    <v-icon color="white">mdi-twitter</v-icon>
 </template>
 
 <script>
@@ -10,6 +8,5 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>
