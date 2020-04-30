@@ -3,7 +3,7 @@
     <email-text-field @input="setEmailValue" :value="email" />
     <password-text-field @input="setPasswordValue" :value="password" />
 
-    <orange-btn type="submit" :canClick="!isValid" @onClick="login">
+    <orange-btn type="submit" :disabled="!isValid" @onClick="login">
       ログイン
     </orange-btn>
   </v-form>
