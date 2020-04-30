@@ -1,6 +1,7 @@
 <template>
-  <v-btn :dark="dark" :href="href" :to="to" @click="onClick">
+  <v-btn :dark="dark" :href="href" :to="to" @click="onClick" :fab="fab" :x-small="xSmall" color="#171515" class="white--text" >
     <github-icon />
+    <slot />
   </v-btn>
 </template>
 
@@ -15,7 +16,7 @@ export default {
   props: {
     dark: {
       type: Boolean,
-      default: true
+      default: false
     },
 
     to: {
@@ -26,6 +27,11 @@ export default {
     href: {
       type: String,
       default: undefined
+    },
+
+    fab: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -34,9 +40,14 @@ export default {
       return this.$emit('click')
     }
   },
+
+  computed: {
+    xSmall() {
+      return this.fab
+    }
+  }
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>
