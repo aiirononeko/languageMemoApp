@@ -1,5 +1,5 @@
 <template>
-    <v-btn depressed color="yellow lighten-3" class="btn" :to="to" @click="onClickBtn" :disabled="canClick">
+    <v-btn depressed color="yellow lighten-3" class="btn" :to="to" @click="onClickBtn" :disabled="disabled">
         <slot/>
     </v-btn>
 </template>
@@ -12,7 +12,7 @@ export default {
             default: "#"
         },
 
-        canClick: {
+        disabled: {
             type: Boolean,
             default: false
         }
