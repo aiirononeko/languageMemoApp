@@ -26,7 +26,7 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
         call_api
         res = JSON.parse(response.body)
         expect(res["success"]).to be_falsey
-        expect(res["errors"]).to include("Invalid login credentials. Please try again.")
+        expect(res["errors"]).to include("ログイン用の認証情報が正しくありません。再度お試しください。")
         expect(response.headers["uid"]).to be_blank
         expect(response.headers["access-token"]).to be_blank
         expect(response.headers["client"]).to be_blank
@@ -42,7 +42,7 @@ RSpec.describe "Api::V1::Auth::Sessions", type: :request do
         call_api
         res = JSON.parse(response.body)
         expect(res["success"]).to be_falsey
-        expect(res["errors"]).to include("Invalid login credentials. Please try again.")
+        expect(res["errors"]).to include("ログイン用の認証情報が正しくありません。再度お試しください。")
         expect(response.headers["uid"]).to be_blank
         expect(response.headers["access-token"]).to be_blank
         expect(response.headers["client"]).to be_blank
