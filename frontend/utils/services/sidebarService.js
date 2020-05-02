@@ -1,8 +1,6 @@
 import { pascalCase } from '~/utils/string'
 import { getSidebarJson } from '~/utils/models/sidebarModel'
 
-const PATH_COMPONENT = "~/components/organisms/list/"
-
 /**
  * sibebar.jsonから必要なデータを取得する
  *
@@ -43,7 +41,7 @@ export const importComponents = (name) => {
   return uniqComponentNames(d).reduce(
     (obj, component) => ({
       ...obj,
-      [component]: () => import(`${PATH_COMPONENT}${component}`),
+      [component]: () => import(`~/components/organisms/list/${component}`),
     }), {}
   )
 }
