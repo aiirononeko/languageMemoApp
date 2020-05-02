@@ -32,8 +32,8 @@ poetaのAPI仕様書
     + Attributes
           + status: error
           + errors
-              + email: ["can't be blank"]
-              + full_messages: ["Email can't be blank"] 
+              + email: ["を入力してください"]
+              + full_messages: ["Emailを入力してください"] 
 
 ### ユーザー削除 [DELETE]
 ユーザーを削除する。
@@ -165,7 +165,7 @@ poetaのAPI仕様書
 
 ## セッション関連API [/auth/sign_in]
 
-### ログイン　[POST /auth/sign_in]
+### ログイン [POST /auth/sign_in]
 ログインする。
 
 + Request
@@ -199,7 +199,7 @@ poetaのAPI仕様書
     + Attributes
         + success: false
         + errors: [
-            "A confirmation email was sent to your account at 'poeta@example.com'. You must follow the instructions in the email before your account can be activated"
+            "'poeta@example.com' に確認用のメールを送信しました。メール内の説明を読み、アカウントの有効化をしてください。"
         ]
 
 ### ログアウト [DELETE /auth/sign_out]
@@ -230,7 +230,7 @@ poetaのAPI仕様書
 + Response 200 (application/json)
   + Attributes
       + success: true
-      + message: An email has been sent to 'poeta@example.com' containing instructions for resetting your password.
+      + message: "'poeta@example.com' にパスワードリセットの案内が送信されました。"
 
 ### パスワード変更 [PUT]
 パスワードを変更する。
@@ -254,13 +254,23 @@ poetaのAPI仕様書
                   + username: null,
                   + created_at: ``,
                   + updated_at: ``
-      + message: Your password has been successfully updated.
+      + message: "パスワードの更新に成功しました。"
 
 + Response 422 (application/json)
   + Attributes
       + success: false
       + errors
-          + password_confirmation: ["doesn't match Password"]
+          + password_confirmation: ["とPasswordの入力が一致しません"]
           + full_messages: [
-              "Password confirmation doesn't match Password"
+              "Password confirmationとPasswordの入力が一致しません"
           ]
+
+## Oauth認証API [/auth/:provider]
+Oauth認証を行う。
+
+### Oauth認証 [GET]
+現在、:providerの欄にはtwitter,github,google_oauth2の3つが対応している。
+GETすると各サービスの認証画面へ遷移。認証に成功すると、リダイレクトを2回挟んで/auth/:provider/callbackへと遷移。このリソースからの
+レスポンスヘッダに、ログインに必要なuid, client, access_tokenが含まれいる。
+
++ Response 200 (application/text/html)

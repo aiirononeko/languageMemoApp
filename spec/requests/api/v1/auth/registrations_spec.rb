@@ -51,7 +51,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         put api_v1_user_registration_path, params: params, headers: headers
         res = JSON.parse(response.body)
         expect(res["success"]).to eq(false)
-        expect(res["errors"]).to include("Please submit proper account update data in request body.")
+        expect(res["errors"]).to include("リクエストボディに適切なアカウント更新のデータを送信してください。")
       end
     end
   end
