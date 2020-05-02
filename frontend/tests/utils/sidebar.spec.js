@@ -1,4 +1,4 @@
-import * as sidebarservice from '~/utils/services/sidebarservice'
+import * as sidebarservice from '~/utils/services/sidebarService'
 import sidebar from '~/assets/json/sidebar'
 import * as sidebarModel from '~/utils/models/sidebarModel'
 
