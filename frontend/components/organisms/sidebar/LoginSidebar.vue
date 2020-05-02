@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { getDatas, importComponents, getComponentName } from '~/utils/sidebar'
+import { getDatas, importComponents, getComponentName } from '~/utils/services/sidebarservice'
 const NAME = 'login'
 
 export default {
