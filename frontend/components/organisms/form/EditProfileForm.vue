@@ -40,13 +40,11 @@ export default {
     TieSnsLinkField,
   },
 
-  data: () => {
-    return {
+  data: () => ({
       userName: undefined,
       selfIntroduction: undefined,
       from: undefined
-    }
-  },
+  }),
 
   created() {
     // TODO(Ropital): フォームに初期値を入れる
