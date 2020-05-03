@@ -67,6 +67,10 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
+          name: debug
+          command: |
+            docker-compose run front ls -a
+      - run:
           name: jest
           command: |
             set -x
