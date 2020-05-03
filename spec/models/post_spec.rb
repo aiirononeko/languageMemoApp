@@ -52,7 +52,7 @@ RSpec.describe Post, type: :model do
   end
 
   describe "association" do
-    it "ユーザーに正しく紐づいていること" do
+    it "Userテーブルに正しく紐づいていること" do
       rel = described_class.reflect_on_association(:user)
       expect(rel.macro).to eq :belongs_to
     end

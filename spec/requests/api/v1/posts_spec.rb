@@ -7,7 +7,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
     let(:confirmed_user) { create(:confirmed_user) }
     let(:post) { create :post, user_id: confirmed_user.id }
 
-    it "レスポンスボディーに期待された値が返っていること" do
+    it "レスポンスボディーに期待された値が返ること" do
       call_api
       res = JSON.parse(response.body)
       expect(res["data"]["attributes"]["name"]).to eq "test"
@@ -43,7 +43,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
         expect { call_api }.to change { Post.count }.from(0).to(1)
       end
 
-      it "レスポンスボディーに期待された値が返っていること" do
+      it "レスポンスボディーに期待された値が返ること" do
         call_api
         res = JSON.parse(response.body)
         expect(res["data"]["attributes"]["name"]).to eq "test"
@@ -63,7 +63,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
         }
       end
 
-      it 'エラー文が表示されていること' do
+      it 'バリデーションエラーが返ること' do
         call_api
         res = JSON.parse(response.body)
         expect(res["status"]).to eq "error"
@@ -99,7 +99,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
           expect(response.status).to eq 200
         end
 
-        it "レスポンスボディーに期待された値が返っていること" do
+        it "レスポンスボディーに期待された値が返ること" do
           call_api
           res = JSON.parse(response.body)
           expect(res["data"]["attributes"]["name"]).to eq "example"
@@ -119,7 +119,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
           }
         end
 
-        it 'エラー文が表示されていること' do
+        it 'バリデーションエラーが返ること' do
           call_api
           res = JSON.parse(response.body)
           expect(res["status"]).to eq "error"
@@ -156,11 +156,11 @@ RSpec.describe "Api::V1::Posts", type: :request do
           expect(response.status).to eq 200
         end
 
-        it '投稿が削除されたこと' do
+        it '投稿が削除されていること' do
           expect { call_api }.to change { Post.count }.by(0)
         end
 
-        it "レスポンスボディーに期待された値が返っていること" do
+        it "レスポンスボディーに期待された値が返ること" do
           call_api
           res = JSON.parse(response.body)
           expect(res["data"]["attributes"]["name"]).to eq "test"
@@ -175,8 +175,8 @@ RSpec.describe "Api::V1::Posts", type: :request do
 
        it "アクセス権限がないと言われる" do
          call_api
-          res = JSON.parse(response.body)
-          expect(res["success"]).to eq false
+         res = JSON.parse(response.body)
+         expect(res["success"]).to eq false
          expect(res["errors"]).to eq ["You don't have the right to access this resource"]
        end
     end
