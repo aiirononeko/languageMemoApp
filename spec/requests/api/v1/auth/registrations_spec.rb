@@ -10,6 +10,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
       call_api
       res = JSON.parse(response.body)
       expect(res["data"]["id"]).to eq(User.last.id.to_s)
+      expect(res["data"]["attributes"]["username"]).to eq(User.last.username)
       expect(response.status).to eq 200
     end
   end
