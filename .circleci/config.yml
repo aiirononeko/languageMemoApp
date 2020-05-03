@@ -69,7 +69,8 @@ jobs:
       - run:
           name: debug
           command: |
-            docker-compose run front ls -a
+            docker-compose run front ls -a assets
+            docker-compose run front ls -a assets/json
       - run:
           name: jest
           command: |
