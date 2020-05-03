@@ -1,11 +1,11 @@
 <template>
-  <v-card>
-    <edit-profile-form />
+  <v-card width="800" class="mx-auto pt-10 pl-6">
+      <edit-profile-form />
   </v-card>
 </template>
 
 <script>
-import EditProfileForm from '~/components/organisms/form/EditProfileForm'
+const EditProfileForm = () => import('~/components/organisms/form/EditProfileForm')
 
 export default {
   components: {
