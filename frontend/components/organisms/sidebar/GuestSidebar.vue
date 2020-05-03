@@ -1,12 +1,25 @@
 <template>
-  <div>
-    <!-- TODO: ログインや新規登録へのリンク -->
-  </div>
+  <v-list>
+    <v-list-item-group color="primary">
+      <component v-for="(data, key) in datas" :is="getComponentName(data)" :key="key" :data="data" />
+    </v-list-item-group>
+  </v-list>
 </template>
 
 <script>
-export default {
+import { getDatas, importComponents, getComponentName } from '~/utils/services/sidebarService'
+const NAME = 'guest'
 
+export default {
+  components: importComponents(NAME),
+
+  computed: {
+    datas: () => getDatas(NAME),
+
+    getComponentName() {
+      return (data) => getComponentName(data)
+    }
+  },
 }
 </script>
 
