@@ -53,24 +53,11 @@ jobs:
           command: |
             set -x
             docker-compose run front rm -rf node_modules
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
       - run:
           name: npm install
           command: |
             set -x
             docker-compose run front npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run:
-          name: debug
-          command: |
-            docker-compose run front ls -a assets
-            docker-compose run front ls -a assets/json
       - run:
           name: jest
           command: |
