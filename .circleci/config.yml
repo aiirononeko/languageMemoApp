@@ -36,8 +36,7 @@ jobs:
           name: database migration
           command: |
             set -x
-            docker-compose exec api bin/rails db:create
-            docker-compose exec api bin/rails db:migrate
+            docker-compose exec api bin/rails db:create db:migrate
       - run:
           name: rspec
           command: |
