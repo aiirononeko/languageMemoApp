@@ -48,11 +48,11 @@ jobs:
       #     command: |
       #       set -x
       #       docker-compose exec api rubocop
-      - run:
-          name: remove node_modules
-          command: |
-            set -x
-            docker-compose run front rm -rf node_modules
+      # - run:
+      #     name: remove node_modules
+      #     command: |
+      #       set -x
+      #       docker-compose run front rm -rf node_modules
       - run:
           name: npm install
           command: |
