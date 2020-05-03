@@ -10,12 +10,10 @@
 
 <script>
 export default {
-    data: () => {
-        return {
-            twitterLink: undefined,
-            githubLink: undefined
-        }
-    },
+    data: () => ({
+        twitterLink: undefined,
+        githubLink: undefined
+    }),
 
     created() {
         // TODO(Ropital): 初期値を入れる
