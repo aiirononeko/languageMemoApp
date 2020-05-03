@@ -17,7 +17,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.save
       render json: @post, serializer: PostSerializer
     else
-      render json: { status: error, errors: @post.errors }
+      render json: { status: "error", errors: @post.errors }
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.update(post_params)
       render json: @post, serializer: PostSerializer
     else
-      render json: { status: error, errors: @post.errors }
+      render json: { status: "error", errors: @post.errors }
     end
   end
 
@@ -37,7 +37,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.destroy
       render json: @post, serializer: PostSerializer
     else
-      render json: { status: error, errors: @post.errors }
+      render json: { status: "error", errors: @post.errors }
     end
   end
 
