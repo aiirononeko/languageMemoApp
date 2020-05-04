@@ -24,7 +24,7 @@ RSpec.describe Post, type: :model do
   end
 
   describe "validate presence" do
-    context "名前が空文字の時" do
+    context "nameがNULLの時" do
       let(:post) { build(:post, name: nil) }
       it "エラーメッセージが返る" do
         post.valid?
@@ -32,11 +32,19 @@ RSpec.describe Post, type: :model do
       end
     end
 
-    context "内容が空文字の時" do
+    context "contentがNULLの時" do
       let(:post) { build(:post, content: nil) }
       it "エラーメッセージが返る" do
         post.valid?
         expect(post.errors.messages[:content]).to include("を入力してください")
+      end
+    end
+
+    context "publicがNULLの時" do
+      let(:post) { build(:post, public: nil) }
+      it "エラーメッセージが返る" do
+        post.valid?
+        expect(post.errors.messages[:public]).to include("は一覧にありません")
       end
     end
   end
