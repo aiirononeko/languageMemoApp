@@ -4,8 +4,8 @@ RSpec.describe "Api::V1::Posts", type: :request do
   describe "GET /api/v1/posts/:id" do
     subject(:call_api){ get "/api/v1/posts/#{post.id}" }
 
-    let(:confirmed_user) { create(:confirmed_user) }
-    let(:post) { create :post, user_id: confirmed_user.id }
+    let(:user) { create(:confirmed_user) }
+    let(:post) { create :post, user_id: user.id }
 
     it "レスポンスボディーに期待された値が返ること" do
       call_api
@@ -13,17 +13,18 @@ RSpec.describe "Api::V1::Posts", type: :request do
       expect(res["data"]["attributes"]["name"]).to eq "test"
       expect(res["data"]["attributes"]["content"]).to eq "example"
       expect(res["data"]["attributes"]["public"]).to eq false
+      expect(res["data"]["attributes"]["user-id"]).to eq user.id
     end
   end
 
   describe "POST /api/v1/posts" do
     subject(:call_api){ post '/api/v1/posts', headers: headers, params: params }
 
-    let(:confirmed_user) { create(:confirmed_user) }
-    let(:headers) { confirmed_user.create_new_auth_token }
-    let(:params) {{}}
+    let(:user) { create(:confirmed_user) }
+    let(:headers) { user.create_new_auth_token }
+    let(:params) {{ }}
 
-    context 'ユーザーが作成された時' do
+    context '投稿の作成に成功した場合' do
       let(:params) do
         {
           post: {
@@ -49,10 +50,11 @@ RSpec.describe "Api::V1::Posts", type: :request do
         expect(res["data"]["attributes"]["name"]).to eq "test"
         expect(res["data"]["attributes"]["content"]).to eq "example"
         expect(res["data"]["attributes"]["public"]).to eq false
+        expect(res["data"]["attributes"]["user-id"]).to eq user.id
       end
     end
 
-    context 'ユーザーが作成に失敗した場合' do
+    context '投稿の作成に失敗した場合' do
       let(:params) do
         {
           post: {
@@ -83,7 +85,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
     let(:params) {{ }}
 
     context 'ログインユーザーと投稿ユーザーが一致している場合' do
-      context 'ユーザーが更新に失敗した場合' do
+      context '投稿の更新に成功した場合' do
         let(:params) do
           {
             post: {
@@ -105,10 +107,11 @@ RSpec.describe "Api::V1::Posts", type: :request do
           expect(res["data"]["attributes"]["name"]).to eq "example"
           expect(res["data"]["attributes"]["content"]).to eq "example"
           expect(res["data"]["attributes"]["public"]).to eq false
+          expect(res["data"]["attributes"]["user-id"]).to eq user.id
         end
       end
 
-      context 'ユーザーが更新に失敗した場合' do
+      context '投稿の更新に失敗した場合' do
         let(:params) do
           {
             post: {
@@ -150,7 +153,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
     let(:post) { create :post, user_id: user.id }
 
     context 'ログインユーザーと投稿ユーザーが一致している場合' do
-      context 'ユーザーの削除に成功した場合' do
+      context '投稿の削除に成功した場合' do
         it 'レスポンスステータスが200で返ること' do
           call_api
           expect(response.status).to eq 200
@@ -166,6 +169,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
           expect(res["data"]["attributes"]["name"]).to eq "test"
           expect(res["data"]["attributes"]["content"]).to eq "example"
           expect(res["data"]["attributes"]["public"]).to eq false
+          expect(res["data"]["attributes"]["user-id"]).to eq user.id
         end
       end
     end
