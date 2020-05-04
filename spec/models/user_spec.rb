@@ -59,6 +59,7 @@ RSpec.describe User, type: :model do
         expect(user.errors.messages[:password]).to include "は8文字以上で入力してください"
       end
     end
+
     context "名前が51文字以上の場合" do
       let(:user) { build(:user, name: 'a' * 51) }
       it "エラーになる" do
@@ -66,6 +67,7 @@ RSpec.describe User, type: :model do
         expect(user.errors.messages[:name]).to include "は50文字以内で入力してください"
       end
     end
+
     context "住所が31文字以上の場合" do
       let(:user) { build(:user, address: 'a' * 31) }
       it "エラーになる" do
@@ -73,6 +75,7 @@ RSpec.describe User, type: :model do
         expect(user.errors.messages[:address]).to include "は30文字以内で入力してください"
       end
     end
+
     context "ユーザーネームが31文字以上の場合" do
       let(:user) { build(:user, username: 'a' * 31) }
       it "エラーになる" do
@@ -81,6 +84,7 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
   describe "validates regular expression" do
     context "パスワードが制御文字と半角を除いたASCII文字の場合" do
       let(:user) { build(:user, password: 'pass_*&^%word') }
@@ -111,6 +115,14 @@ RSpec.describe User, type: :model do
         user.update(username: 'a' * 7 + 'あ')
         expect(user.errors.messages[:username]).to include "は不正な値です"
       end
+    end
+  end
+
+  describe "Association" do
+    it "Postテーブルに正しく紐づいていること" do
+      rel = described_class.reflect_on_association(:posts)
+      expect(rel.macro).to eq :has_many
+      expect(rel.options[:dependent]).to eq :destroy
     end
   end
 end
