@@ -1,7 +1,5 @@
 <template>
   <div>
-    <p>ファイル名：{{ fileID }}</p>
-
     <s-both-template v-if="isBoth" v-model="markdown" :fileid="fileID" />
 
     <s-edit-template v-if="isEdit" v-model="markdown" :fileid="fileID" />
@@ -11,8 +9,7 @@
 </template>
 
 <script>
-const DemoMd = `
-# h1 Heading
+const DemoMd = `# h1 Heading
 ## h2 Heading
 ### h3 Heading
 #### h4 Heading
