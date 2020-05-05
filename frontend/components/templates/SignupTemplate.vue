@@ -1,6 +1,6 @@
 <template>
   <one-column-container>
-    <h1 class="mb-7 m-title">新規登録</h1>
+    <h1 class="mb-7 text-center">新規登録</h1>
 
     <signup-card @signup="signup" />
   </one-column-container>
@@ -25,7 +25,4 @@ export default {
 </script>
 
 <style>
-.m-title {
-  text-align: center;
-}
 </style>
