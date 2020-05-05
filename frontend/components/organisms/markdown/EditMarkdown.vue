@@ -1,14 +1,25 @@
 <template>
-  <!-- markdownのデザインを上書きするときに使うイメージ -->
-  <base-markdown />
+  <v-textarea v-model="md" auto-grow outlined />
 </template>
 
 <script>
-import BaseMarkdown from '~/components/organisms/markdown/BaseMarkdown'
-
 export default {
-  components: {
-    BaseMarkdown
+  props: {
+    value: {
+      type: String,
+      default: undefined
+    }
+  },
+
+  computed: {
+    md: {
+      get() {
+        return this.value
+      },
+      set(newVal) {
+        return this.$emit('input', newVal)
+      }
+    }
   }
 }
 </script>
