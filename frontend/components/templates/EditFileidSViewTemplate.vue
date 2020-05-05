@@ -1,13 +1,20 @@
 <template>
-  <view-file-card />
+  <view-file-card :md="md" />
 </template>
 
 <script>
-import ViewFileCard from '~/components/organisms/cards/ViewFileCard'
+const ViewFileCard = () => import('~/components/organisms/cards/ViewFileCard')
 
 export default {
   components: {
     ViewFileCard
+  },
+
+  props: {
+    md: {
+      type: String,
+      default: undefined
+    }
   }
 }
 </script>
