@@ -29,7 +29,7 @@
     <tie-sns-link-field />
 
     <div class="d-flex justify-center mt-5">
-      <orange-btn @onClick="save">保存する</orange-btn>
+      <orange-btn @onClick="onClick">保存する</orange-btn>
     </div>
   </v-form>
 </template>
@@ -66,16 +66,9 @@ export default {
   },
 
   methods: {
-    async save() {
-      try {
-        await this.$axios.put(`/api/v1/auth`, {
-          name: this.name,
-          profile: this.profile,
-          address: this.address
-        })
-      } catch (e) {
-        console.error(e)
-      }
+    onClick() {
+      const userInfo = { name: this.name, profile: this.profile, address: this.address }
+      this.$emit('save', userInfo)
     }
   }
 }

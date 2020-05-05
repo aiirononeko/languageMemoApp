@@ -1,6 +1,6 @@
 <template>
-  <v-card width="800" class="mx-auto pt-10 pl-6 pb-8">
-      <edit-profile-form :info="info"/>
+  <v-card width="800" class="mx-auto pt-10 pl-6 pb-8" >
+      <edit-profile-form :info="info" @save="save" />
   </v-card>
 </template>
 
@@ -17,6 +17,12 @@ export default {
 
   components: {
     EditProfileForm
+  },
+
+  methods: {
+    save(userInfo) {
+      this.$emit('save', userInfo)
+    }
   }
 }
 </script>

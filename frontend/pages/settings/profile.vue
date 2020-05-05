@@ -1,6 +1,6 @@
 <template>
   <div>
-    <setting-profile-template :info="info"/>
+    <setting-profile-template :info="info" @save="save"/>
   </div>
 </template>
 
@@ -20,6 +20,20 @@ export default {
       return { info: data }
     } catch (e) {
       console.error(e)
+    }
+  },
+
+  methods: {
+    async save(userInfo) {
+      try {
+        await this.$axios.put(`/api/v1/auth`, {
+          name: userInfo.name,
+          profile: userInfo.profile,
+          address: userInfo.address
+        })
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
 }
