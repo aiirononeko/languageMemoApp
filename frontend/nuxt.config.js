@@ -33,6 +33,7 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/vuetify",
     "@nuxtjs/auth",
+    "@nuxtjs/markdownit",
     ["nuxt-sass-resources-loader", ["~/assets/sass/variable.scss"]]
   ],
 
@@ -45,6 +46,10 @@ module.exports = {
   axios: {
     // axios options
     baseURL: process.env.BASE_URL || "http://localhost:3000"
+  },
+
+  markdownit: {
+    injected: true
   },
 
   /*
