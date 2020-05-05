@@ -60,9 +60,9 @@ export default {
   }),
 
   created() {
-    this.name = this.info.attributes.name
-    this.profile = this.info.attributes.profile
-    this.address = this.info.attributes.address
+    this.name = this.info && this.info.attributes && this.info.attributes.name
+    this.profile = this.info && this.info.attributes && this.info.attributes.profile
+    this.address = this.info && this.info.attributes && this.info.attributes.address
   },
 
   methods: {
