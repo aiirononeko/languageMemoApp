@@ -1,11 +1,13 @@
 <template>
-  <two-column-container :leftCols="6" :rightCols="6" >
+  <two-column-container justify="center" :leftCols="6" :rightCols="6" >
     <template #left>
-      <edit-markdown />
+      <select-md-status-btn-group :fileid="fileid" :value="status" />
+
+      <edit-markdown v-model="md" />
     </template>
 
     <template #right>
-      <view-file-card />
+      <view-file-card :md="md" />
 
       <blue-btn />
     </template>
@@ -13,17 +15,47 @@
 </template>
 
 <script>
-import BlueBtn from '~/components/atoms/btns/BlueBtn'
-import EditMarkdown from '~/components/organisms/markdown/EditMarkdown'
-import TwoColumnContainer from '~/components/molecules/containers/TwoColumnContainer'
-import ViewFileCard from '~/components/organisms/cards/ViewFileCard'
+const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
+const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
+const TwoColumnContainer = () => import('~/components/molecules/containers/TwoColumnContainer')
+const ViewFileCard = () => import('~/components/organisms/cards/ViewFileCard')
+const SelectMdStatusBtnGroup = () => import('~/components/organisms/btnGroup/SelectMdStatusBtnGroup')
 
 export default {
   components: {
     BlueBtn,
     EditMarkdown,
     TwoColumnContainer,
-    ViewFileCard
+    ViewFileCard,
+    SelectMdStatusBtnGroup
+  },
+
+  props: {
+    fileid: {
+      type: String,
+      required: true
+    },
+
+    value: {
+      type: String,
+      default: undefined
+    },
+
+    status: {
+      type: String,
+      defaul: undefined
+    }
+  },
+
+  computed: {
+    md: {
+      get() {
+        return this.value
+      },
+      set(newVal) {
+        return this.$emit('input', newVal)
+      }
+    }
   }
 }
 </script>

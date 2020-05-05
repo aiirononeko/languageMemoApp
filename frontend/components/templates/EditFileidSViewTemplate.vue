@@ -1,13 +1,38 @@
 <template>
-  <view-file-card />
+  <one-column-container>
+    <select-md-status-btn-group :fileid="fileid" :value="status" />
+
+    <view-file-card :md="md" />
+  </one-column-container>
 </template>
 
 <script>
-import ViewFileCard from '~/components/organisms/cards/ViewFileCard'
+const ViewFileCard = () => import('~/components/organisms/cards/ViewFileCard')
+const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
+const SelectMdStatusBtnGroup = () => import('~/components/organisms/btnGroup/SelectMdStatusBtnGroup')
 
 export default {
   components: {
-    ViewFileCard
+    ViewFileCard,
+    OneColumnContainer,
+    SelectMdStatusBtnGroup
+  },
+
+  props: {
+    fileid: {
+      type: String,
+      required: true
+    },
+
+    md: {
+      type: String,
+      default: undefined
+    },
+
+    status: {
+      type: String,
+      defaul: undefined
+    }
   }
 }
 </script>
