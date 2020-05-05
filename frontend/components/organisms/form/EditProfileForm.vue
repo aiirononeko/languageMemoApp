@@ -12,42 +12,73 @@
 
     <!-- TODO(Ropital): 各divをコンポーネントに切り出す -->
     <div class="mb-8">
-      <p>ユーザ名</p>
-      <v-text-field v-model="userName" outlined dense />
+      <p>名前</p>
+      <v-text-field v-model="user.name" outlined dense />
     </div>
 
     <div class="mb-8"> 
       <p>自己紹介</p>
-      <v-textarea v-model="selfIntroduction" outlined height="80" />
+      <v-textarea v-model="user.profile" outlined height="80" />
     </div>
 
     <div class="mb-8">
       <p>出身</p>
-      <v-text-field v-model="from" outlined dense />
+      <v-text-field v-model="user.address" outlined dense />
     </div>
 
     <tie-sns-link-field />
+
+    <div class="d-flex justify-center mt-5">
+      <orange-btn @onClick="onClick">保存する</orange-btn>
+    </div>
   </v-form>
 </template>
 
 <script>
 const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/PreviewImageFileInput')
 const TieSnsLinkField = () => import('~/components/organisms/textFields/TieSnsLinkField')
+const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
+
+class UserInfo {
+  constructor() {
+      this.name = null
+      this.profile = null
+      this.address = null
+  }
+
+  infoToUserInfo(info) {
+    this.name = info && info.attributes && info.attributes.name
+    this.profile = info && info.attributes && info.attributes.profile
+    this.address = info && info.attributes && info.attributes.address
+  }
+}
 
 export default {
+  props: {
+    info: {
+      type: Object,
+      default: undefined
+    }
+  },
+
   components: {
     PreviewImageFileInput,
     TieSnsLinkField,
+    OrangeBtn
   },
 
   data: () => ({
-      userName: undefined,
-      selfIntroduction: undefined,
-      from: undefined
+      user: new UserInfo
   }),
 
   created() {
-    // TODO(Ropital): フォームに初期値を入れる
+    this.user.infoToUserInfo(this.info)
+  },
+
+  methods: {
+    onClick() {
+      this.$emit('save', this.user)
+    }
   }
 }
 </script>
