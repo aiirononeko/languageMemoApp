@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import SidebarService from '~/src/domains/services/sidebarService'
+import SidebarService from '~/src/domain/services/sidebarService'
 const NAME = 'login'
 
 const Sidebar = new SidebarService(NAME)
