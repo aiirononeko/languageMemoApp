@@ -8,6 +8,8 @@
     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
     @click:append="showPassword = !showPassword"
     counter
+    outlined
+    dense
   />
 </template>
 
