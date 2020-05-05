@@ -12,18 +12,18 @@
 
     <!-- TODO(Ropital): 各divをコンポーネントに切り出す -->
     <div class="mb-8">
-      <p>ユーザ名</p>
-      <v-text-field v-model="userName" outlined dense />
+      <p>名前</p>
+      <v-text-field v-model="name" outlined dense />
     </div>
 
     <div class="mb-8"> 
       <p>自己紹介</p>
-      <v-textarea v-model="selfIntroduction" outlined height="80" />
+      <v-textarea v-model="profile" outlined height="80" />
     </div>
 
     <div class="mb-8">
       <p>出身</p>
-      <v-text-field v-model="from" outlined dense />
+      <v-text-field v-model="address" outlined dense />
     </div>
 
     <tie-sns-link-field />
@@ -54,26 +54,24 @@ export default {
   },
 
   data: () => ({
-      userName: undefined,
-      selfIntroduction: undefined,
-      from: undefined
+      name: undefined,
+      profile: undefined,
+      address: undefined
   }),
 
   created() {
-    // TODO(Ropital): フォームに初期値を入れる
-    this.userName = this.info.attributes.name
-    this.selfIntroduction = this.info.attributes.profile
-    this.from = this.info.attributes.address
-    console.log(this.info)
+    this.name = this.info.attributes.name
+    this.profile = this.info.attributes.profile
+    this.address = this.info.attributes.address
   },
 
   methods: {
     async save() {
       try {
         await this.$axios.put(`/api/v1/auth`, {
-          name: this.userName,
-          profile: this.selfIntroduction,
-          address: this.from
+          name: this.name,
+          profile: this.profile,
+          address: this.address
         })
       } catch (e) {
         console.error(e)
