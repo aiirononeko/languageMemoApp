@@ -1,5 +1,7 @@
 <template>
-  <v-textarea v-model="md" auto-grow outlined />
+  <client-only>
+    <v-textarea v-model="md" auto-grow outlined />
+  </client-only>
 </template>
 
 <script>

@@ -1,14 +1,36 @@
 <template>
-  <edit-markdown />
+  <one-column-container>
+    <edit-markdown v-model="md" />
+  </one-column-container>
 </template>
 
 <script>
-import EditMarkdown from '~/components/organisms/markdown/EditMarkdown'
+const EditMarkdown = () => '~/components/organisms/markdown/EditMarkdown'
+const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
 
 export default {
   components: {
-    EditMarkdown
-  }
+    EditMarkdown,
+    OneColumnContainer
+  },
+
+  props: {
+    value: {
+      type: String,
+      default: undefined
+    }
+  },
+
+  computed: {
+    md: {
+      get() {
+        return this.value
+      },
+      set(newVal) {
+        return this.$emit('input', newVal)
+      }
+    }
+  },
 }
 </script>
 
