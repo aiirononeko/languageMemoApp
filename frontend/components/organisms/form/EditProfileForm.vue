@@ -27,12 +27,15 @@
     </div>
 
     <tie-sns-link-field />
+
+    <orange-btn>保存する</orange-btn>
   </v-form>
 </template>
 
 <script>
 const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/PreviewImageFileInput')
 const TieSnsLinkField = () => import('~/components/organisms/textFields/TieSnsLinkField')
+const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
 
 export default {
   props: {
@@ -45,6 +48,7 @@ export default {
   components: {
     PreviewImageFileInput,
     TieSnsLinkField,
+    OrangeBtn
   },
 
   data: () => ({
