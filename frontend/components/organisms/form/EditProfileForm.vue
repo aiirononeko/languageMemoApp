@@ -28,7 +28,9 @@
 
     <tie-sns-link-field />
 
-    <orange-btn>保存する</orange-btn>
+    <div class="d-flex justify-center mt-5">
+      <orange-btn>保存する</orange-btn>
+    </div>
   </v-form>
 </template>
 
