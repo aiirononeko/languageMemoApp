@@ -7,17 +7,19 @@
 </template>
 
 <script>
-import { getDatas, importComponents, getComponentName } from '~/utils/services/sidebarService'
+import SidebarService from '~/src/domain/services/sidebarService'
 const NAME = 'guest'
 
+const Sidebar = new SidebarService(NAME)
+
 export default {
-  components: importComponents(NAME),
+  components: Sidebar.importComponents,
 
   computed: {
-    datas: () => getDatas(NAME),
+    datas: () => Sidebar.datas,
 
     getComponentName() {
-      return (data) => getComponentName(data)
+      return (data) => Sidebar.componentName(data)
     }
   },
 }
