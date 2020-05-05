@@ -2,7 +2,7 @@ require('dotenv').config()
 
 module.exports = {
   env: {
-    baseUrl: process.env.BASE_URL || "http://localhost:3000"
+    baseUrl: process.env.BASE_URL || "http://localhost:3000",
   },
 
   /*
@@ -13,12 +13,15 @@ module.exports = {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "Nuxt.js project" }
+      { hid: "description", name: "description", content: "Nuxt.js project" },
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
-      { href: "https://use.fontawesome.com/releases/v5.6.1/css/all.css", rel:"stylesheet" }
-    ]
+      {
+        href: "https://use.fontawesome.com/releases/v5.6.1/css/all.css",
+        rel: "stylesheet",
+      },
+    ],
   },
 
   /*
@@ -34,7 +37,7 @@ module.exports = {
     "@nuxtjs/vuetify",
     "@nuxtjs/auth",
     "@nuxtjs/markdownit",
-    ["nuxt-sass-resources-loader", ["~/assets/sass/variable.scss"]]
+    ["nuxt-sass-resources-loader", ["~/assets/sass/variable.scss"]],
   ],
 
   buildModules: ["@nuxtjs/dotenv"],
@@ -45,11 +48,23 @@ module.exports = {
 
   axios: {
     // axios options
-    baseURL: process.env.BASE_URL || "http://localhost:3000"
+    baseURL: process.env.BASE_URL || "http://localhost:3000",
   },
 
   markdownit: {
-    injected: true
+    injected: true,
+    use: [
+      "markdown-it-abbr",
+      "markdown-it-container",
+      "markdown-it-deflist",
+      "markdown-it-emoji",
+      "markdown-it-ins",
+      "markdown-it-katex",
+      "markdown-it-latex",
+      "markdown-it-mark",
+      "markdown-it-sub",
+      "markdown-it-sup"
+    ]
   },
 
   /*
@@ -65,9 +80,9 @@ module.exports = {
           enforce: "pre",
           test: /\.(js|vue)$/,
           loader: "eslint-loader",
-          exclude: /(node_modules)/
+          exclude: /(node_modules)/,
         })
       }
-    }
-  }
+    },
+  },
 }
