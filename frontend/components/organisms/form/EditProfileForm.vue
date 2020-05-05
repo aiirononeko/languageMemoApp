@@ -35,6 +35,13 @@ const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/Pr
 const TieSnsLinkField = () => import('~/components/organisms/textFields/TieSnsLinkField')
 
 export default {
+  props: {
+    info: {
+      type: Object,
+      default: undefined
+    }
+  },
+
   components: {
     PreviewImageFileInput,
     TieSnsLinkField,
@@ -48,6 +55,10 @@ export default {
 
   created() {
     // TODO(Ropital): フォームに初期値を入れる
+    this.userName = this.info.attributes.name
+    this.selfIntroduction = this.info.attributes.profile
+    this.from = this.info.attributes.address
+    console.log(this.info)
   }
 }
 </script>

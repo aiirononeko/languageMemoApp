@@ -1,6 +1,6 @@
 <template>
   <div>
-    <setting-profile-template />
+    <setting-profile-template :info="info"/>
   </div>
 </template>
 
@@ -12,7 +12,16 @@ export default {
     SettingProfileTemplate
   },
 
-  middleware: "authenticated"
+  middleware: "authenticated",
+
+  async asyncData({ $axios, params }) {
+    try {
+      const { data } = await $axios.$get(`/api/v1/auth/edit`)
+      return { info: data }
+    } catch (e) {
+      console.error(e)
+    }
+  }
 }
 </script>
 
