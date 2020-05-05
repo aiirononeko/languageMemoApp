@@ -4,7 +4,7 @@
     <password-text-field @input="setPasswordValue" :value="password" />
     <p class="mb-6">※半角英数字のみ使用可能です</p>
 
-    <div class="button">
+    <div class="text-center">
       <orange-btn type="submit" :disabled="!isValid" @onClick="onClick">
         新規登録
       </orange-btn>
@@ -60,7 +60,4 @@ export default {
 </script>
 
 <style>
-.button {
-  text-align: center;
-}
 </style>
