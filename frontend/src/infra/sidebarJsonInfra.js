@@ -1,4 +1,4 @@
-import SidebarJson from '~/assets/json/Sidebar.json'
+import SidebarJson from "~/assets/json/Sidebar.json"
 
 /**
  * サイドバーのjsonを取得する
