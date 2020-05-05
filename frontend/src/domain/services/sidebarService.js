@@ -8,7 +8,7 @@ import SidebarModel from "~/src/domain/models/sidebarModel"
  * @param { String } name
  * @returns { Object[] }
  */
-export const getDatas = (name) => {
+const getDatas = (name) => {
   const sidebarJson = getSidebarJson()
   const sidebar = new SidebarModel(sidebarJson.data[name], sidebarJson.items)
   return sidebar.concatData
