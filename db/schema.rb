@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_152331) do
     t.boolean "public", default: true, null: false, comment: "公開or非公開"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "folder_id", null: false
+    t.bigint "folder_id"
     t.index ["folder_id"], name: "index_posts_on_folder_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
