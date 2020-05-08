@@ -13,16 +13,14 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create
-   if params[:folder_id] === nil
-      @post2 = current_api_v1_user.posts.build(no_folder_params)
-      @post2.save
-      render json: @post2, serializer: PostSerializer
-   else
-      @folder = Folder.joins(:user).where(user_id: @current_api_v1_user.id).find(params[:folder_id])
-      @post1 =  @folder.posts.build(post_params)
-      @post1.save
-      render json: @post1, serializer: PostSerializer
-   end
+    @folder = Folder.find_by(id: params[:folder_id])
+    @post = current_api_v1_user.posts.build(post_params) if @folder.nil?
+    @post =  @folder.posts.build(post_params) unless @folder.nil?
+    if @post.save
+      render json: @post, serializer: PostSerializer
+    else
+      render json: { status: "error", errors: @post.errors }
+    end
   end
 
   def edit
@@ -50,10 +48,6 @@ class Api::V1::PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:name, :content, :public,:user_id, :folder_id)
-  end
-
-  def no_folder_params
-    params.require(:post).permit(:name, :content, :public, :user_id)
   end
 
   def set_post
