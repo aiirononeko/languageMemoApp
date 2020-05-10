@@ -1,7 +1,9 @@
 <template>
-  <v-form>
-    <username-text-field />
-  </v-form>
+    <v-form>
+      <username-text-field />
+
+      <v-btn width="30" height="30" fab outlined >→</v-btn>
+    </v-form>
 </template>
 
 <script>
@@ -14,6 +16,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.v-btn {
+  color: white;
+  background-color: #FDCB6E;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
 </style>
