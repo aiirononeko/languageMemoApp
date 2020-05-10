@@ -1,11 +1,11 @@
 <template>
   <v-card width="800" height="300" class="mx-auto">
-    <v-row class="d-flex flex-row justify-center align-center">
-      <div class="mr-10">
+    <v-row justify="center" align="center">
+      <div class="mr-1 mr-md-6 mr-lg-10">
         <signin-form />
       </div>
 
-      <div class="ml-10">
+      <div class="ml-1 ml-md-6 ml-lg-10">
         <p>その他のアカウント</p>
         <login-sns-btn-group />
       </div>
