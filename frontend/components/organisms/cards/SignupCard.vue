@@ -2,9 +2,9 @@
   <v-card max-width="800" height="400" class="mx-auto pt-4">
     <h2 class="mb-10 text-center">Poeta</h2>
     <v-row justify="center">
-      <signup-form class="mr-10" @signup="signup" />
+      <signup-form class="mr-1 mr-md-6 mr-lg-10" @signup="signup" />
 
-      <div class="ml-10">
+      <div class="ml-1 ml-md-6 ml-lg-10">
         <p>その他のアカウント</p>
         <login-sns-btn-group />
       </div>
