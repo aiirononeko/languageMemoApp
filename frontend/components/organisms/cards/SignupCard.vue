@@ -1,7 +1,7 @@
 <template>
-  <v-card width="800" height="400" class="mx-auto pt-4">
+  <v-card max-width="800" height="400" class="mx-auto pt-4">
     <h2 class="mb-10 text-center">Poeta</h2>
-    <v-row class="d-flex flex-row justify-center ">
+    <v-row justify="center">
       <signup-form class="mr-10" @signup="signup" />
 
       <div class="ml-10">
