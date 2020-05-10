@@ -4,7 +4,7 @@
 
     <the-sidebar :drawer="drawer" />
 
-    <v-card class="overflow-hidden header">
+    <v-card class="overflow-hidden header box-shadow-none">
       <v-sheet
         id="scrolling-techniques-7"
         class="overflow-y-auto"
@@ -39,3 +39,6 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+</style>
