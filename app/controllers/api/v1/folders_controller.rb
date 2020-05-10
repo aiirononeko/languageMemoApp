@@ -52,7 +52,7 @@ class Api::V1::FoldersController < ApplicationController
   end
 
   def correct_user?
-    return if current_api_v1_user == @post.user
+    return if current_api_v1_user == @folder.user
     render json: { success: false,
                    errors: ["You don't have the right to access this resource"] }
   end

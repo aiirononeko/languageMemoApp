@@ -13,9 +13,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create
-    @folder = Folder.find_by(id: params[:folder_id])
-    @post = current_api_v1_user.posts.build(post_params) if @folder.nil?
-    @post =  @folder.posts.build(post_params) unless @folder.nil?
+    @post = current_api_v1_user.posts.build(post_params)
     if @post.save
       render json: @post, serializer: PostSerializer
     else
@@ -36,7 +34,6 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def destroy
-    #binding.pry
     if @post.destroy
       render json: @post, serializer: PostSerializer
     else
@@ -47,7 +44,7 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:name, :content, :public,:user_id, :folder_id)
+    params.require(:post).permit(:name, :content, :public, :user_id, :folder_id)
   end
 
   def set_post
@@ -55,7 +52,6 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def correct_user?
-    #binding.pry
     return if current_api_v1_user == @post.user
     render json: { success: false,
                    errors: ["You don't have the right to access this resource"] }
