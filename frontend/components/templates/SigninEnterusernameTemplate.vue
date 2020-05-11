@@ -1,6 +1,6 @@
 <template>
   <one-column-container>
-    <change-username-card @submit="submit" />
+    <change-username-card @submit="onSubmit" />
   </one-column-container>
 </template>
 
@@ -15,7 +15,7 @@ export default {
   },
 
   methods: {
-    submit(userName) {
+    onSubmit(userName) {
       this.$emit('submit', userName)
     }
   }

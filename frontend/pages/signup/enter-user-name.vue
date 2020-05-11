@@ -1,6 +1,6 @@
 <template>
   <div>
-    <signin-enterusername-template @submit="submit"/>
+    <signin-enterusername-template @submit="updateUsername"/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   },
 
   methods: {
-    async submit(userName) {
+    async updateUsername(userName) {
       try {
         console.log("submit")
         // TODO: この部分の処理はまだ確認していない。確認メールのURLのリダイレクトが変更されたら確認する
