@@ -59,6 +59,9 @@ ActiveRecord::Schema.define(version: 2020_05_07_152331) do
     t.string "address", limit: 30
     t.string "profile"
     t.string "username", limit: 30
+    t.string "twitter_link"
+    t.string "github_link"
+    t.string "github_token"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

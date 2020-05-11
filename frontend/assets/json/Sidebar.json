@@ -4,7 +4,7 @@
     "login": ["home", "settings", "username", "md-debug", "logout"]
   },
   "items": {
-    "home": { "name": "Home", "to": "/", "icon": "mdi-home" },
+    "home": { "name": "Home", "to": "/about", "icon": "mdi-home" },
     "login": {
       "name": "ログイン",
       "to": "/signin",

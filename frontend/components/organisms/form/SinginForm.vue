@@ -3,9 +3,11 @@
     <email-text-field @input="setEmailValue" :value="email" />
     <password-text-field @input="setPasswordValue" :value="password" />
 
-    <orange-btn type="submit" :disabled="!isValid" @onClick="login">
-      ログイン
-    </orange-btn>
+    <div class="text-center">
+      <orange-btn type="submit" :disabled="!isValid" @onClick="login">
+        ログイン
+      </orange-btn>
+    </div>
   </v-form>
 </template>
 

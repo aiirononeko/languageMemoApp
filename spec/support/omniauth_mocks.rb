@@ -40,7 +40,10 @@ module OmniauthMocks
           "Github" => "https://github.com/MockUser1234",
           "Website" => ""
         }
-      }
+      },
+      "credentials" => {
+        "token" => "mock_github_token"
+      },
     })
   end
 

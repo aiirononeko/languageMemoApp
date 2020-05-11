@@ -1,6 +1,6 @@
 <template>
   <one-column-container>
-    <h1 class="mb-8">ログイン</h1>
+    <h1 class="mb-8 text-center">ログイン</h1>
 
     <signin-card />
   </one-column-container>
