@@ -64,5 +64,11 @@ RSpec.describe Post, type: :model do
       rel = described_class.reflect_on_association(:user)
       expect(rel.macro).to eq :belongs_to
     end
+
+    it "Folderテーブルに正しく紐づいていること" do
+      rel = described_class.reflect_on_association(:folder)
+      expect(rel.macro).to eq :belongs_to
+      expect(rel.options[:optional]).to eq true
+    end
   end
 end
