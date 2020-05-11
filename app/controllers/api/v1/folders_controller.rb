@@ -13,7 +13,7 @@ class Api::V1::FoldersController < ApplicationController
   end
 
   def create
-    @folder = current_api_v1_user.folders.build(folder_params)
+    @folder = current_api_v1_user.folders.build(create_folder_params)
     if @folder.save
       render json: @folder, serializer: FolderSerializer
     else
@@ -26,7 +26,7 @@ class Api::V1::FoldersController < ApplicationController
   end
 
   def update
-    if @folder.update(folder_params)
+    if @folder.update(create_folder_params)
       render json: @folder, serializer: FolderSerializer
     else
       render json: { status: "error", errors: @folder.errors }
@@ -43,7 +43,7 @@ class Api::V1::FoldersController < ApplicationController
 
   private
 
-  def folder_params
+  def create_folder_params
     params.require(:folder).permit(:name, :public)
   end
 
