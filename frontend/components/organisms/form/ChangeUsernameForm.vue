@@ -1,5 +1,5 @@
 <template>
-    <v-form>
+    <v-form class="pos-relative">
       <username-text-field />
 
       <!-- TODO: orange-btnを使う。そのため、orange-btnのpropsにfabを追加する -->
@@ -32,4 +32,11 @@ export default {
 </script>
 
 <style scoped>
+.next-btn {
+  color: white;
+  background-color: #FDCB6E;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
 </style>

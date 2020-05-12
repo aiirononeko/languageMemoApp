@@ -1,5 +1,5 @@
 <template>
-  <v-card width="800" class="mx-auto pt-10 pl-6 pb-8" >
+  <v-card width="100%" max-width="800" class="mx-auto pt-10 px-6 pb-8" >
       <edit-profile-form :info="info" @save="save" />
   </v-card>
 </template>

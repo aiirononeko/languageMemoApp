@@ -3,7 +3,10 @@
     <div class="mb-8">
       <p>プロフィール画像</p>
       <div class="d-flex align-center">
-        <img src="https://picsum.photos/510/300?random" class="mr-2" />
+        <div class="mr-2">
+          <v-img src="https://picsum.photos/510/300?random" class="user-icon" />
+        </div>
+
         <preview-image-file-input />
       </div>
     </div>
@@ -16,7 +19,7 @@
       <v-text-field v-model="user.name" outlined dense />
     </div>
 
-    <div class="mb-8"> 
+    <div class="mb-8">
       <p>自己紹介</p>
       <v-textarea v-model="user.profile" outlined height="80" />
     </div>
@@ -83,13 +86,8 @@ export default {
 }
 </script>
 
-<style>
-.v-form {
-  width: 80%;
-  text-align: left;
-}
-
-img {
+<style lang="scss" scoped>
+.user-icon {
   width: 45px;
   height: 45px;
   object-fit: cover;
