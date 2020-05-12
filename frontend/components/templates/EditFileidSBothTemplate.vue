@@ -1,5 +1,5 @@
 <template>
-  <two-column-container justify="center" :leftCols="6" :rightCols="6" >
+  <two-column-container justify="center" :left-cols="12" :right-cols="12" :left-md="6" :right-md="6" >
     <template #left>
       <select-md-status-btn-group :fileid="fileid" :value="status" />
 
@@ -59,7 +59,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
