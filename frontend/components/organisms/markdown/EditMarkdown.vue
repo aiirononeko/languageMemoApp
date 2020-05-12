@@ -15,9 +15,15 @@ export default {
 
   computed: {
     md: {
+      /**
+       * @returns { String }
+       */
       get() {
         return this.value
       },
+      /**
+       * @param { String } newVal
+       */
       set(newVal) {
         return this.$emit('input', newVal)
       }
