@@ -1,11 +1,25 @@
 <template>
-  <client-only>
-    <v-textarea v-model="md" auto-grow outlined />
+  <client-only placeholder="Codemirror Loading...">
+    <codemirror
+      ref="cmEditor"
+      v-model="md"
+      :options="cmOptions"
+      style="height: 100%"
+    />
   </client-only>
 </template>
 
 <script>
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/mode/markdown/markdown'
+import 'codemirror/lib/codemirror.css' // import base style
+import 'codemirror/theme/material.css'
+
 export default {
+  components: {
+    codemirror
+  },
+
   props: {
     value: {
       type: String,
@@ -13,7 +27,23 @@ export default {
     }
   },
 
+  data() {
+    return {
+      cmOptions: {
+        tabSize: 4,
+        mode: 'markdown',
+        theme: 'material',
+        lineNumbers: true,
+        line: true,
+      }
+    }
+  },
+
   computed: {
+    codemirror() {
+      return this.$refs.cmEditor.codemirror
+    },
+
     md: {
       /**
        * @returns { String }
@@ -32,6 +62,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+/**
+ * あえて、globalで定義した
+ * ただ、assets内に書くと距離が遠くなるので、ここに書く
+ */
+.CodeMirror {
+  height: 100% !important;
+}
 </style>

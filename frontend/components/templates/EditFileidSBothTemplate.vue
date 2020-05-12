@@ -1,8 +1,10 @@
 <template>
   <two-column-container justify="center" :left-cols="12" :right-cols="12" :left-md="6" :right-md="6" >
-    <template #left>
+    <template #top>
       <select-md-status-btn-group :fileid="fileid" :value="status" />
+    </template>
 
+    <template #left>
       <edit-markdown v-model="md" />
     </template>
 
