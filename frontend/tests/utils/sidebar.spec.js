@@ -33,7 +33,7 @@ describe('utils/sidebar', () => {
             home: { name: "Home", to: "/", icon: "mdi-home" },
             login: {
               name: "ログイン",
-              to: "/user/login",
+              to: "/signin",
               icon: "mdi-account-arrow-right",
               btn: true
             }
