@@ -15,7 +15,7 @@
 
 <script>
 import LoginSnsBtnGroup from '~/components/organisms/btnGroup/LoginSnsBtnGroup'
-import SigninForm from '~/components/organisms/form/SinginForm'
+import SigninForm from '~/components/organisms/form/SigninForm'
 
 export default {
   components: {
