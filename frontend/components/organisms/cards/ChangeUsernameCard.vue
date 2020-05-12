@@ -22,17 +22,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.username-card {
-  position: relative;
-}
-
-.next-btn {
-  color: white;
-  background-color: #FDCB6E;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-</style>
