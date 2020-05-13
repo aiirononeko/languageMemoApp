@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Api::V1::Folders", type: :request do
-  describe "GET /api/v1/folders/:id" do
+  describe "GET /api/v1/users/user:id/folders/:id" do
     subject(:call_api){ get "/api/v1/users/#{user.id}/folders/#{folder.id}" }
 
     let(:user) { create(:confirmed_user) }
@@ -16,7 +16,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
     end
   end
 
-  describe "POST /api/v1/posts" do
+  describe "POST /api/v1/users/user:id/folders" do
     subject(:call_api){ post "/api/v1/users/#{user.id}/folders", headers: headers, params: params }
 
     let(:user) { create(:confirmed_user) }
@@ -29,6 +29,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
           folder: {
             name: "folder_test",
             public: false,
+            user_id: user.id
           }
         }
       end
@@ -57,6 +58,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
           folder: {
             name: "",
             public: false,
+            user_id: user.id
           }
         }
       end
@@ -70,7 +72,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
     end
   end
 
-  describe "PUT /api/v1/posts/:id" do
+  describe "PUT /api/v1/users/user:id/folders/:id" do
     subject(:call_api) { put "/api/v1/users/#{user.id}/folders/#{folder.id}", headers: headers, params: params }
 
     let(:user) { create :confirmed_user }
@@ -86,6 +88,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
             folder: {
               name: "update_folder_test",
               public: false,
+              user_id: user.id
             }
           }
         end
@@ -109,7 +112,8 @@ RSpec.describe "Api::V1::Folders", type: :request do
           {
             folder: {
               name: "",
-              public: false
+              public: false,
+              user_id: user.id
             }
           }
         end
@@ -135,7 +139,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
     end
   end
 
-  describe "DELETE /api/v1/posts/:id" do
+  describe "DELETE /api/v1/users/user:id/folders/:id" do
     subject(:call_api) { delete "/api/v1/users/#{user.id}/folders/#{folder.id}", headers: headers }
 
     let(:user) { create :confirmed_user }
