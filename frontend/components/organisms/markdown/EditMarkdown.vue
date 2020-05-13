@@ -128,7 +128,7 @@ export default {
   },
 
   methods: {
-    onChange(name) {
+    onChange() {
       if (this.mdExclusive) {
         const mdModel = _mdService.getMarkdownModel(this.mdExclusive)
         const doc = this.codemirror.getDoc()
@@ -138,6 +138,7 @@ export default {
         }
         doc.replaceRange(mdModel.insert, cursor)
         this.codemirror.focus()
+        this.mdExclusive = undefined
       }
     }
   },
