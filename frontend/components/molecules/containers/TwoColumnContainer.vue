@@ -1,5 +1,9 @@
 <template>
   <base-container :fluid="fluid" :no-gutters="noGutters">
+    <v-row>
+      <slot name="top" />
+    </v-row>
+
     <v-row :justify="justify">
       <v-col :cols="leftCols" :sm="leftSm" :md="leftMd" :lg="leftLg" :xl="leftXl">
         <slot name="left" />
