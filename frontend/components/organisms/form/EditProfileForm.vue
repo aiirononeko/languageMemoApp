@@ -86,7 +86,6 @@ export default {
     },
 
     setAvatarValue(newVal) {
-      console.log(newVal)
       this.user.avator = newVal
     }
   }
