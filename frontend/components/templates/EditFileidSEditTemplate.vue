@@ -1,6 +1,8 @@
 <template>
-  <one-column-container>
-    <select-md-status-btn-group :fileid="fileid" :value="status" />
+  <one-column-container fluid>
+    <v-col class="px-0">
+      <select-md-status-btn-group :fileid="fileid" :value="status" />
+    </v-col>
 
     <edit-markdown v-model="md" />
   </one-column-container>
