@@ -29,7 +29,8 @@ export default {
         await this.$axios.put(`/api/v1/auth`, {
           name: userInfo.name,
           profile: userInfo.profile,
-          address: userInfo.address
+          address: userInfo.address,
+          avatar: userInfo.avatar
         })
       } catch (e) {
         console.error(e)
