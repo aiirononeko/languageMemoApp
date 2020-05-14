@@ -128,16 +128,23 @@ export default {
   },
 
   methods: {
+    /**
+     * 特定の文字列をマークダウンに追加
+     */
     onChange() {
       if (this.mdExclusive) {
+        // 挿入したいテキストなどの情報を取得
         const mdModel = _mdService.getMarkdownModel(this.mdExclusive)
         const doc = this.codemirror.getDoc()
-        const cursor = doc.getCursor()
-        for (let i = 0; i < mdModel.getLineNum(); i++) {
+        const cursor = doc.getCursor() // カーソルの位置を取得
+
+        // 改行する
+        if (mdModel.getLineNum() > 0) {
           doc.replaceRange('\n', cursor)
         }
-        doc.replaceRange(mdModel.insert, cursor)
-        this.codemirror.focus()
+
+        doc.replaceRange(mdModel.insert, cursor) // 文字列の挿入
+        this.codemirror.focus() // focusを当てる
         this.mdExclusive = undefined
       }
     }
