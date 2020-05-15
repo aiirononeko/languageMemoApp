@@ -1,23 +1,17 @@
 <template>
   <one-column-container fluid>
-    <v-col class="px-0">
-      <select-md-status-btn-group :fileid="fileid" :value="status" />
-    </v-col>
-
-    <view-file-card :md="md" />
+    <edit-markdown v-model="md" :preview="preview" />
   </one-column-container>
 </template>
 
 <script>
-const ViewFileCard = () => import('~/components/organisms/cards/ViewFileCard')
+const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
 const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const SelectMdStatusBtnGroup = () => import('~/components/organisms/btnGroup/SelectMdStatusBtnGroup')
 
 export default {
   components: {
-    ViewFileCard,
-    OneColumnContainer,
-    SelectMdStatusBtnGroup
+    EditMarkdown,
+    OneColumnContainer
   },
 
   props: {
@@ -26,7 +20,7 @@ export default {
       required: true
     },
 
-    md: {
+    value: {
       type: String,
       default: undefined
     },
@@ -34,11 +28,23 @@ export default {
     status: {
       type: String,
       defaul: undefined
+    },
+
+    preview: {
+      type: Boolean,
+      default: true
+    }
+  },
+
+  computed: {
+    md: {
+      get() {
+        return this.value
+      },
+      set(newVal) {
+        return this.$emit('input', newVal)
+      }
     }
   }
 }
 </script>
-
-<style>
-
-</style>
