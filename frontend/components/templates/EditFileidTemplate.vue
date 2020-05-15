@@ -1,6 +1,6 @@
 <template>
   <one-column-container fluid>
-    <edit-markdown v-model="md" :preview="preview" />
+    <edit-markdown v-model="md" />
   </one-column-container>
 </template>
 
