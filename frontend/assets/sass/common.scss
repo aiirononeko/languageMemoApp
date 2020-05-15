@@ -17,3 +17,8 @@
 .pos-relative {
   position: relative;
 }
+
+// markdown editorの打ち消し
+.v-note-wrapper {
+  position: unset !important;
+}
