@@ -42,7 +42,10 @@ module.exports = {
 
   buildModules: ["@nuxtjs/dotenv"],
 
-  plugins: ["~/plugins/axios"],
+  plugins: [
+    "~/plugins/axios",
+    { src: "@/plugins/vue-mavon-editor", ssr: false },
+  ],
 
   css: [{ src: "~/assets/sass/common.scss", lang: "scss" }],
 
@@ -63,8 +66,8 @@ module.exports = {
       "markdown-it-latex",
       "markdown-it-mark",
       "markdown-it-sub",
-      "markdown-it-sup"
-    ]
+      "markdown-it-sup",
+    ],
   },
 
   /*

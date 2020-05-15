@@ -1,10 +1,6 @@
 <template>
   <div>
-    <s-both-template v-if="isBoth" v-model="markdown" :fileid="fileID" />
-
-    <s-edit-template v-if="isEdit" v-model="markdown" :fileid="fileID" />
-
-    <s-view-template v-if="isView" :md="markdown" :fileid="fileID" />
+    <edit-fileid-template v-model="markdown" :fileid="fileID" :preview="false" />
   </div>
 </template>
 
@@ -66,17 +62,13 @@ Start numbering with offset:
 
 [Poeta github](https://github.com/aiirononeko/languageMemoApp)
 `
-const SBothTemplate = () => import('~/components/templates/EditFileidSBothTemplate')
-const SEditTemplate = () => import('~/components/templates/EditFileidSEditTemplate')
-const SViewTemplate = () => import('~/components/templates/EditFileidSViewTemplate')
+const EditFileidTemplate = () => import('~/components/templates/EditFileidTemplate')
 
 const DEFALUT_STATUS = 'both'
 
 export default {
   components: {
-    SBothTemplate,
-    SEditTemplate,
-    SViewTemplate
+    EditFileidTemplate
   },
 
   data: () => ({
@@ -114,7 +106,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

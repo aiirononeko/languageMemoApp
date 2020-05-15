@@ -1,9 +1,5 @@
 <template>
   <one-column-container fluid>
-    <v-col class="px-0">
-      <select-md-status-btn-group :fileid="fileid" :value="status" />
-    </v-col>
-
     <edit-markdown v-model="md" />
   </one-column-container>
 </template>
@@ -11,13 +7,11 @@
 <script>
 const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
 const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const SelectMdStatusBtnGroup = () => import('~/components/organisms/btnGroup/SelectMdStatusBtnGroup')
 
 export default {
   components: {
     EditMarkdown,
-    OneColumnContainer,
-    SelectMdStatusBtnGroup
+    OneColumnContainer
   },
 
   props: {
