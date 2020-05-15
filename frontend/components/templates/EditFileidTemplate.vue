@@ -23,16 +23,6 @@ export default {
     value: {
       type: String,
       default: undefined
-    },
-
-    status: {
-      type: String,
-      defaul: undefined
-    },
-
-    preview: {
-      type: Boolean,
-      default: true
     }
   },
 

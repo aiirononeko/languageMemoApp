@@ -1,6 +1,6 @@
 <template>
   <div>
-    <edit-fileid-template v-model="markdown" :fileid="fileID" :preview="false" />
+    <edit-fileid-template v-model="markdown" :fileid="fileID" />
   </div>
 </template>
 

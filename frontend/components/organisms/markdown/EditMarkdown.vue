@@ -12,11 +12,6 @@ export default {
     value: {
       type: String,
       default: undefined
-    },
-
-    preview: {
-      type: Boolean,
-      default: true
     }
   },
 
