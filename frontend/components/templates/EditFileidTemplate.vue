@@ -23,11 +23,6 @@ export default {
     value: {
       type: String,
       default: undefined
-    },
-
-    status: {
-      type: String,
-      defaul: undefined
     }
   },
 
@@ -43,7 +38,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
