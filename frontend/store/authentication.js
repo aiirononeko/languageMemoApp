@@ -5,8 +5,7 @@ export const state = () => ({
   accessToken: null,
   client: null,
   id: null,
-  uid: null,
-  isAuthenticated: false,
+  uid: null
 })
 
 export const getters = {
@@ -14,7 +13,7 @@ export const getters = {
   client: (state) => state.client,
   uid: (state) => state.uid,
   id: (state) => state.id,
-  isAuthenticated: (state) => state.isAuthenticated,
+  isAuthenticated: (state) => state.uid ? true : false,
 }
 
 export const mutations = {
@@ -23,7 +22,6 @@ export const mutations = {
     state.client = null
     state.id = null
     state.uid = null
-    state.isAuthenticated = false
   },
 
   setUser (state, res) {
@@ -31,14 +29,12 @@ export const mutations = {
     state.client = res.headers["client"]
     state.id = res.data.data.id
     state.uid = res.headers["uid"]
-    state.isAuthenticated = true
   },
 
-  setHeader (state, { header, auth_flag }) {
-    state.accessToken = header["access-token"]
-    state.client = header["client"]
-    state.uid = header["uid"]
-    state.isAuthenticated = auth_flag
+  setHeader (state, { headers }) {
+    state.accessToken = headers["access-token"]
+    state.client = headers["client"]
+    state.uid = headers["uid"]
   }
 }
 
