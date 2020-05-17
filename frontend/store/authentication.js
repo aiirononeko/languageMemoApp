@@ -23,17 +23,17 @@ export const mutations = {
     state.uid = null
   },
 
-  setUser (state, res) {
-    state.accessToken = res.headers["access-token"]
-    state.client = res.headers["client"]
-    state.id = res.data.data.id
-    state.uid = res.headers["uid"]
+  setUser (state, { data, headers }) {
+    state.accessToken = headers["access-token"]
+    state.client = headers["client"]
+    state.id = data.data.id
+    state.uid = headers["uid"]
   },
 
-  setHeader (state, { header }) {
-    state.accessToken = header["access-token"]
-    state.client = header["client"]
-    state.uid = header["uid"]
+  setHeader (state, { headers }) {
+    state.accessToken = headers["access-token"]
+    state.client = headers["client"]
+    state.uid = headers["uid"]
   }
 }
 
