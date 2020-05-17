@@ -1,22 +1,33 @@
 <template>
-    <v-btn depressed color="blue accent-4" class="btn" :to="to">
-        <slot/>
-    </v-btn>
+  <v-btn depressed color="blue accent-4" class="btn" :large="large" :to="to" @click="onClick">
+    <slot/>
+  </v-btn>
 </template>
 
 <script>
 export default {
-    props: {
-        to: {
-            type: String,
-            default: "#"
-        }
+  props: {
+    large: {
+      type: Boolean,
+      default: false
+    },
+
+    to: {
+      type: [String, Object],
+      default: "#"
     }
+  },
+
+  methods: {
+    onClick() {
+      return this.$emit('click')
+    }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-    .btn {
-        color: white;
-    }
+.btn {
+  color: white;
+}
 </style>
