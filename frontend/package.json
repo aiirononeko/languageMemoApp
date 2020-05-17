@@ -21,9 +21,9 @@
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.10.2",
     "axios-cookiejar-support": "^0.5.1",
-    "cookieparser": "^0.1.0",
     "mavon-editor": "^2.9.0",
-    "nuxt": "^2.12.2"
+    "nuxt": "^2.12.2",
+    "universal-cookie": "^4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
