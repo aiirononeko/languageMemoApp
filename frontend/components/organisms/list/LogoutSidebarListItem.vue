@@ -25,7 +25,7 @@ export default {
       try {
         await this.$store.dispatch("authentication/logout")
 
-        this.$router.push(`/user/login`)
+        this.$router.push(`/signin`)
       } catch (e) {
         console.error(e)
       }

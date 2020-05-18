@@ -3,8 +3,11 @@
     <div class="mb-8">
       <p>プロフィール画像</p>
       <div class="d-flex align-center">
-        <img src="https://picsum.photos/510/300?random" class="mr-2" />
-        <preview-image-file-input />
+        <div class="mr-2">
+          <v-img :src="user.avatar" class="user-icon" />
+        </div>
+
+        <preview-image-file-input @input="setAvatarValue" />
       </div>
     </div>
     <!-- TODO: ユーザー名や自己紹介もこんなふうに加える-->
@@ -13,17 +16,17 @@
     <!-- TODO(Ropital): 各divをコンポーネントに切り出す -->
     <div class="mb-8">
       <p>名前</p>
-      <v-text-field v-model="user.name" outlined dense />
+      <v-text-field v-model="user.name" label="名前" outlined dense />
     </div>
 
-    <div class="mb-8"> 
+    <div class="mb-8">
       <p>自己紹介</p>
-      <v-textarea v-model="user.profile" outlined height="80" />
+      <v-textarea v-model="user.profile" label="自己紹介" outlined height="80" />
     </div>
 
     <div class="mb-8">
       <p>出身</p>
-      <v-text-field v-model="user.address" outlined dense />
+      <v-text-field v-model="user.address" label="出身" outlined dense />
     </div>
 
     <tie-sns-link-field />
@@ -44,12 +47,14 @@ class UserInfo {
       this.name = null
       this.profile = null
       this.address = null
+      this.avatar = "https://picsum.photos/510/300?random"
   }
 
   infoToUserInfo(info) {
     this.name = info && info.attributes && info.attributes.name
     this.profile = info && info.attributes && info.attributes.profile
     this.address = info && info.attributes && info.attributes.address
+    // Todo: avatarを取得する
   }
 }
 
@@ -78,18 +83,17 @@ export default {
   methods: {
     onClick() {
       this.$emit('save', this.user)
+    },
+
+    setAvatarValue(newVal) {
+      this.user.avator = newVal
     }
   }
 }
 </script>
 
-<style>
-.v-form {
-  width: 80%;
-  text-align: left;
-}
-
-img {
+<style lang="scss" scoped>
+.user-icon {
   width: 45px;
   height: 45px;
   object-fit: cover;
