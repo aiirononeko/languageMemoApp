@@ -1,6 +1,6 @@
 <template>
   <div>
-    <edit-fileid-template v-model="markdown" :fileid="fileID" />
+    <edit-fileid-template v-model="markdown" :fileid="fileID" @post="post" />
   </div>
 </template>
 
@@ -103,6 +103,16 @@ export default {
       const status = this.$route.query.status
       return status ? status === LABEL : this.defalutStatus === LABEL
     }
-  }
+  },
+
+  methods: {
+    post(){
+      // TODO: 投稿処理をする
+
+      this.$router.push({ path: '/edit/success', query: {
+        fileid: this.fileID
+      }})
+    }
+  },
 }
 </script>
