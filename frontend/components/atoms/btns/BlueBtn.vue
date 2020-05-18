@@ -1,5 +1,13 @@
 <template>
-  <v-btn depressed color="blue accent-4" class="btn" :large="large" :to="to" @click="onClick">
+  <v-btn
+    color="blue accent-4"
+    class="btn"
+    depressed
+    :disabled="disabled"
+    :large="large"
+    :to="to"
+    @click="onClick"
+  >
     <slot/>
   </v-btn>
 </template>
@@ -7,6 +15,11 @@
 <script>
 export default {
   props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+
     large: {
       type: Boolean,
       default: false
@@ -14,7 +27,7 @@ export default {
 
     to: {
       type: [String, Object],
-      default: "#"
+      default: undefined
     }
   },
 
