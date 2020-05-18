@@ -1,5 +1,16 @@
 <template>
-  <v-btn :dark="dark" :href="href" :to="to" @click="onClick" :fab="fab" :x-small="xSmall" color="#00AEEF" class="white--text">
+  <v-btn
+    :dark="dark"
+    :fab="fab"
+    :href="href"
+    :target="vTarget"
+    :rel="rel"
+    :to="to"
+    :x-small="xSmall"
+    @click="onClick"
+    color="#00AEEF"
+    class="white--text"
+  >
     <twitter-icon />
     <slot />
   </v-btn>
@@ -19,9 +30,9 @@ export default {
       default: false
     },
 
-    to: {
-      type: [String, Object],
-      default: undefined
+    fab: {
+      type: Boolean,
+      default: false
     },
 
     href: {
@@ -29,9 +40,14 @@ export default {
       default: undefined
     },
 
-    fab: {
-      type: Boolean,
-      default: false
+    target: {
+      type: String,
+      default: undefined
+    },
+
+    to: {
+      type: [String, Object],
+      default: undefined
     }
   },
 
@@ -44,6 +60,23 @@ export default {
   computed: {
     xSmall() {
       return this.fab
+    },
+
+    /**
+     * targetがpropsで設定されていれば、それを返す
+     * 設定されていなければ、hrefが設定されているときに、_blankを返す
+     *
+     * @return { String|undefined }
+     */
+    vTarget() {
+      if (this.target) {
+        return this.target
+      }
+      return this.href ? '_blank' : undefined
+    },
+
+    rel() {
+      return this.vTarget ? 'noopener' : undefined
     }
   }
 }

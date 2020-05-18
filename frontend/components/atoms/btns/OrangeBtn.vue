@@ -1,33 +1,46 @@
 <template>
-    <v-btn depressed color="yellow lighten-3" class="btn" :to="to" @click="onClickBtn" :disabled="disabled">
-        <slot/>
-    </v-btn>
+  <v-btn
+    color="yellow lighten-3"
+    class="btn"
+    depressed
+    :disabled="disabled"
+    :large="large"
+    :to="to"
+    @click="onClick"
+  >
+    <slot/>
+  </v-btn>
 </template>
 
 <script>
 export default {
-    props: {
-        to: {
-            type: String,
-            default: "#"
-        },
-
-        disabled: {
-            type: Boolean,
-            default: false
-        }
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
     },
 
-    methods: {
-        onClickBtn() {
-            this.$emit('onClick')
-        }
+    large: {
+      type: Boolean,
+      default: false
+    },
+
+    to: {
+      type: [String, Object],
+      default: undefined
     }
+  },
+
+  methods: {
+    onClick() {
+      this.$emit('onClick')
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-    .btn {
-        color: #747474;
-    }
+.btn {
+  color: #747474;
+}
 </style>
