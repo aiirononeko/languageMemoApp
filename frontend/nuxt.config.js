@@ -36,35 +36,21 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/vuetify",
     "@nuxtjs/auth",
-    "@nuxtjs/markdownit",
     ["nuxt-sass-resources-loader", ["~/assets/sass/variable.scss"]],
   ],
 
   buildModules: ["@nuxtjs/dotenv"],
 
-  plugins: ["~/plugins/axios"],
+  plugins: [
+    "~/plugins/axios",
+    { src: "~/plugins/vue-mavon-editor", ssr: false },
+  ],
 
   css: [{ src: "~/assets/sass/common.scss", lang: "scss" }],
 
   axios: {
     // axios options
     baseURL: process.env.BASE_URL || "http://localhost:3000",
-  },
-
-  markdownit: {
-    injected: true,
-    use: [
-      "markdown-it-abbr",
-      "markdown-it-container",
-      "markdown-it-deflist",
-      "markdown-it-emoji",
-      "markdown-it-ins",
-      "markdown-it-katex",
-      "markdown-it-latex",
-      "markdown-it-mark",
-      "markdown-it-sub",
-      "markdown-it-sup"
-    ]
   },
 
   /*

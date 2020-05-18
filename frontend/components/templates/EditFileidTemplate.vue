@@ -1,23 +1,23 @@
 <template>
-  <one-column-container fluid>
-    <v-col class="px-0">
-      <select-md-status-btn-group :fileid="fileid" :value="status" />
-    </v-col>
-
+  <one-column-container class="pos-relative" fluid>
     <edit-markdown v-model="md" />
+
+    <blue-btn class="post-btn" large @click="post">
+      投稿する
+    </blue-btn>
   </one-column-container>
 </template>
 
 <script>
+const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
 const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
 const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const SelectMdStatusBtnGroup = () => import('~/components/organisms/btnGroup/SelectMdStatusBtnGroup')
 
 export default {
   components: {
+    BlueBtn,
     EditMarkdown,
-    OneColumnContainer,
-    SelectMdStatusBtnGroup
+    OneColumnContainer
   },
 
   props: {
@@ -29,11 +29,6 @@ export default {
     value: {
       type: String,
       default: undefined
-    },
-
-    status: {
-      type: String,
-      defaul: undefined
     }
   },
 
@@ -46,10 +41,21 @@ export default {
         return this.$emit('input', newVal)
       }
     }
-  }
+  },
+
+  methods: {
+    post() {
+      return this.$emit('post')
+    }
+  },
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.post-btn {
+  position: fixed;
 
+  bottom: 5vh;
+  right: 5vw;
+}
 </style>
