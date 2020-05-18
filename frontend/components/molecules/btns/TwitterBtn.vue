@@ -11,7 +11,7 @@
     color="#00AEEF"
     class="white--text"
   >
-    <twitter-icon class="mr-2" />
+    <twitter-icon />
     <slot />
   </v-btn>
 </template>

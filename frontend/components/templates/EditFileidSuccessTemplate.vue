@@ -4,7 +4,7 @@
 
     <v-row class="mb-4" justify="center">
       <twitter-btn>
-        Twitterに投稿する
+        <span class="ml-2">Twitterに投稿する</span>
       </twitter-btn>
     </v-row>
 
