@@ -6,10 +6,10 @@
 <script>
 export default {
   methods: {
-    uploadAvatar(avatarfile) {
-      if (avatarfile !== undefined && avatarfile !== null) {
+    uploadAvatar(file) {
+      if (file !== undefined && file !== null) {
         const fr = new FileReader()
-        fr.readAsDataURL(avatarfile)
+        fr.readAsDataURL(file)
         fr.addEventListener('load', () => {
           this.$emit('input', fr.result)
         })
