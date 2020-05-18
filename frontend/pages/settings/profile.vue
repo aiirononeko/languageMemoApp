@@ -14,14 +14,14 @@ export default {
 
   middleware: "authenticated",
 
-  async asyncData({ $axios, params, store }) {
+  async asyncData({ $axios, store }) {
     try {
       const { data } = await $axios.$get(`/api/v1/auth/edit`, 
       {
         headers: {
           "access-token": store.getters["authentication/accessToken"],
-          "uid": store.getters["authentication/uid"],
-          "client": store.getters["authentication/client"]
+          "client": store.getters["authentication/client"],
+          "uid": store.getters["authentication/uid"]
         }
       })
       return { info: data }
