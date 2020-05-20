@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Api::V1::Posts", type: :request do
-  describe "GET /api/v1/users/user:id/posts/:id" do
-    subject(:call_api){ get "/api/v1/users/#{user.id}/posts/#{post.id}" }
+  describe "GET /api/v1/posts/:id" do
+    subject(:call_api){ get "/api/v1/posts/#{post.id}" }
 
     let(:user) { create(:confirmed_user) }
 
@@ -36,8 +36,8 @@ RSpec.describe "Api::V1::Posts", type: :request do
     end
   end
 
-  describe "POST /api/v1/users/user:id/posts" do
-    subject(:call_api){ post "/api/v1/users/#{user.id}/posts", headers: headers, params: params }
+  describe "POST /api/v1/posts" do
+    subject(:call_api){ post "/api/v1/posts", headers: headers, params: params }
 
     let(:user) { create(:confirmed_user) }
     let(:headers) { user.create_new_auth_token }
@@ -133,8 +133,8 @@ RSpec.describe "Api::V1::Posts", type: :request do
     end
   end
 
-  describe "PUT /api/v1/users/user:id/posts/:id" do
-    subject(:call_api) { put "/api/v1/users/#{user.id}/posts/#{post.id}", headers: headers, params: params }
+  describe "PUT /api/v1/posts/:id" do
+    subject(:call_api) { put "/api/v1/posts/#{post.id}", headers: headers, params: params }
 
     let(:user) { create :confirmed_user }
     let(:user2) { create :confirmed_user, username: "test_name" }
@@ -238,8 +238,8 @@ RSpec.describe "Api::V1::Posts", type: :request do
     end
   end
 
-  describe "DELETE /api/v1/users/user:id/posts/:id" do
-    subject(:call_api) { delete "/api/v1/users/#{user.id}/posts/#{post.id}", headers: headers }
+  describe "DELETE /api/v1/posts/:id" do
+    subject(:call_api) { delete "/api/v1/posts/#{post.id}", headers: headers }
 
     let(:user) { create :confirmed_user }
     let(:user2) { create :confirmed_user, username: "test_name" }

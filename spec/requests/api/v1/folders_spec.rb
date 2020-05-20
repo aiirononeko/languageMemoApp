@@ -1,23 +1,59 @@
 require 'rails_helper'
 
 RSpec.describe "Api::V1::Folders", type: :request do
-  describe "GET /api/v1/users/user:id/folders/:id" do
-    subject(:call_api){ get "/api/v1/users/#{user.id}/folders/#{folder.id}" }
+  describe "GET /api/v1/folders/:id" do
+    subject(:call_api){ get "/api/v1/folders/#{folder.id}", headers: headers }
 
-    let(:user) { create(:confirmed_user) }
-    let(:folder) { create :folder, user_id: user.id }
+    let!(:user) { create(:confirmed_user) }
+    let!(:headers) { user.create_new_auth_token }
+    let!(:folder) { create :folder, user_id: user.id }
 
-    it "レスポンスボディーに期待された値が返ること" do
-      call_api
-      res = JSON.parse(response.body)
-      expect(res["data"]["attributes"]["name"]).to eq "folder_test"
-      expect(res["data"]["attributes"]["public"]).to eq false
-      expect(res["data"]["attributes"]["user-id"]).to eq user.id
+    context 'postが存在している場合' do
+      let!(:post) { create :post, user_id: user.id, folder_id: folder.id }
+
+      it 'レスポンスステータスが200で返ること' do
+        call_api
+        expect(response.status).to eq 200
+      end
+
+      it "レスポンスボディーにfolderの値が返ること" do
+        call_api
+        res = JSON.parse(response.body)
+        expect(res["data"]["attributes"]["name"]).to eq "folder_test"
+        expect(res["data"]["attributes"]["public"]).to eq false
+        expect(res["data"]["attributes"]["user-id"]).to eq user.id
+      end
+
+      it "レスポンスボディーにpostの値も含まれていること" do
+        call_api
+        res = JSON.parse(response.body)
+        expect(res["data"]["attributes"]["posts"][0]["name"]).to eq "test"
+        expect(res["data"]["attributes"]["posts"][0]["content"]).to eq "example"
+        expect(res["data"]["attributes"]["posts"][0]["public"]).to eq false
+        expect(res["data"]["attributes"]["posts"][0]["user_id"]).to eq user.id
+        expect(res["data"]["attributes"]["posts"][0]["folder_id"]).to eq folder.id
+      end
+    end
+
+    context 'postが存在していない場合' do
+
+      it 'レスポンスステータスが200で返ること' do
+        call_api
+        expect(response.status).to eq 200
+      end
+
+      it "レスポンスボディーに期待された値が返ること" do
+        call_api
+        res = JSON.parse(response.body)
+        expect(res["data"]["attributes"]["name"]).to eq "folder_test"
+        expect(res["data"]["attributes"]["public"]).to eq false
+        expect(res["data"]["attributes"]["user-id"]).to eq user.id
+      end
     end
   end
 
-  describe "POST /api/v1/users/user:id/folders" do
-    subject(:call_api){ post "/api/v1/users/#{user.id}/folders", headers: headers, params: params }
+  describe "POST /api/v1/folders" do
+    subject(:call_api){ post "/api/v1/folders", headers: headers, params: params }
 
     let(:user) { create(:confirmed_user) }
     let(:headers) { user.create_new_auth_token }
@@ -72,8 +108,8 @@ RSpec.describe "Api::V1::Folders", type: :request do
     end
   end
 
-  describe "PUT /api/v1/users/user:id/folders/:id" do
-    subject(:call_api) { put "/api/v1/users/#{user.id}/folders/#{folder.id}", headers: headers, params: params }
+  describe "PUT /api/v1/users/folders/:id" do
+    subject(:call_api) { put "/api/v1/folders/#{folder.id}", headers: headers, params: params }
 
     let(:user) { create :confirmed_user }
     let(:user2) { create :confirmed_user, username: "test_name" }
@@ -139,8 +175,8 @@ RSpec.describe "Api::V1::Folders", type: :request do
     end
   end
 
-  describe "DELETE /api/v1/users/user:id/folders/:id" do
-    subject(:call_api) { delete "/api/v1/users/#{user.id}/folders/#{folder.id}", headers: headers }
+  describe "DELETE /api/v1/folders/:id" do
+    subject(:call_api) { delete "/api/v1/folders/#{folder.id}", headers: headers }
 
     let(:user) { create :confirmed_user }
     let(:user2) { create :confirmed_user, username: "test_name" }
