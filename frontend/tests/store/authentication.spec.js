@@ -48,7 +48,7 @@ describe('store/authentication.js', () => {
         client: "NQqnvItfl_4F9V_l2gzIla",
       }
 
-      store.commit('setHeader', { header: parsedCookie, auth_flag: true })
+      store.commit('setHeader', { headers: parsedCookie })
 
       expect(store.getters.accessToken).toBe("2RvvBof6HGQ-C__vaMQ5Wq")
       expect(store.getters.client).toBe("NQqnvItfl_4F9V_l2gzIla")

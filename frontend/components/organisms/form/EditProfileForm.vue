@@ -86,7 +86,7 @@ export default {
     },
 
     setAvatarValue(newVal) {
-      this.user.avator = newVal
+      this.user.avatar = newVal
     }
   }
 }
