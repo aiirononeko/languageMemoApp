@@ -1,5 +1,5 @@
 <template>
-  <v-form>
+  <v-form enctype="multipart/form-data">
     <div class="mb-8">
       <p>プロフィール画像</p>
       <div class="d-flex align-center">
