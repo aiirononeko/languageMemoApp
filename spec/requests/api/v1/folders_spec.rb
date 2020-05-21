@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::Folders", type: :request do
   describe "GET /api/v1/folders/:id" do
-    subject(:call_api){ get "/api/v1/folders/#{folder.id}", headers: headers }
+    subject(:call_api){ get "/api/v1/folders/#{folder.id}" }
 
     let!(:user) { create(:confirmed_user) }
     let!(:headers) { user.create_new_auth_token }
