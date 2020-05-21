@@ -78,9 +78,9 @@ docker-compose exec api rails db:migrate
 ### Windows10 Home
 
 ``` shell
-cp frontend/.env.win-home.example frontend/.env // .envのコピー
+cp frontend/.env.win-home.example frontend/.env # .envのコピー
 
-docker-compose run front npm i --no-bin-link // npm iの際にシンボリックリンクを作成しないようにする。
+docker-compose run front npm i --no-bin-link # npm iの際にシンボリックリンクを作成しないようにする。
 
 docker-compose up -d
 
@@ -117,9 +117,9 @@ docker-compose exec api rails db:migrate
 文面や値だけ変えるのが分かりやすい。追記が終わったら最後にHTML形式に整形する。
 
 ``` shell
-npm install -g aglio // aglioがインストールされていなければ
+npm install -g aglio # aglioがインストールされていなければ
 
-aglio -i poeta_api.apib -o poeta_api.html // html形式に整形
+aglio -i poeta_api.apib -o poeta_api.html # html形式に整形
 ```
 
 - ブランチをmasterにpush、レビューはslackでバックエンド担当の別メンバーにお願いする。
