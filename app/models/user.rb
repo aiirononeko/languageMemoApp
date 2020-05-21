@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :posts, dependent: :destroy
+  has_many :folders, dependent: :destroy
 
   VALID_USERNAME_REGEX = /\A[\w_]+\z/i
   VALID_PASSWORD_REGEX = /\A[!-~]+\z/
