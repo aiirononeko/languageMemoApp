@@ -1,7 +1,7 @@
 <template>
-  <two-column-container>
+  <two-column-container leftCols="4" rightCols="6">
     <template #left>
-      <user-intro-card />
+      <user-intro-card :userInfo="userInfo" />
     </template>
 
     <template #right>
@@ -9,7 +9,7 @@
 
       <folder-breadcrumbs />
 
-      <file-folder-list-with-action />
+      <!-- <file-folder-list-with-action /> -->
     </template>
   </two-column-container>
 </template>
@@ -25,6 +25,13 @@ export default {
     FolderBreadcrumbs,
     TwoColumnContainer,
     UserIntroCard
+  },
+  
+  props: {
+    userInfo: {
+      type: Object,
+      default: undefined
+    }
   }
 }
 </script>
