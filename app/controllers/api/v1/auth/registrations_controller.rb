@@ -1,5 +1,6 @@
 class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   before_action :authenticate_api_v1_user!, except:[:create,:new]
+  wrap_parameters false
 
   def edit
     render json: current_api_v1_user, serializer: UserSerializer
