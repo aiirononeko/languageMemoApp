@@ -7,9 +7,21 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
   end
 
   def update
+    if params[:avatar]
+      image_match = params[:avatar].match(/^data:(.*?);(?:.*?),(.*)$/)
+      mime_type, encoded_image = image_match.captures
+      extension = mime_type.split('/').second
+      decoded_image = Base64.decode64(encoded_image)
+      filename = "avatar#{current_api_v1_user.id}.#{extension}"
+      image_path = "#{Rails.root}/#{filename}"
+      File.open(image_path, 'wb') do |f|
+        f.write(decoded_image)
+      end
+      current_api_v1_user.avatar.attach({ io: File.open(image_path), filename: filename, content_type: mime_type })
+    end
     super
-    current_api_v1_user.avatar.attach(params[:avatar]) if params[:avatar]
   end
+  
 
   private
 
