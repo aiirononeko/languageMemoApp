@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 2020_05_11_011753) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.boolean "public", default: true, null: false, comment: "公開or非公開"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_folders_on_user_id"
+  end
+
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", limit: 100, null: false
@@ -40,6 +49,8 @@ ActiveRecord::Schema.define(version: 2020_05_11_011753) do
     t.boolean "public", default: true, null: false, comment: "公開or非公開"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "folder_id"
+    t.index ["folder_id"], name: "index_posts_on_folder_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -79,5 +90,7 @@ ActiveRecord::Schema.define(version: 2020_05_11_011753) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "folders", "users"
+  add_foreign_key "posts", "folders"
   add_foreign_key "posts", "users"
 end
