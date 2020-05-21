@@ -1,7 +1,15 @@
 <template>
   <div class="mavonEditor">
     <client-only>
-      <mavon-editor font-size="16px" language="ja" :toolbars="markdownOption" v-model="md"/>
+      <mavon-editor
+        v-model="md"
+        :default-open="defaultOpen"
+        :subfield="subfield"
+        :toolbars="markdownOption"
+        font-size="16px"
+        language="ja"
+        @save="onSave"
+      />
     </client-only>
   </div>
 </template>
@@ -12,6 +20,16 @@ export default {
     value: {
       type: String,
       default: undefined
+    },
+
+    isView: {
+      type: Boolean,
+      default: true
+    },
+
+    subfield: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -33,7 +51,6 @@ export default {
         imagelink: false /** 画像 */,
         code: true,
         table: true,
-        fullscreen: true,
         readmodel: true,
         htmlcode: true,
         help: true,
@@ -52,6 +69,14 @@ export default {
   },
 
   computed: {
+    defaultOpen() {
+      if (this.subfield) {
+        return 'preview'
+      }
+
+      return this.isView ? 'preview' : 'edit'
+    },
+
     md: {
       /**
        * @returns { String }
@@ -66,6 +91,12 @@ export default {
         return this.$emit('input', newVal)
       }
     }
-  }
+  },
+
+  methods: {
+    onSave() {
+      return this.$emit('save')
+    }
+  },
 }
 </script>

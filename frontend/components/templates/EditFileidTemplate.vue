@@ -1,6 +1,6 @@
 <template>
   <one-column-container class="pos-relative" fluid>
-    <edit-markdown v-model="md" />
+    <edit-markdown v-model="md" :isView="isView" :subfield="isBoth" @save="post" />
 
     <blue-btn class="post-btn" large @click="post">
       投稿する
@@ -24,6 +24,21 @@ export default {
     fileid: {
       type: String,
       required: true
+    },
+
+    isBoth: {
+      type: Boolean,
+      default: false
+    },
+
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
+
+    isView: {
+      type: Boolean,
+      default: false
     },
 
     value: {
