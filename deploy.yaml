@@ -16,7 +16,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: rails
-            key: master-key
+            key: master
     - command:
       - rails
       - s
