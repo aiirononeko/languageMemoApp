@@ -12,6 +12,8 @@ export default {
     SigninEnterusernameTemplate
   },
 
+  middleware: "authenticated",
+
   methods: {
     async updateUsername(userName) {
       try {
@@ -27,9 +29,7 @@ export default {
         console.error(error)
       }
     },
-  },
-
-  middleware: "authenticated"
+  }
 }
 </script>
 

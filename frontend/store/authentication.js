@@ -72,7 +72,6 @@ export const actions = {
             "access-token": getters.accessToken,
             client: getters.client,
             uid: getters.uid
-
           }
         }
       )
