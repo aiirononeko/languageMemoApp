@@ -7,11 +7,6 @@ class Api::V1::PostsController < ApplicationController
     render json: @post, serializer: PostSerializer
   end
 
-  def new
-    @post = Post.new
-    render json: @post, serializer: PostSerializer
-  end
-
   def create
     @post = current_api_v1_user.posts.build(post_params)
     if @post.save
@@ -19,10 +14,6 @@ class Api::V1::PostsController < ApplicationController
     else
       render json: { status: "error", errors: @post.errors }
     end
-  end
-
-  def edit
-    render json: @post, serializer: PostSerializer
   end
 
   def update

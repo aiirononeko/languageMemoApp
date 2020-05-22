@@ -7,11 +7,6 @@ class Api::V1::FoldersController < ApplicationController
     render json: @folder, serializer: FolderSerializer
   end
 
-  def new
-    @folder = Folder.new
-    render json: @folder, serializer: FolderSerializer
-  end
-
   def create
     @folder = current_api_v1_user.folders.build(folder_params)
     if @folder.save
@@ -21,9 +16,6 @@ class Api::V1::FoldersController < ApplicationController
     end
   end
 
-  def edit
-    render json: @folder, serializer: FolderSerializer
-  end
 
   def update
     if @folder.update(folder_params)
