@@ -99,11 +99,15 @@ RSpec.describe "Api::V1::Folders", type: :request do
         }
       end
 
+      it 'レスポンスステータスが200で返ること' do
+        call_api
+        expect(response.status).to eq 422
+      end
+
       it 'バリデーションエラーが返ること' do
         call_api
         res = JSON.parse(response.body)
-        expect(res["status"]).to eq "error"
-        expect(res["errors"]["name"]).to eq ["を入力してください"]
+        expect(res["name"]).to eq ["を入力してください"]
       end
     end
   end
@@ -154,11 +158,15 @@ RSpec.describe "Api::V1::Folders", type: :request do
           }
         end
 
+        it 'レスポンスステータスが200で返ること' do
+          call_api
+          expect(response.status).to eq 422
+        end
+
         it 'バリデーションエラーが返ること' do
           call_api
           res = JSON.parse(response.body)
-          expect(res["status"]).to eq "error"
-          expect(res["errors"]["name"]).to eq ["を入力してください"]
+          expect(res["name"]).to eq ["を入力してください"]
         end
       end
     end
@@ -170,7 +178,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
           call_api
           res = JSON.parse(response.body)
           expect(res["success"]).to eq false
-          expect(res["errors"]).to eq ["You don't have the right to access this resource"]
+          expect(res["errors"]).to eq ["アクセスする権限がありません。"]
         end
     end
   end
@@ -197,9 +205,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
         it "レスポンスボディーに期待された値が返ること" do
           call_api
           res = JSON.parse(response.body)
-          expect(res["data"]["attributes"]["name"]).to eq "folder_test"
-          expect(res["data"]["attributes"]["public"]).to eq false
-          expect(res["data"]["attributes"]["user-id"]).to eq user.id
+          expect(res['message']).to eq "削除に成功しました"
         end
       end
     end
@@ -211,7 +217,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
          call_api
          res = JSON.parse(response.body)
          expect(res["success"]).to eq false
-         expect(res["errors"]).to eq ["You don't have the right to access this resource"]
+         expect(res["errors"]).to eq ["アクセスする権限がありません。"]
        end
     end
   end
