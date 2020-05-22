@@ -9,7 +9,7 @@
     <p class="profile">{{ userInfo.attributes.profile }}</p>
 
     <div>
-      <p>{{ userInfo.attributes.address }}</p>
+      <p>FROM: {{ userInfo.attributes.address }}</p>
 
       <user-sns-btn-group />
     </div>
