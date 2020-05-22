@@ -110,11 +110,7 @@ export default {
 
   computed: {
     defaultOpen() {
-      if (this.subfield) {
-        return 'preview'
-      }
-
-      return this.isView ? 'preview' : 'edit'
+      return (this.subfield || this.isView) ? 'preview' : 'edit'
     },
 
     md: {
