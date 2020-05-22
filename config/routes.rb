@@ -7,8 +7,8 @@ Rails.application.routes.draw do
         sessions: 'api/v1/auth/sessions',
         omniauth_callbacks: "api/v1/auth/omniauth_callbacks"
       }
-      resources :posts, only: [:show :create, :update, :destroy]
-      resources :folders, only: [:show :create, :update, :destroy]
+      resources :posts, only: [:show, :create, :update, :destroy]
+      resources :folders, only: [:show, :create, :update, :destroy]
     end
   end
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
