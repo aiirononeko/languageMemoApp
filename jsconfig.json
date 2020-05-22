@@ -1,19 +1,26 @@
 {
-    "compilerOptions": {
-        "baseUrl": "./frontend",
-        "paths": {
-            "@/*": [
-                "*"
-            ],
-            "~/*": [
-                "*"
-            ],
-            "@@/*": [
-                "*"
-            ],
-            "~~/*": [
-                "*"
-            ]
-        }
+  "compilerOptions": {
+    "baseUrl": "./frontend",
+    "target": "es2020",
+    "paths": {
+      "@/*": [
+          "*"
+      ],
+      "~/*": [
+          "*"
+      ],
+      "@@/*": [
+          "*"
+      ],
+      "~~/*": [
+          "*"
+      ]
     }
+  },
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    "coverage",
+    "dist"
+  ]
 }
