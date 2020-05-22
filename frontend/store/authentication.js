@@ -5,7 +5,8 @@ export const state = () => ({
   accessToken: null,
   client: null,
   id: null,
-  uid: null
+  uid: null,
+  username: null
 })
 
 export const getters = {
@@ -14,6 +15,7 @@ export const getters = {
   uid: (state) => state.uid,
   id: (state) => state.id,
   isAuthenticated: (state) => state.uid ? true : false,
+  username: (state) => state.username
 }
 
 export const mutations = {
@@ -22,6 +24,7 @@ export const mutations = {
     state.client = null
     state.id = null
     state.uid = null
+    state.username = null
   },
 
   setUser (state, res) {
@@ -29,12 +32,15 @@ export const mutations = {
     state.client = res.headers["client"]
     state.id = res.data.data.id
     state.uid = res.headers["uid"]
+    state.username = res.data.data.attributes.username
   },
 
   setHeader (state, { headers }) {
     state.accessToken = headers["access-token"]
     state.client = headers["client"]
+    state.id = headers["id"]
     state.uid = headers["uid"]
+    state.username = headers["username"]
   }
 }
 
@@ -53,7 +59,9 @@ export const actions = {
       // Cookieにセット
       cookies.set("access-token", getters.accessToken)
       cookies.set("client", getters.client)
+      cookies.set("id", getters.id)
       cookies.set("uid", getters.uid)
+      cookies.set("username", getters.username)
     } catch (error) {
       if (error.response && error.response.status === 401) {
         throw new Error("Bad credentials")
@@ -80,7 +88,9 @@ export const actions = {
       commit("clearUser")
       cookies.remove("access-token")
       cookies.remove("client")
+      cookies.remove("id")
       cookies.remove("uid")
+      cookies.remove("username")
     } catch (error) {
       if (error.response && error.response.status === 401) {
         throw new Error("Bad credentials")
