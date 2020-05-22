@@ -47,6 +47,10 @@ module.exports = {
     { src: "~/plugins/vue-mavon-editor", ssr: false },
   ],
 
+  // router: {
+  //   middleware: ["check-auth"],
+  // },
+
   css: [{ src: "~/assets/sass/common.scss", lang: "scss" }],
 
   axios: {
