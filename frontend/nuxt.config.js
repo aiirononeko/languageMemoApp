@@ -35,6 +35,7 @@ module.exports = {
   modules: [
     "@nuxtjs/axios",
     "@nuxtjs/vuetify",
+    "@nuxtjs/device",
     "@nuxtjs/auth",
     ["nuxt-sass-resources-loader", ["~/assets/sass/variable.scss"]],
   ],
@@ -45,6 +46,10 @@ module.exports = {
     "~/plugins/axios",
     { src: "~/plugins/vue-mavon-editor", ssr: false },
   ],
+
+  // router: {
+  //   middleware: ["check-auth"],
+  // },
 
   css: [{ src: "~/assets/sass/common.scss", lang: "scss" }],
 

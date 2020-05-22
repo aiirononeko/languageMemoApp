@@ -1,3 +1,5 @@
+@import "functions/mq.scss";
+
 .text-decoration-none {
   text-decoration: none !important;
 }
@@ -19,6 +21,22 @@
 }
 
 // markdown editorの打ち消し
-.v-note-wrapper {
-  position: unset !important;
+.mavonEditor {
+  .v-note-wrapper {
+    position: unset;
+  }
+
+  .v-note-wrapper .v-note-op {
+    display: block;
+    @include mq(sm) {
+      display: flex;
+    }
+  }
+
+  .v-note-wrapper .v-note-op .v-right-item {
+    max-width: 100%;
+    @include mq(sm) {
+      max-width: 30%;
+    }
+  }
 }
