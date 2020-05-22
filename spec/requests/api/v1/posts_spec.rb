@@ -241,7 +241,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
         call_api
         res = JSON.parse(response.body)
         expect(res["success"]).to eq false
-        expect(res["errors"]).to eq ["アクセスする権限がありません。"]
+        expect(res["errors"]).to eq ["アクセスする権限がありません"]
       end
     end
   end
@@ -282,7 +282,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
          call_api
          res = JSON.parse(response.body)
          expect(res["success"]).to eq false
-         expect(res["errors"]).to eq ["アクセスする権限がありません。"]
+         expect(res["errors"]).to eq ["アクセスする権限がありません"]
        end
     end
   end
