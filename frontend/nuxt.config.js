@@ -35,6 +35,7 @@ module.exports = {
   modules: [
     "@nuxtjs/axios",
     "@nuxtjs/vuetify",
+    "@nuxtjs/device",
     "@nuxtjs/auth",
     ["nuxt-sass-resources-loader", ["~/assets/sass/variable.scss"]],
   ],
