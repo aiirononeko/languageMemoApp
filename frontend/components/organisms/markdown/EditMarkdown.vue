@@ -139,7 +139,7 @@ export default {
 
   methods: {
     onSave() {
-      return this.$emit('save')
+      return this.$emit('post')
     },
 
     onPreviewToggle(status) {
