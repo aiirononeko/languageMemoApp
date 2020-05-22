@@ -10,7 +10,7 @@ module.exports = {
    */
   head: {
     htmlAttrs: { lang: "ja" },
-    title: "frontend",
+    title: "Poeta",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -79,6 +79,9 @@ module.exports = {
     gzip: true,
   },
 
+  /*
+   ** Style Resources configuration
+   */
   styleResources: {
     scss: [
       "~/assets/sass/variable.scss",
