@@ -27,8 +27,7 @@ export default {
     },
 
     username() {
-      // TODO: usernameにする
-      return this.$store.getters["authentication/uid"]
+      return this.$store.getters["authentication/username"]
     }
   },
 }
