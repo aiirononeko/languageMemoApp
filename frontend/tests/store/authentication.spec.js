@@ -69,7 +69,7 @@ describe('store/authentication.js', () => {
           uid: "hoge@example.com",
           client: "NQqnvItfl_4F9V_l2gzIla",
         },
-        data: { data: { id: "1" } }
+        data: { data: { id: "1", attributes: { username: "ApeE8e4ka" } } }
       }
       store.commit('setUser', res)
 
@@ -102,7 +102,7 @@ describe('store/authentication.js', () => {
           uid: "hoge@example.com",
           client: "NQqnvItfl_4F9V_l2gzIla",
         },
-        data: { data: { id: "1" } }
+        data: { data: { id: "1", attributes: { username: "ApeE8e4ka" } } }
       }
 
       await store.dispatch('login', { email: 'hoge@example.com', password: 'password' })
@@ -147,7 +147,7 @@ describe('store/authentication.js', () => {
           uid: "hoge@example.com",
           client: "NQqnvItfl_4F9V_l2gzIla",
         },
-        data: { data: { id: "1" } }
+        data: { data: { id: "1", attributes: { username: "ApeE8e4ka" } } }
       }
       store.commit('setUser', res)
 
