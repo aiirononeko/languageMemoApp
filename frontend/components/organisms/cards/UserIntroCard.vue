@@ -4,12 +4,12 @@
       <v-img src="https://picsum.photos/510/300?random" class="user-icon" />
     </div>
 
-    <p class="name">{{ userInfo.attributes.name }}</p>
+    <p class="name">{{ getName }}</p>
 
-    <p class="profile">{{ userInfo.attributes.profile }}</p>
+    <p class="profile">{{ getProfile }}</p>
 
     <div>
-      <p>FROM: {{ userInfo.attributes.address }}</p>
+      <p>FROM: {{ getAddress }}</p>
 
       <user-sns-btn-group />
     </div>
@@ -17,23 +17,35 @@
 </template>
 
 <script>
-import UserSnsBtnGroup from '~/components/organisms/btnGroup/UserSnsBtnGroup'
+import UserSnsBtnGroup from "~/components/organisms/btnGroup/UserSnsBtnGroup"
 
 export default {
   components: {
-    UserSnsBtnGroup
+    UserSnsBtnGroup,
   },
 
   props: {
     userInfo: {
       type: Object,
-      default: undefined
-    }
-  }
+      default: undefined,
+    },
+  },
+
+  computed: {
+    getName() {
+      return this.userInfo.attributes && this.userInfo.attributes.name
+    },
+    getProfile() {
+      return this.userInfo.attributes && this.userInfo.attributes.profile
+    },
+    getAddress() {
+      return this.userInfo.attributes && this.userInfo.attributes.address
+    },
+  },
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .user-icon {
   width: 80px;
   height: 80px;
