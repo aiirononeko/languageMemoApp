@@ -45,6 +45,6 @@ class Api::V1::PostsController < ApplicationController
   def correct_user?
     return if current_api_v1_user == @post.user
     render status: 401, json: { success: false,
-                   errors: ["アクセスする権限がありません。"] }
+                   errors: ["アクセスする権限がありません"] }
   end
 end
