@@ -18,10 +18,12 @@ export default {
     }
   },
 
-  async asyncData({ $axios, params }) {
+  async asyncData({ $axios, params, store }) {
     try {
-      const { data } = await $axios.$get(`/api/v1/users/2`)
-      console.log(data)
+      // Todo: APIが変更されたら以下のように変更する
+      // const { data } = await $axios.$get(`/api/v1/users/#{params}`)
+
+      const { data } = await $axios.$get(`/api/v1/users/${store.getters["authentication/id"]}`)
       return { userInfo: data }
     } catch (e) {
       console.error(e)
