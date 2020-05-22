@@ -22,7 +22,11 @@ export default {
   computed: {
     newData() {
       const data = this.data
-      data.to = `/${this.username}`
+      if(this.$store.getters["authentication/accessToken"]) {
+        data.to = `/${this.username}`
+      } else {
+        data.to = '/about'
+      }
       return data
     },
 
