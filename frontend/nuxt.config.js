@@ -32,7 +32,6 @@ module.exports = {
     "@nuxtjs/device",
     "@nuxtjs/sitemap",
     "@nuxtjs/vuetify",
-    ["nuxt-sass-resources-loader", ["~/assets/sass/variable.scss"]],
   ],
 
   /*
@@ -40,6 +39,7 @@ module.exports = {
    */
   buildModules: [
     "@nuxtjs/dotenv",
+    "@nuxtjs/style-resources",
     // "@nuxtjs/google-analytics",
     // "@nuxtjs/pwa" // pwaは開発時にバグりやすいので、しばらくはコメント,
   ],
@@ -79,6 +79,13 @@ module.exports = {
     gzip: true,
   },
 
+  styleResources: {
+    scss: [
+      "~/assets/sass/variable.scss",
+      "~/assets/sass/functions/**.scss"
+    ]
+  },
+
   /*
    ** Build configuration
    */
@@ -94,8 +101,8 @@ module.exports = {
           test: /\.(js|vue)$/,
           loader: "eslint-loader",
           exclude: /(node_modules)/,
-        });
+        })
       }
     },
   },
-};
+}
