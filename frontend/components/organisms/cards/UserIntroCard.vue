@@ -1,17 +1,19 @@
 <template>
-  <v-card max-width="355px" class="d-flex flex-column align-center pt-4">
+  <v-card max-width="355px" class="text-center pt-4">
     <div>
-      <v-img src="https://picsum.photos/510/300?random" class="user-icon" />
-    </div>
+      <div>
+        <v-img src="https://picsum.photos/510/300?random" class="user-icon" />
+      </div>
 
-    <p class="name">{{ getName }}</p>
+      <p class="name">{{ getName }}</p>
 
-    <p class="profile">{{ getProfile }}</p>
+      <p class="profile">{{ getProfile }}</p>
 
-    <div>
-      <p>FROM: {{ getAddress }}</p>
+      <div class="mt-3">
+        <p>FROM: {{ getAddress }}</p>
 
-      <user-sns-btn-group />
+        <user-sns-btn-group />
+      </div>
     </div>
   </v-card>
 </template>
@@ -51,6 +53,7 @@ export default {
   height: 80px;
   object-fit: cover;
   border-radius: 50%;
+  margin: 0 auto;
 }
 
 .name {
@@ -60,5 +63,6 @@ export default {
 
 .profile {
   width: 80%;
+  margin: 0 auto;
 }
 </style>
