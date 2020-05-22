@@ -18,8 +18,8 @@ local:
 google:
   service: GCS
   credentials: <%= Rails.root.join("gcp_keyfile.json") %>
-  project: ""
-  bucket: ""
+  project: "poeta-276706"
+  bucket: "poeta-images"
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
 # microsoft:
 #   service: AzureStorage
