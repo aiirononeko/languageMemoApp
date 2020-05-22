@@ -33,7 +33,7 @@ poetaのAPI仕様書
           + status: error
           + errors
               + email: ["を入力してください"]
-              + full_messages: ["Emailを入力してください"] 
+              + full_messages: ["Emailを入力してください"]
 
 ### ユーザー削除 [DELETE]
 ユーザーを削除する。
@@ -55,7 +55,7 @@ poetaのAPI仕様書
 ### ユーザー情報編集 [PUT]
 ユーザーの情報を編集する。
 
-+ Request 
++ Request
 
       + Headers
 
@@ -89,7 +89,7 @@ poetaのAPI仕様書
 ユーザーの情報の編集画面を表示する。
 
 
-+ Request 
++ Request
 
       + Headers
 
@@ -115,7 +115,7 @@ poetaのAPI仕様書
 ### トークンの有効性を検証 [GET /auth/validate_token]
 リクエストヘッダを見てユーザーがログイン状態かどうか判定する。
 
-+ Request 
++ Request
 
       + Headers
 
@@ -181,11 +181,11 @@ poetaのAPI仕様書
             client: `ランダムな文字列`
             access_token: `ランダムな文字列`
 
-    + Attributes 
+    + Attributes
         + data
             + id: 1,
             + type: users,
-            + attributes 
+            + attributes
                 + name: null,
                 + profile: null,
                 + address: null,
@@ -205,7 +205,7 @@ poetaのAPI仕様書
 ### ログアウト [DELETE /auth/sign_out]
 現在ログインしているアカウントからログアウトする。
 
-+ Request 
++ Request
 
       + Headers
 
@@ -246,7 +246,7 @@ poetaのAPI仕様書
       + data
               + id: 1,
               + type: users,
-              + attributes 
+              + attributes
                   + name: null,
                   + profile: null,
                   + address: null,
@@ -274,3 +274,326 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
 レスポンスヘッダに、ログインに必要なuid, client, access_tokenが含まれいる。
 
 + Response 200 (application/text/html)
+
+##POST関連API[/users/{user.id}/posts/{post.id}]
+
+###postの詳細ページ[GET /users/{user.id}/posts/{post.id}]
+postの詳細を取得する
+
++ Request
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+      + id: 1 (ポストID)
+      + user_id: 1
+
++ Response 200 (application/json)
+   + Attributes
+        + data
+            + id: 1,
+            + type: posts,
+            + attributes
+                + name: `example`,
+                + content: `example2`,
+                + public: false,
+                + user-id: 1,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
+###投稿[POST /users/{user.id}/posts/]
+
+TILを投稿する
++ Request
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+      + name: "example",
+      + content: "example2",
+      + public :false,
+      + user_id: 1
+
++ Response 200 (application/json)
+  + Attributes
+        + data
+            + id: 1,
+            + type: posts,
+            + attributes
+                + name: `example`,
+                + content: `example2`,
+                + public: false,
+                + user-id: 1,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
++ Response 200 (application/json)
+  + Attributes
+    + success: "error"
+    + errors
+          + name: ["を入力してください"]
+          + full_messages: [ "を入力してください"]
+
+###postの編集ページ[GET /posts/{post.id}/edit]
+TILを編集する
+
++ Request
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+     + id: 1 (ポストID)
+     + user_id: 1
+
++ Response 200 (application/json)
+   + Attributes
+        + data
+            + id: 1,
+            + type: posts,
+            + attributes
+                + name: `example`,
+                + content: `example2`,
+                + public: false,
+                + user-id: 1,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
+### postの情報を更新[PUT /users/{user.id}/posts/{post.id}]
+TILを更新する
+
++ Request
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+      + name: "update_example",
+      + content: "update_example2",
+      + public :false,
+      + user_id: 1
+      + id: 1 (ポストID)
+
++ Response 200 (application/json)
+  + Attributes
+        + data
+            + id: 1,
+            + type: posts,
+            + attributes
+                + name: `update_example`,
+                + content: `update_example2`,
+                + public: false,
+                + user-id: 1,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
++ Response 200 (application/json)
+  + Attributes
+    + success: false
+    + errors
+          + ["You don't have the right to access this resource"]
+
++ Response 200 (application/json)
+  + Attributes
+    + success: "error"
+    + errors
+          + name: ["を入力してください"]
+          + content: [ "を入力してください"]
+
+###postの削除[DELETE /users/{user.id}/posts/{post.id}]
+TILを削除する
+
++ Request
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+      + user_id: 1
+      + id: 1 (ポストID)
+
++ Response 200 (application/json)
+   + Attributes
+        + data
+            + id: 1,
+            + type: posts,
+            + attributes
+                + name: `example`,
+                + content: `example2`,
+                + public: false,
+                + user-id: 1,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
++ Response 200 (application/json)
+  + Attributes
+    + success: false
+    + errors
+        + ["You don't have the right to access this resource"]
+
+##Folder関連API[/users/{user.id}/folders/{folder.id}]
+
+###folderの詳細ページ[GET /users/{user.id}/folders/{folder.id}]
+folderの詳細ページを取得する
+
++ Request
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+      + user_id: 1
+      + id: 1 (フォルダーID)
+
++ Response 200 (application/json)
+   + Attributes
+        + data
+            + id: 1,
+            + type: posts,
+            + attributes
+                + name: `example`,
+                + public: false,
+                + user-id: 1,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+                + posts
+                    [  + name: `example`,
+                       + content: `example2`,
+                       + public: false,
+                       + user-id: 1,
+                       + created_at: `2020-03-05`,
+                       + updated_at: `2020-03-05` ]
+
+###folder作成[POST /users/{user.id}/folders/]
+Folderを作成する
+
++ Request
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+      + name: "example",
+      + public :false,
+      + user_id: 1
+
++ Response 200 (application/json)
+  + Attributes
+        + data
+            + id: 1,
+            + type: posts,
+            + attributes
+                + name: `example`,
+                + public: false,
+                + user-id: 1,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
++ Response 200 (application/json)
+  + Attributes
+    + success: "error"
+    + errors
+          + name: ["を入力してください"]
+
+###folderの編集ページ[GET /users/{user.id}/folders/{folder.id}/edit]
+folderの編集をする
+
++ Parameters
+    + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+    + user_id: 1
+    + id: 1 (フォルダーID)
+
++ Response 200 (application/json)
+   + Attributes
+        + data
+            + id: 1,
+            + type: posts,
+            + attributes
+                + name: `example`,
+                + public: false,
+                + user-id: 1,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
+### folderの情報を更新[PUT /users/{user.id}/folders/{folder.id}/]
+folderを更新する
+
++ Request
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+      + name: "update_example",
+      + public :false,
+      + user_id: 1
+      + id: 1 (フォルダーID)
+
++ Response 200 (application/json)
+  + Attributes
+        + data
+            + id: 1,
+            + type: posts,
+            + attributes
+                + name: `update_example`,
+                + public: false,
+                + user-id: 1,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
++ Response 200 (application/json)
+  + Attributes
+    + success: false
+    + errors
+          + ["You don't have the right to access this resource"]
+
++ Response 200 (application/json)
+  + Attributes
+    + success: "error"
+    + errors
+          + name: ["を入力してください"]
+
+###folderの削除[DELETE /users/{user.id}/folders/{folder.id}]
+
++ Request
+      + Headers
+
+            uid: "ログイン時にレスポンスヘッダで返されたuid"
+            client: "ログイン時にレスポンスヘッダで返されたclient"
+            access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
+      + user_id: 1
+      + id: 1 (フォルダーID)
+
++ Response 200 (application/json)
+   + Attributes
+        + data
+            + id: 1,
+            + type: posts,
+            + attributes
+                + name: `example`,
+                + public: false,
+                + user-id: 1,
+                + created_at: `2020-03-05`,
+                + updated_at: `2020-03-05`
+
++ Response 200 (application/json)
+  + Attributes
+    + success: false
+    + errors
+          + ["You don't have the right to access this resource"]

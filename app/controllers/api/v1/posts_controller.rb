@@ -1,6 +1,6 @@
 class Api::V1::PostsController < ApplicationController
   before_action :authenticate_api_v1_user!, except:[:show]
-  before_action :set_post, except: [:new, :create]
+  before_action :set_post, except: [:new,:create]
   before_action :correct_user?, only: [:update, :destroy]
 
   def show
@@ -44,7 +44,7 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:name, :content, :public)
+    params.require(:post).permit(:name, :content, :public, :user_id, :folder_id)
   end
 
   def set_post
