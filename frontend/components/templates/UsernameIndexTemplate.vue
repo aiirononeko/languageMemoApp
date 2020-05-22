@@ -1,15 +1,17 @@
 <template>
-  <two-column-container leftCols="4" rightCols="6">
+  <two-column-container :leftCols="4" :rightCols="6">
+
+
     <template #left>
-      <user-intro-card :userInfo="userInfo" />
+      <user-intro-card :userInfo="userInfo" class="mt-10" />
     </template>
 
     <template #right>
-      <h2>あなたのリポジトリ</h2>
+      <h2 class="text-center">あなたのリポジトリ</h2>
 
       <folder-breadcrumbs />
 
-      <!-- <file-folder-list-with-action /> -->
+      <file-folder-list-with-action />
     </template>
   </two-column-container>
 </template>
@@ -22,9 +24,10 @@ import UserIntroCard from '~/components/organisms/cards/UserIntroCard'
 
 export default {
   components: {
+    FileFolderListWithAction,
     FolderBreadcrumbs,
     TwoColumnContainer,
-    UserIntroCard
+    UserIntroCard,
   },
   
   props: {
