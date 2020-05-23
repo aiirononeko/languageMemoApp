@@ -21,7 +21,6 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
     end
     super
   end
-  
 
   private
 
