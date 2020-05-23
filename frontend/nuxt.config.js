@@ -1,6 +1,10 @@
 require('dotenv').config()
 
 module.exports = {
+
+  /*
+   ** Environment Variables
+   */
   env: {
     baseUrl: process.env.BASE_URL || "http://localhost:3000",
   },
@@ -52,6 +56,9 @@ module.exports = {
     { src: "~/plugins/vue-mavon-editor", ssr: false },
   ],
 
+  /*
+   ** Global css
+   */
   css: [{ src: "~/assets/sass/common.scss", lang: "scss" }],
 
   /*
