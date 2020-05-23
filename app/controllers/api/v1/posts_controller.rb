@@ -12,7 +12,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.save
       render json: @post, serializer: PostSerializer
     else
-      render json: { status: "error", errors: @post.errors }
+      render status: :unprocessable_entity, json: @post.errors
     end
   end
 
@@ -20,13 +20,13 @@ class Api::V1::PostsController < ApplicationController
     if @post.update(post_params)
       render json: @post, serializer: PostSerializer
     else
-      render json: { status: "error", errors: @post.errors }
+      render  status: :unprocessable_entity, json: @post.errors
     end
   end
 
   def destroy
     if @post.destroy
-      render json: @post, serializer: PostSerializer
+      render json: { status: 200, message: "削除に成功しました" }
     else
       render json: { status: "error", errors: @post.errors }
     end
@@ -44,7 +44,7 @@ class Api::V1::PostsController < ApplicationController
 
   def correct_user?
     return if current_api_v1_user == @post.user
-    render json: { success: false,
-                   errors: ["You don't have the right to access this resource"] }
+    render status: 401, json: { success: false,
+                   errors: ["アクセスする権限がありません"] }
   end
 end
