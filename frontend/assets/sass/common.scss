@@ -1,42 +1,23 @@
-@import "functions/mq.scss";
-
-.text-decoration-none {
-  text-decoration: none !important;
-}
+/**
+ * Global Cssの記載
+ */
 
 .box-shadow-none {
   box-shadow: none !important;
 }
 
-.w-100 {
-  width: 100%;
+.text-decoration-none {
+  text-decoration: none !important;
 }
 
 .h-100 {
   height: 100%;
 }
 
-.pos-relative {
-  position: relative;
+.w-100 {
+  width: 100%;
 }
 
-// markdown editorの打ち消し
-.mavonEditor {
-  .v-note-wrapper {
-    position: unset;
-  }
-
-  .v-note-wrapper .v-note-op {
-    display: block;
-    @include mq(sm) {
-      display: flex;
-    }
-  }
-
-  .v-note-wrapper .v-note-op .v-right-item {
-    max-width: 100%;
-    @include mq(sm) {
-      max-width: 30%;
-    }
-  }
+.pos-relative {
+  position: relative;
 }
