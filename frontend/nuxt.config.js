@@ -59,7 +59,7 @@ module.exports = {
   /*
    ** Global css
    */
-  css: [{ src: "~/assets/sass/common.scss", lang: "scss" }],
+  css: [{ src: "~/assets/sass/app.scss", lang: "scss" }],
 
   /*
    ** Axios configuration
