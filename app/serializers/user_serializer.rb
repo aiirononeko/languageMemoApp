@@ -4,7 +4,7 @@ class UserSerializer < ActiveModel::Serializer
 
   def image
     image = url_for(object.avatar) if object.avatar.attached?
-    image = object.image unless object.avatar.attached?
+    image ||= object.image
     image
   end
 end
