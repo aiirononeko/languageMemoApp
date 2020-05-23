@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2020-05-22T17:57:09Z"
+  labels:
+    run: poeta-api
+  name: poeta-api
+  namespace: default
+  resourceVersion: "2098"
+  selfLink: /api/v1/namespaces/default/pods/poeta-api
+  uid: a7f5e1b0-9c55-11ea-9ba5-42010a920077
+spec:
+  containers:
+    env:
+      - name: RAILS_MASTER_KEY
+        valueFrom:
+          secretKeyRef:
+            name: rails
+            key: master
+    - command:
+      - rails
+      - s
+      - -e
+      - production
+      image: asia.gcr.io/poeta-276706/poeta-api:1.0
+      imagePullPolicy: IfNotPresent
+      name: poeta-api
+      ports:
+      - containerPort: 3000
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 200m
+        requests:
+          cpu: 200m
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-458rd
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: gke-poeta-default-pool-fddf0113-99s8
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: default-token-458rd
+      secret:
+        defaultMode: 420
+        secretName: default-token-458rd
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2020-05-22T17:57:15Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2020-05-22T18:02:11Z"
+    message: 'containers with unready status: [poeta-api]'
+    reason: ContainersNotReady
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2020-05-22T18:02:11Z"
+    message: 'containers with unready status: [poeta-api]'
+    reason: ContainersNotReady
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2020-05-22T17:57:09Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://bb0c7c714bee2531894c31ff60331a8e01cc19e32ef489a0165ef23743785054
+    image: asia.gcr.io/poeta-276706/poeta-api:1.0
+    imageID: docker-pullable://asia.gcr.io/poeta-276706/poeta-api@sha256:0673c6175e13e0571ec3dcdf41539ac0fd9f162de968fcb8b3ec94f07c511d5b
+    lastState:
+      terminated:
+        containerID: docker://bb0c7c714bee2531894c31ff60331a8e01cc19e32ef489a0165ef23743785054
+        exitCode: 1
+        finishedAt: "2020-05-22T18:02:10Z"
+        reason: Error
+        startedAt: "2020-05-22T18:02:02Z"
+    name: poeta-api
+    ready: false
+    restartCount: 5
+    state:
+      waiting:
+        message: Back-off 2m40s restarting failed container=poeta-api pod=poeta-api_default(a7f5e1b0-9c55-11ea-9ba5-42010a920077)
+        reason: CrashLoopBackOff
+  hostIP: 10.146.0.15
+  phase: Running
+  podIP: 10.52.0.6
+  qosClass: Burstable
+  startTime: "2020-05-22T17:57:15Z"
