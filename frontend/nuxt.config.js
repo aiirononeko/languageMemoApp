@@ -35,7 +35,6 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/device",
     "@nuxtjs/sitemap",
-    "@nuxtjs/vuetify",
   ],
 
   /*
@@ -44,6 +43,7 @@ module.exports = {
   buildModules: [
     "@nuxtjs/dotenv",
     "@nuxtjs/style-resources",
+    "@nuxtjs/vuetify",
     // "@nuxtjs/google-analytics",
     // "@nuxtjs/pwa" // pwaは開発時にバグりやすいので、しばらくはコメント,
   ],
