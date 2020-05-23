@@ -13,7 +13,7 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
       extension = mime_type.split('/').second
       decoded_image = Base64.decode64(encoded_image)
       filename = "avatar#{current_api_v1_user.id}.#{extension}"
-      image_path = "#{Rails.root}/#{filename}"
+      image_path = Rails.root.join('storage', filename)
       File.open(image_path, 'wb') do |f|
         f.write(decoded_image)
       end
