@@ -3,8 +3,6 @@ class UserSerializer < ActiveModel::Serializer
   attributes :id, :name, :username, :image, :profile, :address, :twitter_link, :github_link, :created_at, :updated_at
 
   def image
-    image = url_for(object.avatar) if object.avatar.attached?
-    image ||= object.image
-    image
+    object.avatar.attached? ?  url_for(object.avatar) : object.image
   end
 end
