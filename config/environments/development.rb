@@ -65,4 +65,5 @@ Rails.application.configure do
   # DockerのIPアドレスをホワイトリストに追加
   config.web_console.whitelisted_ips = ['172.18.0.1', '192.168.99.1']
   config.action_controller.forgery_protection_origin_check = false
+  Rails.application.routes.default_url_options[:host] = ENV['DEV_API_DOMAIN'] || 'localhost:3000'
 end
