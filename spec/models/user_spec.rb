@@ -119,10 +119,17 @@ RSpec.describe User, type: :model do
   end
 
   describe "Association" do
-    it "Postテーブルに正しく紐づいていること" do
+    it "Postテーブルに正しく紐づいている" do
       rel = described_class.reflect_on_association(:posts)
       expect(rel.macro).to eq :has_many
       expect(rel.options[:dependent]).to eq :destroy
+    end
+  end
+
+  describe "ActiveStorage - avatar" do
+    let(:user) { create(:confirmed_user, :with_avatar) }
+    it "ユーザーにアタッチされている" do
+      expect(user.avatar.attached?).to eq true
     end
   end
 end
