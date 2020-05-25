@@ -132,4 +132,11 @@ RSpec.describe User, type: :model do
       expect(user.avatar.attached?).to eq true
     end
   end
+
+  describe "ActiveStorage - avatarが不正な時" do
+    let(:user) { create(:confirmed_user, :with_invalid_avatar) }
+    it "ユーザーにアタッチされない" do
+      expect(user.avatar.attached?).to eq true
+    end
+  end
 end
