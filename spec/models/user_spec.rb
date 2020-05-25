@@ -134,9 +134,13 @@ RSpec.describe User, type: :model do
   end
 
   describe "ActiveStorage - avatarが不正な時" do
-    let(:user) { create(:confirmed_user, :with_invalid_avatar) }
+    let(:user) { create(:confirmed_user, :with_avatar) }
     it "ユーザーにアタッチされない" do
-      expect(user.avatar.attached?).to eq true
+      file_path = Rails.root.join('spec', 'fixtures', 'test.txt')
+      file = fixture_file_upload(file_path, 'text/plain')
+      user.avatar.detach
+      user.update(avatar: file)
+      expect(user.valid?).to eq false
     end
   end
 end
