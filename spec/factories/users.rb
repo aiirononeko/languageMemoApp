@@ -19,5 +19,12 @@ FactoryBot.define do
         user.avatar.attach(file)
       end
     end
+    trait :with_invalid_avatar do
+      after(:build) do |user|
+        file_path = Rails.root.join('spec', 'fixtures', 'test.txt')
+        file = fixture_file_upload(file_path)
+        user.avatar.attach(file)
+      end
+    end
   end
 end
