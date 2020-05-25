@@ -2,6 +2,9 @@
   <div>
     <!-- ファイルやフォルダーのリスト -->
     <!-- 編集や削除のアクションを付けるList -->
+    <link-to-back-item />
+    <file-list-item />
+    <folder-list-item />
   </div>
 </template>
 
