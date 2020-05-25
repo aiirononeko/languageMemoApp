@@ -1,6 +1,5 @@
 class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   before_action :authenticate_api_v1_user!, except:[:create,:new]
-  before_action :valid_extension?, only:[:update]
   wrap_parameters false
 
   def edit	
@@ -48,20 +47,5 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
 
   def default_username
     SecureRandom.alphanumeric(15)
-  end
-
-  def valid_extension?
-    if params[:avatar]
-      image_match = params[:avatar]&.match(/^data:(.*?);(?:.*?),(.*)$/)
-      mime_type, encoded_image = image_match&.captures
-      extension = mime_type&.split('/')&.second
-      unless extension_white_list.include?(extension)
-        render status: :unprocessable_entity, json: { errors: ["jpg, png, gifのいずれかのファイルを選択して下さい"] }
-      end
-    end
-  end
-
-  def extension_white_list
-    %w(jpg jpeg gif png)
   end
 end
