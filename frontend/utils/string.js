@@ -5,9 +5,9 @@
  */
 export const camelCase = (str) => {
   str = str.charAt(0).toLowerCase() + str.slice(1)
-  return str.replace(/[-_ ](.)/g, (match, group) => {
-    return group.toUpperCase()
-  })
+  return str.replace(/[-_ ](.)/g, (match, group) =>
+    group.toUpperCase()
+  )
 }
 
 
@@ -18,9 +18,9 @@ export const camelCase = (str) => {
  */
 export const snakeCase = (str) => {
   const camel = camelCase(str)
-  return camel.replace(/[A-Z]/g, (s) => {
-    return "_" + s.charAt(0).toLowerCase()
-  })
+  return camel.replace(/[A-Z]/g, (s) =>
+    "_" + s.charAt(0).toLowerCase()
+  )
 }
 
 

@@ -71,7 +71,7 @@ Start numbering with offset:
 `
 const EditFileidTemplate = () => import('~/components/templates/EditFileidTemplate')
 
-const DEFALUT_STATUS = 'both'
+const DEFAULT_STATUS = 'both'
 
 export default {
   components: {
@@ -85,8 +85,8 @@ export default {
   middleware: "authenticated",
 
   computed: {
-    defalutStatus() {
-      return DEFALUT_STATUS
+    defaultStatus() {
+      return DEFAULT_STATUS
     },
 
     fileID() {
@@ -96,19 +96,19 @@ export default {
     isBoth() {
       const LABEL = 'both'
       const status = this.$route.query.status
-      return status ? status === LABEL : this.defalutStatus === LABEL
+      return status ? status === LABEL : this.defaultStatus === LABEL
     },
 
     isEdit() {
       const LABEL = 'edit'
       const status = this.$route.query.status
-      return status ? status === LABEL : this.defalutStatus === LABEL
+      return status ? status === LABEL : this.defaultStatus === LABEL
     },
 
     isView() {
       const LABEL = 'view'
       const status = this.$route.query.status
-      return status ? status === LABEL : this.defalutStatus === LABEL
+      return status ? status === LABEL : this.defaultStatus === LABEL
     }
   },
 

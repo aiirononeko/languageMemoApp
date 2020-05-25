@@ -7,15 +7,15 @@
 </template>
 
 <script>
-import FileListItem from '~/components/organisms/list/FileListItem'
+// import FileListItem from '~/components/organisms/list/FileListItem'
 import FileFolderListTitleItem from '~/components/organisms/list/FileFolderListTitleItem'
-import FolderListItem from '~/components/organisms/list/FolderListItem'
+// import FolderListItem from '~/components/organisms/list/FolderListItem'
 
 export default {
   components: {
-    FileListItem,
+    // FileListItem,
     FileFolderListTitleItem,
-    FolderListItem
+    // FolderListItem
   }
 }
 </script>
