@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   validate :avatar_content_type, if: :was_attached?
 
   def avatar_content_type
-    extension = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
+    extension = ['image/png', 'image/jpg', 'image/jpeg']
     errors.add(:avatar, "の拡張子が間違っています") unless avatar.content_type.in?(extension)
   end
 
