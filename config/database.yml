@@ -49,6 +49,7 @@ test:
 #
 production:
   <<: *default
-  database: languageMemoApp_production
-  username: languageMemoApp
-  password: <%= ENV['LANGUAGEMEMOAPP_DATABASE_PASSWORD'] %>
+  host: <%= ENV['POETA_DB_HOST'] %>
+  database: <%= ENV['POETA_DB_DBNAME'] %>
+  username: <%= ENV['POETA_DB_USERNAME'] %>
+  password: <%= ENV['POETA_DB_PASSWORD'] %>
