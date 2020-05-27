@@ -10,7 +10,9 @@ import SigninTemplate from '~/components/templates/SigninTemplate'
 export default {
   components: {
     SigninTemplate
-  }
+  },
+
+  middleware: 'guest'
 }
 </script>
 

@@ -28,7 +28,7 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
-  config.active_storage.service = :local
+  config.active_storage.service = :google
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -65,4 +65,5 @@ Rails.application.configure do
   # DockerのIPアドレスをホワイトリストに追加
   config.web_console.whitelisted_ips = ['172.18.0.1', '192.168.99.1']
   config.action_controller.forgery_protection_origin_check = false
+  Rails.application.routes.default_url_options[:host] = ENV['DEV_API_DOMAIN'] || 'localhost:3000'
 end
