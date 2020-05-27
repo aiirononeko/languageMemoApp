@@ -1,8 +1,6 @@
 <template>
   <div>
-    <p>ユーザー名：{{ username }}</p>
-
-    <username-index-template />
+    <username-index-template :userInfo="userInfo" />
   </div>
 </template>
 
@@ -17,6 +15,18 @@ export default {
   computed: {
     username() {
       return this.$route.params.username
+    }
+  },
+
+  async asyncData({ $axios, params, store }) {
+    try {
+      // Todo: APIが変更されたら以下のように変更する
+      // const { data } = await $axios.$get(`/api/v1/users/#{params}`)
+
+      const { data } = await $axios.$get(`/api/v1/users/${store.getters["authentication/id"]}`)
+      return { userInfo: data }
+    } catch (e) {
+      console.error(e)
     }
   },
 }

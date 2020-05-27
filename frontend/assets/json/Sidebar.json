@@ -1,10 +1,10 @@
 {
   "data": {
     "guest": ["home", "login", "register"],
-    "login": ["home", "settings", "username", "md-debug", "logout"]
+    "login": ["home", "settings", "post", "md-debug", "logout"]
   },
   "items": {
-    "home": { "name": "Home", "to": "/about", "icon": "mdi-home" },
+    "home": { "name": "Home", "event": "home" , "icon": "mdi-home" },
     "login": {
       "name": "ログイン",
       "to": "/signin",
@@ -28,10 +28,9 @@
       "icon": "mdi-cog",
       "to": "/settings/profile"
     },
-    "username": {
+    "post": {
       "name": "投稿する",
-      "icon": "mdi-pencil",
-      "event": "username"
+      "icon": "mdi-pencil"
     },
     "md-debug": {
       "name": "マークダウン",
