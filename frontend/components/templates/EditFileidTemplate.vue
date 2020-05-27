@@ -1,10 +1,16 @@
 <template>
   <one-column-container class="pos-relative" fluid>
-    <edit-markdown v-model="md" />
+    <edit-markdown v-model="md" :fileid="fileid" :isView="isView" :subfield="isBoth" @post="post" />
 
-    <blue-btn class="post-btn" large @click="post">
-      投稿する
-    </blue-btn>
+    <div :class="{ 'text-right': !$device.isDesktopOrTablet }">
+      <blue-btn
+        :class="{ 'post-btn' : $device.isDesktopOrTablet  }"
+        large
+        @click="post"
+      >
+        投稿する
+      </blue-btn>
+    </div>
   </one-column-container>
 </template>
 
@@ -24,6 +30,21 @@ export default {
     fileid: {
       type: String,
       required: true
+    },
+
+    isBoth: {
+      type: Boolean,
+      default: false
+    },
+
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
+
+    isView: {
+      type: Boolean,
+      default: false
     },
 
     value: {

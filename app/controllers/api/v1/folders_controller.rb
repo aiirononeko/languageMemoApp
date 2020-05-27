@@ -7,35 +7,27 @@ class Api::V1::FoldersController < ApplicationController
     render json: @folder, serializer: FolderSerializer
   end
 
-  def new
-    @folder = Folder.new
-    render json: @folder, serializer: FolderSerializer
-  end
-
   def create
     @folder = current_api_v1_user.folders.build(folder_params)
     if @folder.save
       render json: @folder, serializer: FolderSerializer
     else
-      render json: { status: "error", errors: @folder.errors }
+      render status: :unprocessable_entity, json: @folder.errors
     end
   end
 
-  def edit
-    render json: @folder, serializer: FolderSerializer
-  end
 
   def update
     if @folder.update(folder_params)
       render json: @folder, serializer: FolderSerializer
     else
-      render json: { status: "error", errors: @folder.errors }
+      render status: :unprocessable_entity, json: @folder.errors
     end
   end
 
   def destroy
     if @folder.destroy
-      render json: @folder, serializer: FolderSerializer
+      render json: { status: 200, message: "削除に成功しました" }
     else
       render json: { status: "error", errors: @folder.errors }
     end
@@ -53,7 +45,7 @@ class Api::V1::FoldersController < ApplicationController
 
   def correct_user?
     return if current_api_v1_user == @folder.user
-    render json: { success: false,
-                   errors: ["You don't have the right to access this resource"] }
+    render status: 401, json: { success: false,
+                                errors: ["アクセスする権限がありません"] }
   end
 end
