@@ -44,6 +44,22 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
         expect(res["data"]["attributes"]["image"]).to eq('https://image_url')
       end
     end
+
+    context "渡す値が正しく、avatarが存在する時" do
+      let(:user) { create(:confirmed_user, :with_avatar) }
+      let(:headers) { user.create_new_auth_token }
+      let(:params) { {name: 'テスト太郎', profile: 'テストマンだよ', address: 'テス都', image: 'https://image_url' } }
+
+      it "値を変更でき、imageでavatarのURLが返る" do
+        put api_v1_user_registration_path, params: params, headers: headers
+        res = JSON.parse(response.body)
+        expect(res["data"]["attributes"]["name"]).to eq('テスト太郎')
+        expect(res["data"]["attributes"]["profile"]).to eq('テストマンだよ')
+        expect(res["data"]["attributes"]["address"]).to eq('テス都')
+        expect(res["data"]["attributes"]["image"]).to match(/.+rails\/active_storage\/blobs.+test_image.jpg/)
+      end
+    end
+
     context "渡す値が正しくないとき" do
       let(:user) { create(:confirmed_user) }
       let(:params) { { id: '3' } }

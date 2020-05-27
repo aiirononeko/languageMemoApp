@@ -14,7 +14,7 @@ export const getters = {
   client: (state) => state.client,
   uid: (state) => state.uid,
   id: (state) => state.id,
-  isAuthenticated: (state) => state.uid ? true : false,
+  isAuthenticated: (state) => !!state.uid,
   userInfo: (state) => state.userInfo
 }
 
@@ -100,7 +100,6 @@ export const actions = {
             "access-token": getters.accessToken,
             client: getters.client,
             uid: getters.uid
-
           }
         }
       )

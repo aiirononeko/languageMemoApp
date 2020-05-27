@@ -39,7 +39,9 @@ gem 'omniauth-twitter'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # 日本語化対応
-gem 'rails-i18n', '~> 5.1' 
+gem 'rails-i18n', '~> 5.1'
+
+gem "google-cloud-storage", "~> 1.8", require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
