@@ -1,6 +1,10 @@
 require('dotenv').config()
 
 module.exports = {
+
+  /*
+   ** Environment Variables
+   */
   env: {
     baseUrl: process.env.BASE_URL || "http://localhost:3000",
   },
@@ -9,19 +13,14 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: "frontend",
+    htmlAttrs: { lang: "ja" },
+    title: "Poeta",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: "Nuxt.js project" },
     ],
-    link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
-      {
-        href: "https://use.fontawesome.com/releases/v5.6.1/css/all.css",
-        rel: "stylesheet",
-      },
-    ],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
   /*
@@ -34,29 +33,78 @@ module.exports = {
    */
   modules: [
     "@nuxtjs/axios",
-    "@nuxtjs/vuetify",
-    "@nuxtjs/auth",
-    ["nuxt-sass-resources-loader", ["~/assets/sass/variable.scss"]],
+    "@nuxtjs/device",
+    "@nuxtjs/sitemap",
   ],
 
-  buildModules: ["@nuxtjs/dotenv"],
+  /*
+   ** build modules
+   */
+  buildModules: [
+    "@nuxtjs/dotenv",
+    "@nuxtjs/style-resources",
+    "@nuxtjs/vuetify",
+    // "@nuxtjs/google-analytics",
+    // "@nuxtjs/pwa" // pwaは開発時にバグりやすいので、しばらくはコメント,
+  ],
 
+  /*
+   ** plugins
+   */
   plugins: [
     "~/plugins/axios",
     { src: "~/plugins/vue-mavon-editor", ssr: false },
   ],
 
-  css: [{ src: "~/assets/sass/common.scss", lang: "scss" }],
+  /*
+   ** Global css
+   */
+  css: [{ src: "~/assets/sass/app.scss", lang: "scss" }],
 
+  // router: {
+  //   middleware: ["check-auth"],
+  // },
+
+  /*
+   ** Axios configuration
+   */
   axios: {
     // axios options
     baseURL: process.env.BASE_URL || "http://localhost:3000",
   },
 
   /*
+   ** Google Analytics configuration
+   */
+  // googleAnalytics: {
+  //   // google analytics options
+  //   id: 'UA-12301-2'
+  // },
+
+  /*
+   ** Sitemap configuration
+   */
+  sitemap: {
+    // sitemap options
+    hostname: process.env.BASE_URL || "http://localhost:3000",
+    gzip: true,
+  },
+
+  /*
+   ** Style Resources configuration
+   */
+  styleResources: {
+    scss: [
+      "~/assets/sass/variable.scss",
+      "~/assets/sass/functions/**.scss"
+    ]
+  },
+
+  /*
    ** Build configuration
    */
   build: {
+    extractCSS: true,
     /*
      ** Run ESLint on save
      */

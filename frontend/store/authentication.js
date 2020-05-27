@@ -6,7 +6,8 @@ export const state = () => ({
   client: null,
   id: null,
   uid: null,
-  username: null
+  username: null,
+  userInfo: null
 })
 
 export const getters = {
@@ -14,8 +15,9 @@ export const getters = {
   client: (state) => state.client,
   uid: (state) => state.uid,
   id: (state) => state.id,
-  isAuthenticated: (state) => state.uid ? true : false,
-  username: (state) => state.username
+  isAuthenticated: (state) => !!state.uid,
+  username: (state) => state.username,
+  userInfo: (state) => state.userInfo
 }
 
 export const mutations = {
@@ -25,6 +27,7 @@ export const mutations = {
     state.id = null
     state.uid = null
     state.username = null
+    state.userInfo = null
   },
 
   setUser (state, res) {
@@ -33,6 +36,11 @@ export const mutations = {
     state.id = res.data.data.id
     state.uid = res.headers["uid"]
     state.username = res.data.data.attributes.username
+    state.userInfo = res.data.data
+  },
+
+  setUserInfo (state, userInfo) {
+    state.userInfo = userInfo
   },
 
   setHeader (state, { headers }) {
@@ -45,6 +53,26 @@ export const mutations = {
 }
 
 export const actions = {
+
+  /**
+   * User情報を取得する
+   *
+   * 目的: cookieのdataからUserInfoを取得する
+   *
+   * TODO: 動くかは確認してないので、確認する
+   */
+  // async fetchUser ({ commit, getters }) {
+  //   try {
+  //     const { data } = await this.$axios.$get(`users/${getters.id}`)
+
+  //     commit('setUserInfo', data)
+  //   } catch (e) {
+  //     if (e.response && e.response.status === 401) {
+  //       throw new Error("Bad credentials")
+  //     }
+  //     throw new Error("Internal Server Error")
+  //   }
+  // },
 
   // ログイン
   async login ({ commit, getters }, { email, password }) {
@@ -80,7 +108,6 @@ export const actions = {
             "access-token": getters.accessToken,
             client: getters.client,
             uid: getters.uid
-
           }
         }
       )

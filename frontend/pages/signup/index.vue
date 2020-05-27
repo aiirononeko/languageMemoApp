@@ -12,6 +12,8 @@ export default {
     SignupTemplate
   },
 
+  middleware: 'guest',
+
   methods: {
     async signup(userInfo) {
       try {

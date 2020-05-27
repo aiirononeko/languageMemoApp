@@ -14,9 +14,10 @@ export default {
 
   middleware: "authenticated",
 
+  // TODO: storeから取れるので、あとで削除する
   async asyncData({ $axios, store }) {
     try {
-      const { data } = await $axios.$get(`/api/v1/auth/edit`, 
+      const { data } = await $axios.$get(`/api/v1/auth/edit`,
       {
         headers: {
           "access-token": store.getters["authentication/accessToken"],
@@ -28,6 +29,13 @@ export default {
     } catch (e) {
       console.error(e)
     }
+  },
+
+  computed: {
+    // TODO: infoをstoreから取得する
+    // info() {
+    //   return this.$store.getters['authentication/userInfo']
+    // }
   },
 
   methods: {

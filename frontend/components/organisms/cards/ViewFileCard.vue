@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="html">
     <div id="md_view" v-html="html" />
   </div>
 </template>
