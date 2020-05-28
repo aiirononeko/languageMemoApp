@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_11_011753) do
+ActiveRecord::Schema.define(version: 2020_05_28_122241) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -33,12 +33,23 @@ ActiveRecord::Schema.define(version: 2020_05_11_011753) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "folder_relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "parent_id"
+    t.bigint "child_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_id"], name: "index_folder_relationships_on_child_id"
+    t.index ["parent_id", "child_id"], name: "index_folder_relationships_on_parent_id_and_child_id", unique: true
+    t.index ["parent_id"], name: "index_folder_relationships_on_parent_id"
+  end
+
   create_table "folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false
     t.boolean "public", default: true, null: false, comment: "公開or非公開"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "parent_id"
     t.index ["user_id"], name: "index_folders_on_user_id"
   end
 
@@ -90,6 +101,8 @@ ActiveRecord::Schema.define(version: 2020_05_11_011753) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "folder_relationships", "folders", column: "child_id"
+  add_foreign_key "folder_relationships", "folders", column: "parent_id"
   add_foreign_key "folders", "users"
   add_foreign_key "posts", "folders"
   add_foreign_key "posts", "users"
