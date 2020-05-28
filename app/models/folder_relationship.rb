@@ -1,0 +1,2 @@
+class FolderRelationship < ApplicationRecord
+end
