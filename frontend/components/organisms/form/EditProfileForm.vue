@@ -4,7 +4,7 @@
       <p>プロフィール画像</p>
       <div class="d-flex align-center">
         <div class="mr-2">
-          <v-img :src="user.avatar" class="user-icon" />
+          <v-img :src="getPreviewIcon" class="user-icon" />
         </div>
 
         <preview-image-file-input @input="setAvatarValue" />
@@ -16,17 +16,17 @@
     <!-- TODO(Ropital): 各divをコンポーネントに切り出す -->
     <div class="mb-8">
       <p>名前</p>
-      <v-text-field v-model="user.name" label="名前" outlined dense />
+      <v-text-field v-model="form.name" label="名前" outlined dense />
     </div>
 
     <div class="mb-8">
       <p>自己紹介</p>
-      <v-textarea v-model="user.profile" label="自己紹介" outlined height="80" />
+      <v-textarea v-model="form.profile" label="自己紹介" outlined height="80" />
     </div>
 
     <div class="mb-8">
       <p>出身</p>
-      <v-text-field v-model="user.address" label="出身" outlined dense />
+      <v-text-field v-model="form.address" label="出身" outlined dense />
     </div>
 
     <tie-sns-link-field />
@@ -38,55 +38,55 @@
 </template>
 
 <script>
+import User from "@/types/User"
 const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/PreviewImageFileInput')
 const TieSnsLinkField = () => import('~/components/organisms/textFields/TieSnsLinkField')
 const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
 
-class UserInfo {
-  constructor() {
-      this.name = null
-      this.profile = null
-      this.address = null
-      this.avatar = "https://picsum.photos/510/300?random"
-  }
-
-  infoToUserInfo(info) {
-    this.name = info && info.attributes && info.attributes.name
-    this.profile = info && info.attributes && info.attributes.profile
-    this.address = info && info.attributes && info.attributes.address
-    // Todo: avatarを取得する
-  }
-}
-
 export default {
-  props: {
-    info: {
-      type: Object,
-      default: undefined
-    }
-  },
-
   components: {
     PreviewImageFileInput,
     TieSnsLinkField,
     OrangeBtn
   },
 
-  data: () => ({
-      user: new UserInfo
-  }),
+  props: {
+    info: {
+      type: User,
+      default: undefined
+    }
+  },
+
+  data() {
+    return {
+      form: {
+        address: '',
+        avatar: null,
+        profile: '',
+        name: '',
+      }
+    }
+  },
 
   created() {
-    this.user.infoToUserInfo(this.info)
+    // this.form.address = this.info.address
+    this.form.profile = this.info.profile
+    this.form.name = this.info.name
+  },
+
+  computed: {
+    getPreviewIcon() {
+      return this.form.avatar || this.info.image || 'https://picsum.photos/510/300?random'
+    }
   },
 
   methods: {
     onClick() {
-      this.$emit('save', this.user)
+      this.$emit('save', this.form)
     },
 
     setAvatarValue(newVal) {
-      this.user.avatar = newVal
+      this.form.avatar = newVal
     }
   }
 }
