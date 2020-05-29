@@ -1,6 +1,20 @@
 import Cookies from "universal-cookie"
+import User from "~/types/User"
 const cookies = new Cookies()
 
+/**
+ * @typedef state
+ * @property {String} accessToken
+ * @property {String} client
+ * @property {Number} id
+ * @property {String} uid - UserId
+ * @property {String} username - ユーザー名
+ * @property {User} userInfo
+ */
+
+/**
+ * @returns {state}
+ */
 export const state = () => ({
   accessToken: null,
   client: null,
@@ -30,13 +44,13 @@ export const mutations = {
     state.userInfo = null
   },
 
-  setUser (state, res) {
-    state.accessToken = res.headers["access-token"]
-    state.client = res.headers["client"]
-    state.id = res.data.data.id
-    state.uid = res.headers["uid"]
-    state.username = res.data.data.attributes.username
-    state.userInfo = res.data.data
+  setUser (state, { headers, data }) {
+    state.accessToken = headers["access-token"]
+    state.client = headers["client"]
+    state.id = data.data.id
+    state.uid = headers["uid"]
+    state.username = data.data.attributes.username
+    state.userInfo = new User(data.data)
   },
 
   setUserInfo (state, userInfo) {
@@ -61,18 +75,18 @@ export const actions = {
    *
    * TODO: 動くかは確認してないので、確認する
    */
-  // async fetchUser ({ commit, getters }) {
-  //   try {
-  //     const { data } = await this.$axios.$get(`users/${getters.id}`)
+  async fetchUser ({ commit, getters }) {
+    try {
+      const { data } = await this.$axios.$get(`/api/v1/users/${getters.username}`)
 
-  //     commit('setUserInfo', data)
-  //   } catch (e) {
-  //     if (e.response && e.response.status === 401) {
-  //       throw new Error("Bad credentials")
-  //     }
-  //     throw new Error("Internal Server Error")
-  //   }
-  // },
+      commit('setUserInfo', new User(data))
+    } catch (e) {
+      if (e.response && e.response.status === 401) {
+        throw new Error("Bad credentials")
+      }
+      throw new Error("Internal Server Error")
+    }
+  },
 
   // ログイン
   async login ({ commit, getters }, { email, password }) {
