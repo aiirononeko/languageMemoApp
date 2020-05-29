@@ -69,12 +69,15 @@ export default {
   },
 
   created() {
-    // this.form.address = this.info.address
+    this.form.address = this.info.address
     this.form.profile = this.info.profile
     this.form.name = this.info.name
   },
 
   computed: {
+    /**
+     * @returns {String}
+     */
     getPreviewIcon() {
       return this.form.avatar || this.info.image || 'https://picsum.photos/510/300?random'
     }
