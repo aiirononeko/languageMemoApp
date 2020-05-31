@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import User from "@/types/User"
 const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/PreviewImageFileInput')
 const TieSnsLinkField = () => import('~/components/organisms/textFields/TieSnsLinkField')
 const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
@@ -52,7 +51,7 @@ export default {
 
   props: {
     info: {
-      type: User,
+      type: Object,
       default: undefined
     }
   },
