@@ -10,9 +10,14 @@ class Api::V1::FoldersController < ApplicationController
   def create
     @folder = current_api_v1_user.folders.build(folder_params)
     if @folder.save
-      render json: @folder, serializer: FolderSerializer
+      if params[:parent_id]
+        @relation = FolderRelationship.new(parent_id: folder_params[:parent_id], child_id: @folder.id)
+        @relation.save
+        render json: @folder, serializer: FolderSerializer if @relation.valid?
+        render status: :unprocessable_entity, json: @relation.errors and @folder.destroy unless @relation.valid?
+      end
     else
-      render status: :unprocessable_entity, json: @folder.errors
+      render status: :unprocessable_entity, json: @folder.errors unless @folder.valid?
     end
   end
 
