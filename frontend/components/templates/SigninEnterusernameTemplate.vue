@@ -1,6 +1,6 @@
 <template>
   <one-column-container>
-    <change-username-card @submit="onSubmit" />
+    <change-username-card :username="username" @submit="onSubmit" />
   </one-column-container>
 </template>
 
@@ -12,6 +12,13 @@ export default {
   components: {
     ChangeUsernameCard,
     OneColumnContainer
+  },
+
+  props: {
+    username: {
+      type: String,
+      default: undefined
+    }
   },
 
   methods: {
