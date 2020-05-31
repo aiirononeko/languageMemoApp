@@ -1,6 +1,6 @@
 <template>
   <div>
-    <signin-enterusername-template @submit="updateUsername"/>
+    <signin-enterusername-template :username="username" @submit="updateUsername"/>
   </div>
 </template>
 
@@ -14,15 +14,16 @@ export default {
 
   middleware: "authenticated",
 
+  computed: {
+    username() {
+      return this.$store.getters["authentication/username"]
+    }
+  },
+
   methods: {
     async updateUsername(userName) {
       try {
-        console.log("submit")
-        // TODO: この部分の処理はまだ確認していない。確認メールのURLのリダイレクトが変更されたら確認する
-
-        // await this.$axios.put(`/api/v1/auth`, {
-        //   username: userName,
-        // })
+        await this.$store.dispatch("authentication/updateUsername", userName)
 
         this.$router.push(`/settings/profile`)
       } catch (error) {
