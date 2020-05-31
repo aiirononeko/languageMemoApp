@@ -6,6 +6,7 @@
 
 <script>
 import SettingProfileTemplate from '~/components/templates/SettingProfileTemplate'
+import User from "@/types/User"
 
 export default {
   components: {
@@ -27,13 +28,15 @@ export default {
      */
     async save(userInfo) {
       try {
-        await this.$axios.put(`/api/v1/auth`, {
+        const { data } = await this.$axios.$put(`/api/v1/auth`, {
           name: userInfo.name,
           profile: userInfo.profile,
           address: userInfo.address,
           avatar: userInfo.avatar,
           image: userInfo.image
         })
+
+        this.$store.commit("authentication/setUserInfo", new User(data))
       } catch (e) {
         console.error(e)
       }
