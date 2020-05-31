@@ -1,0 +1,10 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+*.html text diff=html
+*.xml text diff=xml
+*.rb diff=ruby
+*.css text
+*.js text
+*.sql text
+*.txt text
