@@ -1,7 +1,7 @@
 /**
  * キャメルケースへ変換 sampleString
- * @param string
- * @return string
+ * @param {String} str
+ * @return String
  */
 export const camelCase = (str) => {
   str = str.charAt(0).toLowerCase() + str.slice(1)
@@ -13,8 +13,8 @@ export const camelCase = (str) => {
 
 /**
  * スネークケースへ変換 sample_string
- * @param string
- * @return string
+ * @param {String} str
+ * @return String
  */
 export const snakeCase = (str) => {
   const camel = camelCase(str)
@@ -26,8 +26,8 @@ export const snakeCase = (str) => {
 
 /**
  * パスカルケースへ変換 SampleString
- * @param string
- * @return string
+ * @param {String} str
+ * @return String
  */
 export const pascalCase = (str) => {
   const camel = camelCase(str)

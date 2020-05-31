@@ -61,9 +61,9 @@ module.exports = {
    */
   css: [{ src: "~/assets/sass/app.scss", lang: "scss" }],
 
-  // router: {
-  //   middleware: ["check-auth"],
-  // },
+  router: {
+    middleware: ["check-auth"],
+  },
 
   /*
    ** Axios configuration

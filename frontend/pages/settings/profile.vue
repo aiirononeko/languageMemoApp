@@ -14,38 +14,25 @@ export default {
 
   middleware: "authenticated",
 
-  // TODO: storeから取れるので、あとで削除する
-  async asyncData({ $axios, store }) {
-    try {
-      const { data } = await $axios.$get(`/api/v1/auth/edit`,
-      {
-        headers: {
-          "access-token": store.getters["authentication/accessToken"],
-          "client": store.getters["authentication/client"],
-          "uid": store.getters["authentication/uid"]
-        }
-      })
-      return { info: data }
-    } catch (e) {
-      console.error(e)
+  computed: {
+    info() {
+      return this.$store.getters['authentication/userInfo']
     }
   },
 
-  computed: {
-    // TODO: infoをstoreから取得する
-    // info() {
-    //   return this.$store.getters['authentication/userInfo']
-    // }
-  },
-
   methods: {
+
+    /**
+     * @param {import('~/types/User').default} userInfo
+     */
     async save(userInfo) {
       try {
         await this.$axios.put(`/api/v1/auth`, {
           name: userInfo.name,
           profile: userInfo.profile,
           address: userInfo.address,
-          avatar: userInfo.avatar
+          avatar: userInfo.avatar,
+          image: userInfo.image
         })
       } catch (e) {
         console.error(e)
