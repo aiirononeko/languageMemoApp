@@ -99,7 +99,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
         }
       end
 
-      it 'レスポンスステータスが200で返ること' do
+      it 'レスポンスステータスが422で返ること' do
         call_api
         expect(response.status).to eq 422
       end
@@ -112,7 +112,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
     end
   end
 
-  describe "PUT /api/v1/users/folders/:id" do
+  describe "PUT /api/v1/folders/:id" do
     subject(:call_api) { put "/api/v1/folders/#{folder.id}", headers: headers, params: params }
 
     let(:user) { create :confirmed_user }
@@ -158,7 +158,7 @@ RSpec.describe "Api::V1::Folders", type: :request do
           }
         end
 
-        it 'レスポンスステータスが200で返ること' do
+        it 'レスポンスステータスが422で返ること' do
           call_api
           expect(response.status).to eq 422
         end
