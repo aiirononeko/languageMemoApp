@@ -1,16 +1,16 @@
 <template>
   <div>
-    <setting-profile-template :info="info" @save="save"/>
+    <settings-profile-template :info="info" @save="save"/>
   </div>
 </template>
 
 <script>
-import SettingProfileTemplate from '~/components/templates/SettingProfileTemplate'
+import SettingsProfileTemplate from '~/components/templates/SettingsProfileTemplate'
 import User from "@/types/User"
 
 export default {
   components: {
-    SettingProfileTemplate
+    SettingsProfileTemplate
   },
 
   middleware: "authenticated",
