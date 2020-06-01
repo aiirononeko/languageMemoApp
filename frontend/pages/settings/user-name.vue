@@ -1,15 +1,15 @@
 <template>
   <div>
-    <signin-enterusername-template :username="username" @submit="updateUsername"/>
+    <settings-user-name-template :username="username" @submit="updateUsername"/>
   </div>
 </template>
 
 <script>
-import SigninEnterusernameTemplate from '~/components/templates/SigninEnterusernameTemplate'
+import SettingsUserNameTemplate from '~/components/templates/SettingsUserNameTemplate'
 
 export default {
   components: {
-    SigninEnterusernameTemplate
+    SettingsUserNameTemplate
   },
 
   middleware: "authenticated",
