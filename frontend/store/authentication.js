@@ -148,8 +148,6 @@ export const actions = {
       username
     })
 
-    console.log(res)
-
     commit("setUser", res)
 
     cookies.set("username", getters.username)
