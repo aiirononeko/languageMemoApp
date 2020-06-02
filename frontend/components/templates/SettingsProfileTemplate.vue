@@ -7,14 +7,13 @@
 </template>
 
 <script>
-import User from "@/types/User"
 import OneColumnContainer from '~/components/molecules/containers/OneColumnContainer'
 import SettingProfileCard from '~/components/organisms/cards/SettingProfileCard'
 
 export default {
   props: {
     info: {
-      type: User,
+      type: Object,
       default: undefined
     }
   },

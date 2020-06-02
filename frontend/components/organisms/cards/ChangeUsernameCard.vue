@@ -3,7 +3,7 @@
     <p class="mb-5">ユーザーIDを入力してください</p>
     <p class="mb-5">※半角英数字とアンダーバー(_)のみ使用可能です。</p>
 
-    <change-username-form @submit="onSubmit" />
+    <change-username-form :username="username" @submit="onSubmit" />
   </v-card>
 </template>
 
@@ -13,6 +13,13 @@ import ChangeUsernameForm from '~/components/organisms/form/ChangeUsernameForm'
 export default {
   components: {
     ChangeUsernameForm
+  },
+
+  props: {
+    username: {
+      type: String,
+      default: undefined
+    }
   },
 
   methods: {

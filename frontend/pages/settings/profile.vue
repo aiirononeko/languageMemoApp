@@ -1,15 +1,16 @@
 <template>
   <div>
-    <setting-profile-template :info="info" @save="save"/>
+    <settings-profile-template :info="info" @save="save"/>
   </div>
 </template>
 
 <script>
-import SettingProfileTemplate from '~/components/templates/SettingProfileTemplate'
+import SettingsProfileTemplate from '~/components/templates/SettingsProfileTemplate'
+import User from "@/types/User"
 
 export default {
   components: {
-    SettingProfileTemplate
+    SettingsProfileTemplate
   },
 
   middleware: "authenticated",
@@ -27,13 +28,15 @@ export default {
      */
     async save(userInfo) {
       try {
-        await this.$axios.put(`/api/v1/auth`, {
+        const { data } = await this.$axios.$put(`/api/v1/auth`, {
           name: userInfo.name,
           profile: userInfo.profile,
           address: userInfo.address,
           avatar: userInfo.avatar,
           image: userInfo.image
         })
+
+        this.$store.commit("authentication/setUserInfo", new User(data))
       } catch (e) {
         console.error(e)
       }

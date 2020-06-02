@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import User from "@/types/User"
 const EditProfileForm = () => import('~/components/organisms/form/EditProfileForm')
 
 export default {
@@ -15,7 +14,7 @@ export default {
 
   props: {
     info: {
-      type: User,
+      type: Object,
       default: undefined
     }
   },

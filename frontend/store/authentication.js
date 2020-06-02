@@ -139,4 +139,17 @@ export const actions = {
       throw new Error("Internal Server Error")
     }
   },
+
+  /**
+   * username を更新する
+   */
+  async updateUsername({ commit, getters }, username) {
+    const res = await this.$axios.put(`/api/v1/auth`, {
+      username
+    })
+
+    commit("setUser", res)
+
+    cookies.set("username", getters.username)
+  }
 }
