@@ -1,5 +1,7 @@
 <template>
   <one-column-container>
+    <h1 class="main-heading mb-8 text-center">新しいパスワードを入力してください</h1>
+
     <password-reset-confirm-card @submit="onSubmit" />
   </one-column-container>
 </template>
@@ -21,7 +23,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
