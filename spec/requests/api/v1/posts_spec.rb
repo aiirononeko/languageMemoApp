@@ -123,7 +123,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
         }
       end
 
-      it 'レスポンスステータスが200で返ること' do
+      it 'レスポンスステータスが422で返ること' do
         call_api
         expect(response.status).to eq 422
       end
@@ -220,7 +220,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
           }
         end
 
-        it 'レスポンスステータスが200で返ること' do
+        it 'レスポンスステータスが422で返ること' do
           call_api
           expect(response.status).to eq 422
         end
