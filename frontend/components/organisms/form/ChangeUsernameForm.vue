@@ -1,9 +1,9 @@
 <template>
     <v-form class="pos-relative">
-      <username-text-field />
+      <username-text-field v-model="vUserName" />
 
       <!-- TODO: orange-btnを使う。そのため、orange-btnのpropsにfabを追加する -->
-      <v-btn class="next-btn" :value="userName" @click="onSubmit" @input="setUserName" width="30" height="30" fab outlined >→</v-btn>
+      <v-btn class="next-btn" @click="onSubmit"  width="30" height="30" fab outlined >→</v-btn>
     </v-form>
 </template>
 
@@ -15,17 +15,22 @@ export default {
     UsernameTextField
   },
 
-  data: () => ({
-    userName: ""
-  }),
+  props: {
+    username: {
+      type: String,
+      default: undefined
+    }
+  },
+
+  data() {
+    return {
+      vUserName: this.username
+    }
+  },
 
   methods: {
-    setUserName(newVal) {
-      this.userName = newVal
-    },
-
     onSubmit() {
-      this.$emit('submit', this.userName)
+      this.$emit('submit', this.vUserName)
     }
   }
 }
