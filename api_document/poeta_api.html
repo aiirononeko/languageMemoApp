@@ -30,6 +30,8 @@
       "<span class="hljs-attribute">address</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
       "<span class="hljs-attribute">username</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
       "<span class="hljs-attribute">image</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
+      "<span class="hljs-attribute">posts</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span></span>,
+      "<span class="hljs-attribute">folders</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span>
     </span>}
@@ -63,6 +65,12 @@
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">image</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">posts</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">folders</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
@@ -121,6 +129,7 @@
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"``"</span></span>,
   "<span class="hljs-attribute">profile</span>": <span class="hljs-value"><span class="hljs-string">"``"</span></span>,
   "<span class="hljs-attribute">username</span>": <span class="hljs-value"><span class="hljs-string">"``"</span></span>,
+  "<span class="hljs-attribute">avatar</span>": <span class="hljs-value"><span class="hljs-string">"``"</span></span>,
   "<span class="hljs-attribute">address</span>": <span class="hljs-value"><span class="hljs-string">"``"</span></span>,
   "<span class="hljs-attribute">image</span>": <span class="hljs-value"><span class="hljs-string">"``"</span>
 </span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
@@ -133,6 +142,9 @@
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
     </span>}</span>,
     "<span class="hljs-attribute">username</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">avatar</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
     </span>}</span>,
     "<span class="hljs-attribute">address</span>": <span class="hljs-value">{
@@ -260,8 +272,8 @@
       </span>}
     </span>}
   </span>}
-</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="ユーザー関連api" class="resource"><h3 class="resource-heading">ユーザー関連API <a href="#ユーザー関連api" class="permalink">&nbsp;&para;</a></h3><div id="ユーザー関連api-get" class="action get"><h4 class="action-heading"><div class="name">ユーザー詳細</div><a href="#ユーザー関連api-get" class="method get">GET</a><code class="uri">/users/{id}</code></h4><p>ユーザーのマイページを取得する。</p>
-<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/users/<span class="hljs-attribute" title="id">1</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>id</dt><dd><code>ユーザーID</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span></dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="ユーザー関連api" class="resource"><h3 class="resource-heading">ユーザー関連API <a href="#ユーザー関連api" class="permalink">&nbsp;&para;</a></h3><div id="ユーザー関連api-get" class="action get"><h4 class="action-heading"><div class="name">ユーザー詳細</div><a href="#ユーザー関連api-get" class="method get">GET</a><code class="uri">/users/{user_name}</code></h4><p>ユーザーのマイページを取得する。</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/users/<span class="hljs-attribute" title="user_name">STQnpFar9JfTusk</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>user_name</dt><dd><code>ユーザーネーム</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>STQnpFar9JfTusk</span></span></dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
     "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"users"</span></span>,
@@ -269,7 +281,24 @@
       "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"poeta"</span></span>,
       "<span class="hljs-attribute">profile</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
       "<span class="hljs-attribute">address</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
-      "<span class="hljs-attribute">username</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
+      "<span class="hljs-attribute">posts</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id: 1"</span>,
+        <span class="hljs-string">"user_id: 1"</span>,
+        <span class="hljs-string">"content: ~"</span>,
+        <span class="hljs-string">"public: true"</span>,
+        <span class="hljs-string">"folder_id: null"</span>,
+        <span class="hljs-string">"created_at: ~"</span>,
+        <span class="hljs-string">"updated_at: ~"</span>
+      ]</span>,
+      "<span class="hljs-attribute">folders</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id: 1"</span>,
+        <span class="hljs-string">"user_id: 1"</span>,
+        <span class="hljs-string">"public: true"</span>,
+        <span class="hljs-string">"parent_id: null"</span>,
+        <span class="hljs-string">"created_at: ~"</span>,
+        <span class="hljs-string">"updated_at: ~"</span>
+      ]</span>,
+      "<span class="hljs-attribute">username</span>": <span class="hljs-value"><span class="hljs-string">"STQnpFar9JfTusk"</span></span>,
       "<span class="hljs-attribute">image</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span>
@@ -299,6 +328,12 @@
             </span>}</span>,
             "<span class="hljs-attribute">address</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">posts</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">folders</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
             </span>}</span>,
             "<span class="hljs-attribute">username</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
@@ -346,6 +381,8 @@
       "<span class="hljs-attribute">address</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
       "<span class="hljs-attribute">username</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
       "<span class="hljs-attribute">image</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
+      "<span class="hljs-attribute">posts</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span></span>,
+      "<span class="hljs-attribute">folders</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"``"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"``"</span>
     </span>}
@@ -379,6 +416,12 @@
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">image</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">posts</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">folders</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
@@ -478,6 +521,8 @@
       "<span class="hljs-attribute">profile</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
       "<span class="hljs-attribute">address</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
       "<span class="hljs-attribute">image</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
+      "<span class="hljs-attribute">posts</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span></span>,
+      "<span class="hljs-attribute">folders</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span></span>,
       "<span class="hljs-attribute">username</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"``"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"``"</span>
@@ -513,6 +558,12 @@
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">image</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">posts</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">folders</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">username</span>": <span class="hljs-value">{
@@ -571,7 +622,8 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
       "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"example"</span></span>,
       "<span class="hljs-attribute">content</span>": <span class="hljs-value"><span class="hljs-string">"example2"</span></span>,
       "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
-      "<span class="hljs-attribute">user</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+      "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+      "<span class="hljs-attribute">folder_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span>
     </span>}
@@ -601,9 +653,11 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"id: 1,"</span>
+            "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">folder_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
@@ -617,7 +671,33 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
     </span>}
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="til関連api-post" class="action post"><h4 class="action-heading"><div class="name">TIL投稿</div><a href="#til関連api-post" class="method post">POST</a><code class="uri">/posts/</code></h4><p>TILを投稿する</p>
-<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/posts/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/posts/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"\"example\""</span></span>,
+  "<span class="hljs-attribute">content</span>": <span class="hljs-value"><span class="hljs-string">"\"example2\""</span></span>,
+  "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
+  "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+  "<span class="hljs-attribute">folder_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">content</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">folder_id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
     "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"posts"</span></span>,
@@ -625,7 +705,8 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
       "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"example"</span></span>,
       "<span class="hljs-attribute">content</span>": <span class="hljs-value"><span class="hljs-string">"example2"</span></span>,
       "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
-      "<span class="hljs-attribute">user</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+      "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+      "<span class="hljs-attribute">folder_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span>
     </span>}
@@ -655,9 +736,11 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"id: 1,"</span>
+            "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">folder_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
@@ -695,8 +778,26 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
       </span>}
     </span>}
   </span>}
-</span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="til関連api-put" class="action put"><h4 class="action-heading"><div class="name">TIL更新</div><a href="#til関連api-put" class="method put">PUT</a><code class="uri">/posts/</code></h4><p>TILを更新する</p>
-<h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/posts/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="til関連api-put" class="action put"><h4 class="action-heading"><div class="name">TIL更新</div><a href="#til関連api-put" class="method put">PUT</a><code class="uri">/posts/{id}</code></h4><p>TILを更新する</p>
+<h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/posts/<span class="hljs-attribute" title="id">1</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>id</dt><dd><code>ポストID</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span></dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"\"update_example\""</span></span>,
+  "<span class="hljs-attribute">content</span>": <span class="hljs-value"><span class="hljs-string">"\"update_example2\""</span></span>,
+  "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">content</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
     "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"posts"</span></span>,
@@ -704,7 +805,8 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
       "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"update_example"</span></span>,
       "<span class="hljs-attribute">content</span>": <span class="hljs-value"><span class="hljs-string">"update_example2"</span></span>,
       "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
-      "<span class="hljs-attribute">user</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+      "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+      "<span class="hljs-attribute">folder_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span>
     </span>}
@@ -734,9 +836,11 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"id: 1,"</span>
+            "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">folder_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
@@ -795,58 +899,19 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
       </span>}
     </span>}
   </span>}
-</span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="til関連api-delete" class="action delete"><h4 class="action-heading"><div class="name">TIL削除</div><a href="#til関連api-delete" class="method delete">DELETE</a><code class="uri">/posts/</code></h4><p>TILを削除する</p>
-<h4>Example URI</h4><div class="definition"><span class="method delete">DELETE</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/posts/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
-    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"posts"</span></span>,
-    "<span class="hljs-attribute">attributes</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"example"</span></span>,
-      "<span class="hljs-attribute">content</span>": <span class="hljs-value"><span class="hljs-string">"example2"</span></span>,
-      "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
-      "<span class="hljs-attribute">user</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-      "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
-      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span>
-    </span>}
-  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="til関連api-delete" class="action delete"><h4 class="action-heading"><div class="name">TIL削除</div><a href="#til関連api-delete" class="method delete">DELETE</a><code class="uri">/posts/{id}</code></h4><p>TILを削除する</p>
+<h4>Example URI</h4><div class="definition"><span class="method delete">DELETE</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/posts/<span class="hljs-attribute" title="id">1</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>id</dt><dd><code>TILのID</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span></dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"200"</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"削除に成功しました"</span>
 </span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
   "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-        </span>}</span>,
-        "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-        </span>}</span>,
-        "<span class="hljs-attribute">attributes</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-          "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-            "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}</span>,
-            "<span class="hljs-attribute">content</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}</span>,
-            "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}</span>,
-            "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"id: 1,"</span>
-            </span>}</span>,
-            "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}</span>,
-            "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}
-          </span>}
-        </span>}
-      </span>}
+    "<span class="hljs-attribute">status</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">message</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
     </span>}
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
@@ -878,10 +943,34 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
     "<span class="hljs-attribute">attributes</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"example"</span></span>,
       "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
-      "<span class="hljs-attribute">user</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+      "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+      "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
-      "<span class="hljs-attribute">posts</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span>
+      "<span class="hljs-attribute">posts</span>": <span class="hljs-value">[
+        <span class="hljs-string">"name: `example`"</span>,
+        <span class="hljs-string">"content: `example2`"</span>,
+        <span class="hljs-string">"public: false"</span>,
+        <span class="hljs-string">"user_id: 1"</span>,
+        <span class="hljs-string">"created_at: `2020-03-05`"</span>,
+        <span class="hljs-string">"updated_at: `2020-03-05` ]"</span>
+      ]</span>,
+      "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
+        "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+        "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"true"</span></span>,
+        "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
+        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"~"</span></span>,
+        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"~"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id: 1"</span>,
+        <span class="hljs-string">"user_id: 1"</span>,
+        <span class="hljs-string">"public: true"</span>,
+        <span class="hljs-string">"parent_id: null"</span>,
+        <span class="hljs-string">"created_at: ~"</span>,
+        <span class="hljs-string">"updated_at: ~"</span>
+      ]
     </span>}
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
@@ -906,9 +995,11 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"id: 1,"</span>
+            "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
@@ -917,8 +1008,33 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">posts</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"[  + name: `example`,\n\n+ content: `example2`,\n\n+ public: false,\n\n+ user-id: 1,\n\n+ created_at: `2020-03-05`,\n\n+ updated_at: `2020-03-05` ]"</span>
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+              "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+                "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}
+              </span>}
+            </span>}</span>,
+            "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
             </span>}
           </span>}
         </span>}
@@ -926,16 +1042,56 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
     </span>}
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="フォルダー関連api-post" class="action post"><h4 class="action-heading"><div class="name">フォルダー作成</div><a href="#フォルダー関連api-post" class="method post">POST</a><code class="uri">/folders/</code></h4><p>Folderを作成する</p>
-<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/folders/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/folders/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"\"example\""</span></span>,
+  "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
+  "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+  "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
     "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"posts"</span></span>,
     "<span class="hljs-attribute">attributes</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"example"</span></span>,
       "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
-      "<span class="hljs-attribute">user</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+      "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+      "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
-      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span>
+      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
+      "<span class="hljs-attribute">posts</span>": <span class="hljs-value">[
+        <span class="hljs-string">"name: `example`"</span>,
+        <span class="hljs-string">"content: `example2`"</span>,
+        <span class="hljs-string">"public: false"</span>,
+        <span class="hljs-string">"user_id: 1"</span>,
+        <span class="hljs-string">"created_at: `2020-03-05`"</span>,
+        <span class="hljs-string">"updated_at: `2020-03-05` ]"</span>
+      ]</span>,
+      "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
+        "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+        "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"true"</span></span>,
+        "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
+        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"~"</span></span>,
+        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"~"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span>
     </span>}
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
@@ -960,14 +1116,45 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"id: 1,"</span>
+            "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">posts</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+              "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+                "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}
+              </span>}
+            </span>}</span>,
+            "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}
           </span>}
@@ -997,14 +1184,32 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
     </span>}
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="フォルダー関連api-put" class="action put"><h4 class="action-heading"><div class="name">フォルダー更新</div><a href="#フォルダー関連api-put" class="method put">PUT</a><code class="uri">/folders/{id}/</code></h4><p>folderを更新する</p>
-<h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/folders/<span class="hljs-attribute" title="id">1</span>/</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>id</dt><dd><code>フォルダーID</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span></dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+<h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/folders/<span class="hljs-attribute" title="id">1</span>/</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>id</dt><dd><code>フォルダーID</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span></dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"update_example"</span></span>,
+  "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
     "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"folders"</span></span>,
     "<span class="hljs-attribute">attributes</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"update_example"</span></span>,
       "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
-      "<span class="hljs-attribute">user</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
+      "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+      "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
+      "<span class="hljs-attribute">posts</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span></span>,
+      "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value"><span class="hljs-string">"{~}"</span></span>,
+      "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span>
     </span>}
@@ -1031,9 +1236,20 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"id: 1,"</span>
+            "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">posts</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+            </span>}</span>,
+            "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
@@ -1089,52 +1305,17 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
     </span>}
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="フォルダー関連api-delete" class="action delete"><h4 class="action-heading"><div class="name">フォルダー削除</div><a href="#フォルダー関連api-delete" class="method delete">DELETE</a><code class="uri">/folders/{id}</code></h4><h4>Example URI</h4><div class="definition"><span class="method delete">DELETE</span>&nbsp;<span class="uri"><span class="hostname">http://localhost/api/v1</span>/folders/<span class="hljs-attribute" title="id">1</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>id</dt><dd><code>フォルダーID</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>1</span></span></dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">uid</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたuid"</span><br><span class="hljs-attribute">client</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたclient"</span><br><span class="hljs-attribute">access_token</span>: <span class="hljs-string">"ログイン時にレスポンスヘッダで返されたaccess_token"</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
-    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"folders"</span></span>,
-    "<span class="hljs-attribute">attributes</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"example"</span></span>,
-      "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
-      "<span class="hljs-attribute">user</span>": <span class="hljs-value"><span class="hljs-string">"Hello, world!"</span></span>,
-      "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
-      "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span>
-    </span>}
-  </span>}
+  "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"200"</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"削除に成功しました"</span>
 </span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
   "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
   "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-        </span>}</span>,
-        "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-        </span>}</span>,
-        "<span class="hljs-attribute">attributes</span>": <span class="hljs-value">{
-          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-          "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-            "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}</span>,
-            "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}</span>,
-            "<span class="hljs-attribute">user</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-              "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"id: 1,"</span>
-            </span>}</span>,
-            "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}</span>,
-            "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}
-          </span>}
-        </span>}
-      </span>}
+    "<span class="hljs-attribute">status</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">message</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
     </span>}
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>401</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
@@ -1158,7 +1339,7 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
       </span>}
     </span>}
   </span>}
-</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 22 May 2020</p><script>/* eslint-env browser */
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 04 Jun 2020</p><script>/* eslint-env browser */
 /* eslint quotes: [2, "single"] */
 'use strict';
 

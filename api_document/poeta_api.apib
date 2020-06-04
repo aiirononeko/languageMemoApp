@@ -25,6 +25,8 @@ poetaのAPI仕様書
                 + address: `null`,
                 + username: `null`,
                 + image: `null`,
+                + posts: `[]`,
+                + folders: `[]`,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
 
@@ -67,6 +69,7 @@ poetaのAPI仕様書
         + name: ``
         + profile:``
         + username:``
+        + avatar:``
         + address:``
         + image:``
 
@@ -115,11 +118,11 @@ poetaのAPI仕様書
 
 ## ユーザー関連API [/users]
 
-### ユーザー詳細 [GET /users/{id}]
+### ユーザー詳細 [GET /users/{user_name}]
 ユーザーのマイページを取得する。
 
 + Parameters
-    + id: 1 (ユーザーID)
+    + user_name: STQnpFar9JfTusk (ユーザーネーム)
 
 + Response 200 (application/json)
   + Attributes
@@ -130,7 +133,22 @@ poetaのAPI仕様書
                 + name: `poeta`,
                 + profile: `null`,
                 + address: `null`,
-                + username: `null`,
+                + posts(array)
+                    + id: 1,
+                    + user_id: 1,
+                    + content: ~,
+                    + public: true,
+                    + folder_id: null,
+                    + created_at: ~,
+                    + updated_at: ~,
+                + folders(array)
+                    + id: 1,
+                    + user_id: 1,
+                    + public: true,
+                    + parent_id: null,
+                    + created_at: ~,
+                    + updated_at: ~ 
+                + username: `STQnpFar9JfTusk`,
                 + image: `null`,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
@@ -164,6 +182,8 @@ poetaのAPI仕様書
                 + address: null,
                 + username: null,
                 + image: null,
+                + posts: `[]`,
+                + folders: `[]`,
                 + created_at: ``,
                 + updated_at: ``
 
@@ -224,6 +244,8 @@ poetaのAPI仕様書
                   + profile: null,
                   + address: null,
                   + image: null,
+                  + posts: `[]`,
+                  + folders: `[]`
                   + username: null,
                   + created_at: ``,
                   + updated_at: ``
@@ -265,7 +287,8 @@ TILの詳細を取得する
                 + name: `example`,
                 + content: `example2`,
                 + public: false,
-                + user-id: 1,
+                + user_id: 1,
+                + folder_id: 1,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
 
@@ -280,11 +303,11 @@ TILを投稿する
             access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
 
       + Attributes
-
-            + name: "example",
-            + content: "example2",
-            + public :false,
-            + user_id: 1
+         + name: "example",
+         + content: "example2",
+         + public :false,
+         + user_id: 1
+         + folder_id: 1
 
 + Response 200 (application/json)
   + Attributes
@@ -295,7 +318,8 @@ TILを投稿する
                 + name: `example`,
                 + content: `example2`,
                 + public: false,
-                + user-id: 1,
+                + user_id: 1,
+                + folder_id: 1,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
 
@@ -310,6 +334,9 @@ TILを投稿する
 ### TIL更新[PUT /posts/{id}]
 TILを更新する
 
++ Parameters
+      + id: 1 (ポストID)
+
 + Request
       + Headers
 
@@ -318,12 +345,9 @@ TILを更新する
             access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
 
       + Attributes
-            + name: "update_example",
-            + content: "update_example2",
-            + public :false
-
-      +Parameters
-            + id: 1 (ポストID)
+          + name: "update_example",
+          + content: "update_example2",
+          + public :false
 
 + Response 200 (application/json)
   + Attributes
@@ -334,7 +358,8 @@ TILを更新する
                 + name: `update_example`,
                 + content: `update_example2`,
                 + public: false,
-                + user-id: 1,
+                + user_id: 1,
+                + folder_id: 1,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
 
@@ -354,10 +379,11 @@ TILを更新する
 ### TIL削除[DELETE /posts/{id}]
 TILを削除する
 
-+ Request
++ Parameters
+      + id: 1 (TILのID)
 
-      + Parameters
-          + id: 1 (TILのID)
+
++ Request
 
       + Headers
 
@@ -368,16 +394,8 @@ TILを削除する
 
 + Response 200 (application/json)
    + Attributes
-        + data
-            + id: 1,
-            + type: posts,
-            + attributes
-                + name: `example`,
-                + content: `example2`,
-                + public: false,
-                + user-id: 1,
-                + created_at: `2020-03-05`,
-                + updated_at: `2020-03-05`
+       + status: 200,
+       + message: 削除に成功しました
 
 + Response 401 (application/json)
   + Attributes
@@ -401,16 +419,33 @@ TILを削除する
             + attributes
                 + name: `example`,
                 + public: false,
-                + user-id: 1,
+                + user_id: 1,
+                + parent_id: 2,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
-                + posts
-                    [  + name: `example`,
+                + posts(array)
+                       + name: `example`,
                        + content: `example2`,
                        + public: false,
-                       + user-id: 1,
+                       + user_id: 1,
                        + created_at: `2020-03-05`,
                        + updated_at: `2020-03-05` ]
+
+                + parent_folder
+                    + id: 2,
+                    + user_id: 1,
+                    + public: true,
+                    + parent_id: null,
+                    + created_at: ~,
+                    + updated_at: ~ 
+
+                + child_folders(array)
+                    + id: 1,
+                    + user_id: 1,
+                    + public: true,
+                    + parent_id: null,
+                    + created_at: ~,
+                    + updated_at: ~ 
 
 ### フォルダー作成[POST /folders/{id}]
 Folderを作成する
@@ -423,9 +458,10 @@ Folderを作成する
             access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
       
       + Attributes
-            + name: "example",
-            + public :false,
-            + user_id: 1
+          + name: "example",
+          + public :false,
+          + user_id: 1,
+          + parent_id: 2
 
 + Response 200 (application/json)
   + Attributes
@@ -435,9 +471,26 @@ Folderを作成する
             + attributes
                 + name: `example`,
                 + public: false,
-                + user-id: 1,
+                + user_id: 1,
+                + parent_id: 2,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
+                + posts(array)
+                       + name: `example`,
+                       + content: `example2`,
+                       + public: false,
+                       + user_id: 1,
+                       + created_at: `2020-03-05`,
+                       + updated_at: `2020-03-05` ]
+
+                + parent_folder
+                    + id: 2,
+                    + user_id: 1,
+                    + public: true,
+                    + parent_id: null,
+                    + created_at: ~,
+                    + updated_at: ~ 
+                + child_folders: []
 
 + Response 422 (application/json)
   + Attributes
@@ -458,9 +511,8 @@ folderを更新する
             client: "ログイン時にレスポンスヘッダで返されたclient"
             access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
       + Attributes
-
-            + name: `update_example`,
-            + public: false
+          + name: `update_example`,
+          + public: false
 
 + Response 200 (application/json)
   + Attributes
@@ -470,7 +522,11 @@ folderを更新する
             + attributes
                 + name: `update_example`,
                 + public: false,
-                + user-id: 1,
+                + user_id: 1,
+                + parent_id: 2,
+                + posts: `[]`,
+                + parent_folder:`{~}`,
+                + child_folders: `[]`,
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
 
@@ -500,15 +556,8 @@ folderを更新する
 
 + Response 200 (application/json)
    + Attributes
-        + data
-            + id: 1,
-            + type: folders,
-            + attributes
-                + name: `example`,
-                + public: false,
-                + user-id: 1,
-                + created_at: `2020-03-05`,
-                + updated_at: `2020-03-05`
+        + status: 200,
+        + message: 削除に成功しました
 
 + Response 401 (application/json)
   + Attributes
