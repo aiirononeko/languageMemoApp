@@ -1,6 +1,6 @@
 <template>
   <one-column-container>
-    <h1 class="mb-8 text-center">ログイン</h1>
+    <h1 class="main-heading mb-8 text-center">ログイン</h1>
 
     <signin-card />
   </one-column-container>
@@ -17,9 +17,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  h1 {
-    color: #646464;
-  }
-</style>
