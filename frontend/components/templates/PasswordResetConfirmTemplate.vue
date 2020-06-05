@@ -14,6 +14,9 @@
           v-else
         >
           {{ message }}
+          <div class="text-right">
+            <nuxt-link to="/signin">ログインへ</nuxt-link>
+          </div>
         </v-alert>
       </v-col>
     </v-row>

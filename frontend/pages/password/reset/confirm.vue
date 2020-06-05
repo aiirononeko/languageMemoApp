@@ -13,9 +13,10 @@ export default {
   middleware: "guest",
 
   validate({ query }) {
+    console.log(query)
     return query["access-token"]
       && (query.client || query.client_id)
-      && query.reset_passoword
+      && query.reset_password
       && query.token
       && query.uid
   },
@@ -27,16 +28,27 @@ export default {
     }
   },
 
+  computed: {
+    headers() {
+      return {
+        "access-token": this.$route.query["access-token"],
+        client: this.$route.query.client,
+        uid: this.$route.query.uid
+      }
+    }
+  },
+
   methods: {
     async reset({ password, password_confirmation }) {
       try {
-        const { data } = await this.$axios.$put(`/api/v1/auth/password`, {
+        const { success, message } = await this.$axios.$put(`/api/v1/auth/password`, {
           password, password_confirmation
+        }, {
+          headers: this.headers
         })
 
-        this.success = data.success
-        this.message = data.message
-        // this.$router.push(data.redirect_url)
+        this.success = success
+        this.message = message
       } catch (e) {
         console.error(e)
       }
