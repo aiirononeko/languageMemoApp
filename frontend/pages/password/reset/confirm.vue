@@ -12,6 +12,14 @@ export default {
 
   middleware: "guest",
 
+  validate({ query }) {
+    return query["access-token"]
+      && (query.client || query.client_id)
+      && query.reset_passoword
+      && query.token
+      && query.uid
+  },
+
   data() {
     return {
       success: false,
