@@ -216,6 +216,12 @@ poetaのAPI仕様書
 パスワード変更用のリンクを含むメールを送信する。
 
 + Request
+  + Headers
+
+              uid: "ログイン時にレスポンスヘッダで返されたuid"
+              client: "ログイン時にレスポンスヘッダで返されたclient"
+              access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
+
   + Attributes
       + email: `poeta@example.com` (string, required) - メールアドレス
       + redirect_url: `http://localhost:3000/~` (string, required) - リンクを踏んだ際のリダイレクト先URL
@@ -229,6 +235,11 @@ poetaのAPI仕様書
 パスワードを変更する。
 
 + Request
+  + Headers
+  
+              uid: "ログイン時にレスポンスヘッダで返されたuid"
+              client: "ログイン時にレスポンスヘッダで返されたclient"
+              access_token: "ログイン時にレスポンスヘッダで返されたaccess_token"
   + Attributes
       + password: `password`
       + password_confirmation: `password`
