@@ -1,0 +1,62 @@
+<template>
+  <password-reset-confirm-template :success="success" :message="message" @submit="reset" />
+</template>
+
+<script>
+const PasswordResetConfirmTemplate = () => import('~/components/templates/PasswordResetConfirmTemplate')
+
+export default {
+  components: {
+    PasswordResetConfirmTemplate
+  },
+
+  middleware: "guest",
+
+  validate({ query }) {
+    console.log(query)
+    return query["access-token"]
+      && (query.client || query.client_id)
+      && query.reset_password
+      && query.token
+      && query.uid
+  },
+
+  data() {
+    return {
+      success: false,
+      message: null
+    }
+  },
+
+  computed: {
+    headers() {
+      return {
+        "access-token": this.$route.query["access-token"],
+        client: this.$route.query.client,
+        uid: this.$route.query.uid
+      }
+    }
+  },
+
+  methods: {
+    async reset({ password, password_confirmation }) {
+      try {
+        const { success, message } = await this.$axios.$put(`/api/v1/auth/password`, {
+          password, password_confirmation
+        }, {
+          headers: this.headers
+        })
+
+        this.success = success
+        this.message = message
+      } catch (e) {
+        console.error(e)
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+
+</style>
