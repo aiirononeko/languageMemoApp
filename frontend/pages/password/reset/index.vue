@@ -1,5 +1,7 @@
 <template>
-  <password-reset-index-template @submit="reset" />
+  <div>
+    <password-reset-index-template :success="success" :message="message" @submit="reset" />
+  </div>
 </template>
 
 <script>
@@ -10,15 +12,25 @@ export default {
     PasswordResetIndexTemplate
   },
 
+  middleware: "guest",
+
+  data() {
+    return {
+      success: false,
+      message: null
+    }
+  },
+
   methods: {
-    reset(email) {
+    async reset(email) {
       try {
-        const { data } = this.$axios.$post(`/api/v1/auth/password`, {
+        const { success, message } = await this.$axios.$post(`/api/v1/auth/password`, {
           email,
           'redirect_url': `${process.env.clientUrl}/password/reset/confirm`
         })
 
-        this.$router.push(data.redirect_url)
+        this.success = success
+        this.message = message
       } catch (e) {}
     }
   }
