@@ -1,9 +1,9 @@
 <template>
-  <v-form @submit="onSubmit">
+  <v-form @submit.prevent="onSubmit">
     <email-text-field v-model="email" />
 
     <div class="d-flex justify-end">
-      <blue-btn>
+      <blue-btn type="submit">
         送信
       </blue-btn>
     </div>
