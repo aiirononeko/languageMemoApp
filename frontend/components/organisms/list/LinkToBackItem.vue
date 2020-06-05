@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- TODO: ← のアイコン -->
+    <v-icon>mdi-arrow-left-circle</v-icon>
   </div>
 </template>
 
