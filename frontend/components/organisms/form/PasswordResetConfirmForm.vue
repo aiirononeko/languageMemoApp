@@ -1,5 +1,5 @@
 <template>
-  <v-form @submit="onSubmit">
+  <v-form @submit.prevent="onSubmit">
     <password-confirmation-text-field
       v-model="password"
       :cvalue="password_confirmation"
@@ -7,7 +7,7 @@
     />
 
     <div class="d-flex justify-end">
-      <blue-btn>
+      <blue-btn type="submit">
         送信
       </blue-btn>
     </div>
@@ -37,7 +37,10 @@ export default {
     },
 
     onSubmit() {
-      return this.$emit('submit', this.email)
+      return this.$emit('submit', {
+        password: this.password,
+        password_confirmation: this.password_confirmation
+      })
     }
   }
 }

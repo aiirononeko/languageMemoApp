@@ -47,7 +47,7 @@
             return !!value || "入力してください"
           },
           min: (value) => {
-            return value.length >= 8 || "８文字以上入力してください"
+            return (value && value.length >= 8) || "８文字以上入力してください"
           },
         },
 
