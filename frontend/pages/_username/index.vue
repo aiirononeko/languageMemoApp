@@ -23,7 +23,7 @@ export default {
       // Todo: APIが変更されたら以下のように変更する
       // const { data } = await $axios.$get(`/api/v1/users/#{params}`)
 
-      const { data } = await $axios.$get(`/api/v1/users/${store.getters["authentication/id"]}`)
+      const { data } = await $axios.$get(`/api/v1/users/${store.getters["authentication/username"]}`)
       return { userInfo: data }
     } catch (e) {
       console.error(e)
