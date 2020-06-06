@@ -1,7 +1,5 @@
 <template>
   <div>
-    <blue-btn @click="changeCreatingNewFolder">フォルダーを作成する</blue-btn>
-    
     <v-list v-if="existList">
       <v-list-item-group>
         <v-list-item v-if="!isRepository" @click="toBackFolder">
@@ -62,12 +60,10 @@
 
 <script>
 import LinkToBackItem from '~/components/organisms/list/LinkToBackItem'
-import BlueBtn from '~/components/atoms/btns/BlueBtn'
 
 export default {
   components: {
     LinkToBackItem,
-    BlueBtn
   },
 
   props: {
@@ -79,12 +75,16 @@ export default {
     isRepository: {
       type: Boolean,
       default: undefined
+    },
+
+    creatingNewFolder: {
+      type: Boolean,
+      default: undefined
     }
   },
 
   data: () => ({
     newFolderName: "",
-    creatingNewFolder: false
   }),
 
   computed: {
@@ -94,10 +94,6 @@ export default {
   },
 
   methods: {
-    changeCreatingNewFolder() {
-      this.creatingNewFolder = true
-    },
-
     openListItem(id, title) {
       let username = this.$store.getters["authentication/username"]
       this.$router.push(`/${username}/${id}`)
@@ -107,7 +103,7 @@ export default {
       let newFolderName = this.newFolderName
       this.$emit('submit', newFolderName)
 
-      this.creatingNewFolder = false
+      this.$emit('changeCreatingNewFolder')
       this.newFolderName = ""
     },
 
