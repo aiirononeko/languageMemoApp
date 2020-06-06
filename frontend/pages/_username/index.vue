@@ -1,6 +1,6 @@
 <template>
   <div>
-    <username-index-template :userInfo="userInfo" />
+    <username-index-template :userInfo="userInfo" @submit="submit" />
   </div>
 </template>
 
@@ -15,6 +15,24 @@ export default {
   computed: {
     username() {
       return this.$route.params.username
+    }
+  },
+
+  methods: {
+    async submit(newFolderName) {
+      let folderInfo = {
+        name: newFolderName,
+        public: false,
+        user_id: this.$store.getters["authentication/id"],
+        parent_id: null 
+      }
+      try {
+        console.log("onSubmit")
+        await this.$axios.post(`/api/v1/folders`, folderInfo)
+      } catch(e) {
+        console.error(e)
+      }
+      
     }
   },
 

@@ -11,7 +11,7 @@
 
       <folder-breadcrumbs />
 
-      <file-folder-list-with-action />
+      <file-folder-list-with-action @submit="submit" />
     </template>
   </two-column-container>
 </template>
@@ -34,6 +34,12 @@ export default {
     userInfo: {
       type: Object,
       default: undefined
+    }
+  },
+
+  methods: {
+    submit(newFolderName) {
+      this.$emit('submit', newFolderName)
     }
   }
 }
