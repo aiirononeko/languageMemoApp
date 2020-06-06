@@ -1,15 +1,27 @@
 <template>
-  <two-column-container :leftCols="4" :rightCols="6">
+  <two-column-container :leftCols="4" :rightCols="8">
     <template #left>
       <user-intro-card :userInfo="userInfo" class="mt-10" />
     </template>
 
     <template #right>
-      <h2 class="text-center">あなたのリポジトリ</h2>
+      <v-container>
+        <v-row>
+          <v-col cols="8"><h2 class="text-center">あなたのリポジトリ</h2></v-col>
+          <v-col cols="4"><blue-btn @click="changeCreatingNewFolder">フォルダーを作成する</blue-btn></v-col>
+        </v-row>
+      </v-container>
 
       <folder-breadcrumbs />
 
-      <file-folder-list-with-action @submit="submit" @fetchData="fetchData" :list="list" :isRepository="isRepository" />
+      <file-folder-list-with-action 
+        @submit="submit" 
+        @fetchData="fetchData" 
+        :list="list" 
+        :isRepository="isRepository" 
+        :creatingNewFolder="creatingNewFolder" 
+        @changeCreatingNewFolder="changeCreatingNewFolder" 
+      />
     </template>
   </two-column-container>
 </template>
@@ -19,6 +31,7 @@ import FileFolderListWithAction from '~/components/organisms/list/FileFolderList
 import FolderBreadcrumbs from '~/components/organisms/breadcrumbs/FolderBreadcrumbs'
 import TwoColumnContainer from '~/components/molecules/containers/TwoColumnContainer'
 import UserIntroCard from '~/components/organisms/cards/UserIntroCard'
+import BlueBtn from '~/components/atoms/btns/BlueBtn'
 
 export default {
   components: {
@@ -26,6 +39,7 @@ export default {
     FolderBreadcrumbs,
     TwoColumnContainer,
     UserIntroCard,
+    BlueBtn
   },
   
   props: {
@@ -37,10 +51,15 @@ export default {
 
   data: () => ({
     list: null,
-    isRepository: false
+    isRepository: false,
+    creatingNewFolder: false
   }),
 
   methods: {
+    changeCreatingNewFolder() {
+      this.creatingNewFolder = !this.creatingNewFolder
+    },
+
     submit(newFolderName) {
       this.$emit('submit', newFolderName)
     },
@@ -70,7 +89,7 @@ export default {
 
   created() {
     this.isRepository = !!this.userInfo.attributes.folders
-    
+
     this.setList()
   }
 }
