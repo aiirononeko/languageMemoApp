@@ -6,17 +6,17 @@
       <v-list-item-group>
         <v-list-item  v-for="(item, i) in list" :key="i">
           <v-list-item-icon>
-            <v-icon>{{ item.isFolder ? "mdi-folder" : "mdi-file" }}</v-icon>
+            <v-icon>{{ item.folder_id ? "mdi-file" : "mdi-folder" }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
             <v-list-item-title>
-              {{ item.title }}
+              {{ item.name }}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item v-if="creatingNewFolder">
+        <v-list-item v-if="creatingNewFolder  && existList">
           <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
 
           <v-list-item-content>
@@ -29,6 +29,17 @@
     </v-list>
 
     <div v-else>フォルダやファイルは存在しません。作成してください</div>
+    <v-list>
+      <v-list-item v-if="creatingNewFolder  && !existList">
+        <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
+
+        <v-list-item-content>
+          <v-form @submit="onSubmit">
+            <v-list-item-title><v-text-field v-model="newFolderName" dense /></v-list-item-title>
+          </v-form>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
 
     <link-to-back-item />
   </div>
@@ -45,32 +56,13 @@ export default {
   },
 
   props: {
-    // リストを受けとる
-    // list: {
-    //   type: Array,
-    //   default: undefined
-    // }
+    list: {
+      type: Array,
+      default: undefined
+    }
   },
 
   data: () => ({
-    list: [
-      {
-        title: "Docker",
-        isFolder: true
-      },
-      {
-        title: "CSS",
-        isFolder: true
-      },
-      {
-        title: "HTML",
-        isFolder: true
-      },
-      {
-        title: "MaterialDesgin.md",
-        isFolder: false
-      },
-    ],
     newFolderName: "",
     creatingNewFolder: false
   }),
@@ -91,6 +83,7 @@ export default {
       this.$emit('submit', newFolderName)
       this.creatingNewFolder = false
       this.newFolderName = ""
+      this.$emit('fetchData')
     }
   }
 }
