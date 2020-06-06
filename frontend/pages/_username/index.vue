@@ -1,6 +1,6 @@
 <template>
   <div>
-    <username-index-template :userInfo="userInfo" @submit="submit" />
+    <username-index-template :userInfo="userInfo" @submit="submit" @fetchData="fetchData" />
   </div>
 </template>
 
@@ -32,7 +32,18 @@ export default {
       } catch(e) {
         console.error(e)
       }
-      
+    },
+
+    async fetchData() {
+      try {
+        // Todo: APIが変更されたら以下のように変更する
+        // const { data } = await $axios.$get(`/api/v1/users/#{params}`)
+
+        const { data } = await this.$axios.$get(`/api/v1/users/${this.$store.getters["authentication/username"]}`)
+        this.userInfo = data
+      } catch (e) {
+        console.error(e)
+      }
     }
   },
 
@@ -42,6 +53,7 @@ export default {
       // const { data } = await $axios.$get(`/api/v1/users/#{params}`)
 
       const { data } = await $axios.$get(`/api/v1/users/${store.getters["authentication/username"]}`)
+      console.log(data)
       return { userInfo: data }
     } catch (e) {
       console.error(e)

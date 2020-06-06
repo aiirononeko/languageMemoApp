@@ -11,7 +11,7 @@
 
       <folder-breadcrumbs />
 
-      <file-folder-list-with-action @submit="submit" />
+      <file-folder-list-with-action @submit="submit" @fetchData="fetchData" :list="list" />
     </template>
   </two-column-container>
 </template>
@@ -37,10 +37,34 @@ export default {
     }
   },
 
+  data: () => ({
+    list: null
+  }),
+
   methods: {
     submit(newFolderName) {
       this.$emit('submit', newFolderName)
+    },
+
+    fetchData() {
+      this.$emit('fetchData')
     }
+  },
+
+  watch: {
+    userInfo: function () {
+      console.log("Hello")
+      let folders = this.userInfo.attributes.folders ? this.userInfo.attributes.folders : []
+      let files = this.userInfo.attributes.files ? this.userInfo.attributes.files : []
+      this.list = folders.concat(files)
+    }
+  },
+
+  created() {
+    let folders = this.userInfo.attributes.folders ? this.userInfo.attributes.folders : []
+    let files = this.userInfo.attributes.files ? this.userInfo.attributes.files : []
+    this.list = folders.concat(files)
+    console.log(this.list)
   }
 }
 </script>
