@@ -1,7 +1,5 @@
 <template>
   <two-column-container :leftCols="4" :rightCols="6">
-
-
     <template #left>
       <user-intro-card :userInfo="userInfo" class="mt-10" />
     </template>
@@ -11,7 +9,7 @@
 
       <folder-breadcrumbs />
 
-      <file-folder-list-with-action @submit="submit" @fetchData="fetchData" :list="list" />
+      <file-folder-list-with-action @submit="submit" @fetchData="fetchData" :list="list" :isRepository="isRepository" />
     </template>
   </two-column-container>
 </template>
@@ -38,7 +36,8 @@ export default {
   },
 
   data: () => ({
-    list: null
+    list: null,
+    isRepository: false
   }),
 
   methods: {
@@ -48,23 +47,31 @@ export default {
 
     fetchData() {
       this.$emit('fetchData')
+    },
+
+    setList() {
+      if(this.isRepository) {
+        let folders = this.userInfo.attributes.folders ? this.userInfo.attributes.folders : []
+        let posts = this.userInfo.attributes.posts ? this.userInfo.attributes.posts : []
+        this.list = folders.concat(posts)
+      } else {
+        let folders = this.userInfo.attributes["child-folders"] ? this.userInfo.attributes["child-folders"] : []
+        let posts = this.userInfo.attributes.posts ? this.userInfo.attributes.posts : []
+        this.list = folders.concat(posts)
+      }
     }
   },
 
   watch: {
     userInfo: function () {
-      console.log("Hello")
-      let folders = this.userInfo.attributes.folders ? this.userInfo.attributes.folders : []
-      let files = this.userInfo.attributes.files ? this.userInfo.attributes.files : []
-      this.list = folders.concat(files)
+      this.setList()
     }
   },
 
   created() {
-    let folders = this.userInfo.attributes.folders ? this.userInfo.attributes.folders : []
-    let files = this.userInfo.attributes.files ? this.userInfo.attributes.files : []
-    this.list = folders.concat(files)
-    console.log(this.list)
+    this.isRepository = !!this.userInfo.attributes.folders
+    
+    this.setList()
   }
 }
 </script>
