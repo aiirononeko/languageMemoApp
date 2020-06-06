@@ -4,7 +4,7 @@
     
     <v-list v-if="existList">
       <v-list-item-group>
-        <v-list-item v-if="!isRepository">
+        <v-list-item v-if="!isRepository" @click="toBackFolder">
           <v-list-item-icon>
             <link-to-back-item />
           </v-list-item-icon>
@@ -38,7 +38,7 @@
       <p>フォルダやファイルは存在しません。作成してください</p> 
       <v-list>
         <v-list-item-group>
-          <v-list-item v-if="!isRepository">
+          <v-list-item v-if="!isRepository" @click="toBackFolder">
             <v-list-item-icon>
               <link-to-back-item />
             </v-list-item-icon>
@@ -100,8 +100,6 @@ export default {
 
     openListItem(id, title) {
       let username = this.$store.getters["authentication/username"]
-
-      console.log([id, title])
       this.$router.push(`/${username}/${id}`)
     },
 
@@ -111,6 +109,10 @@ export default {
 
       this.creatingNewFolder = false
       this.newFolderName = ""
+    },
+
+    toBackFolder() {
+      this.$router.go(-1)
     }
   }
 }
