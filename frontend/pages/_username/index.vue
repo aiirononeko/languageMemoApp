@@ -1,4 +1,5 @@
 <template>
+  <!-- マイページのルート -->
   <div>
     <username-index-template :userInfo="userInfo" @submit="submit" @fetchData="fetchData" />
   </div>
@@ -27,18 +28,15 @@ export default {
         parent_id: null 
       }
       try {
-        console.log("onSubmit")
         await this.$axios.post(`/api/v1/folders`, folderInfo)
       } catch(e) {
         console.error(e)
       }
+      this.fetchData()
     },
 
     async fetchData() {
       try {
-        // Todo: APIが変更されたら以下のように変更する
-        // const { data } = await $axios.$get(`/api/v1/users/#{params}`)
-
         const { data } = await this.$axios.$get(`/api/v1/users/${this.$store.getters["authentication/username"]}`)
         this.userInfo = data
       } catch (e) {
@@ -49,9 +47,6 @@ export default {
 
   async asyncData({ $axios, params, store }) {
     try {
-      // Todo: APIが変更されたら以下のように変更する
-      // const { data } = await $axios.$get(`/api/v1/users/#{params}`)
-
       const { data } = await $axios.$get(`/api/v1/users/${store.getters["authentication/username"]}`)
       console.log(data)
       return { userInfo: data }

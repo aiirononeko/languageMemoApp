@@ -1,10 +1,16 @@
 <template>
   <div>
-    <!-- ファイルやフォルダーのリスト -->
     <blue-btn @click="changeCreatingNewFolder">フォルダーを作成する</blue-btn>
+    
     <v-list v-if="existList">
       <v-list-item-group>
-        <v-list-item  v-for="(item, i) in list" :key="i">
+        <v-list-item v-if="!isRepository">
+          <v-list-item-icon>
+            <link-to-back-item />
+          </v-list-item-icon>
+        </v-list-item>
+
+        <v-list-item  v-for="item in list" :key="item.id" @click="openListItem(item.id, item.name)">
           <v-list-item-icon>
             <v-icon>{{ item.folder_id ? "mdi-file" : "mdi-folder" }}</v-icon>
           </v-list-item-icon>
@@ -16,7 +22,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item v-if="creatingNewFolder  && existList">
+        <v-list-item v-if="creatingNewFolder && existList">
           <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
 
           <v-list-item-content>
@@ -28,20 +34,29 @@
       </v-list-item-group>
     </v-list>
 
-    <div v-else>フォルダやファイルは存在しません。作成してください</div>
-    <v-list>
-      <v-list-item v-if="creatingNewFolder  && !existList">
-        <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
+    <div v-else>
+      <p>フォルダやファイルは存在しません。作成してください</p> 
+      <v-list>
+        <v-list-item-group>
+          <v-list-item v-if="!isRepository">
+            <v-list-item-icon>
+              <link-to-back-item />
+            </v-list-item-icon>
+          </v-list-item>
 
-        <v-list-item-content>
-          <v-form @submit="onSubmit">
-            <v-list-item-title><v-text-field v-model="newFolderName" dense /></v-list-item-title>
-          </v-form>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+          <v-list-item v-if="creatingNewFolder && !existList">
+            <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
 
-    <link-to-back-item />
+            <v-list-item-content>
+              <v-form @submit="onSubmit">
+                <v-list-item-title><v-text-field v-model="newFolderName" dense /></v-list-item-title>
+              </v-form>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </div>
+   
   </div>
 </template>
 
@@ -58,6 +73,11 @@ export default {
   props: {
     list: {
       type: Array,
+      default: undefined
+    },
+
+    isRepository: {
+      type: Boolean,
       default: undefined
     }
   },
@@ -78,12 +98,19 @@ export default {
       this.creatingNewFolder = true
     },
 
+    openListItem(id, title) {
+      let username = this.$store.getters["authentication/username"]
+
+      console.log([id, title])
+      this.$router.push(`/${username}/${id}`)
+    },
+
     onSubmit() {
       let newFolderName = this.newFolderName
       this.$emit('submit', newFolderName)
+
       this.creatingNewFolder = false
       this.newFolderName = ""
-      this.$emit('fetchData')
     }
   }
 }
