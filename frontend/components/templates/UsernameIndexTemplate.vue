@@ -46,6 +46,11 @@ export default {
     userInfo: {
       type: Object,
       default: undefined
+    },
+
+    foldersInfo: {
+      type: Object,
+      default: undefined
     }
   },
 
@@ -70,12 +75,12 @@ export default {
 
     setList() {
       if(this.isRepository) {
-        let folders = this.userInfo.attributes.folders ? this.userInfo.attributes.folders : []
-        let posts = this.userInfo.attributes.posts ? this.userInfo.attributes.posts : []
+        let folders = this.userInfo.folders ? this.userInfo.folders : []
+        let posts = this.userInfo.posts ? this.userInfo.posts : []
         this.list = folders.concat(posts)
       } else {
-        let folders = this.userInfo.attributes["child-folders"] ? this.userInfo.attributes["child-folders"] : []
-        let posts = this.userInfo.attributes.posts ? this.userInfo.attributes.posts : []
+        let folders = this.foldersInfo.attributes["child-folders"] ? this.foldersInfo.attributes["child-folders"] : []
+        let posts = this.foldersInfo.attributes.posts ? this.foldersInfo.attributes.posts : []
         this.list = folders.concat(posts)
       }
     }
@@ -84,11 +89,16 @@ export default {
   watch: {
     userInfo: function () {
       this.setList()
+    },
+
+    foldersInfo: function() {
+      this.setList()
     }
+
   },
 
   created() {
-    this.isRepository = !!this.userInfo.attributes.folders
+    this.isRepository = !this.foldersInfo
 
     this.setList()
   }
