@@ -2,13 +2,17 @@
   <one-column-container>
     <h1 class="main-heading mb-8 text-center">ログイン</h1>
 
-    <signin-card />
+    <v-row justify="center">
+      <v-col cols="12" sm="10">
+        <signin-card />
+      </v-col>
+    </v-row>
   </one-column-container>
 </template>
 
 <script>
-import OneColumnContainer from '~/components/molecules/containers/OneColumnContainer'
-import SigninCard from '~/components/organisms/cards/SigninCard'
+const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
+const SigninCard = () => import('~/components/organisms/cards/SigninCard')
 
 export default {
   components: {
