@@ -22,5 +22,5 @@ export const isCookieUndefined = (cookies, names) => {
  * @return void
  */
 export const cookieRemoveAll = (cookies, names) =>
-  names.forEach((name) => cookies.remove(name, { path: '/' }))
+  names.forEach((name) => cookies.remove(name))
 
