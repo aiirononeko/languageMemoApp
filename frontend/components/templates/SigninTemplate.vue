@@ -4,7 +4,7 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="10">
-        <signin-card />
+        <signin-card @signin="onSignin" />
       </v-col>
     </v-row>
   </one-column-container>
@@ -18,6 +18,12 @@ export default {
   components: {
     OneColumnContainer,
     SigninCard
+  },
+
+  methods: {
+    onSignin(value) {
+      return this.$emit('signin', value)
+    }
   }
 }
 </script>
