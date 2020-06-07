@@ -3,7 +3,7 @@
     <h1 class="main-heading mb-8 text-center">ログイン</h1>
 
     <v-row justify="center">
-      <v-col cols="12" sm="10">
+      <v-col cols="12" sm="10" md="8">
         <signin-card @signin="onSignin" />
       </v-col>
     </v-row>
