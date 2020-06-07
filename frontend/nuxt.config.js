@@ -7,7 +7,6 @@ module.exports = {
    */
   env: {
     baseUrl: process.env.BASE_URL || "http://localhost:3000",
-    clientUrl: process.env.CLIENT_URL || "http://localhost:3001"
   },
 
   /*
@@ -63,7 +62,7 @@ module.exports = {
   css: [{ src: "~/assets/sass/app.scss", lang: "scss" }],
 
   router: {
-    middleware: ["check-auth"],
+    middleware: ["check-auth", "check-cookie-integrity"],
   },
 
   /*
