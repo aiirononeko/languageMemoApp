@@ -29,6 +29,7 @@ export default {
       }
       try {
         await this.$axios.post(`/api/v1/folders`, folderInfo)
+        await this.$store.dispatch("authentication/fetchUser")
       } catch(e) {
         console.error(e)
       }
@@ -37,7 +38,7 @@ export default {
 
     async fetchData() {
       try {
-        const { data } = await this.$axios.$get(`/api/v1/users/${this.$store.getters["authentication/username"]}`)
+        const  data = await this.$store.getters["authentication/userInfo"]
         this.userInfo = data
       } catch (e) {
         console.error(e)
@@ -45,11 +46,10 @@ export default {
     }
   },
 
-  async asyncData({ $axios, params, store }) {
+  async asyncData({ store }) {
     try {
-      const { data } = await $axios.$get(`/api/v1/users/${store.getters["authentication/username"]}`)
-      console.log(data)
-      return { userInfo: data }
+      const userInfo = await store.getters["authentication/userInfo"]
+      return { userInfo }
     } catch (e) {
       console.error(e)
     }

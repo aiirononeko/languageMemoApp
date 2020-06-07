@@ -9,7 +9,7 @@
     <username-file-template v-if="isDir" />
     <username-folder-template v-if="isFile" /> -->
 
-    <username-index-template :userInfo="userInfo" @submit="submit" @fetchData="fetchData" />
+    <username-index-template :userInfo="userInfo" :foldersInfo="foldersInfo" @submit="submit" @fetchData="fetchData" />
   </div>
 </template>
 
@@ -59,8 +59,7 @@ export default {
     async fetchData() {
       try {
         const { data } = await this.$axios.$get(`/api/v1/folders/${this.parentParams}`)
-        console.log(data)
-        this.userInfo = data
+        this.foldersInfo = data
       } catch (e) {
         console.error(e)
       }
@@ -70,8 +69,8 @@ export default {
   async asyncData({ $axios, params, store }) {
     try {
       const { data } = await $axios.$get(`/api/v1/folders/${params.pathMatch}`)
-      console.log(data)
-      return { userInfo: data }
+      const userInfo = await store.getters["authentication/userInfo"]
+      return { userInfo, foldersInfo: data }
     } catch (e) {
       console.error(e)
     }
