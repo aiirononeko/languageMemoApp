@@ -3,11 +3,11 @@
     <h2 class="mb-3 text-center">Poeta</h2>
 
     <v-row justify="center">
-      <v-col cols="12" sm="8" md="8">
+      <v-col cols="12" sm="8" md="6">
         <signin-form @signin="onSignin" />
       </v-col>
 
-      <v-col cols="12" sm="4" md="3" style="max-width: 300px">
+      <v-col cols="12" sm="4" md="3" class="max-width-300">
         <h2 class="other-heading">その他のアカウント</h2>
         <login-sns-btn-group />
       </v-col>
