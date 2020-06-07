@@ -20,7 +20,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item v-if="creatingNewFolder && existList">
+        <v-list-item v-if="isCreatingNewFolder && existList">
           <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
 
           <v-list-item-content>
@@ -42,7 +42,7 @@
             </v-list-item-icon>
           </v-list-item>
 
-          <v-list-item v-if="creatingNewFolder && !existList">
+          <v-list-item v-if="isCreatingNewFolder && !existList">
             <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
 
             <v-list-item-content>
@@ -77,7 +77,7 @@ export default {
       default: undefined
     },
 
-    creatingNewFolder: {
+    isCreatingNewFolder: {
       type: Boolean,
       default: undefined
     }
@@ -103,7 +103,7 @@ export default {
       let newFolderName = this.newFolderName
       this.$emit('submit', newFolderName)
 
-      this.$emit('changeCreatingNewFolder')
+      this.$emit('triggerIsCreatingNewFolder')
       this.newFolderName = ""
     },
 
