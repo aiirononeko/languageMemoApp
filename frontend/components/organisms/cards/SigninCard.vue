@@ -4,7 +4,7 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="8" md="8">
-        <signin-form />
+        <signin-form @signin="onSignin" />
       </v-col>
 
       <v-col cols="12" sm="4" md="3" style="max-width: 300px">
@@ -23,6 +23,12 @@ export default {
   components: {
     LoginSnsBtnGroup,
     SigninForm
+  },
+
+  methods: {
+    onSignin(value) {
+      return this.$emit('signin', value)
+    }
   }
 }
 </script>
