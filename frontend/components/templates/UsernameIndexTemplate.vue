@@ -8,19 +8,19 @@
       <v-container>
         <v-row>
           <v-col cols="8"><h2 class="text-center">あなたのリポジトリ</h2></v-col>
-          <v-col cols="4"><blue-btn @click="changeCreatingNewFolder">フォルダーを作成する</blue-btn></v-col>
+          <v-col cols="4"><blue-btn @click="triggerIsCreatingNewFolder">フォルダーを作成する</blue-btn></v-col>
         </v-row>
       </v-container>
 
       <folder-breadcrumbs />
 
       <file-folder-list-with-action 
-        @submit="submit" 
-        @fetchData="fetchData" 
+        @submit="(newFolderName) => $emit('submit' ,newFolderName)" 
+        @fetchData="$emit('fetchData')" 
         :list="list" 
         :isRepository="isRepository" 
-        :creatingNewFolder="creatingNewFolder" 
-        @changeCreatingNewFolder="changeCreatingNewFolder" 
+        :isCreatingNewFolder="isCreatingNewFolder" 
+        @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder" 
       />
     </template>
   </two-column-container>
@@ -57,20 +57,12 @@ export default {
   data: () => ({
     list: null,
     isRepository: false,
-    creatingNewFolder: false
+    isCreatingNewFolder: false
   }),
 
   methods: {
-    changeCreatingNewFolder() {
-      this.creatingNewFolder = !this.creatingNewFolder
-    },
-
-    submit(newFolderName) {
-      this.$emit('submit', newFolderName)
-    },
-
-    fetchData() {
-      this.$emit('fetchData')
+    triggerIsCreatingNewFolder() {
+      this.isCreatingNewFolder = !this.isCreatingNewFolder
     },
 
     setList() {
