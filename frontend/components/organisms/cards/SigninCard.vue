@@ -1,5 +1,7 @@
 <template>
   <v-card class="pa-6">
+    <h2 class="mb-3 text-center">Poeta</h2>
+
     <v-row justify="center">
       <v-col cols="12" sm="8" md="8">
         <signin-form />

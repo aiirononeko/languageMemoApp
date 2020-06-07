@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import SignupTemplate from '~/components/templates/SignupTemplate'
+const SignupTemplate = () => import('~/components/templates/SignupTemplate')
 
 export default {
   components: {
