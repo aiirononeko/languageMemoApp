@@ -1,21 +1,21 @@
 <template>
-  <v-card width="800" height="300" class="mx-auto">
-    <v-row class="w-100 h-100" justify="center" align="center">
-      <div class="mr-1 mr-md-6 mr-lg-10">
+  <v-card class="pa-6">
+    <v-row justify="center">
+      <v-col cols="12" sm="8" md="8">
         <signin-form />
-      </div>
+      </v-col>
 
-      <div class="ml-1 ml-md-6 ml-lg-10">
-        <p>その他のアカウント</p>
+      <v-col cols="12" sm="4" md="3" style="max-width: 300px">
+        <h2 class="other-heading">その他のアカウント</h2>
         <login-sns-btn-group />
-      </div>
+      </v-col>
     </v-row>
   </v-card>
 </template>
 
 <script>
-import LoginSnsBtnGroup from '~/components/organisms/btnGroup/LoginSnsBtnGroup'
-import SigninForm from '~/components/organisms/form/SigninForm'
+const LoginSnsBtnGroup = () => import('~/components/organisms/btnGroup/LoginSnsBtnGroup')
+const SigninForm = () => import('~/components/organisms/form/SigninForm')
 
 export default {
   components: {
@@ -24,3 +24,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.other-heading {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-bottom: 0.5rem;
+}
+</style>
