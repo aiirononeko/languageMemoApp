@@ -4,17 +4,10 @@
       <v-list-item-group>
         <link-to-back-item v-if="!isRepository" @toBackFolder="toBackFolder" />
 
-        <v-list-item  v-for="item in list" :key="item.id" @click="openListItem(item.id, item.name)">
-          <v-list-item-icon>
-            <v-icon>{{ item.folder_id ? "mdi-file" : "mdi-folder" }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>
-              {{ item.name }}
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <span v-for="item in list" :key="item.id" @click="openListItem(item.id, item.name)">
+          <file-list-item v-if="!!item.content" :name="item.name" />
+          <folder-list-item else :name="item.name" />
+        </span>
 
         <v-list-item v-if="isCreatingNewFolder && existList">
           <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
@@ -51,10 +44,14 @@
 </template>
 
 <script>
+import FileListItem from '~/components/organisms/list/FileListItem'
+import FolderListItem from '~/components/organisms/list/FolderListItem'
 import LinkToBackItem from '~/components/organisms/list/LinkToBackItem'
 
 export default {
   components: {
+    FileListItem,
+    FolderListItem,
     LinkToBackItem,
   },
 
