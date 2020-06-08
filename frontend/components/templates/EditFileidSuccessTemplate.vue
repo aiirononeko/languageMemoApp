@@ -9,7 +9,7 @@
     </v-row>
 
     <v-row class="mb-4" justify="center">
-      <orange-btn class="mr-2">
+      <orange-btn class="mr-2" :to="`/edit/${fileid}`">
         編集する
       </orange-btn>
 
@@ -30,6 +30,13 @@ export default {
     TwitterBtn,
     OneColumnContainer,
     OrangeBtn
+  },
+
+  props: {
+    fileid: {
+      type: String,
+      required: true
+    }
   }
 }
 </script>
