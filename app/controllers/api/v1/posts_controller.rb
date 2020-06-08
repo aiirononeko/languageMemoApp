@@ -4,7 +4,11 @@ class Api::V1::PostsController < ApplicationController
   before_action :correct_user?, only: [:update, :destroy]
 
   def show
-    render json: @post, serializer: PostSerializer
+    if @post 
+      render json: @post, serializer: PostSerializer
+    else
+      head :not_found
+    end
   end
 
   def create
@@ -39,7 +43,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by(id: params[:id])
   end
 
   def correct_user?

@@ -4,7 +4,11 @@ class Api::V1::FoldersController < ApplicationController
   before_action :correct_user?, only: [:update, :destroy]
 
   def show
-    render json: @folder, serializer: FolderSerializer
+    if @folder
+      render json: @folder, serializer: FolderSerializer
+    else
+      head :not_found
+    end
   end
 
   def create
@@ -48,7 +52,7 @@ class Api::V1::FoldersController < ApplicationController
   end
 
   def set_folder
-    @folder = Folder.find(params[:id])
+    @folder = Folder.find_by(id: params[:id])
   end
 
   def correct_user?
