@@ -102,6 +102,13 @@ RSpec.describe "Api::V1::Folders", type: :request do
         expect(res["data"]["attributes"]["user-id"]).to eq user.id
       end
     end
+
+    context "folderが存在しない場合" do
+      it 'レスポンスステータスが404で返る' do
+        get "/api/v1/folders/10000"
+        expect(response.status).to eq 404
+      end
+    end
   end
 
   describe "POST /api/v1/folders" do

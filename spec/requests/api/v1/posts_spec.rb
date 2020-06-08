@@ -34,6 +34,13 @@ RSpec.describe "Api::V1::Posts", type: :request do
         expect(res["data"]["attributes"]["folder-id"]).to eq nil
       end
     end
+
+    context "postが存在しない場合" do
+      it 'レスポンスステータスが404で返る' do
+        get "/api/v1/posts/10000"
+        expect(response.status).to eq 404
+      end
+    end
   end
 
   describe "POST /api/v1/posts" do
