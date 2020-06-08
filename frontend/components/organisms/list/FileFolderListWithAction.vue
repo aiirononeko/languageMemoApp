@@ -2,11 +2,7 @@
   <div>
     <v-list v-if="existList">
       <v-list-item-group>
-        <v-list-item v-if="!isRepository" @click="toBackFolder">
-          <v-list-item-icon>
-            <link-to-back-item />
-          </v-list-item-icon>
-        </v-list-item>
+        <link-to-back-item v-if="!isRepository" @toBackFolder="toBackFolder" />
 
         <v-list-item  v-for="item in list" :key="item.id" @click="openListItem(item.id, item.name)">
           <v-list-item-icon>
@@ -36,11 +32,7 @@
       <p>フォルダやファイルは存在しません。作成してください</p> 
       <v-list>
         <v-list-item-group>
-          <v-list-item v-if="!isRepository" @click="toBackFolder">
-            <v-list-item-icon>
-              <link-to-back-item />
-            </v-list-item-icon>
-          </v-list-item>
+          <link-to-back-item v-if="!isRepository" @toBackFolder="toBackFolder" />
 
           <v-list-item v-if="isCreatingNewFolder && !existList">
             <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
