@@ -1,7 +1,7 @@
 {
   "data": {
     "guest": ["home", "login", "register"],
-    "login": ["home", "settings", "post", "md-debug", "logout"]
+    "login": ["home", "settings", "post", "logout"]
   },
   "items": {
     "home": { "name": "Home", "event": "home" , "icon": "mdi-home" },
@@ -29,13 +29,9 @@
       "to": "/settings/profile"
     },
     "post": {
-      "name": "投稿する",
-      "icon": "mdi-pencil"
-    },
-    "md-debug": {
-      "name": "マークダウン",
+      "name": "新規投稿",
       "icon": "mdi-pencil",
-      "to": "/edit/hoge"
+      "to": "/edit/new"
     }
   }
 }
