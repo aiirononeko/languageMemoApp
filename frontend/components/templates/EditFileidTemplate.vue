@@ -1,5 +1,15 @@
 <template>
   <one-column-container class="pos-relative" fluid>
+    <v-row>
+      <v-col class="py-0" cols="12" sm="6" md="3">
+        <v-text-field v-model.trim="nameModel" dense rounded outlined placeholder="ファイル名" />
+      </v-col>
+      <v-spacer />
+      <v-col class="py-0" cols="12" sm="3" md="3">
+        <v-switch v-model="pubModel" class="mt-0 mt-sm-2" color="primary" flat :label="`${pub ? '公開' : '非公開'}`" />
+      </v-col>
+    </v-row>
+
     <edit-markdown v-model="md" :fileid="fileid" :isView="isView" :subfield="isBoth" @post="post" />
 
     <div :class="{ 'text-right': !$device.isDesktopOrTablet }">
@@ -29,7 +39,7 @@ export default {
   props: {
     fileid: {
       type: String,
-      required: true
+      default: "new"
     },
 
     isBoth: {
@@ -47,9 +57,19 @@ export default {
       default: false
     },
 
+    name: {
+      type: String,
+      default: null
+    },
+
+    pub: {
+      type: Boolean,
+      default: false
+    },
+
     value: {
       type: String,
-      default: undefined
+      default: ""
     }
   },
 
@@ -61,7 +81,25 @@ export default {
       set(newVal) {
         return this.$emit('input', newVal)
       }
-    }
+    },
+
+    nameModel: {
+      get() {
+        return this.name
+      },
+      set(newVal) {
+        return this.$emit('update:name', newVal)
+      }
+    },
+
+    pubModel: {
+      get() {
+        return this.pub
+      },
+      set(newVal) {
+        return this.$emit('update:pub', newVal)
+      }
+    },
   },
 
   methods: {
