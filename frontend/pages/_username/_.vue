@@ -28,6 +28,10 @@ export default {
 
     parentParams() {
       return this.params.pathMatch
+    },
+
+    id() {
+      return this.$store.getters["authentication/id"]
     }
   },
 
@@ -36,7 +40,7 @@ export default {
       let folderInfo = {
         name: newFolderName,
         public: false,
-        user_id: this.$store.getters["authentication/id"],
+        user_id: this.id,
         parent_id: this.parentParams
       }
       try {
@@ -60,7 +64,7 @@ export default {
   async asyncData({ $axios, params, store }) {
     try {
       const { data } = await $axios.$get(`/api/v1/folders/${params.pathMatch}`)
-      const userInfo = await store.getters["authentication/userInfo"]
+      const userInfo = store.getters["authentication/userInfo"]
       return { userInfo, foldersInfo: data }
     } catch (e) {
       console.error(e)

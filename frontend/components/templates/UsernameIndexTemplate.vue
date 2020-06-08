@@ -16,7 +16,6 @@
 
       <file-folder-list-with-action 
         @submit="(newFolderName) => $emit('submit' ,newFolderName)" 
-        @fetchData="$emit('fetchData')" 
         :list="list" 
         :isRepository="isRepository" 
         :isCreatingNewFolder="isCreatingNewFolder" 

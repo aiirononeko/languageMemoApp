@@ -16,7 +16,11 @@ export default {
   computed: {
     username() {
       return this.$route.params.username
-    }
+    },
+
+    id() {
+      return this.$store.getters["authentication/id"]
+    },
   },
 
   methods: {
@@ -24,7 +28,7 @@ export default {
       let folderInfo = {
         name: newFolderName,
         public: false,
-        user_id: this.$store.getters["authentication/id"],
+        user_id: this.id,
         parent_id: null 
       }
       try {
@@ -38,7 +42,7 @@ export default {
 
     async fetchData() {
       try {
-        const  data = await this.$store.getters["authentication/userInfo"]
+        const data = this.$store.getters["authentication/userInfo"]
         this.userInfo = data
       } catch (e) {
         console.error(e)
