@@ -55,44 +55,32 @@ export default {
   },
 
   data: () => ({
-    list: null,
     isRepository: false,
     isCreatingNewFolder: false
   }),
+
+  computed: {
+    list() {
+      if(this.isRepository) {
+        let folders = this.userInfo.folders || []
+        let posts = this.userInfo.posts || []
+        return folders.concat(posts)
+      } else {
+        let folders = this.foldersInfo.attributes["child-folders"] || []
+        let posts = this.foldersInfo.attributes.posts || []
+        return folders.concat(posts)
+      }
+    }
+  },
 
   methods: {
     triggerIsCreatingNewFolder() {
       this.isCreatingNewFolder = !this.isCreatingNewFolder
     },
-
-    setList() {
-      if(this.isRepository) {
-        let folders = this.userInfo.folders ? this.userInfo.folders : []
-        let posts = this.userInfo.posts ? this.userInfo.posts : []
-        this.list = folders.concat(posts)
-      } else {
-        let folders = this.foldersInfo.attributes["child-folders"] ? this.foldersInfo.attributes["child-folders"] : []
-        let posts = this.foldersInfo.attributes.posts ? this.foldersInfo.attributes.posts : []
-        this.list = folders.concat(posts)
-      }
-    }
-  },
-
-  watch: {
-    userInfo: function () {
-      this.setList()
-    },
-
-    foldersInfo: function() {
-      this.setList()
-    }
-
   },
 
   created() {
     this.isRepository = !this.foldersInfo
-
-    this.setList()
   }
 }
 </script>
