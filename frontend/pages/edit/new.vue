@@ -70,8 +70,6 @@ export default {
           folder_id: null // TODO folder_idを設定できるようにする
         })
 
-        console.log(data)
-
         this.$router.push({ path: '/edit/success', query: {
           fileid: data.id
         }})
