@@ -1,6 +1,6 @@
 <template>
   <div>
-    <edit-fileid-success-template />
+    <edit-fileid-success-template :fileid="fileID" />
   </div>
 </template>
 
@@ -12,11 +12,13 @@ export default {
     EditFileidSuccessTemplate
   },
 
+  middleware: "authenticated",
+
   computed: {
     fileID() {
       return this.$route.query.fileid
     }
-  },
+  }
 }
 </script>
 
