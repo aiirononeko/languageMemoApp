@@ -62,13 +62,13 @@ export default {
   computed: {
     list() {
       if(this.isRepository) {
-        let folders = this.userInfo.folders || []
-        let posts = this.userInfo.posts || []
-        return folders.concat(posts)
+        const folders = this.userInfo.folders || []
+        const posts = this.userInfo.posts || []
+        return [...folders, ...posts]
       } else {
-        let folders = this.foldersInfo.attributes["child-folders"] || []
-        let posts = this.foldersInfo.attributes.posts || []
-        return folders.concat(posts)
+        const folders = this.foldersInfo.attributes["child-folders"] || []
+        const posts = this.foldersInfo.attributes.posts || []
+        return [...folders, ...posts]
       }
     }
   },
