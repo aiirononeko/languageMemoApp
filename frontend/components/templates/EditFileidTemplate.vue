@@ -15,6 +15,7 @@
     <div :class="{ 'text-right': !$device.isDesktopOrTablet }">
       <blue-btn
         :class="{ 'post-btn' : $device.isDesktopOrTablet  }"
+        :disabled="isDisabled"
         large
         @click="post"
       >
@@ -76,6 +77,10 @@ export default {
   },
 
   computed: {
+    isDisabled() {
+      return !this.value || !this.name
+    },
+
     md: {
       get() {
         return this.value
