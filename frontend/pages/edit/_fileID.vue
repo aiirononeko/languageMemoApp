@@ -97,7 +97,7 @@ export default {
         public: this.pub
       })
 
-      this.$router.push({ path: '/edit/success', query: {
+      await this.$router.push({ path: '/edit/success', query: {
         fileid: this.fileID
       }})
     }
