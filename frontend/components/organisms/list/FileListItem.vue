@@ -21,7 +21,7 @@ export default {
     },
 
     id: {
-      type: String,
+      type: Number,
       default: undefined
     },
 
