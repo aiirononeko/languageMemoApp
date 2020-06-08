@@ -1,5 +1,5 @@
 <template>
-  <v-list-item>
+  <v-list-item :to="`/${username}/${id}`">
     <v-list-item-icon>
       <v-icon>mdi-folder</v-icon>
     </v-list-item-icon>
@@ -18,7 +18,17 @@ export default {
     name: {
       type: String,
       default: undefined
-    }
+    },
+
+    id: {
+      type: String,
+      default: undefined
+    },
+
+    username: {
+      type: String,
+      default: undefined
+    },
   }
 }
 </script>

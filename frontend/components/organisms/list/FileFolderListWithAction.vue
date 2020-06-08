@@ -4,9 +4,9 @@
       <v-list-item-group>
         <link-to-back-item v-if="!isRepository" @toBackFolder="toBackFolder" />
 
-        <span v-for="item in list" :key="item.id" @click="openListItem(item.id, item.name)">
-          <file-list-item v-if="!!item.content" :name="item.name" />
-          <folder-list-item else :name="item.name" />
+        <span v-for="item in list" :key="item.id">
+          <file-list-item v-if="!!item.content" :name="item.name" item.id :username="username" />
+          <folder-list-item else :name="item.name" :id="item.id" :username="username" />
         </span>
 
         <v-list-item v-if="isCreatingNewFolder && existList">
@@ -79,15 +79,14 @@ export default {
   computed: {
     existList() {
       return this.list[0]
+    },
+
+    username() {
+      return this.$store.getters["authetication/username"]
     }
   },
 
   methods: {
-    openListItem(id, title) {
-      let username = this.$store.getters["authentication/username"]
-      this.$router.push(`/${username}/${id}`)
-    },
-
     onSubmit() {
       let newFolderName = this.newFolderName
       this.$emit('submit', newFolderName)
