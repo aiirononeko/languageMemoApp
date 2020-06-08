@@ -2,7 +2,7 @@
   <one-column-container class="pos-relative" fluid>
     <v-row>
       <v-col class="py-0" cols="12" sm="6" md="3">
-        <v-text-field v-model.trim="nameModel" dense rounded outlined placeholder="ファイル名" />
+        <file-name-text-field v-model="nameModel" />
       </v-col>
       <v-spacer />
       <v-col class="py-0" cols="12" sm="3" md="3">
@@ -27,12 +27,14 @@
 <script>
 const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
 const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
+const FileNameTextField = () => import('~/components/organisms/textFields/FileNameTextField')
 const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
 
 export default {
   components: {
     BlueBtn,
     EditMarkdown,
+    FileNameTextField,
     OneColumnContainer
   },
 
