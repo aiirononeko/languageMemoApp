@@ -33,3 +33,11 @@ export const pascalCase = (str) => {
   const camel = camelCase(str)
   return camel.charAt(0).toUpperCase() + camel.slice(1)
 }
+
+/**
+ * 文字列型か
+ *
+ * @param {any} v
+ * @return {boolean}
+ */
+export const isString = (v) => typeof v === 'string'

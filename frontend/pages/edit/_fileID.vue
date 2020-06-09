@@ -1,7 +1,9 @@
 <template>
   <div>
     <edit-fileid-template
-      v-model="markdown"
+      v-model="content"
+      :name.sync="name"
+      :pub.sync="pub"
       :fileid="fileID"
       :is-both="isBoth"
       :is-edit="isEdit"
@@ -12,64 +14,16 @@
 </template>
 
 <script>
-const DemoMd = `# h1 Heading
-## h2 Heading
-### h3 Heading
-#### h4 Heading
-##### h5 Heading
-###### h6 Heading
-
-## Emphasis
-
-**This is bold text**
-
-__This is bold text__
-
-*This is italic text*
-
-_This is italic text_
-
-~~Strikethrough~~
-
-## Blockquotes
-
-
-> Blockquotes can also be nested...
->> ...by using additional greater-than signs right next to each other...
-> > > ...or with spaces between arrows.
-
-## Lists
-
-Unordered
-
-+ Create a list by starting a line with '+', '-', or '*'
-+ Sub-lists are made by indenting 2 spaces:
-  - Marker character change forces new list start:
-    * Ac tristique libero volutpat at
-    + Facilisis in pretium nisl aliquet
-    - Nulla volutpat aliquam velit
-+ Very easy!
-
-Ordered
-
-1. Lorem ipsum dolor sit amet
-2. Consectetur adipiscing elit
-3. Integer molestie lorem at massa
-
-
-1. You can use sequential numbers...
-1. ...or keep all the numbers as '1.'
-
-Start numbering with offset:
-
-57. foo
-1. bar
-
-## Link
-
-[Poeta github](https://github.com/aiirononeko/languageMemoApp)
-`
+import {isValidFileID} from "~/utils/fileID"
 const EditFileidTemplate = () => import('~/components/templates/EditFileidTemplate')
+
+// 不正な fileID だったら、APIの送信に辿り着く前に弾く
+const checkValidFileID = ({ params, redirect }) => {
+  // 不正な fileID (数値以外) ではないことを確認
+  if (!isValidFileID(params.fileID)) {
+    return redirect('/edit/new') // 新規作成ページにリダイレクト
+  }
+}
 
 const DEFAULT_STATUS = 'both'
 
@@ -79,10 +33,16 @@ export default {
   },
 
   data: () => ({
-    markdown: DemoMd // TODO: APIからの値を入れる
+    content: "" /** markdown */,
+    name: null /** ファイル名 */,
+    pub: false /** 公開の有無 */,
+    folderID: null
   }),
 
-  middleware: "authenticated",
+  middleware: [
+    "authenticated",
+    checkValidFileID
+  ],
 
   computed: {
     defaultStatus() {
@@ -112,11 +72,33 @@ export default {
     }
   },
 
-  methods: {
-    post(){
-      // TODO: 投稿処理をする
+  async asyncData({ $axios, redirect, params }) {
+    try {
+      const { data } = await $axios.$get(`/api/v1/posts/${params.fileID}`)
+      return { data }
+    } catch (e) {
+      return redirect('/edit/new') // ファイルがなかったら、新規作成ページにリダイレクト
+    }
+  },
 
-      this.$router.push({ path: '/edit/success', query: {
+  created() {
+    if (this.data && this.data.attributes) {
+      this.content = this.data.attributes.content
+      this.name = this.data.attributes.name
+      this.pub = this.data.attributes.public
+      this.folderID = this.data.attributes.folderID
+    }
+  },
+
+  methods: {
+    async post(){
+      const { data } = await this.$axios.$put(`/api/v1/posts/${this.fileID}`, {
+        name: this.name,
+        content: this.content,
+        public: this.pub
+      })
+
+      await this.$router.push({ path: '/edit/success', query: {
         fileid: this.fileID
       }})
     }

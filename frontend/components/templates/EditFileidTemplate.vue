@@ -1,10 +1,21 @@
 <template>
   <one-column-container class="pos-relative" fluid>
+    <v-row>
+      <v-col class="py-0" cols="12" sm="6" md="3">
+        <file-name-text-field v-model="nameModel" />
+      </v-col>
+      <v-spacer />
+      <v-col class="py-0" cols="12" sm="3" md="3">
+        <v-switch v-model="pubModel" class="mt-0 mt-sm-2" color="primary" flat :label="`${pub ? '公開' : '非公開'}`" />
+      </v-col>
+    </v-row>
+
     <edit-markdown v-model="md" :fileid="fileid" :isView="isView" :subfield="isBoth" @post="post" />
 
     <div :class="{ 'text-right': !$device.isDesktopOrTablet }">
       <blue-btn
         :class="{ 'post-btn' : $device.isDesktopOrTablet  }"
+        :disabled="isDisabled"
         large
         @click="post"
       >
@@ -17,19 +28,21 @@
 <script>
 const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
 const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
+const FileNameTextField = () => import('~/components/organisms/textFields/FileNameTextField')
 const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
 
 export default {
   components: {
     BlueBtn,
     EditMarkdown,
+    FileNameTextField,
     OneColumnContainer
   },
 
   props: {
     fileid: {
       type: String,
-      required: true
+      default: "new"
     },
 
     isBoth: {
@@ -47,13 +60,27 @@ export default {
       default: false
     },
 
+    name: {
+      type: String,
+      default: null
+    },
+
+    pub: {
+      type: Boolean,
+      default: false
+    },
+
     value: {
       type: String,
-      default: undefined
+      default: ""
     }
   },
 
   computed: {
+    isDisabled() {
+      return !this.value || !this.name
+    },
+
     md: {
       get() {
         return this.value
@@ -61,7 +88,25 @@ export default {
       set(newVal) {
         return this.$emit('input', newVal)
       }
-    }
+    },
+
+    nameModel: {
+      get() {
+        return this.name
+      },
+      set(newVal) {
+        return this.$emit('update:name', newVal)
+      }
+    },
+
+    pubModel: {
+      get() {
+        return this.pub
+      },
+      set(newVal) {
+        return this.$emit('update:pub', newVal)
+      }
+    },
   },
 
   methods: {
