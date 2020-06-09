@@ -19,7 +19,7 @@ const EditFileidTemplate = () => import('~/components/templates/EditFileidTempla
 
 // 不正な fileID だったら、APIの送信に辿り着く前に弾く
 const checkValidFileID = ({ params, redirect }) => {
-  // 不正なfileID (数値以外) 出ないことを確認
+  // 不正な fileID (数値以外) ではないことを確認
   if (!isValidFileID(params.fileID)) {
     return redirect('/edit/new') // 新規作成ページにリダイレクト
   }
