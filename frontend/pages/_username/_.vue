@@ -1,4 +1,5 @@
 <template>
+  <!-- マイページの２階層以下 -->
   <div>
     <username-index-template 
       :userInfo="userInfo" 
