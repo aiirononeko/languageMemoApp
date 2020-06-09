@@ -1,7 +1,7 @@
 <template>
   <!-- マイページのルート -->
   <div>
-    <username-index-template :userInfo="userInfo" @submit="submit" @fetchData="fetchData" />
+    <username-index-template :userInfo="userInfo" @submit="submit" />
   </div>
 </template>
 
@@ -21,6 +21,10 @@ export default {
     id() {
       return this.$store.getters["authentication/id"]
     },
+
+    userInfo() {
+      return this.$store.getters["authentication/userInfo"]
+    }
   },
 
   methods: {
@@ -37,26 +41,7 @@ export default {
       } catch(e) {
         console.error(e)
       }
-      this.fetchData()
     },
-
-    async fetchData() {
-      try {
-        const data = this.$store.getters["authentication/userInfo"]
-        this.userInfo = data
-      } catch (e) {
-        console.error(e)
-      }
-    }
-  },
-
-  async asyncData({ store }) {
-    try {
-      const userInfo = await store.getters["authentication/userInfo"]
-      return { userInfo }
-    } catch (e) {
-      console.error(e)
-    }
   },
 }
 </script>
