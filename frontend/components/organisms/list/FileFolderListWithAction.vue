@@ -58,7 +58,7 @@ export default {
   props: {
     list: {
       type: Array,
-      default: undefined
+      default: () => []
     },
 
     isRepository: {
@@ -78,11 +78,11 @@ export default {
 
   computed: {
     existList() {
-      return this.list[0]
+      return !!this.list.length
     },
 
     username() {
-      return this.$store.getters["authetication/username"]
+      return this.$store.getters["authentication/username"]
     }
   },
 
@@ -90,8 +90,7 @@ export default {
     onSubmit() {
       let newFolderName = this.newFolderName
       this.$emit('submit', newFolderName)
-
-      this.$emit('triggerIsCreatingNewFolder')
+      
       this.newFolderName = ""
     },
 
