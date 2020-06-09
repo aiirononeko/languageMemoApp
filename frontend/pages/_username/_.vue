@@ -4,8 +4,10 @@
     <username-index-template 
       :userInfo="userInfo" 
       :foldersInfo="foldersInfo" 
+      :isCreatingNewFolder="isCreatingNewFolder"
       @submit="submit" 
       @fetchData="fetchData" 
+      @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder"
     />
   </div>
 </template>
@@ -17,6 +19,10 @@ export default {
   components: {
     UsernameIndexTemplate
   },
+
+  data: () => ({
+    isCreatingNewFolder: false
+  }),
 
   computed: {
     username() {
@@ -38,7 +44,7 @@ export default {
 
   methods: {
     async submit(newFolderName) {
-      let folderInfo = {
+      const folderInfo = {
         name: newFolderName,
         public: false,
         user_id: this.id,
@@ -56,10 +62,15 @@ export default {
       try {
         const { data } = await this.$axios.$get(`/api/v1/folders/${this.parentParams}`)
         this.foldersInfo = data
+        this.triggerIsCreatingNewFolder()
       } catch (e) {
         console.error(e)
       }
-    }
+    },
+
+    triggerIsCreatingNewFolder() {
+      this.isCreatingNewFolder = !this.isCreatingNewFolder
+    },
   },
 
   async asyncData({ $axios, params, store }) {

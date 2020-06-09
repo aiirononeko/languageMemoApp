@@ -1,7 +1,12 @@
 <template>
   <!-- マイページのルート -->
   <div>
-    <username-index-template :userInfo="userInfo" @submit="submit" />
+    <username-index-template 
+      :userInfo="userInfo" 
+      :isCreatingNewFolder="isCreatingNewFolder"
+      @submit="submit" 
+      @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder" 
+    />
   </div>
 </template>
 
@@ -12,6 +17,10 @@ export default {
   components: {
     UsernameIndexTemplate
   },
+
+  data: () => ({
+    isCreatingNewFolder: false
+  }),
 
   computed: {
     username() {
@@ -29,7 +38,7 @@ export default {
 
   methods: {
     async submit(newFolderName) {
-      let folderInfo = {
+      const folderInfo = {
         name: newFolderName,
         public: false,
         user_id: this.id,
@@ -41,6 +50,11 @@ export default {
       } catch(e) {
         console.error(e)
       }
+      this.triggerIsCreatingNewFolder()
+    },
+
+    triggerIsCreatingNewFolder() {
+      this.isCreatingNewFolder = !this.isCreatingNewFolder
     },
   },
 }

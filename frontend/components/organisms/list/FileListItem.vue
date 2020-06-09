@@ -17,17 +17,17 @@ export default {
   props: {
     name: {
       type: String,
-      default: undefined
+      required: true
     },
 
     id: {
       type: Number,
-      default: undefined
+      required: true
     },
 
     username: {
       type: String,
-      default: undefined
+      required: true
     },
   }
 }

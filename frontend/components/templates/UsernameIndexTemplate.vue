@@ -8,7 +8,7 @@
       <v-container>
         <v-row>
           <v-col cols="8"><h2 class="text-center">あなたのリポジトリ</h2></v-col>
-          <v-col cols="4"><blue-btn @click="triggerIsCreatingNewFolder">フォルダーを作成する</blue-btn></v-col>
+          <v-col cols="4"><blue-btn @click="$emit('triggerIsCreatingNewFolder')">フォルダーを作成する</blue-btn></v-col>
         </v-row>
       </v-container>
 
@@ -18,8 +18,7 @@
         @submit="(newFolderName) => $emit('submit' ,newFolderName)" 
         :list="list" 
         :isRepository="isRepository" 
-        :isCreatingNewFolder="isCreatingNewFolder" 
-        @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder" 
+        :isCreatingNewFolder="isCreatingNewFolder"
       />
     </template>
   </two-column-container>
@@ -50,13 +49,13 @@ export default {
     foldersInfo: {
       type: Object,
       default: undefined
+    },
+
+    isCreatingNewFolder: {
+      type: Boolean,
+      default: false
     }
   },
-
-  data: () => ({
-    isRepository: false,
-    isCreatingNewFolder: false
-  }),
 
   computed: {
     list() {
@@ -69,18 +68,12 @@ export default {
         const posts = this.foldersInfo.attributes.posts || []
         return [...folders, ...posts]
       }
+    },
+
+    isRepository() {
+      return !this.foldersInfo
     }
   },
-
-  methods: {
-    triggerIsCreatingNewFolder() {
-      this.isCreatingNewFolder = !this.isCreatingNewFolder
-    },
-  },
-
-  created() {
-    this.isRepository = !this.foldersInfo
-  }
 }
 </script>
 
