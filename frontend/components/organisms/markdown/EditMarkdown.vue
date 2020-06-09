@@ -88,7 +88,7 @@ export default {
 
     fileid: {
       type: String,
-      required: true
+      default: "new"
     },
 
     isView: {
