@@ -6,7 +6,7 @@
  * @param {String|Number} v
  * @return {boolean}
  */
-export const isCurrentFileID = (v) => {
+export const isValidFileID = (v) => {
   v = typeof v === 'number' ? v : Number(v)
   return Number.isInteger(v)
 }
