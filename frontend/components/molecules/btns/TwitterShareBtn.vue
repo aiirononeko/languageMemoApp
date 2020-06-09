@@ -1,11 +1,8 @@
 <template>
   <twitter-btn
     :href="twitterLink"
-    :data-hashtags="hashtag"
-    :data-text="text"
     target="_target"
-    data-lang="ja"
-    data-show-count="false"
+    rel="nofollow"
   >
     <slot />
   </twitter-btn>
@@ -38,7 +35,8 @@ export default {
       const map = new Map()
       this.text && map.set('text', this.text)
       this.hashtag && map.set('hashtags', this.getHashtagStr)
-      const params = new URLSearchParams(map)
+      const params = new URLSearchParams(map) // クエリパラメータの生成
+
       return `${TWITTER_TWEET_URL}?${params.toString()}`
     },
 
