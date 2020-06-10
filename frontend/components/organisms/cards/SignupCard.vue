@@ -1,20 +1,23 @@
 <template>
-  <v-card max-width="800" height="400" class="mx-auto pt-4">
-    <h2 class="mb-10 text-center">Poeta</h2>
-    <v-row justify="center" class="w-100 h-100">
-      <signup-form class="mr-1 mr-md-6 mr-lg-10" @signup="signup" />
+  <v-card class="pa-6">
+    <h2 class="mb-3 text-center">Poeta</h2>
 
-      <div class="ml-1 ml-md-6 ml-lg-10">
-        <p>その他のアカウント</p>
+    <v-row justify="center">
+      <v-col cols="12" sm="8" md="6">
+        <signup-form @signup="onSignup" />
+      </v-col>
+
+      <v-col cols="12" sm="4" md="3" class="max-width-300">
+        <h2 class="other-heading">その他のアカウント</h2>
         <login-sns-btn-group />
-      </div>
+      </v-col>
     </v-row>
   </v-card>
 </template>
 
 <script>
-import LoginSnsBtnGroup from '~/components/organisms/btnGroup/LoginSnsBtnGroup'
-import SignupForm from '~/components/organisms/form/SignupForm'
+const LoginSnsBtnGroup = () => import('~/components/organisms/btnGroup/LoginSnsBtnGroup')
+const SignupForm = () => import('~/components/organisms/form/SignupForm')
 
 export default {
   components: {
@@ -23,9 +26,17 @@ export default {
   },
 
   methods: {
-    signup(userInfo) {
-      this.$emit('signup', userInfo)
+    onSignup(value) {
+      this.$emit('signup', value)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.other-heading {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-bottom: 0.5rem;
+}
+</style>
