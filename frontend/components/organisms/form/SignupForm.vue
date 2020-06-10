@@ -1,11 +1,11 @@
 <template>
-  <v-form ref="form">
-    <email-text-field @input="setEmailValue" :value="email" />
-    <password-text-field @input="setPasswordValue" :value="password" />
+  <v-form ref="form" @submit.prevent="onSubmit">
+    <email-text-field v-model="email" />
+    <password-text-field v-model="password" />
     <p class="mb-6">※半角英数字のみ使用可能です</p>
 
     <div class="text-center">
-      <orange-btn type="submit" :disabled="!isValid" @onClick="onClick">
+      <orange-btn type="submit" :disabled="!isValid">
         新規登録
       </orange-btn>
     </div>
@@ -25,7 +25,6 @@ export default {
   },
 
   data: () => ({
-    showPassword: false,
     isValid: false,
     password: "",
     email: "",
@@ -33,18 +32,10 @@ export default {
   }),
 
   methods: {
-    onClick() {
+    onSubmit() {
       const userInfo = { password: this.password, email: this.email }
       this.$emit('signup', userInfo)
-    },
-
-    setEmailValue(newVal) {
-      this.email = newVal
-    },
-
-    setPasswordValue(newVal) {
-      this.password = newVal
-    },
+    }
   },
 
   watch: {

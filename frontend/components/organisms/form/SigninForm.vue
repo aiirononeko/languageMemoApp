@@ -1,10 +1,10 @@
 <template>
-  <v-form ref="form" @submit.prevent="login">
-    <email-text-field @input="setEmailValue" :value="email" />
-    <password-text-field @input="setPasswordValue" :value="password" />
+  <v-form ref="form" @submit.prevent="onSubmit">
+    <email-text-field v-model="email" />
+    <password-text-field v-model="password" />
 
     <div class="text-center">
-      <orange-btn type="submit" :disabled="!isValid" @onClick="login">
+      <orange-btn type="submit" :disabled="!isValid">
         ログイン
       </orange-btn>
     </div>
@@ -24,7 +24,6 @@ export default {
   },
 
   data: () => ({
-    showPassword: false,
     isValid: false,
     password: "",
     email: "",
@@ -32,26 +31,12 @@ export default {
   }),
 
   methods: {
-    async login(e) {
-      try {
-        await this.$store.dispatch("authentication/login", {
-          email: this.email,
-          password: this.password,
-        })
-
-        this.$router.push(`/settings/profile`)
-      } catch (e) {
-        console.log(this.formError)
-      }
-    },
-
-    setEmailValue(newVal) {
-      this.email = newVal
-    },
-
-    setPasswordValue(newVal) {
-      this.password = newVal
-    },
+    onSubmit() {
+      return this.$emit('signin', {
+        email: this.email,
+        password: this.password
+      })
+    }
   },
 
   watch: {

@@ -2,13 +2,17 @@
   <one-column-container>
     <h1 class="main-heading mb-8 text-center">新規登録</h1>
 
-    <signup-card @signup="signup" />
+    <v-row justify="center">
+      <v-col cols="12" sm="10" md="8">
+        <signup-card @signup="onSignup" />
+      </v-col>
+    </v-row>
   </one-column-container>
 </template>
 
 <script>
-import OneColumnContainer from '~/components/molecules/containers/OneColumnContainer'
-import SignupCard from '~/components/organisms/cards/SignupCard'
+const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
+const SignupCard = () => import('~/components/organisms/cards/SignupCard')
 
 export default {
   components: {
@@ -17,8 +21,8 @@ export default {
   },
 
   methods: {
-    signup(userInfo) {
-      this.$emit('signup', userInfo)
+    onSignup(value) {
+      this.$emit('signup', value)
     }
   }
 }

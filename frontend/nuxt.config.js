@@ -63,7 +63,7 @@ module.exports = {
   css: [{ src: "~/assets/sass/app.scss", lang: "scss" }],
 
   router: {
-    middleware: ["check-auth"],
+    middleware: ["check-auth", "check-cookie-integrity"],
   },
 
   /*
