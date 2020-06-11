@@ -48,6 +48,12 @@ export default {
         })
       }
     }
+  },
+
+  head() {
+    return {
+      title: "パスワードをリセット"
+    }
   }
 }
 </script>

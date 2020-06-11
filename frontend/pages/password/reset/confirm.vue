@@ -65,6 +65,12 @@ export default {
         })
       }
     }
+  },
+
+  head() {
+    return {
+      title: "新しいパスワードの入力"
+    }
   }
 }
 </script>
