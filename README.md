@@ -123,3 +123,10 @@ aglio -i poeta_api.apib -o poeta_api.html # html形式に整形
 ```
 
 - ブランチをmasterにpush、レビューはslackでバックエンド担当の別メンバーにお願いする。
+
+## 開発
+
+### 開発中のメールの確認
+
+`http://localhost:3000/letter_opener`
+にアクセスすることで送信されたメールの確認ができる。
