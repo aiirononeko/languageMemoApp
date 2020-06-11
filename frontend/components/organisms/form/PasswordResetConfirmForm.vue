@@ -24,6 +24,13 @@ export default {
     PasswordConfirmationTextField
   },
 
+  props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
+  },
+
   data() {
     return {
       password: null,
