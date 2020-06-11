@@ -13,7 +13,6 @@ export default {
   middleware: "guest",
 
   validate({ query }) {
-    console.log(query)
     return query["access-token"]
       && (query.client || query.client_id)
       && query.reset_password
@@ -23,6 +22,7 @@ export default {
 
   data() {
     return {
+      errors: null,
       success: false,
       message: null
     }
@@ -50,7 +50,14 @@ export default {
         this.success = success
         this.message = message
       } catch (e) {
-        console.error(e)
+        if (e.response && e.response.status === 422) {
+          this.errors = e.response.data.errors
+          return
+        }
+
+        return this.$nuxt.error({
+          statusCode: e.response.status
+        })
       }
     }
   }
