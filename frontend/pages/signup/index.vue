@@ -1,6 +1,11 @@
 <template>
   <div>
-    <signup-template @signup="signup" />
+    <signup-template
+      :errors="errors"
+      :success="success"
+      :message="message"
+      @signup="signup"
+    />
   </div>
 </template>
 
@@ -14,18 +19,33 @@ export default {
 
   middleware: 'guest',
 
+  data() {
+    return {
+      errors: null,
+      success: false,
+      message: null
+    }
+  },
+
   methods: {
     async signup(userInfo) {
       try {
-        console.log("singup")
-        await this.$axios.post(`/api/v1/auth`, {
+        const { success, message } = await this.$axios.$post(`/api/v1/auth`, {
           email: userInfo.email,
           password: userInfo.password
         })
 
-        this.$router.push(`/user/confirm`)
+        this.success = success
+        this.message = message
       } catch (error) {
-        console.error(error)
+        if (error.response && error.response.status === 422) {
+          this.errors = error.response.data.errors
+          return
+        }
+
+        return this.$nuxt.error({
+          statusCode: error.response.status
+        })
       }
     },
   }

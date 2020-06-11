@@ -24,11 +24,17 @@ export default {
     OrangeBtn
   },
 
+  props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
+  },
+
   data: () => ({
     isValid: false,
     password: "",
     email: "",
-    error: [],
   }),
 
   methods: {

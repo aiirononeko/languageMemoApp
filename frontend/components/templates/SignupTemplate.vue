@@ -4,7 +4,17 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
-        <signup-card @signup="onSignup" />
+        <signup-card v-if="!success" :errors="errors" @signup="onSignup" />
+
+        <v-alert
+          border="top"
+          colored-border
+          type="info"
+          elevation="2"
+          v-else
+        >
+          {{ message }}
+        </v-alert>
       </v-col>
     </v-row>
   </one-column-container>
@@ -18,6 +28,26 @@ export default {
   components: {
     OneColumnContainer,
     SignupCard
+  },
+
+  props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
+
+    success: {
+      type: Boolean,
+      default: false
+    },
+
+    /**
+     * 成功時のメッセージ
+     */
+    message: {
+      type: String,
+      default: undefined
+    }
   },
 
   methods: {
