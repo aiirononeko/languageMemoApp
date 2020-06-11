@@ -4,7 +4,7 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6">
-        <signin-form @signin="onSignin" />
+        <signin-form :errors="errors" @signin="onSignin" />
       </v-col>
 
       <v-col cols="12" sm="4" md="3" class="max-width-300">
@@ -23,6 +23,13 @@ export default {
   components: {
     LoginSnsBtnGroup,
     SigninForm
+  },
+
+  props: {
+    errors: {
+      type: Object,
+      default: undefined
+    }
   },
 
   methods: {
