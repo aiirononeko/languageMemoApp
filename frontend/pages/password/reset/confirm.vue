@@ -1,5 +1,10 @@
 <template>
-  <password-reset-confirm-template :success="success" :message="message" @submit="reset" />
+  <password-reset-confirm-template
+    :errors="errors"
+    :success="success"
+    :message="message"
+    @submit="reset"
+  />
 </template>
 
 <script>

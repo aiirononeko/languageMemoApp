@@ -1,6 +1,6 @@
 <template>
   <v-card class="pt-10 px-6 pb-8">
-    <password-reset-confirm-form @submit="onSubmit" />
+    <password-reset-confirm-form :errors="errors" @submit="onSubmit" />
   </v-card>
 </template>
 
@@ -10,6 +10,13 @@ const PasswordResetConfirmForm = () => import('~/components/organisms/form/Passw
 export default {
   components: {
     PasswordResetConfirmForm
+  },
+
+  props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
   },
 
   methods: {
