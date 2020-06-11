@@ -16,6 +16,7 @@ export default {
 
   data() {
     return {
+      errors: null,
       success: false,
       message: null
     }
@@ -31,7 +32,16 @@ export default {
 
         this.success = success
         this.message = message
-      } catch (e) {}
+      } catch (e) {
+        if (e.response && e.response.status === 422) {
+          this.errors = e.response.data.errors
+          return
+        }
+
+        return this.$nuxt.error({
+          statusCode: e.response.status
+        })
+      }
     }
   }
 }

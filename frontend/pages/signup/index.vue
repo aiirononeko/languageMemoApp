@@ -37,14 +37,14 @@ export default {
 
         this.success = success
         this.message = message
-      } catch (error) {
-        if (error.response && error.response.status === 422) {
-          this.errors = error.response.data.errors
+      } catch (e) {
+        if (e.response && e.response.status === 422) {
+          this.errors = e.response.data.errors
           return
         }
 
         return this.$nuxt.error({
-          statusCode: error.response.status
+          statusCode: e.response.status
         })
       }
     },

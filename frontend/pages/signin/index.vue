@@ -14,6 +14,12 @@ export default {
 
   middleware: 'guest',
 
+  data() {
+    return {
+      errors: null
+    }
+  },
+
   methods: {
     async login({ email, password }) {
       try {
@@ -21,9 +27,16 @@ export default {
           email, password
         })
 
-        this.$router.push(`/settings/profile`)
+        await this.$router.push(`/settings/profile`)
       } catch (e) {
-        console.error(e)
+        if (e.response && e.response.status === 422) {
+          this.errors = e.response.data.errors
+          return
+        }
+
+        return this.$nuxt.error({
+          statusCode: e.response.status
+        })
       }
     }
   }
