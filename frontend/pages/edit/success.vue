@@ -30,6 +30,12 @@ export default {
     fileID() {
       return this.$route.query.fileid
     }
+  },
+
+  head() {
+    return {
+      title: "ファイルの投稿完了"
+    }
   }
 }
 </script>

@@ -39,6 +39,12 @@ export default {
         })
       }
     }
+  },
+
+  head() {
+    return {
+      title: "ログイン"
+    }
   }
 }
 </script>

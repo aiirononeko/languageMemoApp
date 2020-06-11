@@ -103,5 +103,11 @@ export default {
       }})
     }
   },
+
+  head() {
+    return {
+      title: `ファイル編集 (${this.name})`
+    }
+  }
 }
 </script>
