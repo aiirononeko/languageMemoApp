@@ -294,7 +294,6 @@
         <span class="hljs-string">"id: 1"</span>,
         <span class="hljs-string">"user_id: 1"</span>,
         <span class="hljs-string">"public: true"</span>,
-        <span class="hljs-string">"parent_id: null"</span>,
         <span class="hljs-string">"created_at: ~"</span>,
         <span class="hljs-string">"updated_at: ~"</span>
       ]</span>,
@@ -944,7 +943,6 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
       "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"example"</span></span>,
       "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
       "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
-      "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">posts</span>": <span class="hljs-value">[
@@ -955,19 +953,17 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
         <span class="hljs-string">"created_at: `2020-03-05`"</span>,
         <span class="hljs-string">"updated_at: `2020-03-05` ]"</span>
       ]</span>,
-      "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
-        "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
-        "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"true"</span></span>,
-        "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
-        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"~"</span></span>,
-        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"~"</span>
-      </span>}</span>,
+      "<span class="hljs-attribute">ancestor_folders</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id: 2"</span>,
+        <span class="hljs-string">"user_id: 1"</span>,
+        <span class="hljs-string">"public: true"</span>,
+        <span class="hljs-string">"created_at: ~"</span>,
+        <span class="hljs-string">"updated_at: ~"</span>
+      ]</span>,
       "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value">[
         <span class="hljs-string">"id: 1"</span>,
         <span class="hljs-string">"user_id: 1"</span>,
         <span class="hljs-string">"public: true"</span>,
-        <span class="hljs-string">"parent_id: null"</span>,
         <span class="hljs-string">"created_at: ~"</span>,
         <span class="hljs-string">"updated_at: ~"</span>
       ]
@@ -998,9 +994,6 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}</span>,
             "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
@@ -1010,28 +1003,8 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">posts</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-              "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-                "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}
-              </span>}
+            "<span class="hljs-attribute">ancestor_folders</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
             </span>}</span>,
             "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
@@ -1072,7 +1045,6 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
       "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"example"</span></span>,
       "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
       "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
-      "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">posts</span>": <span class="hljs-value">[
@@ -1083,14 +1055,13 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
         <span class="hljs-string">"created_at: `2020-03-05`"</span>,
         <span class="hljs-string">"updated_at: `2020-03-05` ]"</span>
       ]</span>,
-      "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
-        "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
-        "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"true"</span></span>,
-        "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"null"</span></span>,
-        "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"~"</span></span>,
-        "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"~"</span>
-      </span>}</span>,
+      "<span class="hljs-attribute">ancestor_folders</span>": <span class="hljs-value">[
+        <span class="hljs-string">"id: 2"</span>,
+        <span class="hljs-string">"user_id: 1"</span>,
+        <span class="hljs-string">"public: true"</span>,
+        <span class="hljs-string">"created_at: ~"</span>,
+        <span class="hljs-string">"updated_at: ~"</span>
+      ]</span>,
       "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span>
     </span>}
   </span>}
@@ -1119,9 +1090,6 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}</span>,
             "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
@@ -1131,28 +1099,8 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">posts</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
-              "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
-                "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">public</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">created_at</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}</span>,
-                "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value">{
-                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-                </span>}
-              </span>}
+            "<span class="hljs-attribute">ancestor_folders</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
             </span>}</span>,
             "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
@@ -1206,9 +1154,8 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
       "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"update_example"</span></span>,
       "<span class="hljs-attribute">public</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
       "<span class="hljs-attribute">user_id</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
-      "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value"><span class="hljs-string">"2"</span></span>,
       "<span class="hljs-attribute">posts</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span></span>,
-      "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value"><span class="hljs-string">"{~}"</span></span>,
+      "<span class="hljs-attribute">ancestor_folders</span>": <span class="hljs-value"><span class="hljs-string">"[{~}]"</span></span>,
       "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value"><span class="hljs-string">"[]"</span></span>,
       "<span class="hljs-attribute">created_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span></span>,
       "<span class="hljs-attribute">updated_at</span>": <span class="hljs-value"><span class="hljs-string">"2020-03-05"</span>
@@ -1239,13 +1186,10 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
             "<span class="hljs-attribute">user_id</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">parent_id</span>": <span class="hljs-value">{
-              "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
-            </span>}</span>,
             "<span class="hljs-attribute">posts</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
-            "<span class="hljs-attribute">parent_folder</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">ancestor_folders</span>": <span class="hljs-value">{
               "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
             </span>}</span>,
             "<span class="hljs-attribute">child_folders</span>": <span class="hljs-value">{
@@ -1339,7 +1283,7 @@ GETすると各サービスの認証画面へ遷移。認証に成功すると�
       </span>}
     </span>}
   </span>}
-</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 05 Jun 2020</p><script>/* eslint-env browser */
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 11 Jun 2020</p><script>/* eslint-env browser */
 /* eslint quotes: [2, "single"] */
 'use strict';
 
