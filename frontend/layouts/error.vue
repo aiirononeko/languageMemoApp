@@ -18,44 +18,7 @@
 </template>
 
 <script>
-const defaultErrorMessages = {
-  401: {
-    title: "Unauthorized",
-    message: "認証ができていません"
-  },
-
-  403: {
-    title: "Forbidden",
-    message: "ページを見る権限がありません"
-  },
-
-  404: {
-    title: "Page Not Found",
-    message: "ページが存在しません"
-  },
-
-  500: {
-    title: "Internal Server Error",
-    message: "エラーが発生しました"
-  },
-}
-
-/**
- * @param {String|Number|null} statusCode
- * @return {{title: string, message: string}}
- */
-const getErrorMessage = (statusCode = null) => {
-  statusCode = String(statusCode) || "500" // statusCodeがnullのとき、500にする。
-
-  for (const v in defaultErrorMessages) {
-    if (v === statusCode) {
-      return defaultErrorMessages[v]
-    }
-  }
-
-  return defaultErrorMessages["500"]
-}
-
+import { getErrorMessage } from "~/utils/errors"
 
 export default {
   props: ['error'],
