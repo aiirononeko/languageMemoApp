@@ -4,7 +4,7 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
-        <signin-card @signin="onSignin" />
+        <signin-card :errors="errors" @signin="onSignin" />
       </v-col>
     </v-row>
   </one-column-container>
@@ -18,6 +18,13 @@ export default {
   components: {
     OneColumnContainer,
     SigninCard
+  },
+
+  props: {
+    errors: {
+      type: Object,
+      default: undefined
+    }
   },
 
   methods: {
