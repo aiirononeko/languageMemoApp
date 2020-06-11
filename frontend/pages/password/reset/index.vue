@@ -1,6 +1,11 @@
 <template>
   <div>
-    <password-reset-index-template :success="success" :message="message" @submit="reset" />
+    <password-reset-index-template
+      :errors="errors"
+      :success="success"
+      :message="message"
+      @submit="reset"
+    />
   </div>
 </template>
 
