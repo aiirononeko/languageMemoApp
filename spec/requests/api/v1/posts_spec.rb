@@ -17,7 +17,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
         expect(res["data"]["attributes"]["content"]).to eq "example"
         expect(res["data"]["attributes"]["public"]).to eq false
         expect(res["data"]["attributes"]["user-id"]).to eq user.id
-        expect(res["data"]["attributes"]["folder-id"]).to eq folder.id
+        expect(res["data"]["attributes"]["ancestor-folders"].first["id"]).to eq folder.id
       end
     end
 
@@ -31,7 +31,6 @@ RSpec.describe "Api::V1::Posts", type: :request do
         expect(res["data"]["attributes"]["content"]).to eq "example"
         expect(res["data"]["attributes"]["public"]).to eq false
         expect(res["data"]["attributes"]["user-id"]).to eq user.id
-        expect(res["data"]["attributes"]["folder-id"]).to eq nil
       end
     end
 
@@ -81,7 +80,6 @@ RSpec.describe "Api::V1::Posts", type: :request do
           expect(res["data"]["attributes"]["content"]).to eq "example"
           expect(res["data"]["attributes"]["public"]).to eq false
           expect(res["data"]["attributes"]["user-id"]).to eq user.id
-          expect(res["data"]["attributes"]["folder-id"]).to eq folder.id
         end
       end
 
@@ -114,7 +112,6 @@ RSpec.describe "Api::V1::Posts", type: :request do
           expect(res["data"]["attributes"]["content"]).to eq "example"
           expect(res["data"]["attributes"]["public"]).to eq false
           expect(res["data"]["attributes"]["user-id"]).to eq user.id
-          expect(res["data"]["attributes"]["folder-id"]).to eq nil
         end
       end
     end
@@ -181,7 +178,6 @@ RSpec.describe "Api::V1::Posts", type: :request do
             expect(res["data"]["attributes"]["content"]).to eq "example"
             expect(res["data"]["attributes"]["public"]).to eq false
             expect(res["data"]["attributes"]["user-id"]).to eq user.id
-            expect(res["data"]["attributes"]["folder-id"]).to eq folder.id
           end
         end
 
@@ -210,7 +206,6 @@ RSpec.describe "Api::V1::Posts", type: :request do
             expect(res["data"]["attributes"]["content"]).to eq "example"
             expect(res["data"]["attributes"]["public"]).to eq false
             expect(res["data"]["attributes"]["user-id"]).to eq user.id
-            expect(res["data"]["attributes"]["folder-id"]).to eq nil
           end
         end
       end
