@@ -292,7 +292,14 @@ TILの詳細を取得する
                 + content: `example2`,
                 + public: false,
                 + user_id: 1,
-                + folder_id: 1,
+                + ancestor_folders(array)
+                      + id: 2,
+                      + name: `a`,
+                      + user_id: 1,
+                      + public: true,
+                      + created_at: ~,
+                      + updated_at: ~ ,
+                      + parent_id: 1
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
 
@@ -323,7 +330,14 @@ TILを投稿する
                 + content: `example2`,
                 + public: false,
                 + user_id: 1,
-                + folder_id: 1,
+                + ancestor_folders(array)
+                      + id: 2,
+                      + name: `a`,
+                      + user_id: 1,
+                      + public: true,
+                      + created_at: ~,
+                      + updated_at: ~ ,
+                      + parent_id: 1
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
 
@@ -363,7 +377,14 @@ TILを更新する
                 + content: `update_example2`,
                 + public: false,
                 + user_id: 1,
-                + folder_id: 1,
+                + ancestor_folders(array)
+                      + id: 2,
+                      + name: `a`,
+                      + user_id: 1,
+                      + public: true,
+                      + created_at: ~,
+                      + updated_at: ~ ,
+                      + parent_id: 1
                 + created_at: `2020-03-05`,
                 + updated_at: `2020-03-05`
 
@@ -436,10 +457,12 @@ TILを削除する
 
                 + ancestor_folders(array)
                       + id: 2,
+                      + name: `a`,
                       + user_id: 1,
                       + public: true,
                       + created_at: ~,
-                      + updated_at: ~ 
+                      + updated_at: ~ ,
+                      + parent_id: 1
 
                 + child_folders(array)
                     + id: 1,
@@ -485,10 +508,12 @@ Folderを作成する
 
                 + ancestor_folders(array)
                       + id: 2,
+                      + name: `a`,
                       + user_id: 1,
                       + public: true,
                       + created_at: ~,
-                      + updated_at: ~ 
+                      + updated_at: ~ ,
+                      + parent_id: 1
                 + child_folders: []
 
 + Response 422 (application/json)
