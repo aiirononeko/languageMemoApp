@@ -54,9 +54,9 @@ RSpec.describe "Api::V1::Folders", type: :request do
       it "レスポンスボディーに親folderの値も含まれていること" do
         call_api
         res = JSON.parse(response.body)
-        expect(res["data"]["attributes"]["parent-folder"]["name"]).to eq parent_folder.name
-        expect(res["data"]["attributes"]["parent-folder"]["public"]).to eq parent_folder.public
-        expect(res["data"]["attributes"]["parent-folder"]["user_id"]).to eq parent_folder.user_id
+        expect(res["data"]["attributes"]["ancestor-folders"].first["name"]).to eq parent_folder.name
+        expect(res["data"]["attributes"]["ancestor-folders"].first["public"]).to eq parent_folder.public
+        expect(res["data"]["attributes"]["ancestor-folders"].first["user_id"]).to eq parent_folder.user_id
       end
     end
 
