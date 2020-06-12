@@ -1,5 +1,4 @@
-import Cookies from 'universal-cookie'
-import { cookieRemoveAll, isCookieUndefined } from '~/utils/cookie'
+import Cookies from '~/utils/Cookie'
 
 /**
  * Cookieの整合性を確認する
@@ -12,9 +11,9 @@ export default () => {
     const checkCookieName = ['access-token', 'client', 'uid', 'id', 'username']
 
     // Cookieにundefinedがないか確認する
-    if (isCookieUndefined(cookies, checkCookieName)) {
+    if (!cookies.isCookiesDefined(checkCookieName)) {
       // 指定した名前のすべてのCookieを削除する
-      cookieRemoveAll(cookies, checkCookieName)
+      cookies.removeAll(checkCookieName)
     }
   }
 }

@@ -1,4 +1,4 @@
-import Cookies from "universal-cookie"
+import Cookies from "~/utils/Cookie"
 import User from "~/types/User"
 const cookies = new Cookies()
 
@@ -127,11 +127,7 @@ export const actions = {
       )
 
       commit("clearUser")
-      cookies.remove("access-token")
-      cookies.remove("client")
-      cookies.remove("id")
-      cookies.remove("uid")
-      cookies.remove("username")
+      cookies.removeAll(["access-token", "client", "id", "uid", "username"])
     } catch (error) {
       if (error.response && error.response.status === 401) {
         throw new Error("Bad credentials")
@@ -149,7 +145,6 @@ export const actions = {
     })
 
     commit("setUser", res)
-
     cookies.set("username", getters.username)
   }
 }
