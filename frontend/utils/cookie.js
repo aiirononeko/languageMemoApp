@@ -6,9 +6,12 @@ class Cookies extends UniversalCookies {
    *
    * @param { Array<String> } names
    * @param { import('universal-cookie').CookieOpts|null } options
-   * @return { Array<String> }
+   * @returns {{ [x: string]: string }}
    */
-  getMultiple = (names, options = {}) => names.map(name => this.get(name, options))
+  getMultiple = (names, options = {}) => names.reduce((obj, name) => {
+    obj[name] = this.get(name, options)
+    return obj
+  }, {})
 
   /**
    * 指定した名前のCookieをすべて削除する
@@ -28,8 +31,8 @@ class Cookies extends UniversalCookies {
    * @return { Boolean }
    */
   isCookiesDefined = (names) => {
-    const valArr = this.getMultiple(names)
-    return valArr.every(v => v !== 'undefined')
+    const cookiesData = this.getMultiple(names)
+    return Object.keys(cookiesData).every(key => cookiesData[key] !== 'undefined')
   }
 }
 
