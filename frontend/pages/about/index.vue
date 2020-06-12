@@ -8,6 +8,12 @@ import AboutIndexTemplate from '~/components/templates/AboutIndexTemplate'
 export default {
   components: {
     AboutIndexTemplate
+  },
+
+  head() {
+    return {
+      title: "Poetaについて"
+    }
   }
 }
 </script>

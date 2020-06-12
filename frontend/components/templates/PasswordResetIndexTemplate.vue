@@ -4,7 +4,7 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="8">
-        <password-reset-card v-if="!success" @submit="onSubmit" />
+        <password-reset-card v-if="!success" :errors="errors" @submit="onSubmit" />
 
         <v-alert
           border="top"
@@ -31,6 +31,11 @@ export default {
   },
 
   props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
+
     success: {
       type: Boolean,
       default: false

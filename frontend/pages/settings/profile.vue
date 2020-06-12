@@ -41,6 +41,12 @@ export default {
         console.error(e)
       }
     }
+  },
+
+  head() {
+    return {
+      title: "プロフィール編集"
+    }
   }
 }
 </script>
