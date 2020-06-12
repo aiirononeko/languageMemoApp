@@ -7,6 +7,6 @@
  * @return {boolean}
  */
 export const isValidFileID = (v) => {
-  v = typeof v === 'number' ? v : Number(v)
-  return Number.isInteger(v)
+  const num = typeof v === 'number' ? v : Number(v)
+  return Number.isInteger(num) && num > 0
 }
