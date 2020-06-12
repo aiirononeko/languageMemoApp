@@ -1,18 +1,18 @@
-import Cookies from 'universal-cookie'
-import { isCookieUndefined } from "~/utils/cookie"
+import Cookies from '~/utils/Cookie'
 
 export const actions = {
-  async nuxtServerInit ({ commit }, { req }) {
+  async nuxtServerInit ({ commit, dispatch }, { req }) {
     if (req.headers.cookie) {
       const cookies = new Cookies(req.headers.cookie)
       const names = ['access-token', 'client', 'uid', 'id', 'username']
       // Cookieのデータがおかしくないかを確認する
-      if (isCookieUndefined(cookies, names)) {
+      if (!cookies.isCookiesDefined(names)) {
+        cookies.removeAll(names)
         return
       }
 
       commit("authentication/setHeader", { headers: cookies.cookies })
-      await store.dispatch("authentication/fetchUser")
+      await dispatch("authentication/fetchUser")
     }
   }
 }
