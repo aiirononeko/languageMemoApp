@@ -76,5 +76,11 @@ export default {
       } catch (e) {}
     }
   },
+
+  head() {
+    return {
+      title: "新規ファイル作成"
+    }
+  }
 }
 </script>

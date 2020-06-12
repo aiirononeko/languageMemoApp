@@ -20,6 +20,13 @@ export default {
     EmailTextField
   },
 
+  props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
+  },
+
   data() {
     return {
       email: null

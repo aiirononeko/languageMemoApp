@@ -30,6 +30,12 @@ export default {
         console.error(error)
       }
     },
+  },
+
+  head() {
+    return {
+      title: "ユーザー名編集"
+    }
   }
 }
 </script>

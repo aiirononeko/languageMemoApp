@@ -16,10 +16,14 @@ module.exports = {
   head: {
     htmlAttrs: { lang: "ja" },
     title: "Poeta",
+    titleTemplate: "%s | Poeta",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "Nuxt.js project" },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'Poeta' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: process.env.clientUrl },
+      { hid: 'og:title', property: 'og:title', content: 'Poeta' },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
