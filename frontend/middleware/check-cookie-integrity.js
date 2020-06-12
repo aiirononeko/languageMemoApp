@@ -1,4 +1,4 @@
-import Cookies from '~/utils/Cookie'
+import Cookies from '~/utils/Cookies'
 
 /**
  * Cookieの整合性を確認する
