@@ -1,4 +1,4 @@
-import Cookies from '~/utils/Cookie'
+import Cookies from '~/utils/Cookies'
 
 export const actions = {
   async nuxtServerInit ({ commit, dispatch }, { req }) {
