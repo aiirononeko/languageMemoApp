@@ -72,8 +72,6 @@ export const actions = {
    * User情報を取得する
    *
    * 目的: cookieのdataからUserInfoを取得する
-   *
-   * TODO: 動くかは確認してないので、確認する
    */
   async fetchUser ({ commit, getters }) {
     try {
