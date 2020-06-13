@@ -1,4 +1,4 @@
-import Cookies from "universal-cookie"
+import Cookies from "~/utils/Cookies"
 import User from "~/types/User"
 const cookies = new Cookies()
 
@@ -72,8 +72,6 @@ export const actions = {
    * User情報を取得する
    *
    * 目的: cookieのdataからUserInfoを取得する
-   *
-   * TODO: 動くかは確認してないので、確認する
    */
   async fetchUser ({ commit, getters }) {
     try {
@@ -127,11 +125,7 @@ export const actions = {
       )
 
       commit("clearUser")
-      cookies.remove("access-token")
-      cookies.remove("client")
-      cookies.remove("id")
-      cookies.remove("uid")
-      cookies.remove("username")
+      cookies.removeAll(["access-token", "client", "id", "uid", "username"])
     } catch (error) {
       if (error.response && error.response.status === 401) {
         throw new Error("Bad credentials")
@@ -149,7 +143,6 @@ export const actions = {
     })
 
     commit("setUser", res)
-
     cookies.set("username", getters.username)
   }
 }
