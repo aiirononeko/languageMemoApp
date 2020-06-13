@@ -79,6 +79,7 @@ export default {
     },
 
     toBackFolder() {
+      // TODO: APIが変更されたら値を使って親のフォルダに戻るように変更
       this.$router.go(-1)
     }
   }
