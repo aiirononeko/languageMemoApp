@@ -62,8 +62,8 @@ export default {
   computed: {
     list() {
       if(this.isRepository) {
-        const folders = this.userInfo.folders || []
-        const posts = this.userInfo.posts || []
+        const folders = this.userInfo.attributes.folders || []
+        const posts = this.userInfo.attributes.posts || []
         return [...folders, ...posts]
       } else {
         const folders = this.foldersInfo.attributes["child-folders"] || []
@@ -83,7 +83,8 @@ export default {
 
     breadCrumbs() {
       // TODO: usernameとカレントディレクトリを前後に追加
-      breadCrumbs = this.ancestorFolders.reduce((breadCrumbs, folder) => (`${folder.name}/${breadCrumbs}`), "")
+      let breadCrumbs = "username"
+      breadCrumbs = this.ancestorFolders.reduce((breadCrumbs, folder) => (`${folder.name}/${breadCrumbs}`), breadCrumbs)
       return breadCrumbs
     },
 
