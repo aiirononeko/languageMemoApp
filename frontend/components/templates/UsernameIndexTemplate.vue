@@ -6,6 +6,8 @@
 
     <template #right>
       <v-container>
+        {{ ancestorFolders }}<br/>
+        {{ breadCrumbs }}
         <v-row>
           <v-col cols="8"><h2 class="text-center">あなたのリポジトリ</h2></v-col>
           <v-col cols="4"><blue-btn @click="$emit('triggerIsCreatingNewFolder')">フォルダーを作成する</blue-btn></v-col>
@@ -68,6 +70,21 @@ export default {
         const posts = this.foldersInfo.attributes.posts || []
         return [...folders, ...posts]
       }
+    },
+
+    ancestorFolders() {
+      return (
+        this.foldersInfo 
+        && this.foldersInfo.attributes 
+        && this.foldersInfo.attributes["ancestor-folders"] 
+        || []
+      )
+    },
+
+    breadCrumbs() {
+      // TODO: usernameとカレントディレクトリを前後に追加
+      breadCrumbs = this.ancestorFolders.reduce((breadCrumbs, folder) => (`${folder.name}/${breadCrumbs}`), "")
+      return breadCrumbs
     },
 
     isRepository() {
