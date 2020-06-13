@@ -52,7 +52,7 @@ export default {
 
     isCreatingNewFolder: {
       type: Boolean,
-      default: undefined
+      default: false
     }
   },
 
