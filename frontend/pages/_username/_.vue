@@ -1,50 +1,85 @@
 <template>
+  <!-- マイページの２階層以下 -->
   <div>
-    <p>パラメータ：{{ params }}</p>
-    <p>ディレクトリ: {{ getDirArr  }}</p>
-    <p>拡張子：{{ getExt }}</p>
-    <p>ファイル名：{{ getFilename }}</p>
-    <p>ファイルであるか：{{ isFile }}</p>
-
-    <username-file-template v-if="isDir" />
-    <username-folder-template v-if="isFile" />
+    <username-index-template 
+      :userInfo="userInfo" 
+      :foldersInfo="foldersInfo" 
+      :isCreatingNewFolder="isCreatingNewFolder"
+      @submit="submit" 
+      @fetchData="fetchData" 
+      @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder"
+    />
   </div>
 </template>
 
 <script>
-import UsernameFileTemplate from '~/components/templates/UsernameFileTemplate'
-import UsernameFolderTemplate from '~/components/templates/UsernameFolderTemplate'
-import { getDirArr, getExt, getFilename, isDir, isFile } from '~/utils/path'
+import UsernameIndexTemplate from '~/components/templates/UsernameIndexTemplate'
 
 export default {
   components: {
-    UsernameFileTemplate,
-    UsernameFolderTemplate
+    UsernameIndexTemplate
   },
 
+  data: () => ({
+    isCreatingNewFolder: false
+  }),
+
   computed: {
+    username() {
+      return this.$route.params.username
+    },
+
     params() {
       return this.$route.params
     },
 
-    getDirArr() {
-      return getDirArr(this.params.pathMatch)
+    parentParams() {
+      return this.params.pathMatch
     },
 
-    getExt() {
-      return getExt(this.params.pathMatch)
+    id() {
+      return this.$store.getters["authentication/id"]
+    }
+  },
+
+  methods: {
+    async submit(newFolderName) {
+      const folderInfo = {
+        name: newFolderName,
+        public: false,
+        user_id: this.id,
+        parent_id: this.parentParams
+      }
+      try {
+        await this.$axios.post(`/api/v1/folders`, folderInfo)
+      } catch(e) {
+        console.error(e)
+      }
+      this.fetchData()
     },
 
-    getFilename() {
-      return getFilename(this.params.pathMatch)
+    async fetchData() {
+      try {
+        const { data } = await this.$axios.$get(`/api/v1/folders/${this.parentParams}`)
+        this.foldersInfo = data
+        this.triggerIsCreatingNewFolder()
+      } catch (e) {
+        console.error(e)
+      }
     },
 
-    isDir() {
-      return isDir(this.params.pathMatch)
+    triggerIsCreatingNewFolder() {
+      this.isCreatingNewFolder = !this.isCreatingNewFolder
     },
+  },
 
-    isFile() {
-      return isFile(this.params.pathMatch)
+  async asyncData({ $axios, params, store }) {
+    try {
+      const { data } = await $axios.$get(`/api/v1/folders/${params.pathMatch}`)
+      const userInfo = store.getters["authentication/userInfo"]
+      return { userInfo, foldersInfo: data }
+    } catch (e) {
+      console.error(e)
     }
   },
 }

@@ -1,24 +1,29 @@
 <template>
   <div>
-    <!-- ファイルやフォルダーのリスト -->
+   <p v-if="!existList">フォルダやファイルは存在しません。作成してください</p>
+    
     <v-list>
       <v-list-item-group>
-        <v-list-item  v-for="(item, i) in list" :key="i">
-          <v-list-item-icon>
-            <v-icon>{{ item.isFolder ? "mdi-folder" : "mdi-file" }}</v-icon>
-          </v-list-item-icon>
+        <link-to-back-item v-if="!isRepository" @toBackFolder="toBackFolder" />
+
+        <template v-if="existList">
+          <span v-for="item in list" :key="item.id">
+            <file-list-item v-if="!!item.content" :name="item.name" item.id :username="username" />
+            <folder-list-item else :name="item.name" :id="item.id" :username="username" />
+          </span>
+        </template>
+
+        <v-list-item v-if="isCreatingNewFolder">
+          <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
+
           <v-list-item-content>
-            <v-list-item-title>
-              {{ item.title }}
-            </v-list-item-title>
+            <v-form @submit="onSubmit">
+              <v-list-item-title><v-text-field v-model="newFolderName" dense /></v-list-item-title>
+            </v-form>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
     </v-list>
-    <!-- 編集や削除のアクションを付けるList -->
-    <link-to-back-item />
-    <file-list-item />
-    <folder-list-item />
   </div>
 </template>
 
@@ -31,37 +36,53 @@ export default {
   components: {
     FileListItem,
     FolderListItem,
-    LinkToBackItem
+    LinkToBackItem,
   },
 
   props: {
-    // リストを受けとる
-    // list: {
-    //   type: Array,
-    //   default: undefined
-    // }
+    list: {
+      type: Array,
+      default: () => []
+    },
+
+    isRepository: {
+      type: Boolean,
+      default: undefined
+    },
+
+    isCreatingNewFolder: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data: () => ({
-    list: [
-      {
-        title: "Docker",
-        isFolder: true
-      },
-      {
-        title: "CSS",
-        isFolder: true
-      },
-      {
-        title: "HTML",
-        isFolder: true
-      },
-      {
-        title: "MaterialDesgin.md",
-        isFolder: false
-      },
-    ]
+    newFolderName: "",
   }),
+
+  computed: {
+    existList() {
+      return !!this.list.length
+    },
+
+    username() {
+      return this.$store.getters["authentication/username"]
+    }
+  },
+
+  methods: {
+    onSubmit() {
+      let newFolderName = this.newFolderName
+      this.$emit('submit', newFolderName)
+      
+      this.newFolderName = ""
+    },
+
+    toBackFolder() {
+      // TODO: APIが変更されたら値を使って親のフォルダに戻るように変更
+      this.$router.go(-1)
+    }
+  }
 }
 </script>
 

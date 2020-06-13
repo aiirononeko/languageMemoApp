@@ -2,9 +2,11 @@
  * @typedef UserAttributes
  * @property {String} address
  * @property {String} created-at
+ * @property {Array}  folders
  * @property {String} github-link
  * @property {String} image
  * @property {String} name
+ * @property {Array}  posts
  * @property {String} profile
  * @property {String} twitter-link
  * @property {String} updated-at
@@ -24,9 +26,11 @@ class User {
     this.type = type
     this.address = attributes.address
     this.createdAt = new Date(attributes['created-at'])
+    this.folders = attributes.folders
     this.githubLink = attributes['github-link']
     this.image = attributes.image
     this.name = attributes.name
+    this.posts = attributes.posts
     this.profile = attributes.profile
     this.twitterLink = attributes['twitter-link']
     this.updatedAt = new Date(attributes['updated-at'])
