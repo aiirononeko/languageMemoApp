@@ -1,6 +1,12 @@
 <template>
+  <!-- マイページのルート -->
   <div>
-    <username-index-template :userInfo="userInfo" />
+    <username-index-template 
+      :userInfo="userInfo" 
+      :isCreatingNewFolder="isCreatingNewFolder"
+      @submit="submit" 
+      @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder" 
+    />
   </div>
 </template>
 
@@ -12,22 +18,44 @@ export default {
     UsernameIndexTemplate
   },
 
+  data: () => ({
+    isCreatingNewFolder: false
+  }),
+
   computed: {
     username() {
       return this.$route.params.username
+    },
+
+    id() {
+      return this.$store.getters["authentication/id"]
+    },
+
+    userInfo() {
+      return this.$store.getters["authentication/userInfo"]
     }
   },
 
-  async asyncData({ $axios, params, store }) {
-    try {
-      // Todo: APIが変更されたら以下のように変更する
-      // const { data } = await $axios.$get(`/api/v1/users/#{params}`)
+  methods: {
+    async submit(newFolderName) {
+      const folderInfo = {
+        name: newFolderName,
+        public: false,
+        user_id: this.id,
+        parent_id: null 
+      }
+      try {
+        await this.$axios.post(`/api/v1/folders`, folderInfo)
+        await this.$store.dispatch("authentication/fetchUser")
+      } catch(e) {
+        console.error(e)
+      }
+      this.triggerIsCreatingNewFolder()
+    },
 
-      const { data } = await $axios.$get(`/api/v1/users/${store.getters["authentication/id"]}`)
-      return { userInfo: data }
-    } catch (e) {
-      console.error(e)
-    }
+    triggerIsCreatingNewFolder() {
+      this.isCreatingNewFolder = !this.isCreatingNewFolder
+    },
   },
 }
 </script>
