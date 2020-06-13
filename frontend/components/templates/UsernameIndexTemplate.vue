@@ -6,15 +6,17 @@
 
     <template #right>
       <v-container>
-        {{ ancestorFolders }}<br/>
-        {{ breadCrumbs }}
         <v-row>
           <v-col cols="8"><h2 class="text-center">あなたのリポジトリ</h2></v-col>
           <v-col cols="4"><blue-btn @click="$emit('triggerIsCreatingNewFolder')">フォルダーを作成する</blue-btn></v-col>
         </v-row>
       </v-container>
 
-      <folder-breadcrumbs />
+      <folder-breadcrumbs 
+        :breadCrumbs="breadCrumbs"
+        :currentUsername="currentUsername"
+        :currentFolderName="isRepository ? '' : currentFolderName"
+      />
 
       <file-folder-list-with-action 
         @submit="(newFolderName) => $emit('submit' ,newFolderName)" 
@@ -32,6 +34,7 @@ import FolderBreadcrumbs from '~/components/organisms/breadcrumbs/FolderBreadcru
 import TwoColumnContainer from '~/components/molecules/containers/TwoColumnContainer'
 import UserIntroCard from '~/components/organisms/cards/UserIntroCard'
 import BlueBtn from '~/components/atoms/btns/BlueBtn'
+import cloneDeep from 'lodash.clonedeep'
 
 export default {
   components: {
@@ -60,6 +63,39 @@ export default {
   },
 
   computed: {
+    ancestorFolders() {
+      return (
+        this.foldersInfo 
+        && this.foldersInfo.attributes 
+        && this.foldersInfo.attributes["ancestor-folders"] 
+        || []
+      )
+    },
+
+    breadCrumbs() {
+      let breadCrumbs = [{ to: this.currentUsername, name: `${this.currentUsername}`, isRepo: true }]
+      const reAncestorFolders = cloneDeep(this.ancestorFolders).reverse()
+
+      let ancestorBreadCrumbs = reAncestorFolders.map(
+        (folder) => ({ to: folder.id , name: `${folder.name}`, isRepo: false })
+      )
+
+      breadCrumbs = [...breadCrumbs, ...ancestorBreadCrumbs]
+      return breadCrumbs
+    },
+
+    currentFolderName() {
+      return this.foldersInfo && this.foldersInfo.attributes.name
+    },
+
+    currentUsername() {
+      return this.$route.params.username
+    },
+
+    isRepository() {
+      return !this.foldersInfo
+    },
+
     list() {
       if(this.isRepository) {
         const folders = this.userInfo.attributes.folders || []
@@ -72,25 +108,9 @@ export default {
       }
     },
 
-    ancestorFolders() {
-      return (
-        this.foldersInfo 
-        && this.foldersInfo.attributes 
-        && this.foldersInfo.attributes["ancestor-folders"] 
-        || []
-      )
+    params() {
+      return this.$route.params
     },
-
-    breadCrumbs() {
-      // TODO: usernameとカレントディレクトリを前後に追加
-      let breadCrumbs = "username"
-      breadCrumbs = this.ancestorFolders.reduce((breadCrumbs, folder) => (`${folder.name}/${breadCrumbs}`), breadCrumbs)
-      return breadCrumbs
-    },
-
-    isRepository() {
-      return !this.foldersInfo
-    }
   },
 }
 </script>
