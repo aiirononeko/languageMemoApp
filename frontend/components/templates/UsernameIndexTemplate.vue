@@ -14,10 +14,10 @@
 
       <folder-breadcrumbs />
 
-      <file-folder-list-with-action 
-        @submit="(newFolderName) => $emit('submit' ,newFolderName)" 
-        :list="list" 
-        :isRepository="isRepository" 
+      <file-folder-list-with-action
+        @submit="(newFolderName) => $emit('submit' ,newFolderName)"
+        :list="list"
+        :isRepository="isRepository"
         :isCreatingNewFolder="isCreatingNewFolder"
       />
     </template>
@@ -39,7 +39,7 @@ export default {
     UserIntroCard,
     BlueBtn
   },
-  
+
   props: {
     userInfo: {
       type: Object,
