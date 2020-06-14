@@ -29,6 +29,8 @@ export default {
 
   methods: {
     async signup(userInfo) {
+      this.errors = null // 前回取得したerrorの削除
+
       try {
         await this.$axios.$post(`/api/v1/auth`, {
           email: userInfo.email,
