@@ -14,6 +14,7 @@
 
 <script>
 import UsernameIndexTemplate from '~/components/templates/UsernameIndexTemplate'
+import User from '~/types/User'
 
 export default {
   components: {
@@ -25,10 +26,6 @@ export default {
   }),
 
   computed: {
-    username() {
-      return this.$route.params.username
-    },
-
     params() {
       return this.$route.params
     },
@@ -75,9 +72,9 @@ export default {
 
   async asyncData({ $axios, params, store }) {
     try {
-      const { data } = await $axios.$get(`/api/v1/folders/${params.pathMatch}`)
-      const userInfo = store.getters["authentication/userInfo"]
-      return { userInfo, foldersInfo: data }
+      const foldersInfo = await $axios.$get(`/api/v1/folders/${params.pathMatch}`)
+      const userInfo = await $axios.$get(`/api/v1/users/${params.username}`)
+      return { userInfo: new User(userInfo.data), foldersInfo: foldersInfo.data }
     } catch (e) {
       console.error(e)
     }
