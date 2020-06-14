@@ -14,6 +14,7 @@
 
 <script>
 import UsernameIndexTemplate from '~/components/templates/UsernameIndexTemplate'
+import User from '~/types/User'
 
 export default {
   components: {
@@ -73,7 +74,7 @@ export default {
     try {
       const foldersInfo = await $axios.$get(`/api/v1/folders/${params.pathMatch}`)
       const userInfo = await $axios.$get(`/api/v1/users/${params.username}`)
-      return { userInfo: userInfo.data, foldersInfo: foldersInfo.data }
+      return { userInfo: new User(userInfo.data), foldersInfo: foldersInfo.data }
     } catch (e) {
       console.error(e)
     }
