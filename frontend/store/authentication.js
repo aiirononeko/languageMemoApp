@@ -102,11 +102,8 @@ export const actions = {
       cookies.set("id", getters.id)
       cookies.set("uid", getters.uid)
       cookies.set("username", getters.username)
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        throw new Error("Bad credentials")
-      }
-      throw new Error("Internal Server Error")
+    } catch (e) {
+      throw e.response && e.response.status
     }
   },
 
