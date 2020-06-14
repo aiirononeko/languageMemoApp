@@ -1,11 +1,11 @@
 <template>
-  <v-form ref="form" @submit.prevent="onSubmit">
-    <email-text-field v-model="email" />
-    <password-text-field v-model="password" />
-    <p class="mb-6">※半角英数字のみ使用可能です</p>
+  <v-form ref="form" v-model="valid" :lazy-validation="lazy" @submit.prevent="onSubmit">
+    <email-text-field v-model="email" :api-error="emailApiError" :submit-count="submitCount" />
 
-    <div class="text-center">
-      <orange-btn type="submit" :disabled="!isValid">
+    <password-text-field v-model="password" :api-error="passwordApiError" :submit-count="submitCount" />
+
+    <div class="text-center mt-4">
+      <orange-btn type="submit" :disabled="!valid">
         新規登録
       </orange-btn>
     </div>
@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import EmailTextField from '~/components/organisms/textFields/EmailTextField'
-import PasswordTextField from '~/components/organisms/textFields/PasswordTextField'
-import OrangeBtn from '~/components/atoms/btns/OrangeBtn'
+const EmailTextField = () => import('~/components/organisms/textFields/EmailTextField')
+const PasswordTextField = () => import('~/components/organisms/textFields/PasswordTextField')
+const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
 
 export default {
   components: {
@@ -29,30 +29,43 @@ export default {
       type: Object,
       default: undefined
     },
+
+    lazy: {
+      type: Boolean,
+      default: false
+    },
   },
 
   data: () => ({
-    isValid: false,
+    valid: false,
     password: "",
     email: "",
+    submitCount: 0 /** Submitした回数 */
   }),
 
-  methods: {
-    onSubmit() {
-      const userInfo = { password: this.password, email: this.email }
-      this.$emit('signup', userInfo)
+  computed: {
+    emailApiError() {
+      return this.errors && this.errors.email || undefined
+    },
+
+    passwordApiError() {
+      return this.errors && this.errors.password || undefined
     }
   },
 
-  watch: {
-    email: function (e) {
-      this.isValid = this.$refs.form.validate()
+  methods: {
+    onSubmit() {
+      this.validate()
+
+      const userInfo = { password: this.password, email: this.email }
+      this.$emit('signup', userInfo)
+      this.submitCount++
     },
 
-    password: function (e) {
-      this.isValid = this.$refs.form.validate()
-    },
-  },
+    validate () {
+      this.$refs.form.validate()
+    }
+  }
 }
 </script>
 
