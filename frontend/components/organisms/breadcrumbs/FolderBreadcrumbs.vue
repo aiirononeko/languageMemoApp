@@ -5,7 +5,7 @@
       <nuxt-link v-if="breadCrumb.isRepo" :to="`/${breadCrumb.to}`">{{ breadCrumb.name }}</nuxt-link>
       <nuxt-link v-else :to="`/${currentUsername}/${breadCrumb.to}`">{{ breadCrumb.name }}</nuxt-link>
     </span>
-    <span v-if="!!currentFolderName">/{{ currentFolderName }}</span>
+    <span v-if="currentFolderName">/{{ currentFolderName }}</span>
   </div>
 </template>
 
