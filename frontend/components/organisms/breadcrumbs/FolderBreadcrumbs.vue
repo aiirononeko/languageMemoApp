@@ -2,8 +2,7 @@
   <div>
     <span v-for="breadCrumb in breadCrumbs" :key="breadCrumb.to">
       /
-      <nuxt-link v-if="breadCrumb.isRepo" :to="`/${breadCrumb.to}`">{{ breadCrumb.name }}</nuxt-link>
-      <nuxt-link v-else :to="`/${currentUsername}/${breadCrumb.to}`">{{ breadCrumb.name }}</nuxt-link>
+      <nuxt-link :to="getBreadCrumbs(breadCrumb.to, breadCrumb.isRepo)">{{ breadCrumb.name }}</nuxt-link>
     </span>
     <span v-if="currentFolderName">/{{ currentFolderName }}</span>
   </div>
@@ -27,6 +26,18 @@ export default {
       default: ""
     }
   },
+  
+  computed: {
+    getBreadCrumbs() {
+      return function(to, isRepo) {
+        if(isRepo) {
+          return `/${this.currentUsername}`
+        }else {
+          return `/${this.currentUsername}/${to}`
+        }
+      }
+    }
+  }
 }
 </script>
 
