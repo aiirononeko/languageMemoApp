@@ -35,13 +35,13 @@ export default {
 
   computed: {
     getName() {
-      return this.userInfo && this.userInfo.attributes.name
+      return this.userInfo && this.userInfo.name
     },
     getProfile() {
-      return this.userInfo && this.userInfo.attributes.profile
+      return this.userInfo && this.userInfo.profile
     },
     getAddress() {
-      return this.userInfo && this.userInfo.attributes.address
+      return this.userInfo && this.userInfo.address
     },
   },
 }

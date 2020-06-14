@@ -12,6 +12,7 @@
 
 <script>
 import UsernameIndexTemplate from '~/components/templates/UsernameIndexTemplate'
+import User from '~/types/User'
 
 export default {
   components: {
@@ -52,7 +53,7 @@ export default {
      async fetchData() {
       try {
         const { data } = await this.$axios.$get(`/api/v1/users/${this.params.username}`)
-        this.userInfo = data
+        this.userInfo = new User(data)
         this.triggerIsCreatingNewFolder()
       } catch (e) {
         console.error(e)
@@ -66,8 +67,8 @@ export default {
 
   async asyncData({ $axios, params, store }) {
     try {
-      const userInfo = await $axios.$get(`/api/v1/users/${params.username}`)
-      return { userInfo: userInfo.data }
+      const { data } = await $axios.$get(`/api/v1/users/${params.username}`)
+      return { userInfo: new User(data) }
     } catch (e) {
       console.error(e)
     }

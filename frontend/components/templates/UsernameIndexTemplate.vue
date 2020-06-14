@@ -100,8 +100,8 @@ export default {
 
     list() {
       if(this.isRepository) {
-        const folders = this.userInfo.attributes.folders || []
-        const posts = this.userInfo.attributes.posts || []
+        const folders = this.userInfo.folders || []
+        const posts = this.userInfo.posts || []
         return [...folders, ...posts]
       } else {
         const folders = this.foldersInfo.attributes["child-folders"] || []
