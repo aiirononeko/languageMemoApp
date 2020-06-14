@@ -64,6 +64,11 @@ export default {
   },
 
   computed: {
+    /**
+     * 祖先のフォルダの情報を配列形式で返す
+     * 
+     * @returns { Object[] }
+     */
     ancestorFolders() {
       return (
         this.foldersInfo 
@@ -73,6 +78,11 @@ export default {
       )
     },
 
+    /**
+     * ルートから親フォルダまでの各idとisRepoを返す
+     * 
+     * @returns { Object[] }
+     */
     breadCrumbs() {
       const rootBreadCrumbs = [{ to: this.currentUsername, name: `${this.currentUsername}`, isRepo: true }]
       const reAncestorFolders = Object.assign([], this.ancestorFolders).reverse()
