@@ -21,6 +21,8 @@
       <file-folder-list-with-action 
         @submit="(newFolderName) => $emit('submit' ,newFolderName)" 
         :list="list" 
+        :ancestorFolders="ancestorFolders"
+        :currentUsername="currentUsername"
         :isRepository="isRepository" 
         :isCreatingNewFolder="isCreatingNewFolder"
       />

@@ -4,7 +4,7 @@
     
     <v-list>
       <v-list-item-group>
-        <link-to-back-item v-if="!isRepository" @toBackFolder="toBackFolder" />
+        <link-to-back-item v-if="!isRepository" :to="toBackFolder" />
 
         <template v-if="existList">
           <span v-for="item in list" :key="item.id">
@@ -40,6 +40,16 @@ export default {
   },
 
   props: {
+    ancestorFolders: {
+      type: Array,
+      default: () => []
+    },
+
+    currentUsername: {
+      type: String,
+      default: ""
+    },
+
     list: {
       type: Array,
       default: () => []
@@ -67,6 +77,18 @@ export default {
 
     username() {
       return this.$store.getters["authentication/username"]
+    },
+
+    parentId() {
+      return !!this.ancestorFolders.length && this.ancestorFolders[0].id
+    },
+
+    toBackFolder() {
+      if(this.parentId) {
+        return `/${this.currentUsername}/${this.parentId}`
+      }else {
+        return `/${this.currentUsername}`
+      }
     }
   },
 
@@ -77,11 +99,6 @@ export default {
       
       this.newFolderName = ""
     },
-
-    toBackFolder() {
-      // TODO: APIが変更されたら値を使って親のフォルダに戻るように変更
-      this.$router.go(-1)
-    }
   }
 }
 </script>
