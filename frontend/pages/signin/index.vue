@@ -1,6 +1,6 @@
 <template>
   <div>
-    <signin-template @signin="login" />
+    <signin-template @signin="login" :errors="errors" />
   </div>
 </template>
 
@@ -22,6 +22,8 @@ export default {
 
   methods: {
     async login({ email, password }) {
+      this.errors = null // 前回取得したerrorの削除
+
       try {
         await this.$store.dispatch("authentication/login", {
           email, password
@@ -29,8 +31,10 @@ export default {
 
         await this.$router.push(`/settings/profile`)
       } catch (e) {
-        if (e.response && e.response.status === 422) {
-          this.errors = e.response.data.errors
+        if (e === 401 || e === 422) {
+          this.errors = {
+            email: 'メールアドレスかパスワードが違います'
+          }
           return
         }
 

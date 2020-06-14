@@ -7,7 +7,7 @@
     :required="required"
     :rules="getRule"
     :type="showPassword ? 'text' : 'password'"
-    :persistent-hint="true"
+    :persistent-hint="persistentHint"
     @change="onChange"
     @click:append="showPassword = !showPassword"
     counter
@@ -28,7 +28,12 @@ export default {
 
     label: {
       type: String,
-      default: 'メール'
+      default: 'パスワード'
+    },
+
+    persistentHint: {
+      type: Boolean,
+      default: true
     },
 
     submitCount: {
