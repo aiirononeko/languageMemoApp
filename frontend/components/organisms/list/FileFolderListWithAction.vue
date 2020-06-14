@@ -1,15 +1,15 @@
 <template>
   <div>
-   <p v-if="!existList">フォルダやファイルは存在しません。作成してください</p>
-    
+    <p v-if="!existList">フォルダやファイルは存在しません。作成してください</p>
+
     <v-list>
       <v-list-item-group>
         <link-to-back-item v-if="!isRepository" :to="toBackFolder" />
 
         <template v-if="existList">
           <span v-for="item in list" :key="item.id">
-            <file-list-item v-if="!!item.content" :name="item.name" item.id :username="username" />
-            <folder-list-item else :name="item.name" :id="item.id" :username="username" />
+            <file-list-item v-if="!!item.content" :name="item.name" :id=item.id :username="username" />
+            <folder-list-item v-else :name="item.name" :id="item.id" :username="username" />
           </span>
         </template>
 
@@ -96,7 +96,7 @@ export default {
     onSubmit() {
       let newFolderName = this.newFolderName
       this.$emit('submit', newFolderName)
-      
+
       this.newFolderName = ""
     },
   }

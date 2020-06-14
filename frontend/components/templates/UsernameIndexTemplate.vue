@@ -46,7 +46,7 @@ export default {
     UserIntroCard,
     BlueBtn
   },
-  
+
   props: {
     userInfo: {
       type: Object,
