@@ -30,13 +30,13 @@ export default {
   methods: {
     async signup(userInfo) {
       try {
-        const { success, message } = await this.$axios.$post(`/api/v1/auth`, {
+        await this.$axios.$post(`/api/v1/auth`, {
           email: userInfo.email,
           password: userInfo.password
         })
 
-        this.success = success
-        this.message = message
+        this.success = true
+        this.message = "新規登録ありがとうございます。登録したメールアドレスを確認してください"
       } catch (e) {
         if (e.response && e.response.status === 422) {
           this.errors = e.response.data.errors

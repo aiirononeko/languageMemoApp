@@ -1,12 +1,12 @@
 <template>
   <!-- マイページの２階層以下 -->
   <div>
-    <username-index-template 
-      :userInfo="userInfo" 
-      :foldersInfo="foldersInfo" 
+    <username-index-template
+      :userInfo="userInfo"
+      :foldersInfo="foldersInfo"
       :isCreatingNewFolder="isCreatingNewFolder"
-      @submit="submit" 
-      @fetchData="fetchData" 
+      @submit="submit"
+      @fetchData="fetchData"
       @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder"
     />
   </div>
