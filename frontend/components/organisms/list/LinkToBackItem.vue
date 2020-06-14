@@ -1,5 +1,5 @@
 <template>
-  <v-list-item @click="$emit('toBackFolder')">
+  <v-list-item :to="to">
     <v-list-item-icon>
       <v-icon>mdi-arrow-left-circle</v-icon>
     </v-list-item-icon>
@@ -8,7 +8,12 @@
 
 <script>
 export default {
-
+  props: {
+    to: {
+      type: String,
+      default: ""
+    }
+  }
 }
 </script>
 
