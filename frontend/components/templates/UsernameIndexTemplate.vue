@@ -12,12 +12,18 @@
         </v-row>
       </v-container>
 
-      <folder-breadcrumbs />
+      <folder-breadcrumbs 
+        :breadCrumbs="breadCrumbs"
+        :currentUsername="currentUsername"
+        :currentFolderName="isRepository ? '' : currentFolderName"
+      />
 
-      <file-folder-list-with-action
-        @submit="(newFolderName) => $emit('submit' ,newFolderName)"
-        :list="list"
-        :isRepository="isRepository"
+      <file-folder-list-with-action 
+        @submit="(newFolderName) => $emit('submit' ,newFolderName)" 
+        :list="list" 
+        :ancestorFolders="ancestorFolders"
+        :currentUsername="currentUsername"
+        :isRepository="isRepository" 
         :isCreatingNewFolder="isCreatingNewFolder"
       />
     </template>
@@ -58,6 +64,49 @@ export default {
   },
 
   computed: {
+    /**
+     * 祖先のフォルダの情報を配列形式で返す
+     * 
+     * @returns { Object[] }
+     */
+    ancestorFolders() {
+      return (
+        this.foldersInfo 
+        && this.foldersInfo.attributes 
+        && this.foldersInfo.attributes["ancestor-folders"] 
+        || []
+      )
+    },
+
+    /**
+     * ルートから親フォルダまでの各idとisRepoを返す
+     * 
+     * @returns { Object[] }
+     */
+    breadCrumbs() {
+      const rootBreadCrumbs = [{ to: this.currentUsername, name: `${this.currentUsername}`, isRepo: true }]
+      const reAncestorFolders = Object.assign([], this.ancestorFolders).reverse()
+
+      const ancestorBreadCrumbs = reAncestorFolders.map(
+        (folder) => ({ to: folder.id , name: `${folder.name}`, isRepo: false })
+      )
+
+      const breadCrumbs = [...rootBreadCrumbs, ...ancestorBreadCrumbs]
+      return breadCrumbs
+    },
+
+    currentFolderName() {
+      return this.foldersInfo && this.foldersInfo.attributes.name
+    },
+
+    currentUsername() {
+      return this.$route.params.username
+    },
+
+    isRepository() {
+      return !this.foldersInfo
+    },
+
     list() {
       if(this.isRepository) {
         const folders = this.userInfo.folders || []
@@ -70,9 +119,9 @@ export default {
       }
     },
 
-    isRepository() {
-      return !this.foldersInfo
-    }
+    params() {
+      return this.$route.params
+    },
   },
 }
 </script>

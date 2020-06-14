@@ -12,6 +12,7 @@
 
 <script>
 import UsernameIndexTemplate from '~/components/templates/UsernameIndexTemplate'
+import User from '~/types/User'
 
 export default {
   components: {
@@ -23,16 +24,12 @@ export default {
   }),
 
   computed: {
-    username() {
-      return this.$route.params.username
-    },
-
     id() {
       return this.$store.getters["authentication/id"]
     },
 
-    userInfo() {
-      return this.$store.getters["authentication/userInfo"]
+    params() {
+      return this.$route.params
     }
   },
 
@@ -50,12 +47,31 @@ export default {
       } catch(e) {
         console.error(e)
       }
-      this.triggerIsCreatingNewFolder()
+      this.fetchData()
+    },
+
+     async fetchData() {
+      try {
+        const { data } = await this.$axios.$get(`/api/v1/users/${this.params.username}`)
+        this.userInfo = new User(data)
+        this.triggerIsCreatingNewFolder()
+      } catch (e) {
+        console.error(e)
+      }
     },
 
     triggerIsCreatingNewFolder() {
       this.isCreatingNewFolder = !this.isCreatingNewFolder
     },
+  },
+
+  async asyncData({ $axios, params, store }) {
+    try {
+      const { data } = await $axios.$get(`/api/v1/users/${params.username}`)
+      return { userInfo: new User(data) }
+    } catch (e) {
+      console.error(e)
+    }
   },
 }
 </script>
