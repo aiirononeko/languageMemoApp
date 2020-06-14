@@ -36,7 +36,6 @@ import FolderBreadcrumbs from '~/components/organisms/breadcrumbs/FolderBreadcru
 import TwoColumnContainer from '~/components/molecules/containers/TwoColumnContainer'
 import UserIntroCard from '~/components/organisms/cards/UserIntroCard'
 import BlueBtn from '~/components/atoms/btns/BlueBtn'
-import cloneDeep from 'lodash.clonedeep'
 
 export default {
   components: {
@@ -75,14 +74,14 @@ export default {
     },
 
     breadCrumbs() {
-      let breadCrumbs = [{ to: this.currentUsername, name: `${this.currentUsername}`, isRepo: true }]
-      const reAncestorFolders = cloneDeep(this.ancestorFolders).reverse()
+      const rootBreadCrumbs = [{ to: this.currentUsername, name: `${this.currentUsername}`, isRepo: true }]
+      const reAncestorFolders = Object.assign([], this.ancestorFolders).reverse()
 
-      let ancestorBreadCrumbs = reAncestorFolders.map(
+      const ancestorBreadCrumbs = reAncestorFolders.map(
         (folder) => ({ to: folder.id , name: `${folder.name}`, isRepo: false })
       )
 
-      breadCrumbs = [...breadCrumbs, ...ancestorBreadCrumbs]
+      const breadCrumbs = [...rootBreadCrumbs, ...ancestorBreadCrumbs]
       return breadCrumbs
     },
 
