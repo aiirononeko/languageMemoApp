@@ -33,7 +33,9 @@ export default {
       } catch (e) {
         if (e === 401 || e === 422) {
           this.errors = {
-            email: 'メールアドレスかパスワードが違います'
+            email: [
+              'メールアドレスかパスワードが違います'
+            ]
           }
           return
         }
