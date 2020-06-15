@@ -4,7 +4,7 @@ module Concerns
     include Rails.application.routes.url_helpers
 
     included do
-      Rails.application.routes.default_url_options[:host] = ENV['DEV_API_DOMAIN'] || 'localhost:3000'
+      Rails.application.routes.default_url_options[:host] = ENV['API_DOMAIN'] || 'localhost:3000'
     end
   end
 end
