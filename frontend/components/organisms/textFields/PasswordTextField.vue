@@ -12,6 +12,7 @@
     @click:append="showPassword = !showPassword"
     counter
     outlined
+    inputmode="verbatim"
     hint="8文字以上の半角英数字のみ使用可能です"
     name="password"
     dense

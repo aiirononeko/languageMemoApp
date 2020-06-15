@@ -9,6 +9,7 @@
     :error-messages="getErrorMessage"
     @change="onChange"
     dense
+    inputmode="email"
     type="email"
     name="email"
     outlined
