@@ -35,7 +35,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: ENV['HOST'], port: 3000 }
+  config.action_mailer.default_url_options = { host: ENV['API_HOST'], port: 3000 }
   config.action_mailer.delivery_method = :letter_opener_web
 
   # Print deprecation notices to the Rails logger.
@@ -65,5 +65,5 @@ Rails.application.configure do
   # DockerのIPアドレスをホワイトリストに追加
   config.web_console.whitelisted_ips = ['172.18.0.1', '192.168.99.1']
   config.action_controller.forgery_protection_origin_check = false
-  Rails.application.routes.default_url_options[:host] = ENV['DEV_API_DOMAIN'] || 'localhost:3000'
+  Rails.application.routes.default_url_options[:host] = ENV['API_DOMAIN'] || 'localhost:3000'
 end

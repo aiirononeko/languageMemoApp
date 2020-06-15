@@ -53,6 +53,6 @@ DeviseTokenAuth.setup do |config|
   # do so by enabling this flag. NOTE: This feature is highly experimental!
   # config.enable_standard_devise_support = false
   config.default_confirm_success_url = "confirmed"
-  DEV_DOMAIN =  ENV["DEV_DOMAIN"] ||= "http://localhost:3001"
-  config.default_confirm_success_url = DEV_DOMAIN + "/signup/enter-user-name" if Rails.env.development?
+  FRONT_DOMAIN =  ENV["FRONT_DOMAIN"] ||= "http://localhost:3001"
+  config.default_confirm_success_url = FRONT_DOMAIN + "/signup/enter-user-name" if Rails.env.development?
 end
