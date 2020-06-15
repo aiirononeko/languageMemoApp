@@ -94,8 +94,6 @@ jobs:
           name: Install dependencies
           command: |
             apk add --no-cache 
-              pip
-              gettext
             pip install 
               docker-compose==1.12.0
             gcloud components install kubectl
