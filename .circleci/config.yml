@@ -1,72 +1,147 @@
+# version: 2
+# jobs:
+#   build:
+#     machine:
+#       image: circleci/classic:edge
+#     working_directory: ~/repo
+#     steps:
+#       - checkout
+#       - run:
+#           name: Install Docker Compose
+#           command: |
+#             curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+#             chmod +x ~/docker-compose
+#             sudo mv ~/docker-compose /usr/local/bin/docker-compose
+#       - run:
+#           name: docker-compose up
+#           command: |
+#             set -x
+#             docker-compose up --build -d
+#       - run:
+#           name: docker-compose stop
+#           command: |
+#             set -x
+#             docker-compose stop
+#       - run:
+#           name: docker-compose up
+#           command: |
+            # set -x
+            # docker-compose up -d
+#       - run:
+#           name: bundle Install
+#           command: |
+#             set -x
+#             docker-compose exec api bin/bundle install --path=vendor/bundle
+#       - run:
+#           name: database migration
+#           command: |
+#             set -x
+            # docker-compose exec api bin/rails db:create
+            # docker-compose exec api bin/rails db:migrate
+#       - run:
+#           name: rspec
+#           command: |
+#             set -x
+#             docker-compose exec api rspec
+#       # - run:
+#       #     name: rubocop
+#       #     command: |
+#       #       set -x
+#       #       docker-compose exec api rubocop
+#       - run:
+#           name: remove node_modules
+#           command: |
+#             set -x
+#             docker-compose run front rm -rf node_modules
+#       - run:
+#           name: npm install
+#           command: |
+#             set -x
+#             docker-compose run front npm install
+#       - run:
+#           name: jest
+#           command: |
+#             set -x
+#             docker-compose run front npm test
+#       - run:
+#           name: lint
+#           command: |
+#             set -x
+#             docker-compose run front npm run lintfix
+#       - run:
+#           name: docker-compose down
+#           command: docker-compose down
+
 version: 2
 jobs:
   build:
-    machine:
-      image: circleci/classic:edge
-    working_directory: ~/repo
+    working_directory: /app
+    environment:
+      PROJECT_NAME: poeta-276706
+      CLUSTER_NAME: poeta
+      CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
+      DEBIAN_FRONTEND: "https://poeta.dev"
+      GOOGLE_APPLICATION_CREDENTIALS: ${HOME}/account-auth.json
+    docker:
+      - image: google/cloud-sdk:171.0.0-alpine
     steps:
       - checkout
+      - setup_remote_docker
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
       - run:
-          name: Install Docker Compose
+          name: Install dependencies
           command: |
-            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+            apk add --no-cache 
+              py-pip=9.0.0-r1 
+              gettext
+            pip install 
+              docker-compose==1.12.0
+            gcloud components install kubectl
       - run:
-          name: docker-compose up
-          command: |
-            set -x
-            docker-compose up --build -d
-      - run:
-          name: docker-compose stop
-          command: |
-            set -x
-            docker-compose stop
-      - run:
-          name: docker-compose up
+          name: Install Docker client
           command: |
             set -x
-            docker-compose up -d
+            VER="17.05.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
       - run:
-          name: bundle Install
+          name: Check docker version
           command: |
-            set -x
-            docker-compose exec api bin/bundle install --path=vendor/bundle
+            docker version
       - run:
-          name: database migration
+          name: Build application Docker image
           command: |
-            set -x
-            docker-compose exec api bin/rails db:create db:migrate
+            docker-compose -f docker-compose.gke.yml build
       - run:
-          name: rspec
+          name: Save Docker image layer cache
           command: |
-            set -x
-            docker-compose exec api rspec
-      # - run:
-      #     name: rubocop
-      #     command: |
-      #       set -x
-      #       docker-compose exec api rubocop
+            mkdir -p /caches
+            docker save -o /caches/app.tar asia.gcr.io/poeta-276706/poeta-api:latest
+            docker save -o /caches/app.tar asia.gcr.io/poeta-276706/poeta-front:latest
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/app.tar
       - run:
-          name: remove node_modules
+          name: Run tests
           command: |
-            set -x
-            docker-compose run front rm -rf node_modules
-      - run:
-          name: npm install
-          command: |
-            set -x
-            docker-compose run front npm install
-      - run:
-          name: jest
-          command: |
-            set -x
+            docker-compose run api bin/rails db:migrate
+            docker-compose run api rspec
             docker-compose run front npm test
-      - run:
-          name: lint
+      - deploy:
+          name: Deploy application Docker image
           command: |
-            set -x
-            docker-compose run front npm run lintfix
-      - run:
-          name: docker-compose down
-          command: docker-compose down
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              echo $ACCT_AUTH | base64 -d > ${HOME}/account-auth.json
+              gcloud auth activate-service-account --key-file ${HOME}/account-auth.json
+              gcloud config set project $PROJECT_NAME
+              gcloud --quiet config set container/cluster $CLUSTER_NAME
+              gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
+              gcloud --quiet container clusters get-credentials $CLUSTER_NAME
+              gcloud config set container/use_client_certificate True
+              chmod +x deploy.sh
+              ./deploy.sh
+            fi
