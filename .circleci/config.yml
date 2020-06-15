@@ -94,7 +94,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --no-cache 
-              py-pip
+              pip
               gettext
             pip install 
               docker-compose==1.12.0
