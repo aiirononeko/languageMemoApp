@@ -121,7 +121,7 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker-compose -f docker-compose.gke.yml build
+            docker-compose -f docker-compose.test.yml build
       - run:
           name: Save Docker image layer cache
           command: |
@@ -135,7 +135,6 @@ jobs:
       - run:
           name: Run tests
           command: |
-            docker-compose -f docker-compose.test.yml build
             docker-compose -f docker-compose.test.yml run api rails db:migrate
             docker-compose -f docker-compose.test.yml run api rspec
             docker-compose -f docker-compose.test.yml run front npm test
