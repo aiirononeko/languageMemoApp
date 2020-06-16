@@ -16,10 +16,12 @@ spec:
       containers:
         - name: api
           image: asia.gcr.io/poeta-276706/poeta-api:latest
-          command: ["bundle", "exec", "puma", "-t", "5:5", "-p", "3000", "-e", "production"]
+          command: ["rails", "s", "-p", "3000", "-b", "'0.0.0.0'"]
           ports:
             - containerPort: 3000
           env:
+            - name: RAILS_ENV
+              value: production
             - name: RAILS_MASTER_KEY
               value: 91c0501448efc018990344ba434f7b92
             - name: POETA_DB_HOST
