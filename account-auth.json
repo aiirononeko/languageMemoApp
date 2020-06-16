@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "poeta-276706",
+  "private_key_id": "868fd8635ac26ff1509170868a2d25b43aac272a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDfqEBQ49SXGQSv\nSM2JHdum3PdNsj0ZEP6YHL6JaRXOEg6YUgD8+Iss0AOqvhQVy0miC0uVeNVDV5PH\nkyVkzRnvDS9Z+LK44h5ACDMF6cfxNyWQxJOCiQsIcsrf0bYddfeZ8Q6WxuGY0seN\nCsJTU/DSPInLNXvkLDMDQocTYDusAeATW7IH3r+W4yan4WLkSb5LhIu5ExnjSrwV\nClTXzpbT6GHAcjcFx/FV83HDV2ZmWjiKQWDGR1k9CtflaVBC/3egD7SgyFQLsV7W\nfE7lg4s7VkpPnlNtBYa7uja6pdu0xMf68Yquz2cI8JXTgBs2eeZ3rd1wvgGWU/W7\nCPB08SS9AgMBAAECggEAWsB6LHht3Eu2B2v6nm8joB8cKAYxXXj0XYOYWshtpRrV\nmj/4D63IR0w2mLMdEkTVIXAE4OdRXcxs9ffCnhbNNZ87ff34gyWZUbEiBv23+CxA\nzW++TSLPe8Och1ogU+74o5nZKhwUET9B4nyhok82shAHd5HBrjGzF1kI1zderymn\ncB9qC7/GOkKH/tR4h85ycTqm4sngRuXpi6D1DhUeW8m/O1fXRsSN7qWBRQdlxV6q\nFg+eRucCNLDfsoU3t1H/mpsehyFXxplvKrEhb3L5D6nJ1JezRd+NQWIcroIjIOnt\nySMHWlX8l2k/gbuOoD5B69PGnvwsHFV/E1eLXy0ZDwKBgQDx9lonN9njBpKeJirL\nxd95jebEKVg0TwZsVQIiiOvJrPbxF9hpGcTsE/zKXq2g0O6gw6xrCx5KmAfbAvLQ\nv+neumz0ngh3/lhiZCPT0mnjEaRNhLWheed0RjXCcpdP7rINcwB9jYre44k+NoeG\nOt+jrTc/5bP8rugvOjk3LTzAZwKBgQDsoge8Rft+tQiOYprKHmkXdtqTifdGeY43\ngTPt3vuOpD1I0ACi7X27KcvL2XfQyp5TjudI6Tn/0UKn1Am5D3+ZMItZ0y9PRU+S\nyWq8mTYyAxzTUlVUakxypoEoC78vtSOcsTQo3bGwxacLHAAhdqS88bbxJ2nkKwdf\ns019nbSrOwKBgAJvzLCga11R76AQGlY7A+kheLV5BR5hvVrR8FeQsW8ygroi11cX\nn1gRS3ZuRalc8UpFLjNVxVRS+6FFAlT/2ccYcYh1Hvi2YwV6pLG5aL+Uqebt8zZR\nF/efzWLL7KItcTWZduPMzR05hWRPAEZlyWLIl8nY8lsVF9mB6JmZpwb5AoGBAOKg\ns+Pe6mSJoS4sxa55vZCZZfETm11Foa0K8t8IRchxB7iqbVGdPmN4PhR3rEatJ0FD\nhcLQi5mzorD1ZHJ2o2/ljDB1D8RNz0331V/XJI51aLADFHIKdDkBuoTN60cXpom1\nNQ1GdZ2lTrxXDtD9vfyvStRfOQ0rIJ7JLJf36EZtAoGBAOILpyF0FYc0rVgySHKy\njSPPQ9f3wzNsva1qPJe9wOycEdIxjE6Tnf/iibELXbwcQtQQENSjKjumnTmcx1vD\nr/PL0sNo/C2dSfEydAKd2wTwJ5Bcpj8f3W13oB7ALQ2hj5PAQ1phmbYkPeVXHuOs\nCd5crEXfTc1yWuRhlE++sUwv\n-----END PRIVATE KEY-----\n",
+  "client_email": "poeta-db-admin@poeta-276706.iam.gserviceaccount.com",
+  "client_id": "113526870071669013914",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/poeta-db-admin%40poeta-276706.iam.gserviceaccount.com"
+}

@@ -81,7 +81,7 @@ jobs:
       CLUSTER_NAME: poeta
       CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
       DEBIAN_FRONTEND: "https://poeta.dev"
-      GOOGLE_APPLICATION_CREDENTIALS: ${HOME}/account-auth.json
+      GOOGLE_APPLICATION_CREDENTIALS: account-auth.json
     docker:
       - image: google/cloud-sdk:171.0.0-alpine
     steps:
@@ -143,7 +143,8 @@ jobs:
           name: Deploy application Docker image
           command: |
             if [ "${CIRCLE_BRANCH}" == "feature/fixCircleCI" ]; then
-              echo $ACCT_AUTH | base64 -d > ${HOME}/account-auth.json
+              echo $ACCT_AUTH | base64 -d > account-auth.json
+              gcloud auth activate-service-account --key-file account-auth.json
               gcloud config set project $PROJECT_NAME
               gcloud --quiet config set container/cluster $CLUSTER_NAME
               gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}

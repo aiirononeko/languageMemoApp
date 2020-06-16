@@ -33,6 +33,3 @@
 .env
 .env.production
 .env.testing
-
-# important json
-/*.json
