@@ -92,8 +92,8 @@ jobs:
       - run:
           name: Docker build
           command: |
-            docker build -t asia.gcr.io/poeta-276706/poeta-api:$CIRCLE_SHA1 .
-            docker build -t asia.gcr.io/poeta-276706/poeta-front:$CIRCLE_SHA1 ./frontend/.
+            docker build -t asia.gcr.io/poeta-276706/poeta-api:latest .
+            docker build -t asia.gcr.io/poeta-276706/poeta-front:latest ./frontend/.
       - run:
           name: Deploy application Docker image
           command: |
@@ -103,8 +103,8 @@ jobs:
               gcloud --quiet config set project $GOOGLE_PROJECT_ID
               gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
               gcloud --quiet container clusters get-credentials $GOOGLE_CLUSTER_NAME
-              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-api:$CIRCLE_SHA1
-              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:$CIRCLE_SHA1
+              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-api:latest
+              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:latest
               envsubst < ./deployment.yml > patched_deployment.yml
               kubectl apply -f patched_deployment.yml
             fi

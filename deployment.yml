@@ -21,7 +21,7 @@ spec:
             - containerPort: 3000
           env:
             - name: RAILS_MASTER_KEY
-              value: 91c0501448efc018990344ba434f7b92
+              value: df4911d9b1be600c9c4cfb5e5bb06feb6d06e1d42ccb1141da50be1e3a0cafbb0d9f1fba2784f30fdf85bb854d47b1a6f19543265156cf43f41e0b4e1f11428e
             - name: POETA_DB_HOST
               value: 127.0.0.1:3306
             # These secrets are required to start the pod.
