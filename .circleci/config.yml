@@ -4,6 +4,12 @@ jobs:
     machine:
       image: circleci/classic:edge
     working_directory: ~/repo
+    environment:
+      PROJECT_NAME: poeta-276706
+      CLUSTER_NAME: poeta
+      CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
+      DEBIAN_FRONTEND: ""
+      GOOGLE_APPLICATION_CREDENTIALS: ./account-auth.json
     steps:
       - checkout
       - run:
