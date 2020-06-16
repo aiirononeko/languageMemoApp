@@ -1,82 +1,82 @@
 version: 2
 jobs:
-  # build:
-  #   machine:
-  #     image: circleci/classic:edge
-  #   working_directory: ~/repo
-  #   environment:
-  #     PROJECT_NAME: poeta-276706
-  #     CLUSTER_NAME: poeta
-  #     CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
-  #     DEBIAN_FRONTEND: ""
-  #     GOOGLE_APPLICATION_CREDENTIALS: ./account-auth.json
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Install Docker Compose
-  #         command: |
-  #           curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-  #           chmod +x ~/docker-compose
-  #           sudo mv ~/docker-compose /usr/local/bin/docker-compose
-  #     - run:
-  #         name: docker-compose up
-  #         command: |
-  #           set -x
-  #           docker-compose up --build -d
-  #     - run:
-  #         name: docker-compose stop
-  #         command: |
-  #           set -x
-  #           docker-compose stop
-  #     - run:
-  #         name: docker-compose up
-  #         command: |
-  #           set -x
-  #           docker-compose up -d
-  #     - run:
-  #         name: bundle Install
-  #         command: |
-  #           set -x
-  #           docker-compose exec api bin/bundle install --path=vendor/bundle
-  #     - run:
-  #         name: database migration
-  #         command: |
-  #           set -x
-  #           docker-compose exec api bin/rails db:create
-  #           docker-compose exec api bin/rails db:migrate
-  #     - run:
-  #         name: rspec
-  #         command: |
-  #           set -x
-  #           docker-compose exec api rspec
-  #     # - run:
-  #     #     name: rubocop
-  #     #     command: |
-  #     #       set -x
-  #     #       docker-compose exec api rubocop
-  #     - run:
-  #         name: remove node_modules
-  #         command: |
-  #           set -x
-  #           docker-compose run front rm -rf node_modules
-  #     - run:
-  #         name: npm install
-  #         command: |
-  #           set -x
-  #           docker-compose run front npm install
-  #     - run:
-  #         name: jest
-  #         command: |
-  #           set -x
-  #           docker-compose run front npm test
-  #     - run:
-  #         name: lint
-  #         command: |
-  #           set -x
-  #           docker-compose run front npm run lintfix
-  #     - run:
-  #         name: docker-compose down
-  #         command: docker-compose down
+  build:
+    machine:
+      image: circleci/classic:edge
+    working_directory: ~/repo
+    environment:
+      PROJECT_NAME: poeta-276706
+      CLUSTER_NAME: poeta
+      CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
+      DEBIAN_FRONTEND: ""
+      GOOGLE_APPLICATION_CREDENTIALS: ./account-auth.json
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up --build -d
+      - run:
+          name: docker-compose stop
+          command: |
+            set -x
+            docker-compose stop
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up -d
+      - run:
+          name: bundle Install
+          command: |
+            set -x
+            docker-compose exec api bin/bundle install --path=vendor/bundle
+      - run:
+          name: database migration
+          command: |
+            set -x
+            docker-compose exec api bin/rails db:create
+            docker-compose exec api bin/rails db:migrate
+      - run:
+          name: rspec
+          command: |
+            set -x
+            docker-compose exec api rspec
+      # - run:
+      #     name: rubocop
+      #     command: |
+      #       set -x
+      #       docker-compose exec api rubocop
+      - run:
+          name: remove node_modules
+          command: |
+            set -x
+            docker-compose run front rm -rf node_modules
+      - run:
+          name: npm install
+          command: |
+            set -x
+            docker-compose run front npm install
+      - run:
+          name: jest
+          command: |
+            set -x
+            docker-compose run front npm test
+      - run:
+          name: lint
+          command: |
+            set -x
+            docker-compose run front npm run lintfix
+      - run:
+          name: docker-compose down
+          command: docker-compose down
 
   deploy:
     docker:
@@ -88,26 +88,25 @@ jobs:
       GOOGLE_CLUSTER_NAME: 'poeta'
     steps:
       - checkout
-      # - run:
-      #     name: Install Docker Compose
-      #     command: |
-      #       curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-      #       chmod +x ~/docker-compose
-      #       mv ~/docker-compose /usr/local/bin/docker-compose
+      - setup_remote_docker
+      - run:
+          name: Docker build
+          command: |
+            docker build -t asia.gcr.io/poeta-276706/poeta-api:$CIRCLE_SHA1 .
+            docker build -t asia.gcr.io/poeta-276706/poeta-front:$CIRCLE_SHA1 ./frontend/.
       - run:
           name: Deploy application Docker image
           command: |
             if [ "${CIRCLE_BRANCH}" == "feature/fixCircleCI" ]; then
-              docker-compose -f docker-compose.gke.yml build
-              gcloud auth activate-service-account --key-file ./account-auth.json
-              gcloud config set project $PROJECT_NAME
-              gcloud --quiet config set container/cluster $CLUSTER_NAME
-              gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
-              gcloud --quiet container clusters get-credentials $CLUSTER_NAME
-              gcloud config set container/use_client_certificate True
-              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-api:latest
-              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:latest
-              kubectl apply -f k8s/deployment.yml
+              apt-get install -qq -y gettext
+              gcloud auth activate-service-account --key-file=./account-auth.json
+              gcloud --quiet config set project $GOOGLE_PROJECT_ID
+              gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
+              gcloud --quiet container clusters get-credentials $GOOGLE_CLUSTER_NAME
+              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-api:$CIRCLE_SHA1
+              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:$CIRCLE_SHA1
+              envsubst < ./deployment.yml > patched_deployment.yml
+              kubectl apply -f patched_deployment.yml
             fi
 
 workflows:
