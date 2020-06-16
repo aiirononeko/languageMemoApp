@@ -78,10 +78,21 @@ jobs:
           name: docker-compose down
           command: docker-compose down
 
-      - deploy:
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    environment:
+      PROJECT_NAME: 'my-project'
+      GOOGLE_PROJECT_ID: 'my-project-112233'
+      GOOGLE_COMPUTE_ZONE: 'us-central1-a'
+      GOOGLE_CLUSTER_NAME: 'my-project-bed'
+    steps:
+      - checkout
+      - run:
           name: Deploy application Docker image
           command: |
             if [ "${CIRCLE_BRANCH}" == "feature/fixCircleCI" ]; then
+              docker-compose -f docker-compose.gke.yml build
               gcloud auth activate-service-account --key-file ./account-auth.json
               gcloud config set project $PROJECT_NAME
               gcloud --quiet config set container/cluster $CLUSTER_NAME
