@@ -1,82 +1,82 @@
 version: 2
 jobs:
-  build:
-    machine:
-      image: circleci/classic:edge
-    working_directory: ~/repo
-    environment:
-      PROJECT_NAME: poeta-276706
-      CLUSTER_NAME: poeta
-      CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
-      DEBIAN_FRONTEND: ""
-      GOOGLE_APPLICATION_CREDENTIALS: ./account-auth.json
-    steps:
-      - checkout
-      - run:
-          name: Install Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - run:
-          name: docker-compose up
-          command: |
-            set -x
-            docker-compose up --build -d
-      - run:
-          name: docker-compose stop
-          command: |
-            set -x
-            docker-compose stop
-      - run:
-          name: docker-compose up
-          command: |
-            set -x
-            docker-compose up -d
-      - run:
-          name: bundle Install
-          command: |
-            set -x
-            docker-compose exec api bin/bundle install --path=vendor/bundle
-      - run:
-          name: database migration
-          command: |
-            set -x
-            docker-compose exec api bin/rails db:create
-            docker-compose exec api bin/rails db:migrate
-      - run:
-          name: rspec
-          command: |
-            set -x
-            docker-compose exec api rspec
-      # - run:
-      #     name: rubocop
-      #     command: |
-      #       set -x
-      #       docker-compose exec api rubocop
-      - run:
-          name: remove node_modules
-          command: |
-            set -x
-            docker-compose run front rm -rf node_modules
-      - run:
-          name: npm install
-          command: |
-            set -x
-            docker-compose run front npm install
-      - run:
-          name: jest
-          command: |
-            set -x
-            docker-compose run front npm test
-      - run:
-          name: lint
-          command: |
-            set -x
-            docker-compose run front npm run lintfix
-      - run:
-          name: docker-compose down
-          command: docker-compose down
+  # build:
+  #   machine:
+  #     image: circleci/classic:edge
+  #   working_directory: ~/repo
+  #   environment:
+  #     PROJECT_NAME: poeta-276706
+  #     CLUSTER_NAME: poeta
+  #     CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
+  #     DEBIAN_FRONTEND: ""
+  #     GOOGLE_APPLICATION_CREDENTIALS: ./account-auth.json
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Install Docker Compose
+  #         command: |
+  #           curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+  #           chmod +x ~/docker-compose
+  #           sudo mv ~/docker-compose /usr/local/bin/docker-compose
+  #     - run:
+  #         name: docker-compose up
+  #         command: |
+  #           set -x
+  #           docker-compose up --build -d
+  #     - run:
+  #         name: docker-compose stop
+  #         command: |
+  #           set -x
+  #           docker-compose stop
+  #     - run:
+  #         name: docker-compose up
+  #         command: |
+  #           set -x
+  #           docker-compose up -d
+  #     - run:
+  #         name: bundle Install
+  #         command: |
+  #           set -x
+  #           docker-compose exec api bin/bundle install --path=vendor/bundle
+  #     - run:
+  #         name: database migration
+  #         command: |
+  #           set -x
+  #           docker-compose exec api bin/rails db:create
+  #           docker-compose exec api bin/rails db:migrate
+  #     - run:
+  #         name: rspec
+  #         command: |
+  #           set -x
+  #           docker-compose exec api rspec
+  #     # - run:
+  #     #     name: rubocop
+  #     #     command: |
+  #     #       set -x
+  #     #       docker-compose exec api rubocop
+  #     - run:
+  #         name: remove node_modules
+  #         command: |
+  #           set -x
+  #           docker-compose run front rm -rf node_modules
+  #     - run:
+  #         name: npm install
+  #         command: |
+  #           set -x
+  #           docker-compose run front npm install
+  #     - run:
+  #         name: jest
+  #         command: |
+  #           set -x
+  #           docker-compose run front npm test
+  #     - run:
+  #         name: lint
+  #         command: |
+  #           set -x
+  #           docker-compose run front npm run lintfix
+  #     - run:
+  #         name: docker-compose down
+  #         command: docker-compose down
 
   deploy:
     docker:
@@ -88,6 +88,12 @@ jobs:
       GOOGLE_CLUSTER_NAME: 'my-project-bed'
     steps:
       - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - run:
           name: Deploy application Docker image
           command: |
