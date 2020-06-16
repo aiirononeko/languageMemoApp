@@ -135,7 +135,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            docker-compose -f docker-compose.test.yml up -d
+            docker-compose -f docker-compose.test.yml run api rails db:create
             docker-compose -f docker-compose.test.yml run api rails db:migrate
             docker-compose -f docker-compose.test.yml run api rspec
             docker-compose -f docker-compose.test.yml run front npm test
