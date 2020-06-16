@@ -1,144 +1,82 @@
-# version: 2
-# jobs:
-#   build:
-#     machine:
-#       image: circleci/classic:edge
-#     working_directory: ~/repo
-#     steps:
-#       - checkout
-#       - run:
-#           name: Install Docker Compose
-#           command: |
-#             curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-#             chmod +x ~/docker-compose
-#             sudo mv ~/docker-compose /usr/local/bin/docker-compose
-#       - run:
-#           name: docker-compose up
-#           command: |
-#             set -x
-#             docker-compose up --build -d
-#       - run:
-#           name: docker-compose stop
-#           command: |
-#             set -x
-#             docker-compose stop
-#       - run:
-#           name: docker-compose up
-#           command: |
-            # set -x
-            # docker-compose up -d
-#       - run:
-#           name: bundle Install
-#           command: |
-#             set -x
-#             docker-compose exec api bin/bundle install --path=vendor/bundle
-#       - run:
-#           name: database migration
-#           command: |
-#             set -x
-            # docker-compose exec api bin/rails db:create
-            # docker-compose exec api bin/rails db:migrate
-#       - run:
-#           name: rspec
-#           command: |
-#             set -x
-#             docker-compose exec api rspec
-#       # - run:
-#       #     name: rubocop
-#       #     command: |
-#       #       set -x
-#       #       docker-compose exec api rubocop
-#       - run:
-#           name: remove node_modules
-#           command: |
-#             set -x
-#             docker-compose run front rm -rf node_modules
-#       - run:
-#           name: npm install
-#           command: |
-#             set -x
-#             docker-compose run front npm install
-#       - run:
-#           name: jest
-#           command: |
-#             set -x
-#             docker-compose run front npm test
-#       - run:
-#           name: lint
-#           command: |
-#             set -x
-#             docker-compose run front npm run lintfix
-#       - run:
-#           name: docker-compose down
-#           command: docker-compose down
-
 version: 2
 jobs:
   build:
-    working_directory: /app
-    environment:
-      PROJECT_NAME: poeta-276706
-      CLUSTER_NAME: poeta
-      CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
-      DEBIAN_FRONTEND: "https://poeta.dev"
-      GOOGLE_APPLICATION_CREDENTIALS: ${HOME}/account-auth.json
-    docker:
-      - image: google/cloud-sdk:171.0.0-alpine
+    machine:
+      image: circleci/classic:edge
+    working_directory: ~/repo
     steps:
       - checkout
-      - setup_remote_docker
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
       - run:
-          name: Install dependencies
+          name: Install Docker Compose
           command: |
-            apk --update-cache \
-            add musl \
-            linux-headers \
-            gcc \
-            g++ \
-            make \
-            gfortran \
-            openblas-dev \
-            python3 \
-            python3-dev
-            pip3 install 
-            pip3 install docker-compose==1.12.0
-            gcloud components install kubectl
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - run:
-          name: Install Docker client
+          name: docker-compose up
           command: |
             set -x
-            VER="17.05.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            mv /tmp/docker/* /usr/bin
+            docker-compose up --build -d
       - run:
-          name: Check docker version
+          name: docker-compose stop
           command: |
-            docker version
+            set -x
+            docker-compose stop
       - run:
-          name: Build application Docker image
+          name: docker-compose up
           command: |
-            docker-compose -f docker-compose.test.yml build
+            set -x
+            docker-compose up -d
       - run:
-          name: Save Docker image layer cache
+          name: bundle Install
           command: |
-            mkdir -p /caches
-            docker save -o /caches/app.tar asia.gcr.io/poeta-276706/poeta-api:latest
-            docker save -o /caches/app.tar asia.gcr.io/poeta-276706/poeta-front:latest
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/app.tar
+            set -x
+            docker-compose exec api bin/bundle install --path=vendor/bundle
+      - run:
+          name: database migration
+          command: |
+            set -x
+            docker-compose exec api bin/rails db:create
+            docker-compose exec api bin/rails db:migrate
+      - run:
+          name: rspec
+          command: |
+            set -x
+            docker-compose exec api rspec
       # - run:
-      #     name: Run tests
+      #     name: rubocop
       #     command: |
-      #       docker-compose -f docker-compose.test.yml run api rails db:create
-      #       docker-compose -f docker-compose.test.yml run api rails db:migrate
-      #       docker-compose -f docker-compose.test.yml run api rspec
-      #       docker-compose -f docker-compose.test.yml run front npm test
+      #       set -x
+      #       docker-compose exec api rubocop
+      - run:
+          name: remove node_modules
+          command: |
+            set -x
+            docker-compose run front rm -rf node_modules
+      - run:
+          name: npm install
+          command: |
+            set -x
+            docker-compose run front npm install
+      - run:
+          name: jest
+          command: |
+            set -x
+            docker-compose run front npm test
+      - run:
+          name: lint
+          command: |
+            set -x
+            docker-compose run front npm run lintfix
+      - run:
+          name: docker-compose down
+          command: docker-compose down
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
       - deploy:
           name: Deploy application Docker image
           command: |
@@ -150,6 +88,7 @@ jobs:
               gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
               gcloud --quiet container clusters get-credentials $CLUSTER_NAME
               gcloud config set container/use_client_certificate True
-              chmod +x deploy.sh
-              ./deploy.sh
+              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-api:latest
+              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:latest
+              kubectl apply -f k8s/deployment.yml
             fi
