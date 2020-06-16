@@ -109,3 +109,9 @@ jobs:
               gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:latest
               kubectl apply -f k8s/deployment.yml
             fi
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - deploy
