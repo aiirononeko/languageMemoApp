@@ -14,7 +14,7 @@ services:
     build:
       context: .
       dockerfile: ./frontend/Dockerfile
-    image: asia.gcr.io/poeta-276706/poeta-api:latest
+    image: asia.gcr.io/poeta-276706/poeta-front:latest
     command: npm run dev
     ports:
       - 3001:3000
