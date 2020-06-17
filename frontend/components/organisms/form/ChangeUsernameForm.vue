@@ -1,21 +1,35 @@
 <template>
-    <v-form class="pos-relative">
-      <username-text-field v-model="vUserName" />
+  <v-form ref="form" v-model="valid" @submit.prevent="onSubmit">
+    <username-text-field
+      v-model="vUserName"
+      :api-error="apiError"
+      :submit-count="submitCount"
+    />
 
-      <!-- TODO: orange-btnを使う。そのため、orange-btnのpropsにfabを追加する -->
-      <v-btn class="next-btn" @click="onSubmit"  width="30" height="30" fab outlined >→</v-btn>
-    </v-form>
+    <div class="d-flex justify-end">
+      <blue-btn type="submit" :disabled="!valid">
+        変更
+      </blue-btn>
+    </div>
+  </v-form>
 </template>
 
 <script>
-import UsernameTextField from '~/components/organisms/textFields/UsernameTextField'
+const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
+const UsernameTextField = () => import('~/components/organisms/textFields/UsernameTextField')
 
 export default {
   components: {
+    BlueBtn,
     UsernameTextField
   },
 
   props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
+
     username: {
       type: String,
       default: undefined
@@ -24,24 +38,30 @@ export default {
 
   data() {
     return {
-      vUserName: this.username
+      valid: false,
+      vUserName: this.username,
+      submitCount: 0
     }
+  },
+
+  computed: {
+    apiError() {
+      return this.errors && this.errors.username || undefined
+    },
   },
 
   methods: {
     onSubmit() {
-      this.$emit('submit', this.vUserName)
+      this.submitCount++
+      this.validate()
+
+      return this.$emit('submit', this.vUserName)
+    },
+
+    validate () {
+      this.$refs.form.validate()
     }
-  }
+  },
+
 }
 </script>
-
-<style scoped>
-.next-btn {
-  color: white;
-  background-color: #FDCB6E;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-</style>

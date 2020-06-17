@@ -1,6 +1,10 @@
 <template>
   <one-column-container>
-    <change-username-card :username="username" @submit="onSubmit" />
+    <change-username-card
+      :errors="errors"
+      :username="username"
+      @submit="onSubmit"
+    />
   </one-column-container>
 </template>
 
@@ -15,6 +19,11 @@ export default {
   },
 
   props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
+
     username: {
       type: String,
       default: undefined
