@@ -74,3 +74,7 @@ end
 FactoryBot::SyntaxRunner.class_eval do
   include ActionDispatch::TestProcess
 end
+
+RSpec.configure do |config|
+  config.example_status_persistence_file_path = "spec/examples.txt"
+end
