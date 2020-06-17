@@ -2,7 +2,7 @@
   <one-column-container>
     <h1>プロフィール編集</h1>
 
-    <setting-profile-card :info="info" @save="save" />
+    <setting-profile-card :errors="errors" :info="info" @save="save" />
   </one-column-container>
 </template>
 
@@ -12,6 +12,11 @@ import SettingProfileCard from '~/components/organisms/cards/SettingProfileCard'
 
 export default {
   props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
+
     info: {
       type: Object,
       default: undefined

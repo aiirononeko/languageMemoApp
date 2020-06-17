@@ -45,7 +45,6 @@ export default {
 
         await this.$router.push(`/settings/profile`)
       } catch (e) {
-        console.log(e)
         if (e.response && e.response.status === 422) {
           this.errors = e.response.data.errors
           return

@@ -1,6 +1,6 @@
 <template>
   <v-card width="100%" max-width="800" class="mx-auto pt-10 px-6 pb-8" >
-      <edit-profile-form :info="info" @save="save" />
+      <edit-profile-form :errors="errors" :info="info" @save="save" />
   </v-card>
 </template>
 
@@ -13,6 +13,11 @@ export default {
   },
 
   props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
+
     info: {
       type: Object,
       default: undefined
