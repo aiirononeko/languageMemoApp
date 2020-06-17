@@ -24,6 +24,10 @@ export default {
   computed: {
     info() {
       return this.$store.getters['authentication/userInfo']
+    },
+
+    username() {
+      return this.$store.getters['authentication/username']
     }
   },
 
@@ -43,6 +47,8 @@ export default {
         })
 
         this.$store.commit("authentication/setUserInfo", new User(data))
+
+        await this.$router.push(`/${this.username}`)
       } catch (e) {
         if (e.response && e.response.status === 422) {
           this.errors = e.response.data.errors
