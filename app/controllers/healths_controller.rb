@@ -1,5 +1,5 @@
 class HealthsController < ApplicationController
   def test
-    head: ok
+    head :ok
   end
 end
