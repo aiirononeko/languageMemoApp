@@ -1,5 +1,5 @@
 <template>
-  <v-form enctype="multipart/form-data">
+  <v-form v-model="valid" @submit.prevent="onSubmit" enctype="multipart/form-data" ref="form">
     <div class="mb-8">
       <p>プロフィール画像</p>
       <div class="d-flex align-center">
@@ -16,34 +16,52 @@
     <!-- TODO(Ropital): 各divをコンポーネントに切り出す -->
     <div class="mb-8">
       <p>名前</p>
-      <v-text-field v-model="form.name" label="名前" outlined dense />
+      <name-text-field
+        v-model="form.name"
+        :api-error="nameApiError"
+        :submit-count="submitCount"
+      />
     </div>
 
     <div class="mb-8">
       <p>自己紹介</p>
-      <v-textarea v-model="form.profile" label="自己紹介" outlined height="80" />
+      <profile-textarea
+        v-model="form.profile"
+        :api-error="profileApiError"
+        :submit-count="submitCount"
+      />
     </div>
 
     <div class="mb-8">
       <p>出身</p>
-      <v-text-field v-model="form.address" label="出身" outlined dense />
+      <address-text-field
+        v-model="form.address"
+        :api-error="addressApiError"
+        :submit-count="submitCount"
+      />
     </div>
 
     <tie-sns-link-field />
 
     <div class="d-flex justify-center mt-5">
-      <orange-btn @onClick="onClick">保存する</orange-btn>
+      <orange-btn type="submit">保存する</orange-btn>
     </div>
   </v-form>
 </template>
 
 <script>
+const AddressTextField = () => import('~/components/organisms/textFields/AddressTextField')
+const ProfileTextarea = () => import('~/components/organisms/textarea/ProfileTextarea')
+const NameTextField = () => import('~/components/organisms/textFields/NameTextField')
 const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/PreviewImageFileInput')
 const TieSnsLinkField = () => import('~/components/organisms/textFields/TieSnsLinkField')
 const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
 
 export default {
   components: {
+    AddressTextField,
+    ProfileTextarea,
+    NameTextField,
     PreviewImageFileInput,
     TieSnsLinkField,
     OrangeBtn
@@ -68,7 +86,9 @@ export default {
         avatar: null,
         profile: '',
         name: '',
-      }
+      },
+      valid: false,
+      submitCount: 0
     }
   },
 
@@ -79,21 +99,40 @@ export default {
   },
 
   computed: {
+    addressApiError() {
+      return this.errors && this.errors.address || undefined
+    },
+
     /**
      * @returns {String}
      */
     getPreviewIcon() {
       return this.form.avatar || this.info.image || 'https://picsum.photos/510/300?random'
-    }
+    },
+
+    profileApiError() {
+      return this.errors && this.errors.profile || undefined
+    },
+
+    nameApiError() {
+      return this.errors && this.errors.name || undefined
+    },
   },
 
   methods: {
-    onClick() {
+    onSubmit() {
+      this.submitCount++
+      this.validate()
+
       this.$emit('save', this.form)
     },
 
     setAvatarValue(newVal) {
       this.form.avatar = newVal
+    },
+
+    validate () {
+      this.$refs.form.validate()
     }
   }
 }
