@@ -10,8 +10,6 @@
         <preview-image-file-input @input="setAvatarValue" />
       </div>
     </div>
-    <!-- TODO: ユーザー名や自己紹介もこんなふうに加える-->
-    <!-- コンポーネント名をDBやAPIの名前と一致(近いもの)にしたいので、まだコンポーネントを作っていない -->
 
     <!-- TODO(Ropital): 各divをコンポーネントに切り出す -->
     <div class="mb-8">

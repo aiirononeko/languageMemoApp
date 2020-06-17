@@ -1,5 +1,4 @@
 <template>
-  <!-- validationの処理もここに含めたい -->
   <v-text-field
     v-model="valueModel"
     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
