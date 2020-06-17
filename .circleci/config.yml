@@ -1,90 +1,55 @@
 version: 2
 jobs:
-  build:
-    machine:
-      image: circleci/classic:edge
-    working_directory: ~/repo
-    environment:
-      PROJECT_NAME: poeta-276706
-      CLUSTER_NAME: poeta
-      CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
-      DEBIAN_FRONTEND: ""
-      GOOGLE_APPLICATION_CREDENTIALS: ./account-auth.json
+  test:
+    docker:
+      - image: circleci/ruby:2.5.3-node-browsers
+      - image: circleci/mysql:5.7
+
+    working_directory: ~/languageMemoApp
+
     steps:
       - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
       - run:
-          name: Install Docker Compose
+          name: install dependencies
           command: |
-            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+      - run: mv config/database.yml.ci config/database.yml
       - run:
-          name: docker-compose up
-          command: |
-            set -x
-            docker-compose up --build -d
+          name: Wait for DB
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+      # Database setup
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:migrate
+      # run tests!
       - run:
-          name: docker-compose stop
           command: |
-            set -x
-            docker-compose stop
-      - run:
-          name: docker-compose up
-          command: |
-            set -x
-            docker-compose up -d
-      - run:
-          name: bundle Install
-          command: |
-            set -x
-            docker-compose exec api bin/bundle install --path=vendor/bundle
-      - run:
-          name: database migration
-          command: |
-            set -x
-            docker-compose exec api bin/rails db:create
-            docker-compose exec api bin/rails db:migrate
-      - run:
-          name: rspec
-          command: |
-            set -x
-            TEST_FILES=$(circleci tests glob spec/**/*_spec.rb | circleci tests split)
-            echo $TEST_FILES > TEST_FILES
-            docker-compose exec api rspec --failure-exit-code=0 -- $TEST_FILES
-            docker-compose exec api rspec --only-failures $(cat TEST_FILES)
-      - run:
-          name: rspec again
-          command: |
-            set -x
-            docker-compose exec api rspec rspec --only-failures
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
       # - run:
       #     name: rubocop
-      #     command: |
-      #       set -x
-      #       docker-compose exec api rubocop
-      - run:
-          name: remove node_modules
-          command: |
-            set -x
-            docker-compose run front rm -rf node_modules
+      #     command: bundle exec rubocop
+
       - run:
           name: npm install
-          command: |
-            set -x
-            docker-compose run front npm install
-      - run:
-          name: jest
-          command: |
-            set -x
-            docker-compose run front npm test
-      - run:
-          name: lint
-          command: |
-            set -x
-            docker-compose run front npm run lintfix
-      - run:
-          name: docker-compose down
-          command: docker-compose down
+          command: npm install
 
   deploy:
     docker:
@@ -123,7 +88,7 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - build
+      - test
       - deploy:
           requires:
-            - build
+            - test
