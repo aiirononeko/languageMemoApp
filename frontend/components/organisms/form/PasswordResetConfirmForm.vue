@@ -4,7 +4,7 @@
       v-model="password"
       :password_confirmation.sync="password_confirmation"
       :password-api-error="passwordApiError"
-      :password_confirmation-api-error="passwordApiError"
+      :password_confirmation-api-error="passwordConfirmationApiError"
       :submit-count="submitCount"
     />
 
