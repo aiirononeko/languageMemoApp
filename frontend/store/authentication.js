@@ -57,6 +57,10 @@ export const mutations = {
     state.userInfo = userInfo
   },
 
+  setUsername (state, username) {
+    state.username = username
+  },
+
   setHeader (state, { headers }) {
     state.accessToken = headers["access-token"]
     state.client = headers["client"]
@@ -134,12 +138,8 @@ export const actions = {
   /**
    * username を更新する
    */
-  async updateUsername({ commit, getters }, username) {
-    const res = await this.$axios.put(`/api/v1/auth`, {
-      username
-    })
-
-    commit("setUser", res)
+  updateUsername ({ commit, getters }, username) {
+    commit("setUsername", username)
     cookies.set("username", getters.username)
   }
 }
