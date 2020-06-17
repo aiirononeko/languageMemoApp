@@ -50,6 +50,11 @@ export default {
   },
 
   props: {
+    errors: {
+      type: Object,
+      default: undefined
+    },
+
     info: {
       type: Object,
       default: undefined
