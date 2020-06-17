@@ -52,7 +52,6 @@ jobs:
             echo $TEST_FILES > TEST_FILES
             docker-compose exec api rspec --failure-exit-code=0 -- $TEST_FILES
             docker-compose exec api rspec --only-failures $(cat TEST_FILES)
-            no_output_timeout: 30m
       - run:
           name: rspec again
           command: |
