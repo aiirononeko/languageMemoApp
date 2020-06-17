@@ -48,7 +48,16 @@ jobs:
           name: rspec
           command: |
             set -x
-            docker-compose exec api rspec
+            TEST_FILES=$(circleci tests glob spec/**/*_spec.rb | circleci tests split)
+            echo $TEST_FILES > TEST_FILES
+            docker-compose exec api rspec --failure-exit-code=0 -- $TEST_FILES
+            docker-compose exec api rspec --only-failures $(cat TEST_FILES)
+            no_output_timeout: 30m
+      - run:
+          name: rspec again
+          command: |
+            set -x
+            docker-compose exec api rspec rspec --only-failures
       # - run:
       #     name: rubocop
       #     command: |
@@ -108,7 +117,7 @@ jobs:
               gcloud docker -- push asia.gcr.io/poeta-276706/poeta-api:latest
               gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:latest
               envsubst < ./deployment.yml > patched_deployment.yml
-              kubectl apply -f patched_deployment.yml
+              kubectl replace -f patched_deployment.yml
             fi
 
 workflows:
@@ -116,4 +125,6 @@ workflows:
   build_and_deploy:
     jobs:
       - build
-      - deploy
+      - deploy:
+          requires:
+            - build
