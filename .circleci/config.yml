@@ -4,6 +4,12 @@ jobs:
     machine:
       image: circleci/classic:edge
     working_directory: ~/repo
+    environment:
+      PROJECT_NAME: poeta-276706
+      CLUSTER_NAME: poeta
+      CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
+      DEBIAN_FRONTEND: ""
+      GOOGLE_APPLICATION_CREDENTIALS: ./account-auth.json
     steps:
       - checkout
       - run:
@@ -36,7 +42,8 @@ jobs:
           name: database migration
           command: |
             set -x
-            docker-compose exec api bin/rails db:create db:migrate
+            docker-compose exec api bin/rails db:create
+            docker-compose exec api bin/rails db:migrate
       - run:
           name: rspec
           command: |
@@ -70,3 +77,43 @@ jobs:
       - run:
           name: docker-compose down
           command: docker-compose down
+
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    environment:
+      PROJECT_NAME: 'poeta'
+      GOOGLE_PROJECT_ID: 'poeta-276706'
+      GOOGLE_COMPUTE_ZONE: 'asia-northeast1-a'
+      GOOGLE_CLUSTER_NAME: 'poeta'
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Docker build
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              docker build -t asia.gcr.io/poeta-276706/poeta-api:latest .
+              docker build -t asia.gcr.io/poeta-276706/poeta-front:latest ./frontend/.
+            fi
+      - run:
+          name: Deploy application Docker image
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              apt-get install -qq -y gettext
+              gcloud auth activate-service-account --key-file=./account-auth.json
+              gcloud --quiet config set project $GOOGLE_PROJECT_ID
+              gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
+              gcloud --quiet container clusters get-credentials $GOOGLE_CLUSTER_NAME
+              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-api:latest
+              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:latest
+              envsubst < ./deployment.yml > patched_deployment.yml
+              kubectl apply -f patched_deployment.yml
+            fi
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy
