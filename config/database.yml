@@ -50,6 +50,6 @@ test:
 production:
   <<: *default
   host: <%= ENV['POETA_DB_HOST'] %>
-  database: <%= ENV['POETA_DB_DBNAME'] %>
+  database: poeta-db
   username: <%= ENV['POETA_DB_USERNAME'] %>
   password: <%= ENV['POETA_DB_PASSWORD'] %>
