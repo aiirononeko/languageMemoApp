@@ -68,6 +68,11 @@ spec:
           command: ["npm", "start"]
           ports:
             - containerPort: 3000
+          env:
+            - name: BASE_URL
+              value: http://34.85.15.10
+            - name: CLIENT_URL
+              value: http://35.221.110.39
       volumes:
         - name: cloudsql-instance-credentials
           secret:
