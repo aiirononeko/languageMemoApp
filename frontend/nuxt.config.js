@@ -1,13 +1,12 @@
 require('dotenv').config()
 
 module.exports = {
-
   /*
    ** Environment Variables
    */
   env: {
     baseUrl: process.env.BASE_URL || "http://localhost:3000",
-    clientUrl: process.env.CLIENT_URL || "http://localhost:3001"
+    clientUrl: process.env.CLIENT_URL || "http://localhost:3001",
   },
 
   /*
@@ -20,10 +19,10 @@ module.exports = {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: 'og:site_name', property: 'og:site_name', content: 'Poeta' },
-      { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:url', property: 'og:url', content: process.env.clientUrl },
-      { hid: 'og:title', property: 'og:title', content: 'Poeta' },
+      { hid: "og:site_name", property: "og:site_name", content: "Poeta" },
+      { hid: "og:type", property: "og:type", content: "website" },
+      { hid: "og:url", property: "og:url", content: process.env.clientUrl },
+      { hid: "og:title", property: "og:title", content: "Poeta" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
@@ -36,11 +35,7 @@ module.exports = {
   /*
    ** modules
    */
-  modules: [
-    "@nuxtjs/axios",
-    "@nuxtjs/device",
-    "@nuxtjs/sitemap",
-  ],
+  modules: ["@nuxtjs/axios", "@nuxtjs/device", "@nuxtjs/sitemap"],
 
   /*
    ** build modules
@@ -50,7 +45,7 @@ module.exports = {
     "@nuxtjs/style-resources",
     "@nuxtjs/vuetify",
     // "@nuxtjs/google-analytics",
-    // "@nuxtjs/pwa" // pwaは開発時にバグりやすいので、しばらくはコメント,
+    "@nuxtjs/pwa",
   ],
 
   /*
@@ -96,13 +91,19 @@ module.exports = {
   },
 
   /*
+   ** PWA configuration
+   */
+  pwa: {
+    workbox: {
+      /* workbox options */
+    },
+  },
+
+  /*
    ** Style Resources configuration
    */
   styleResources: {
-    scss: [
-      "~/assets/sass/variable.scss",
-      "~/assets/sass/functions/**.scss"
-    ]
+    scss: ["~/assets/sass/variable.scss", "~/assets/sass/functions/**.scss"],
   },
 
   /*
