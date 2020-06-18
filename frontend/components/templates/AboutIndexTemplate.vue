@@ -1,61 +1,100 @@
 <template>
   <div>
-    <div class="top d-flex flex-column justify-center align-center mb-lg">
-      <h1 class="text-center mb-10">TILを記録しよう</h1>
-      <!-- <p><span class="hatena">?</span>TILとは</p> -->
-
+    <v-row justify="center" align="center" class="ma-0 w-100 top">
       <div class="text-center">
+        <h1 class="mb-10">TILを記録しよう</h1>
+        <!-- <p><span class="hatena">?</span>TILとは</p> -->
+
         <red-btn to="/signup">
           すぐに始める
         </red-btn>
       </div>
-    </div>
+    </v-row>
 
-    <div class="text-center mb-lg">
-      <h2>MarkDown形式で書ける</h2>
-      <img src="../../assets/images/post-TIL-page.png" class="page-img" />
-    </div>
+    <one-column-container>
+      <div class="mb-lg">
+        <h2 class="text-center">MarkDown形式で書ける</h2>
 
-    <div class="text-center mb-lg">
-      <h2>フォルダ構成で管理</h2>
-      <img src="../../assets/images/folder-TIL-page.png" class="page-img" />
-    </div>
+        <v-row justify="center">
+          <v-img :src="image.POST_TIL_PAGE_IMAGE" class="page-img" width="100%" max-width="700px" />
+        </v-row>
+      </div>
 
-    <div class="text-center mb-lg">
-      <h2>他の人のTILも見れる</h2>
-      <img src="../../assets/images/view-TIL-page.png" class="page-img" />
-    </div>
+      <div class="mb-lg">
+        <h2 class="text-center">フォルダ構成で管理</h2>
 
-    <div class="text-center mb-lg">
-      <red-btn to="/signup">
-        すぐに始める
-      </red-btn>
-    </div>
+        <v-row justify="center">
+          <v-img :src="image.FOLEDER_TIL_PAGE_IMAGE" class="page-img" width="100%" max-width="700px" />
+        </v-row>
+      </div>
+
+      <div class="mb-lg">
+        <h2 class="text-center">他の人のTILも見れる</h2>
+
+        <v-row justify="center">
+          <v-img :src="image.VIEW_TIL_PAGE_IMAGE" class="page-img" width="100%" max-width="700px" />
+        </v-row>
+      </div>
+
+      <div class="mb-lg">
+        <v-row justify="center">
+          <red-btn to="/signup">
+            すぐに始める
+          </red-btn>
+        </v-row>
+      </div>
+    </one-column-container>
   </div>
 </template>
 
 <script>
-import RedBtn from '~/components/atoms/btns/RedBtn'
+const RedBtn = () => import('~/components/atoms/btns/RedBtn')
+const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
+import POST_TIL_PAGE_IMAGE from '~/assets/images/post-TIL-page.png'
+import FOLEDER_TIL_PAGE_IMAGE from '~/assets/images/folder-TIL-page.png'
+import VIEW_TIL_PAGE_IMAGE from '~/assets/images/view-TIL-page.png'
 
 export default {
   components: {
-    RedBtn
-  }
+    RedBtn,
+    OneColumnContainer
+  },
+
+  computed: {
+    /**
+     * @return {{ [x: string]: string }}
+     */
+    image() {
+      return {
+        POST_TIL_PAGE_IMAGE,
+        FOLEDER_TIL_PAGE_IMAGE,
+        VIEW_TIL_PAGE_IMAGE
+      }
+    }
+  },
 }
 </script>
 
-<style scoped>
-h1, h2 {
-  font-size: 2em;
+<style lang="scss" scoped>
+h1 {
+  font-size: 2rem;
   color: #2B486A;
 }
 
-.mb-md {
-  margin-bottom: 50px;
+h2 {
+  font-size: 1.7rem;
+  color: #2B486A;
+  @include mq(sm) {
+    font-size: 2rem;
+  }
 }
 
 .mb-lg {
-  margin-bottom: 100px;
+  margin-bottom: 50px;
+
+  @include mq(sm) {
+    margin-bottom: 100px;
+  }
 }
 
 .top {
@@ -63,12 +102,7 @@ h1, h2 {
   background-color: #f6e58d;
 }
 
-.center {
-  margin: 0 auto;
-}
-
 .page-img {
-  max-width: 700px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.26)
 }
 
