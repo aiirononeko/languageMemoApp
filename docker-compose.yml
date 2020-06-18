@@ -10,6 +10,7 @@ services:
 
   api:
     build: .
+    image: asia.gcr.io/poeta-276706/poeta-api:latest
     depends_on:
       - db
     # 初回コンテナ起動時のみコメントインする（それ以外の時はコメントアウト）
@@ -28,6 +29,7 @@ services:
     build:
       context: .
       dockerfile: ./frontend/Dockerfile
+    image: asia.gcr.io/poeta-276706/poeta-front:latest
     command: npm run dev
     ports:
       - 3001:3000

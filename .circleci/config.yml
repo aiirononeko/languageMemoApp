@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  api_test:
     machine:
       image: circleci/classic:edge
     working_directory: ~/repo
@@ -36,17 +36,51 @@ jobs:
           name: database migration
           command: |
             set -x
-            docker-compose exec api bin/rails db:create db:migrate
+            docker-compose exec api bin/rails db:create
+            docker-compose exec api bin/rails db:migrate
       - run:
           name: rspec
           command: |
             set -x
+            TEST_FILES=$(circleci tests glob spec/**/*_spec.rb | circleci tests split)
+            echo $TEST_FILES > TEST_FILES
             docker-compose exec api rspec
       # - run:
       #     name: rubocop
       #     command: |
       #       set -x
       #       docker-compose exec api rubocop
+      - run:
+          name: docker-compose down
+          command: docker-compose down
+
+  front_test:
+    machine:
+      image: circleci/classic:edge
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up --build -d
+      - run:
+          name: docker-compose stop
+          command: |
+            set -x
+            docker-compose stop
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up -d
       - run:
           name: remove node_modules
           command: |
@@ -70,3 +104,47 @@ jobs:
       - run:
           name: docker-compose down
           command: docker-compose down
+
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    environment:
+      PROJECT_NAME: 'poeta'
+      GOOGLE_PROJECT_ID: 'poeta-276706'
+      GOOGLE_COMPUTE_ZONE: 'asia-northeast1-a'
+      GOOGLE_CLUSTER_NAME: 'poeta'
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Docker build
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              docker build -t asia.gcr.io/poeta-276706/poeta-api:latest .
+              docker build -f ./frontend/Dockerfile.gke -t asia.gcr.io/poeta-276706/poeta-front:latest ./frontend/.
+            fi
+      - run:
+          name: Deploy application Docker image
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              apt-get install -qq -y gettext
+              gcloud auth activate-service-account --key-file=./account-auth.json
+              gcloud --quiet config set project $GOOGLE_PROJECT_ID
+              gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
+              gcloud --quiet container clusters get-credentials $GOOGLE_CLUSTER_NAME
+              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-api:latest
+              gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:latest
+              envsubst < ./deployment.yml > patched_deployment.yml
+              kubectl replace -f patched_deployment.yml
+            fi
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - api_test
+      - front_test
+      - deploy:
+          requires:
+            - api_test
+            - front_test

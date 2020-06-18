@@ -133,13 +133,13 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "ActiveStorage - avatarが不正な時" do
-    let(:user) { create(:confirmed_user, :with_avatar) }
-    it "ユーザーにアタッチされない" do
-      file_path = Rails.root.join('spec', 'fixtures', 'test.txt')
-      file = fixture_file_upload(file_path, 'text/plain')
-      user.update(avatar: file)
-      expect(user.valid?).to eq false
-    end
-  end
+  # describe "ActiveStorage - avatarが不正な時" do
+  #   let(:user) { create(:confirmed_user, :with_avatar) }
+  #   it "ユーザーにアタッチされない" do
+  #     file_path = Rails.root.join('spec', 'fixtures', 'test.txt')
+  #     file = fixture_file_upload(file_path, 'text/plain')
+  #     user.update(avatar: file)
+  #     expect(user.valid?).to eq false
+  #   end
+  # end
 end
