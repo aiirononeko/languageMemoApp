@@ -90,25 +90,20 @@ export const actions = {
     }
   },
 
-  // ログイン
-  async login ({ commit, getters }, { email, password }) {
-    try {
-      const res = await this.$axios.post(`/api/v1/auth/sign_in`, {
-        email,
-        password
-      })
+  /**
+   * ログイン
+   *
+   * バリデーション結果を画面上に表示させたいので、apiとの通信を入れていない。
+   */
+  login ({ commit, getters }, { headers, data }) {
+    commit("setUser", { headers, data })
 
-      commit("setUser", res)
-
-      // Cookieにセット
-      cookies.set("access-token", getters.accessToken)
-      cookies.set("client", getters.client)
-      cookies.set("id", getters.id)
-      cookies.set("uid", getters.uid)
-      cookies.set("username", getters.username)
-    } catch (e) {
-      throw e.response && e.response.status
-    }
+    // Cookieにセット
+    cookies.set("access-token", getters.accessToken)
+    cookies.set("client", getters.client)
+    cookies.set("id", getters.id)
+    cookies.set("uid", getters.uid)
+    cookies.set("username", getters.username)
   },
 
   // ログアウト
