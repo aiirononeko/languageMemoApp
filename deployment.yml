@@ -67,7 +67,7 @@ spec:
           image: asia.gcr.io/poeta-276706/poeta-front:latest
           command: ["npm", "start"]
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
       volumes:
         - name: cloudsql-instance-credentials
           secret:
