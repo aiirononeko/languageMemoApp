@@ -1,6 +1,6 @@
 <template>
   <div>
-    <settings-profile-template :info="info" @save="save"/>
+    <settings-profile-template :errors="errors" :info="info" @save="save"/>
   </div>
 </template>
 
@@ -15,9 +15,19 @@ export default {
 
   middleware: "authenticated",
 
+  data() {
+    return {
+      errors: null
+    }
+  },
+
   computed: {
     info() {
       return this.$store.getters['authentication/userInfo']
+    },
+
+    username() {
+      return this.$store.getters['authentication/username']
     }
   },
 
@@ -37,8 +47,17 @@ export default {
         })
 
         this.$store.commit("authentication/setUserInfo", new User(data))
+
+        await this.$router.push(`/${this.username}`)
       } catch (e) {
-        console.error(e)
+        if (e.response && e.response.status === 422) {
+          this.errors = e.response.data.errors
+          return
+        }
+
+        return this.$nuxt.error({
+          statusCode: e.response.status
+        })
       }
     }
   },

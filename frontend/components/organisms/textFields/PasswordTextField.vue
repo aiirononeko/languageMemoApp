@@ -1,5 +1,4 @@
 <template>
-  <!-- validationの処理もここに含めたい -->
   <v-text-field
     v-model="valueModel"
     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -7,11 +6,12 @@
     :required="required"
     :rules="getRule"
     :type="showPassword ? 'text' : 'password'"
-    :persistent-hint="true"
+    :persistent-hint="persistentHint"
     @change="onChange"
     @click:append="showPassword = !showPassword"
     counter
     outlined
+    inputmode="verbatim"
     hint="8文字以上の半角英数字のみ使用可能です"
     name="password"
     dense
@@ -28,7 +28,12 @@ export default {
 
     label: {
       type: String,
-      default: 'メール'
+      default: 'パスワード'
+    },
+
+    persistentHint: {
+      type: Boolean,
+      default: true
     },
 
     submitCount: {

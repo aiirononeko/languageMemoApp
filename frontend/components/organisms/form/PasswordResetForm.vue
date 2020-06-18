@@ -1,9 +1,9 @@
 <template>
-  <v-form @submit.prevent="onSubmit">
-    <email-text-field v-model="email" />
+  <v-form ref="form" v-model="valid" @submit.prevent="onSubmit">
+    <email-text-field v-model="email" :api-error="emailApiError" :submit-count="submitCount" />
 
     <div class="d-flex justify-end">
-      <blue-btn type="submit">
+      <blue-btn type="submit" :disabled="!valid">
         送信
       </blue-btn>
     </div>
@@ -29,13 +29,28 @@ export default {
 
   data() {
     return {
-      email: null
+      email: null,
+      valid: false,
+      submitCount: 0
     }
+  },
+
+  computed: {
+    emailApiError() {
+      return this.errors && this.errors.email || undefined
+    },
   },
 
   methods: {
     onSubmit() {
+      this.submitCount++
+      this.validate()
+
       return this.$emit('submit', this.email)
+    },
+
+    validate () {
+      this.$refs.form.validate()
     }
   }
 }
