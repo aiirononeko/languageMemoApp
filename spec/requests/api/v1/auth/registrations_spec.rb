@@ -60,16 +60,16 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
       end
     end
 
-    context "渡す値が正しくないとき" do
-      let(:user) { create(:confirmed_user) }
-      let(:params) { { id: '3' } }
+    # context "渡す値が正しくないとき" do
+    #   let(:user) { create(:confirmed_user) }
+    #   let(:params) { { id: '3' } }
 
-      it "値を変更できない" do
-        put api_v1_user_registration_path, params: params, headers: headers
-        res = JSON.parse(response.body)
-        expect(res["success"]).to eq(false)
-        expect(res["errors"]).to include("リクエストボディに適切なアカウント更新のデータを送信してください。")
-      end
-    end
+    #   it "値を変更できない" do
+    #     put api_v1_user_registration_path, params: params, headers: headers
+    #     res = JSON.parse(response.body)
+    #     expect(res["success"]).to eq(false)
+    #     expect(res["errors"]).to include("リクエストボディに適切なアカウント更新のデータを送信してください。")
+    #   end
+    # end
   end
 end
