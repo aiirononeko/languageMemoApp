@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test:
+  api_test:
     machine:
       image: circleci/classic:edge
     working_directory: ~/repo
@@ -74,6 +74,57 @@ jobs:
           name: docker-compose down
           command: docker-compose down
 
+  front_test:
+    machine:
+      image: circleci/classic:edge
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up --build -d
+      - run:
+          name: docker-compose stop
+          command: |
+            set -x
+            docker-compose stop
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up -d
+      - run:
+          name: remove node_modules
+          command: |
+            set -x
+            docker-compose run front rm -rf node_modules
+      - run:
+          name: npm install
+          command: |
+            set -x
+            docker-compose run front npm install
+      - run:
+          name: jest
+          command: |
+            set -x
+            docker-compose run front npm test
+      - run:
+          name: lint
+          command: |
+            set -x
+            docker-compose run front npm run lintfix
+      - run:
+          name: docker-compose down
+          command: docker-compose down
+
   deploy:
     docker:
       - image: google/cloud-sdk
@@ -111,7 +162,9 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - test
+      - api_test
+      - front_test
       - deploy:
           requires:
-            - test
+            - api_test
+            - front_test
