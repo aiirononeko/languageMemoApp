@@ -1,7 +1,6 @@
 <template>
-  <!-- validationの処理もここに含めたい -->
   <v-text-field
-    v-model="valueModel"
+    v-model.trim="valueModel"
     :label="getLabel"
     :rules="getRule"
     :required="required"
@@ -9,9 +8,8 @@
     :error-messages="getErrorMessage"
     @change="onChange"
     dense
-    inputmode="email"
-    type="email"
-    name="email"
+    name="address"
+    maxlength="30"
     outlined
   />
 </template>
@@ -31,7 +29,7 @@ export default {
 
     label: {
       type: String,
-      default: 'メール'
+      default: '出身'
     },
 
     value: {
@@ -41,7 +39,7 @@ export default {
 
     required: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
 
@@ -49,13 +47,9 @@ export default {
     return {
       change: false,
       rules: {
-        required: value => {
-          return !!value || "入力してください"
-        },
-        email: value => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || '不正なメールアドレスです'
-        },
+        required: v => {
+          return !!v || "入力してください"
+        }
       },
     }
   },
@@ -73,7 +67,6 @@ export default {
       const ret = []
 
       this.required && ret.push(this.rules.required)
-      ret.push(this.rules.email)
 
       return ret
     },
@@ -101,5 +94,3 @@ export default {
   }
 }
 </script>
-
-<style></style>

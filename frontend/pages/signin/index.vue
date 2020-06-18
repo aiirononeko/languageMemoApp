@@ -1,6 +1,6 @@
 <template>
   <div>
-    <signin-template @signin="login" />
+    <signin-template @signin="login" :errors="errors" />
   </div>
 </template>
 
@@ -22,15 +22,23 @@ export default {
 
   methods: {
     async login({ email, password }) {
+      this.errors = null // 前回取得したerrorの削除
+
       try {
-        await this.$store.dispatch("authentication/login", {
+        const res = await this.$axios.post(`/api/v1/auth/sign_in`, {
           email, password
         })
 
+        this.$store.dispatch("authentication/login", res)
+
         await this.$router.push(`/settings/profile`)
       } catch (e) {
-        if (e.response && e.response.status === 422) {
-          this.errors = e.response.data.errors
+        if (e.response.status === 401 || e.response.status === 422) {
+          this.errors = {
+            email: [
+              'メールアドレスかパスワードが違います'
+            ]
+          }
           return
         }
 

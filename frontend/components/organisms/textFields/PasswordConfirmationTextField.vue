@@ -1,25 +1,37 @@
 <template>
-  <!-- validationの処理もここに含めたい -->
   <div>
     <v-text-field
       label="パスワード"
-      v-model="valueModel"
+      v-model.trim="valueModel"
+      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
       :rules="[rules.required, rules.min]"
       :type="showPassword ? 'text' : 'password'"
-      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+      :persistent-hint="persistentHint"
+      :error="!change ? !!passwordApiError : false"
+      :error-messages="getPasswordErrorMessage"
       @click:append="showPassword = !showPassword"
+      @change="onChange"
       counter
       outlined
+      required
+      inputmode="verbatim"
+      hint="8文字以上の半角英数字のみ使用可能です"
       dense
     />
 
     <v-text-field
       label="パスワード(確認用)"
-      v-model="valueConfModel"
-      :rules="[rules.required, rules.min]"
+      v-model.trim="passwordConfirmationModel"
+      :error="!change ? !!password_confirmationApiError : false"
+      :error-messages="getPasswordConfirmationErrorMessage"
+      :rules="[passwordConfirmationRule]"
       :type="showPassword ? 'text' : 'password'"
       :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
       @click:append="showPassword = !showPassword"
+      @change="onChange"
+      counter
+      required
+      inputmode="verbatim"
       outlined
       dense
     />
@@ -34,9 +46,29 @@
         default: undefined,
       },
 
-      cvalue: {
+      password_confirmation: {
         type: String,
         default: undefined,
+      },
+
+      passwordApiError: {
+        type: [String, Array],
+        default: undefined
+      },
+
+      password_confirmationApiError: {
+        type: [String, Array],
+        default: undefined
+      },
+
+      persistentHint: {
+        type: Boolean,
+        default: true
+      },
+
+      submitCount: {
+        type: Number,
+        default: 0
       },
     },
 
@@ -48,14 +80,22 @@
           },
           min: (value) => {
             return (value && value.length >= 8) || "８文字以上入力してください"
-          },
+          }
         },
-
+        change: false,
         showPassword: false,
       }
     },
 
     computed: {
+      getPasswordErrorMessage() {
+        return !this.change ? this.passwordApiError : []
+      },
+
+      getPasswordConfirmationErrorMessage() {
+        return !this.change ? this.password_confirmationApiError : []
+      },
+
       valueModel: {
         get() {
           return this.value
@@ -66,15 +106,31 @@
         },
       },
 
-      valueConfModel: {
+      passwordConfirmationModel: {
         get() {
-          return this.cvalue
+          return this.password_confirmation
         },
         set(newVal) {
-          return this.$emit("cinput", newVal)
+          return this.$emit("update:password_confirmation", newVal)
         }
+      },
+
+      passwordConfirmationRule() {
+        return () => (this.value === this.password_confirmation) || 'パスワードが一致しません'
       }
     },
+
+  methods: {
+    onChange() {
+      this.change = true
+    }
+  },
+
+  watch: {
+    submitCount: function()  {
+      this.change = false
+    }
+  }
   }
 </script>
 

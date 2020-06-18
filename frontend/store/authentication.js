@@ -57,6 +57,10 @@ export const mutations = {
     state.userInfo = userInfo
   },
 
+  setUsername (state, username) {
+    state.username = username
+  },
+
   setHeader (state, { headers }) {
     state.accessToken = headers["access-token"]
     state.client = headers["client"]
@@ -86,28 +90,20 @@ export const actions = {
     }
   },
 
-  // ログイン
-  async login ({ commit, getters }, { email, password }) {
-    try {
-      const res = await this.$axios.post(`/api/v1/auth/sign_in`, {
-        email,
-        password
-      })
+  /**
+   * ログイン
+   *
+   * バリデーション結果を画面上に表示させたいので、apiとの通信を入れていない。
+   */
+  login ({ commit, getters }, { headers, data }) {
+    commit("setUser", { headers, data })
 
-      commit("setUser", res)
-
-      // Cookieにセット
-      cookies.set("access-token", getters.accessToken)
-      cookies.set("client", getters.client)
-      cookies.set("id", getters.id)
-      cookies.set("uid", getters.uid)
-      cookies.set("username", getters.username)
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        throw new Error("Bad credentials")
-      }
-      throw new Error("Internal Server Error")
-    }
+    // Cookieにセット
+    cookies.set("access-token", getters.accessToken)
+    cookies.set("client", getters.client)
+    cookies.set("id", getters.id)
+    cookies.set("uid", getters.uid)
+    cookies.set("username", getters.username)
   },
 
   // ログアウト
@@ -137,12 +133,8 @@ export const actions = {
   /**
    * username を更新する
    */
-  async updateUsername({ commit, getters }, username) {
-    const res = await this.$axios.put(`/api/v1/auth`, {
-      username
-    })
-
-    commit("setUser", res)
+  updateUsername ({ commit, getters }, username) {
+    commit("setUsername", username)
     cookies.set("username", getters.username)
   }
 }

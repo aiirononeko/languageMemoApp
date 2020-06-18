@@ -45,6 +45,8 @@ export default {
 
   methods: {
     async reset({ password, password_confirmation }) {
+      this.errors = null
+
       try {
         const { success, message } = await this.$axios.$put(`/api/v1/auth/password`, {
           password, password_confirmation
