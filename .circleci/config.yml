@@ -90,7 +90,7 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker build -t asia.gcr.io/poeta-276706/poeta-api:latest .
-              docker build -f Dockerfile.gke -t asia.gcr.io/poeta-276706/poeta-front:latest ./frontend/.
+              docker build -f ./frontend/Dockerfile.gke -t asia.gcr.io/poeta-276706/poeta-front:latest ./frontend/.
             fi
       - run:
           name: Deploy application Docker image
