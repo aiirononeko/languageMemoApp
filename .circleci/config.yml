@@ -51,26 +51,6 @@ jobs:
       #       set -x
       #       docker-compose exec api rubocop
       - run:
-          name: remove node_modules
-          command: |
-            set -x
-            docker-compose run front rm -rf node_modules
-      - run:
-          name: npm install
-          command: |
-            set -x
-            docker-compose run front npm install
-      - run:
-          name: jest
-          command: |
-            set -x
-            docker-compose run front npm test
-      - run:
-          name: lint
-          command: |
-            set -x
-            docker-compose run front npm run lintfix
-      - run:
           name: docker-compose down
           command: docker-compose down
 
