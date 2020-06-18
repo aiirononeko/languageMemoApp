@@ -11,8 +11,6 @@ RUN npm install && \
     npm install -g @nuxtjs/auth && \
     npm install -g @nuxtjs/dotenv
 
-RUN npm build
-
 ADD . .
 
 ENV HOST 0.0.0.0

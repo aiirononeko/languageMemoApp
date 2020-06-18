@@ -9,11 +9,10 @@ RUN npm install && \
     npm install -g @nuxtjs/auth && \
     npm install -g @nuxtjs/dotenv
 
-RUN npm build
-
 ADD . .
 
 RUN npm install
+RUN npm run build
 
 ENV HOST 0.0.0.0
 EXPOSE 8080
