@@ -1,65 +1,78 @@
 version: 2
 jobs:
   test:
-    docker:
-      - image: circleci/ruby:2.5.3-node-browsers
-        environment:
-          BUNDLER_VERSION: 2.0.2
-          RAILS_ENV: 'test'
-      - image: circleci/mysql:5.7
-        environment:
-          MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-          MYSQL_ROOT_HOST: '%'
-
-    working_directory: ~/languageMemoApp
-
+    machine:
+      image: circleci/classic:edge
+    working_directory: ~/repo
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          - v1-dependencies-
       - run:
-          name: install dependencies
+          name: Install Docker Compose
           command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-      - run: mv config/database.yml.ci config/database.yml
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
-      # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:migrate
-      - run:
+          name: docker-compose up
           command: |
-            bundle exec rspec --profile 10 \
-                              --format RspecJunitFormatter \
-                              --out test_results/rspec.xml \
-                              --format progress \
-                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+            set -x
+            docker-compose up --build -d
+      - run:
+          name: docker-compose stop
+          command: |
+            set -x
+            docker-compose stop
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up -d
+      - run:
+          name: bundle Install
+          command: |
+            set -x
+            docker-compose exec api bin/bundle install --path=vendor/bundle
+      - run:
+          name: database migration
+          command: |
+            set -x
+            docker-compose exec api bin/rails db:create
+            docker-compose exec api bin/rails db:migrate
+      - run:
+          name: rspec
+          command: |
+            set -x
+            TEST_FILES=$(circleci tests glob spec/**/*_spec.rb | circleci tests split)
+            echo $TEST_FILES > TEST_FILES
+            docker-compose exec api rspec
       # - run:
       #     name: rubocop
-      #     command: bundle exec rubocop
-
-      - run: cd ./frontend/
+      #     command: |
+      #       set -x
+      #       docker-compose exec api rubocop
+      - run:
+          name: remove node_modules
+          command: |
+            set -x
+            docker-compose run front rm -rf node_modules
       - run:
           name: npm install
-          command: npm install
+          command: |
+            set -x
+            docker-compose run front npm install
       - run:
           name: jest
-          command: npm test
+          command: |
+            set -x
+            docker-compose run front npm test
       - run:
           name: lint
-          command: npm run lintfix
+          command: |
+            set -x
+            docker-compose run front npm run lintfix
+      - run:
+          name: docker-compose down
+          command: docker-compose down
 
   deploy:
     docker:
@@ -96,7 +109,7 @@ jobs:
 
 workflows:
   version: 2
-  build_and_deploy:
+  test_and_deploy:
     jobs:
       - test
       - deploy:
