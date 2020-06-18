@@ -63,8 +63,11 @@ spec:
             - name: cloudsql-instance-credentials
               mountPath: /secrets/cloudsql
               readOnly: true
-        # [END proxy_container]
-      # [START volumes]
+        - name: front
+          image: asia.gcr.io/poeta-276706/poeta-front:latest
+          command: ["npm", "start"]
+          ports:
+            - containerPort: 5000:3000
       volumes:
         - name: cloudsql-instance-credentials
           secret:

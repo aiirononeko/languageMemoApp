@@ -1,15 +1,9 @@
 version: 2
 jobs:
-  build:
+  test:
     machine:
       image: circleci/classic:edge
     working_directory: ~/repo
-    environment:
-      PROJECT_NAME: poeta-276706
-      CLUSTER_NAME: poeta
-      CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
-      DEBIAN_FRONTEND: ""
-      GOOGLE_APPLICATION_CREDENTIALS: ./account-auth.json
     steps:
       - checkout
       - run:
@@ -48,6 +42,8 @@ jobs:
           name: rspec
           command: |
             set -x
+            TEST_FILES=$(circleci tests glob spec/**/*_spec.rb | circleci tests split)
+            echo $TEST_FILES > TEST_FILES
             docker-compose exec api rspec
       # - run:
       #     name: rubocop
@@ -108,12 +104,14 @@ jobs:
               gcloud docker -- push asia.gcr.io/poeta-276706/poeta-api:latest
               gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:latest
               envsubst < ./deployment.yml > patched_deployment.yml
-              kubectl apply -f patched_deployment.yml
+              kubectl replace -f patched_deployment.yml
             fi
 
 workflows:
   version: 2
-  build_and_deploy:
+  test_and_deploy:
     jobs:
-      - build
-      - deploy
+      - test
+      - deploy:
+          requires:
+            - test
