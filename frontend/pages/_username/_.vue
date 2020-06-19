@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import UsernameIndexTemplate from '~/components/templates/UsernameIndexTemplate'
+const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
 import User from '~/types/User'
 
 export default {
@@ -47,12 +47,16 @@ export default {
         user_id: this.id,
         parent_id: this.parentParams
       }
+
       try {
-        await this.$axios.post(`/api/v1/folders`, folderInfo)
+        const { data } = await this.$axios.$post(`/api/v1/folders`, folderInfo)
+        this.foldersInfo = data
+        this.triggerIsCreatingNewFolder()
       } catch(e) {
-        console.error(e)
+        this.$nuxt.error({
+          statusCode: e.response.status
+        })
       }
-      this.fetchData()
     },
 
     async fetchData() {
@@ -70,13 +74,15 @@ export default {
     },
   },
 
-  async asyncData({ $axios, params, store }) {
+  async asyncData({ $axios, params, store, error }) {
     try {
-      const foldersInfo = await $axios.$get(`/api/v1/folders/${params.pathMatch}`)
       const userInfo = await $axios.$get(`/api/v1/users/${params.username}`)
+      const foldersInfo = await $axios.$get(`/api/v1/folders/${params.pathMatch}`)
       return { userInfo: new User(userInfo.data), foldersInfo: foldersInfo.data }
     } catch (e) {
-      console.error(e)
+      error({
+        statusCode: e.response.status
+      })
     }
   },
 }

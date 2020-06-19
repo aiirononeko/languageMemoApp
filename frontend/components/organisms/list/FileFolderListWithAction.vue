@@ -17,7 +17,7 @@
           <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
 
           <v-list-item-content>
-            <v-form @submit="onSubmit">
+            <v-form @submit.prevent="onSubmit">
               <v-list-item-title><v-text-field v-model="newFolderName" dense /></v-list-item-title>
             </v-form>
           </v-list-item-content>
@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import FileListItem from '~/components/organisms/list/FileListItem'
-import FolderListItem from '~/components/organisms/list/FolderListItem'
-import LinkToBackItem from '~/components/organisms/list/LinkToBackItem'
+const FileListItem = () => import('~/components/organisms/list/FileListItem')
+const FolderListItem = () => import('~/components/organisms/list/FolderListItem')
+const LinkToBackItem = () => import('~/components/organisms/list/LinkToBackItem')
 
 export default {
   components: {
