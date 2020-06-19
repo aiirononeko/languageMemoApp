@@ -94,8 +94,18 @@ module.exports = {
    ** PWA configuration
    */
   pwa: {
+    /* workbox options */
     workbox: {
-      /* workbox options */
+      runtimeCaching: [
+        {
+          urlPattern: '^https://cdn.jsdelivr.net/(.*)',
+          handler: 'cacheFirst'
+        },
+        {
+          urlPattern: '^https://fonts.googleapis.com/(.*)',
+          handler: 'cacheFirst'
+        }
+      ]
     },
   },
 
