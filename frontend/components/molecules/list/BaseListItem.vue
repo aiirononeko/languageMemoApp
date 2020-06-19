@@ -1,5 +1,5 @@
 <template>
-  <v-list-item :to="to" :nuxt="nuxt" @click="onClick" link>
+  <v-list-item :exact="exact" :to="to" :nuxt="nuxt" @click="onClick" link>
     <v-list-item-action v-if="icon">
       <v-icon v-text="icon" />
     </v-list-item-action>
@@ -13,6 +13,11 @@
 <script>
 export default {
   props:  {
+    exact: {
+      type: Boolean,
+      default: false
+    },
+
     icon: {
       type: String,
       default: undefined
