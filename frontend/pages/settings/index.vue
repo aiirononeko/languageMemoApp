@@ -8,6 +8,8 @@ const SettingsIndexTemplate = () => import('~/components/templates/SettingsIndex
 export default {
   components: {
     SettingsIndexTemplate
-  }
+  },
+
+  middleware: "authenticated"
 }
 </script>
