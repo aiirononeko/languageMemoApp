@@ -1,5 +1,11 @@
 <template>
-  <two-column-container :leftCols="4" :rightCols="8">
+  <two-column-container
+    :left-cols="12"
+    :left-sm="4"
+    :rightCols="12"
+    :right-sm="8"
+    bottom-class="flex-column-reverse flex-sm-row"
+  >
     <template #left>
       <user-intro-card :userInfo="userInfo" class="mt-10" />
     </template>
@@ -7,23 +13,27 @@
     <template #right>
       <v-container>
         <v-row>
-          <v-col cols="8"><h2 class="text-center">あなたのリポジトリ</h2></v-col>
-          <v-col cols="4"><blue-btn @click="$emit('triggerIsCreatingNewFolder')">フォルダーを作成する</blue-btn></v-col>
+          <v-col cols="12" sm="8">
+            <h2 class="text-center">あなたのリポジトリ</h2>
+          </v-col>
+          <v-col cols="12" sm="4" class="text-right">
+            <blue-btn @click="$emit('triggerIsCreatingNewFolder')">フォルダーを作成する</blue-btn>
+          </v-col>
         </v-row>
       </v-container>
 
-      <folder-breadcrumbs 
+      <folder-breadcrumbs
         :breadCrumbs="breadCrumbs"
         :currentUsername="currentUsername"
         :currentFolderName="isRepository ? '' : currentFolderName"
       />
 
-      <file-folder-list-with-action 
-        @submit="(newFolderName) => $emit('submit' ,newFolderName)" 
-        :list="list" 
+      <file-folder-list-with-action
+        @submit="(newFolderName) => $emit('submit' ,newFolderName)"
+        :list="list"
         :ancestorFolders="ancestorFolders"
         :currentUsername="currentUsername"
-        :isRepository="isRepository" 
+        :isRepository="isRepository"
         :isCreatingNewFolder="isCreatingNewFolder"
       />
     </template>
@@ -66,21 +76,21 @@ export default {
   computed: {
     /**
      * 祖先のフォルダの情報を配列形式で返す
-     * 
+     *
      * @returns { Object[] }
      */
     ancestorFolders() {
       return (
-        this.foldersInfo 
-        && this.foldersInfo.attributes 
-        && this.foldersInfo.attributes["ancestor-folders"] 
+        this.foldersInfo
+        && this.foldersInfo.attributes
+        && this.foldersInfo.attributes["ancestor-folders"]
         || []
       )
     },
 
     /**
      * ルートから親フォルダまでの各idとisRepoを返す
-     * 
+     *
      * @returns { Object[] }
      */
     breadCrumbs() {
