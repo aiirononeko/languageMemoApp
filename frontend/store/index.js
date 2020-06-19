@@ -1,7 +1,7 @@
 import Cookies from '~/utils/Cookies'
 
 export const actions = {
-  async nuxtServerInit ({ commit, dispatch }, { req }) {
+  async nuxtServerInit ({ getters, commit, dispatch }, { req }) {
     if (req.headers.cookie) {
       const cookies = new Cookies(req.headers.cookie)
       const names = ['access-token', 'client', 'uid', 'id', 'username']
@@ -12,7 +12,12 @@ export const actions = {
       }
 
       commit("authentication/setHeader", { headers: cookies.cookies })
-      await dispatch("authentication/fetchUser")
+      if (
+        getters["authentication/isAuthenticated"] &&
+        !getters["authentication/userInfo"]
+      ) {
+        await dispatch("authentication/fetchUser")
+      }
     }
   }
 }

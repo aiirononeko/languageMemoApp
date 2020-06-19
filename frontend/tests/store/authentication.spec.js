@@ -95,50 +95,7 @@ describe('store/authentication.js', () => {
       mockAxiosError = false // テストをする前に、falseに戻す。
     })
 
-    it('loginできる(正常系)', async () => {
-      mockAxiosGetResult = {
-        headers: {
-          "access-token": "2RvvBof6HGQ-C__vaMQ5Wq",
-          uid: "hoge@example.com",
-          client: "NQqnvItfl_4F9V_l2gzIla",
-        },
-        data: { data: { id: "1", attributes: { username: "ApeE8e4ka" } } }
-      }
-
-      await store.dispatch('login', { email: 'hoge@example.com', password: 'password' })
-
-      expect(store.getters.accessToken).toBe("2RvvBof6HGQ-C__vaMQ5Wq")
-      expect(store.getters.client).toBe("NQqnvItfl_4F9V_l2gzIla")
-      expect(store.getters.id).toBe("1")
-      expect(store.getters.uid).toBe("hoge@example.com")
-      expect(store.getters.isAuthenticated).toBeTruthy()
-    })
-
-    it('loginできない(異常系:Internal Server Error)', async () => {
-      mockAxiosError = true
-      mockAxiosGetResult = {
-        reponse: {
-          status: 500
-        }
-      }
-
-      await expect(
-        store.dispatch('login', { email: 'hoge@example.com', password: 'password' })
-      ).rejects.toThrow("Internal Server Error")
-    })
-
-    it('loginできない(異常系:Bad credentials)', async () => {
-      mockAxiosError = true
-      mockAxiosGetResult = {
-        response: {
-          status: 401
-        }
-      }
-
-      await expect(
-        store.dispatch('login', { email: 'hoge@example.com', password: 'password' })
-      ).rejects.toThrow("Bad credentials")
-    })
+    // TODO: loginに対するテストを書く
 
     it('logoutできる(正常系)', async () => {
       const res = {
