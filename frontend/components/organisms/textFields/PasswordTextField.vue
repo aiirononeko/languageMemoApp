@@ -28,7 +28,7 @@ export default {
 
     label: {
       type: String,
-      default: 'メール'
+      default: 'パスワード'
     },
 
     submitCount: {
