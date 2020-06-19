@@ -91,7 +91,7 @@ export default {
     /**
      * ルートから親フォルダまでの各idとisRepoを返す
      *
-     * @returns { Object[] }
+     * @returns { { to: Number , name: String, isRepo: Boolean }[] }
      */
     breadCrumbs() {
       const rootBreadCrumbs = [{ to: this.currentUsername, name: `${this.currentUsername}`, isRepo: true }]
