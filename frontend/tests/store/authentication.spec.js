@@ -95,56 +95,8 @@ describe('store/authentication.js', () => {
       mockAxiosError = false // テストをする前に、falseに戻す。
     })
 
-    // TODO: loginに対するテストを書く
+    // TODO: login に対するテストを書く
 
-    it('logoutできる(正常系)', async () => {
-      const res = {
-        headers: {
-          "access-token": "2RvvBof6HGQ-C__vaMQ5Wq",
-          uid: "hoge@example.com",
-          client: "NQqnvItfl_4F9V_l2gzIla",
-        },
-        data: { data: { id: "1", attributes: { username: "ApeE8e4ka" } } }
-      }
-      store.commit('setUser', res)
-
-      mockAxiosGetResult = {
-        success: "true"
-      }
-
-      await store.dispatch('logout')
-
-      expect(store.getters.accessToken).toBeNull()
-      expect(store.getters.client).toBeNull()
-      expect(store.getters.id).toBeNull()
-      expect(store.getters.uid).toBeNull()
-      expect(store.getters.isAuthenticated).toBeFalsy()
-    })
-
-    it('logoutできない(異常系:Internal Server Error)', async () => {
-      mockAxiosError = true
-      mockAxiosGetResult = {
-        reponse: {
-          status: 500
-        }
-      }
-
-      await expect(
-        store.dispatch('logout')
-      ).rejects.toThrow("Internal Server Error")
-    })
-
-    it('logoutできない(異常系:Bad credentials)', async () => {
-      mockAxiosError = true
-      mockAxiosGetResult = {
-        response: {
-          status: 401
-        }
-      }
-
-      await expect(
-        store.dispatch('logout')
-      ).rejects.toThrow("Bad credentials")
-    })
+    // TOO: logout に対するテストを書く
   })
 })
