@@ -1,8 +1,6 @@
 <template>
-  <sidebar-container v-model="drawer">
-    <keep-alive>
-      <component :is="getComponentName" />
-    </keep-alive>
+  <sidebar-container>
+    <component :is="getComponentName" />
   </sidebar-container>
 </template>
 
@@ -18,13 +16,6 @@ export default {
     LoginSidebar
   },
 
-  props: {
-    drawer: {
-      type: Boolean,
-      default: false
-    }
-  },
-
   computed: {
     getComponentName() {
       return this.isLogin ? 'LoginSidebar' : 'GuestSidebar'
@@ -32,10 +23,6 @@ export default {
 
     isLogin() {
       return this.$store.getters["authentication/isAuthenticated"]
-    },
-
-    onInput(newVal) {
-      return this.$emit('input', newVal)
     }
   },
 }
