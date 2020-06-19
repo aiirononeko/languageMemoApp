@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import FileFolderListWithAction from '~/components/organisms/list/FileFolderListWithAction'
-import FolderBreadcrumbs from '~/components/organisms/breadcrumbs/FolderBreadcrumbs'
-import TwoColumnContainer from '~/components/molecules/containers/TwoColumnContainer'
-import UserIntroCard from '~/components/organisms/cards/UserIntroCard'
-import BlueBtn from '~/components/atoms/btns/BlueBtn'
+const FileFolderListWithAction = () => import('~/components/organisms/list/FileFolderListWithAction')
+const FolderBreadcrumbs = () => import('~/components/organisms/breadcrumbs/FolderBreadcrumbs')
+const TwoColumnContainer = () => import('~/components/molecules/containers/TwoColumnContainer')
+const UserIntroCard = () => import('~/components/organisms/cards/UserIntroCard')
+const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
 
 export default {
   components: {
