@@ -14,5 +14,8 @@ ADD . .
 RUN npm install
 RUN npm run build
 
+ENV BASE_URL http://34.85.15.10
+ENV CLIENT_URL http://35.221.110.39
+
 ENV HOST 0.0.0.0
 EXPOSE 3000
