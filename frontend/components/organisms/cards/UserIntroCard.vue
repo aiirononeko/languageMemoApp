@@ -7,7 +7,7 @@
 
       <p v-if="getName" class="name mb-4">{{ getName }}</p>
 
-      <p v-if="getProfile" class="text-center mb-4">{{ getProfile }}</p>
+      <p v-if="getProfile" class="text-center mb-4 px-8 px-sm-12">{{ getProfile }}</p>
 
       <div class="my-3">
         <p v-if="getAddress">
@@ -65,9 +65,5 @@ export default {
 .name {
   font-size: 1.5rem;
   font-weight: bold;
-}
-
-.profile {
-  width: 80%;
 }
 </style>
