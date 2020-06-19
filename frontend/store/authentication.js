@@ -26,6 +26,7 @@ export const state = () => ({
 
 export const getters = {
   accessToken: (state) => state.accessToken,
+  canFetchUser: (state) => !!state.uid && !state.userInfo,
   client: (state) => state.client,
   uid: (state) => state.uid,
   id: (state) => state.id,
