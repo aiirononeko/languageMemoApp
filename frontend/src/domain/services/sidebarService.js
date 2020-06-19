@@ -55,19 +55,19 @@ const importComponents = (datas) => {
  */
 const uniqComponentNames = (datas) => [...new Set(datas.map((key) => getComponentName(key)))]
 
-const SidebarService = class {
+class SidebarService {
   constructor(name) {
     this.name = name
     this.datas = getDatas(name)
   }
 
-  componentName (data) {
+  componentName(data) {
     return getComponentName(data)
   }
 
-  get importComponents () {
+  get importComponents() {
     return importComponents(this.datas)
   }
-}
+};
 
 export default SidebarService
