@@ -1,13 +1,15 @@
 <template>
-  <v-form @submit.prevent="onSubmit">
+  <v-form ref="form" v-model="valid" @submit.prevent="onSubmit">
     <password-confirmation-text-field
       v-model="password"
-      :cvalue="password_confirmation"
-      @cinput="onCInput"
+      :password_confirmation.sync="password_confirmation"
+      :password-api-error="passwordApiError"
+      :password_confirmation-api-error="passwordConfirmationApiError"
+      :submit-count="submitCount"
     />
 
     <div class="d-flex justify-end">
-      <blue-btn type="submit">
+      <blue-btn type="submit" :disabled="!valid">
         送信
       </blue-btn>
     </div>
@@ -34,20 +36,35 @@ export default {
   data() {
     return {
       password: null,
-      password_confirmation: null
+      password_confirmation: null,
+      valid: false,
+      submitCount: 0
     }
   },
 
-  methods: {
-    onCInput(newVal) {
-      this.password_confirmation = newVal
+  computed: {
+    passwordApiError() {
+      return this.errors && this.errors.password || undefined
     },
 
+    passwordConfirmationApiError() {
+      return this.errors && this.errors.password_confirmation || undefined
+    },
+  },
+
+  methods: {
     onSubmit() {
+      this.submitCount++
+      this.validate()
+
       return this.$emit('submit', {
         password: this.password,
         password_confirmation: this.password_confirmation
       })
+    },
+
+    validate () {
+      this.$refs.form.validate()
     }
   }
 }
