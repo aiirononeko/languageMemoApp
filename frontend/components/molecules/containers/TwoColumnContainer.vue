@@ -4,7 +4,7 @@
       <slot name="top" />
     </v-row>
 
-    <v-row :justify="justify">
+    <v-row :justify="justify" :class="bottomClass">
       <v-col :cols="leftCols" :sm="leftSm" :md="leftMd" :lg="leftLg" :xl="leftXl">
         <slot name="left" />
       </v-col>
@@ -25,6 +25,11 @@ export default {
   },
 
   props: {
+    bottomClass: {
+      type: String,
+      default: undefined
+    },
+
     fluid: {
       type: Boolean,
       default: false
