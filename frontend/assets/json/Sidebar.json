@@ -32,7 +32,7 @@
     "profile": {
       "exact": true,
       "name": "プロフィール編集",
-      "icon": "mdi-cog",
+      "icon": "mdi-account-edit",
       "to": "/settings/profile"
     },
     "post": {
