@@ -1,8 +1,12 @@
 <template>
-  <v-card class="d-flex flex-column justify-center align-center mx-auto username-card" max-width="500" height="300">
-    <p class="mb-5">ユーザーIDを入力してください</p>
+  <v-card class="pt-10 px-6 pb-8">
+    <h2 class="mb-3 text-center">ユーザーIDを入力</h2>
 
-    <change-username-form :errors="errors" :username="username" @submit="onSubmit" />
+    <v-row justify="center">
+      <v-col cols="12" sm="8" md="6">
+        <change-username-form :errors="errors" :username="username" @submit="onSubmit" />
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 

@@ -97,9 +97,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.v-text-field {
-  max-width: 400px;
-}
-</style>
