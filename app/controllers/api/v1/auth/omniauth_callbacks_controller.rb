@@ -20,6 +20,7 @@ module Api::V1::Auth
         sign_in(:user, @resource, store: false, bypass: false)
 
         @resource.save!
+        update_auth_header
 
         yield @resource if block_given?
         render_data_or_redirect('deliverCredentials', @auth_params.as_json, @resource.as_json)
