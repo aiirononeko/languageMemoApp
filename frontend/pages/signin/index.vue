@@ -1,6 +1,6 @@
 <template>
   <div>
-    <signin-template @signin="login" :errors="errors" />
+    <signin-template :errors="errors" @signin="login" @snsauth="snsauth" />
   </div>
 </template>
 
@@ -46,6 +46,13 @@ export default {
           statusCode: e.response.status
         })
       }
+    },
+
+    async snsauth(provider) {
+      // TODO: sns認証の処理を書く
+
+      const data = await this.$axios.get(`/api/v1/auth/${provider}`)
+      console.log(data)
     }
   },
 

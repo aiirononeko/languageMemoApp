@@ -9,7 +9,7 @@
 
       <v-col cols="12" sm="4" md="3" class="max-width-300">
         <h2 class="other-heading">その他のアカウント</h2>
-        <login-sns-btn-group />
+        <login-sns-btn-group @snsauth="onSnsauth" />
       </v-col>
     </v-row>
   </v-card>
@@ -35,6 +35,10 @@ export default {
   methods: {
     onSignup(value) {
       this.$emit('signup', value)
+    },
+
+    onSnsauth(value) {
+      this.$emit('snsauth', value)
     }
   }
 }
