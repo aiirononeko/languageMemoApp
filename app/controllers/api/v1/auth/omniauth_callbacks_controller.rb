@@ -1,6 +1,7 @@
 module Api::V1::Auth
   class OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
     include Devise::Controllers::Rememberable
+    skip_before_filter :verify_authenticity_token
 
     def omniauth_success
       if current_api_v1_user
