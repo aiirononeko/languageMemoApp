@@ -88,6 +88,11 @@ module.exports = {
     // sitemap options
     hostname: process.env.BASE_URL || "http://localhost:3000",
     gzip: true,
+    exclude: [
+      "/",
+      "/password/reset/confirm",
+      "/edit/success"
+    ]
   },
 
   /*
