@@ -1,16 +1,22 @@
 <template>
   <one-column-container>
-    <change-username-card
-      :errors="errors"
-      :username="username"
-      @submit="onSubmit"
-    />
+    <h1 class="main-heading mb-8 text-center">ユーザーIDの変更</h1>
+
+    <v-row justify="center">
+      <v-col cols="12" sm="10" md="8">
+        <change-username-card
+          :errors="errors"
+          :username="username"
+          @submit="onSubmit"
+        />
+      </v-col>
+    </v-row>
   </one-column-container>
 </template>
 
 <script>
-import ChangeUsernameCard from '~/components/organisms/cards/ChangeUsernameCard'
-import OneColumnContainer from '~/components/molecules/containers/OneColumnContainer'
+const ChangeUsernameCard = () => import('~/components/organisms/cards/ChangeUsernameCard')
+const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
 
 export default {
   components: {

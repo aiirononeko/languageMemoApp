@@ -4,7 +4,7 @@
       <sidebar-action-btn :text="name" :to="to" @click="onClick" class="mt-4" />
     </v-row>
 
-    <base-list-item v-else :icon="icon" :name="name" :to="to" @click="onClick" />
+    <base-list-item v-else :exact="exact" :icon="icon" :name="name" :to="to" @click="onClick" />
   </div>
 </template>
 
@@ -28,6 +28,10 @@ export default {
   computed: {
     btn() {
       return this.data.btn || false
+    },
+
+    exact() {
+      return this.data.exact || false
     },
 
     icon() {
