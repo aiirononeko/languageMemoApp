@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ログインしたユーザーに見せるもの -->
-    <header-action-btn text="ログアウト" @click="logout" />
+    <header-action-btn v-if="$device.isDesktop" text="ログアウト" @click="logout" />
   </div>
 </template>
 
@@ -18,9 +18,11 @@ export default {
       try {
         await this.$store.dispatch("authentication/logout")
 
-        this.$router.push(`/signin`)
+        await this.$router.push(`/signin`)
       } catch (e) {
-        console.error(e)
+        return this.$nuxt.error({
+          statusCode: 500
+        })
       }
     }
   }

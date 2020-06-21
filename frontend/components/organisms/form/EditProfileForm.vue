@@ -39,8 +39,6 @@
       />
     </div>
 
-    <tie-sns-link-field />
-
     <div class="d-flex justify-center mt-5">
       <orange-btn type="submit">保存する</orange-btn>
     </div>
@@ -52,7 +50,6 @@ const AddressTextField = () => import('~/components/organisms/textFields/Address
 const ProfileTextarea = () => import('~/components/organisms/textarea/ProfileTextarea')
 const NameTextField = () => import('~/components/organisms/textFields/NameTextField')
 const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/PreviewImageFileInput')
-const TieSnsLinkField = () => import('~/components/organisms/textFields/TieSnsLinkField')
 const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
 
 export default {
@@ -61,7 +58,6 @@ export default {
     ProfileTextarea,
     NameTextField,
     PreviewImageFileInput,
-    TieSnsLinkField,
     OrangeBtn
   },
 
