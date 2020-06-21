@@ -1,21 +1,25 @@
 <template>
-  <v-navigation-drawer v-model="value" app fixed clipped>
+  <v-navigation-drawer v-model="drawer" app clipped>
     <slot />
   </v-navigation-drawer>
 </template>
 
 <script>
 export default {
-  props: {
-    value: {
-      type: Boolean,
-      default: false
-    }
-  },
+  computed: {
+    drawer: {
+      get() {
+        return this.getDrawer
+      },
+      set(newVal) {
+        if (this.getDrawer !== newVal) {
+          this.$store.commit('sidebar/onDrawer', newVal)
+        }
+      }
+    },
 
-  methods: {
-    onInput(newVal) {
-      return this.$emit('input', newVal)
+    getDrawer() {
+      return this.$store.getters["sidebar/drawer"]
     }
   },
 }
