@@ -21,12 +21,8 @@ export default {
 
   computed: {
     newData() {
-      const data = this.data
-      if(this.$store.getters["authentication/accessToken"]) {
-        data.to = `/${this.username}`
-      } else {
-        data.to = '/about'
-      }
+      const data = Object.assign({}, this.data)
+      data.to = `/${this.username}`
       return data
     },
 
