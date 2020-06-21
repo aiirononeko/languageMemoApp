@@ -5,6 +5,7 @@
       :success="success"
       :message="message"
       @signup="signup"
+      @snsauth="snsauth"
     />
   </div>
 </template>
@@ -50,6 +51,13 @@ export default {
         })
       }
     },
+
+    async snsauth(provider) {
+      // TODO: sns認証の処理を書く
+
+      const data = await this.$axios.get(`/api/v1/auth/${provider}`)
+      console.log(data)
+    }
   },
 
   head() {

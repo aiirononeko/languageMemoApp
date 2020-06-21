@@ -4,7 +4,7 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
-        <signin-card :errors="errors" @signin="onSignin" />
+        <signin-card :errors="errors" @signin="onSignin" @snsauth="onSnsauth" />
       </v-col>
     </v-row>
   </one-column-container>
@@ -30,6 +30,10 @@ export default {
   methods: {
     onSignin(value) {
       return this.$emit('signin', value)
+    },
+
+    onSnsauth(value) {
+      return this.$emit('snsauth', value)
     }
   }
 }
