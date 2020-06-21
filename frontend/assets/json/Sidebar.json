@@ -1,10 +1,11 @@
 {
   "data": {
-    "guest": ["home", "login", "register"],
+    "guest": ["about", "login", "register"],
     "login": ["home", "post", "profile", "settings", "logout"]
   },
   "items": {
     "home": { "name": "Home", "event": "home", "icon": "mdi-home" },
+    "about": { "name": "Home", "to": "/about", "icon": "mdi-home" },
     "login": {
       "name": "ログイン",
       "to": "/signin",
