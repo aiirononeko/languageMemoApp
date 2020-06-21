@@ -1,10 +1,10 @@
 {
   "data": {
     "guest": ["home", "login", "register"],
-    "login": ["home", "settings", "post", "logout"]
+    "login": ["home", "post", "profile", "settings", "logout"]
   },
   "items": {
-    "home": { "name": "Home", "event": "home" , "icon": "mdi-home" },
+    "home": { "name": "Home", "event": "home", "icon": "mdi-home" },
     "login": {
       "name": "ログイン",
       "to": "/signin",
@@ -24,8 +24,15 @@
       "btn": true
     },
     "settings": {
+      "exact": true,
       "name": "設定",
       "icon": "mdi-cog",
+      "to": "/settings"
+    },
+    "profile": {
+      "exact": true,
+      "name": "プロフィール編集",
+      "icon": "mdi-account-edit",
       "to": "/settings/profile"
     },
     "post": {
