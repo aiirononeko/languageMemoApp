@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex flex-column">
-    <twitter-btn class="mb-4" to="#">Twitter</twitter-btn> 
-    <google-btn class="mb-4" to="#">Google</google-btn>
-    <github-btn to="#">Github</github-btn>
+    <twitter-btn class="mb-4" @click="onClick('twitter')">Twitter</twitter-btn>
+    <google-btn class="mb-4" @click="onClick('google_oauth2')">Google</google-btn>
+    <github-btn @click="onClick('github')">Github</github-btn>
   </div>
 </template>
 
@@ -16,7 +16,13 @@ export default {
     TwitterBtn,
     GoogleBtn,
     GithubBtn
-  }
+  },
+
+  methods: {
+    onClick(value) {
+      return this.$emit('snsauth', value)
+    }
+  },
 }
 </script>
 
