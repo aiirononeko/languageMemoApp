@@ -88,14 +88,29 @@ module.exports = {
     // sitemap options
     hostname: process.env.BASE_URL || "http://localhost:3000",
     gzip: true,
+    exclude: [
+      "/",
+      "/password/reset/confirm",
+      "/edit/success"
+    ]
   },
 
   /*
    ** PWA configuration
    */
   pwa: {
+    /* workbox options */
     workbox: {
-      /* workbox options */
+      runtimeCaching: [
+        {
+          urlPattern: '^https://cdn.jsdelivr.net/(.*)',
+          handler: 'cacheFirst'
+        },
+        {
+          urlPattern: '^https://fonts.googleapis.com/(.*)',
+          handler: 'cacheFirst'
+        }
+      ]
     },
   },
 
