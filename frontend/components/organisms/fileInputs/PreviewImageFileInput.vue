@@ -2,7 +2,7 @@
   <!-- TODO: 画像のプレビューを追加したい -->
   <div class="d-flex align-center">
     <div class="mr-2">
-      <v-img :src="getPreviewSrc" class="user-icon" />
+      <avatar-icon :src="getPreviewSrc" />
     </div>
 
     <base-image-file-input
@@ -14,11 +14,13 @@
 </template>
 
 <script>
+import DEFAULT_SRC from '~/assets/images/default_avatar_icon1.png'
+const AvatarIcon = () => import("~/components/atoms/icons/AvatarIcon")
 const BaseImageFileInput = () => import('~/components/organisms/fileInputs/BaseImageFileInput')
-const DEFAULT_SRC = 'https://picsum.photos/510/300?random'
 
 export default {
   components: {
+    AvatarIcon,
     BaseImageFileInput
   },
 
@@ -67,12 +69,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.user-icon {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 1px solid #333;
-}
-</style>
+
