@@ -1,6 +1,8 @@
 <template>
   <v-text-field
     v-model.trim="valueModel"
+    :counter="isVisibledCounter"
+    :maxlength="maxlength"
     :label="getLabel"
     :rules="getRule"
     :required="required"
@@ -9,8 +11,8 @@
     @change="onChange"
     dense
     name="address"
-    maxlength="30"
     outlined
+    placeholder="例) Tokyo"
   />
 </template>
 
@@ -25,6 +27,11 @@ export default {
     submitCount: {
       type: Number,
       default: 0
+    },
+
+    maxlength: {
+      type: Number,
+      default: 30
     },
 
     label: {
@@ -69,6 +76,24 @@ export default {
       this.required && ret.push(this.rules.required)
 
       return ret
+    },
+
+    /**
+     * counterを表示するかどうか
+     */
+    isVisibledCounter() {
+      if (!this.value) {
+        return false
+      }
+
+      return this.value.length > this.visibledLength
+    },
+
+    /**
+     * counterを表示するサイズ
+     */
+    visibledLength () {
+      return this.maxlength * 0.8
     },
 
     valueModel: {

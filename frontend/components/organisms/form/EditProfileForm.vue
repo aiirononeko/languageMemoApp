@@ -41,7 +41,7 @@
     </div>
 
     <div class="d-flex justify-center mt-5">
-      <orange-btn type="submit">保存する</orange-btn>
+      <orange-btn type="submit" :disabled="!valid">保存する</orange-btn>
     </div>
   </v-form>
 </template>
