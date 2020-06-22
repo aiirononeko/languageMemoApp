@@ -2,7 +2,7 @@
   <!-- TODO: 画像のプレビューを追加したい -->
   <div class="d-flex align-center">
     <div class="mr-2">
-      <avatar-icon :src="getPreviewSrc" />
+      <avatar-icon :src="getPreviewSrc" :alt="`${name} - avatar`" />
     </div>
 
     <base-image-file-input
@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import DEFAULT_SRC from '~/assets/images/default_avatar_icon1.png'
 const AvatarIcon = () => import("~/components/atoms/icons/AvatarIcon")
 const BaseImageFileInput = () => import('~/components/organisms/fileInputs/BaseImageFileInput')
 
@@ -33,6 +32,11 @@ export default {
     submitCount: {
       type: Number,
       default: 0
+    },
+
+    name: {
+      type: String,
+      required: true
     },
 
     /**
@@ -57,8 +61,8 @@ export default {
      * @returns {String}
      */
     getPreviewSrc() {
-      return this.newSrc || this.oldSrc || DEFAULT_SRC
-    },
+      return this.newSrc || this.oldSrc
+    }
   },
 
   methods: {

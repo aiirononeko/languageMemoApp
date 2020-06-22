@@ -1,3 +1,5 @@
+import DEFAULT_AVATAR from '~/assets/images/default_avatar_icon1.png'
+
 /**
  * @typedef UserAttributes
  * @property {String} address
@@ -28,7 +30,8 @@ class User {
     this.createdAt = new Date(attributes['created-at'])
     this.folders = attributes.folders
     this.githubLink = attributes['github-link']
-    this.image = attributes.image
+    /** @type {String} */
+    this.image = attributes.image || DEFAULT_AVATAR
     this.name = attributes.name
     this.posts = attributes.posts
     this.profile = attributes.profile

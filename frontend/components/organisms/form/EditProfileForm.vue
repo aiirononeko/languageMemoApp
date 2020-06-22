@@ -6,6 +6,7 @@
       <preview-image-file-input
         :api-error="avatarApiError"
         :submit-count="submitCount"
+        :name="form.name || info.username"
         :new-src="form.avatar"
         :old-src="info.image"
         @input="setAvatarValue"

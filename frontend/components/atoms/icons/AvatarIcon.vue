@@ -1,10 +1,22 @@
 <template>
-  <v-img :src="src" class="user-icon" />
+  <v-avatar :size="size">
+    <v-img :src="src" :alt="alt" />
+  </v-avatar>
 </template>
 
 <script>
 export default {
   props: {
+    alt: {
+      type: String,
+      default: undefined
+    },
+
+    size: {
+      type: Number,
+      default: 80
+    },
+
     src: {
       type: String,
       default: undefined
@@ -12,13 +24,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.user-icon {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 1px solid #333;
-}
-</style>
