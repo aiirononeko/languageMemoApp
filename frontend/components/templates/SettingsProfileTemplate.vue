@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import OneColumnContainer from '~/components/molecules/containers/OneColumnContainer'
-import SettingProfileCard from '~/components/organisms/cards/SettingProfileCard'
+const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
+const SettingProfileCard = () => import('~/components/organisms/cards/SettingProfileCard')
 
 export default {
   props: {

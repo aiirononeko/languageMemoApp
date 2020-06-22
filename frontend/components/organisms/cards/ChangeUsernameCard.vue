@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import ChangeUsernameForm from '~/components/organisms/form/ChangeUsernameForm'
+const ChangeUsernameForm = () => import('~/components/organisms/form/ChangeUsernameForm')
 
 export default {
   components: {
