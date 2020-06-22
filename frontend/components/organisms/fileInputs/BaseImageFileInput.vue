@@ -39,13 +39,13 @@ export default {
 
   methods: {
     uploadAvatar(file) {
-      if (file !== undefined && file !== null) {
-        const fr = new FileReader()
-        fr.readAsDataURL(file)
-        fr.addEventListener('load', () => {
-          this.$emit('input', fr.result)
-        })
+      if (!file) {
+        return this.$emit('input', undefined)
       }
+
+      const fr = new FileReader()
+      fr.readAsDataURL(file)
+      fr.onload = () => this.$emit('input', fr.result)
     },
 
     onChange(file) {
