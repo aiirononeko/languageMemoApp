@@ -12,7 +12,6 @@
       />
     </div>
 
-    <!-- TODO(Ropital): 各divをコンポーネントに切り出す -->
     <div class="mb-8">
       <p>名前</p>
       <name-text-field
