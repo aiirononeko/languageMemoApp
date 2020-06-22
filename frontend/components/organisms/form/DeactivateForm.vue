@@ -1,11 +1,11 @@
 <template>
-  <v-form>
+  <div>
     <div v-if="!check" class="text-center">
       <p>削除された場合、データを戻すことができません</p>
       <p>再度ご利用いただくには、新規登録が必要となります</p>
     </div>
 
-    <v-row :class="{ 'flex-row-reverse': check }" justify="center">
+    <v-row justify="center">
       <template v-if="!check">
         <v-btn to="/settings" class="mr-4" large>
           戻る
@@ -17,16 +17,18 @@
       </template>
 
       <template v-else>
-        <v-btn @click="onSecondBackClick" class="mr-4" large>
-          やめる
-        </v-btn>
+        <v-form @submit.prevent="onSubmit">
+          <red-btn  class="mr-4" type="submit" large>
+            アカウント削除
+          </red-btn>
 
-        <red-btn @submit.prevent="onSubmit" class="mr-4" type="submit" large>
-          アカウント削除
-        </red-btn>
+          <v-btn @click="onSecondBackClick" class="mr-4" large>
+            やめる
+          </v-btn>
+        </v-form>
       </template>
     </v-row>
-  </v-form>
+  </div>
 </template>
 
 <script>

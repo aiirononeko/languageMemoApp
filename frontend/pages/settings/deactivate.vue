@@ -37,5 +37,11 @@ export default {
       }
     }
   },
+
+  head() {
+    return {
+      title: "アカウント削除"
+    }
+  }
 }
 </script>
