@@ -50,6 +50,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^6.2.2",
     "jest": "^26.0.1",
+    "jest-transform-stub": "^2.0.0",
     "lodash.clonedeep": "^4.5.0",
     "node-sass": "^4.14.1",
     "nuxt-sass-resources-loader": "^2.0.5",
