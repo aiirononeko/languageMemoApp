@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import TwitterIcon from '~/components/atoms/icons/TwitterIcon'
+const TwitterIcon = () => import('~/components/atoms/icons/TwitterIcon')
 
 export default {
   components: {

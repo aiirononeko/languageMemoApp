@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import SettingsUserNameTemplate from '~/components/templates/SettingsUserNameTemplate'
 import User from '~/types/User'
+const SettingsUserNameTemplate = () => import('~/components/templates/SettingsUserNameTemplate')
 
 export default {
   components: {

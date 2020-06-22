@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import SettingsProfileTemplate from '~/components/templates/SettingsProfileTemplate'
 import User from "@/types/User"
+const SettingsProfileTemplate = () => import('~/components/templates/SettingsProfileTemplate')
 
 export default {
   components: {
