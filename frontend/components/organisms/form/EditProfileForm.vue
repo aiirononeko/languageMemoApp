@@ -2,13 +2,14 @@
   <v-form v-model="valid" @submit.prevent="onSubmit" enctype="multipart/form-data" ref="form">
     <div class="mb-8">
       <p>プロフィール画像</p>
-      <div class="d-flex align-center">
-        <div class="mr-2">
-          <v-img :src="getPreviewIcon" class="user-icon" />
-        </div>
 
-        <preview-image-file-input @input="setAvatarValue" />
-      </div>
+      <preview-image-file-input
+        :api-error="avatarApiError"
+        :submit-count="submitCount"
+        :new-src="form.avatar"
+        :old-src="info.image"
+        @input="setAvatarValue"
+      />
     </div>
 
     <!-- TODO(Ropital): 各divをコンポーネントに切り出す -->
@@ -93,15 +94,12 @@ export default {
   },
 
   computed: {
-    addressApiError() {
-      return this.errors && this.errors.address || undefined
+    avatarApiError() {
+      return this.errors && this.errors.avatar || undefined
     },
 
-    /**
-     * @returns {String}
-     */
-    getPreviewIcon() {
-      return this.form.avatar || this.info.image || 'https://picsum.photos/510/300?random'
+    addressApiError() {
+      return this.errors && this.errors.address || undefined
     },
 
     profileApiError() {
@@ -131,12 +129,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.user-icon {
-  width: 45px;
-  height: 45px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-</style>
