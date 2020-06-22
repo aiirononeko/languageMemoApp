@@ -28,7 +28,6 @@
   "devDependencies": {
     "@babel/core": "^7.10.3",
     "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/google-analytics": "^2.3.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@nuxtjs/style-resources": "^1.0.0",
