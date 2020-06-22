@@ -2,9 +2,7 @@
   <v-card class="text-center pt-4 py-2">
     <div>
       <v-row justify="center" class="mb-4">
-        <div>
-          <avatar-icon :src="getAvatar" />
-        </div>
+        <avatar-icon :src="getAvatar" :alt="`${getName} - avatar`" />
       </v-row>
 
       <p v-if="getName" class="name mb-4">{{ getName }}</p>
@@ -23,7 +21,6 @@
 </template>
 
 <script>
-import DEFAULT_SRC from '~/assets/images/default_avatar_icon1.png'
 const AvatarIcon = () => import("~/components/atoms/icons/AvatarIcon")
 const UserSnsBtnGroup = () => import("~/components/organisms/btnGroup/UserSnsBtnGroup")
 
@@ -58,7 +55,7 @@ export default {
     },
 
     getAvatar() {
-      return this.userInfo && this.userInfo.image || DEFAULT_SRC
+      return this.userInfo && this.userInfo.image
     }
   },
 }
