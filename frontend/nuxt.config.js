@@ -121,6 +121,8 @@ module.exports = {
     scss: ["~/assets/sass/variable.scss", "~/assets/sass/functions/**.scss"],
   },
 
+  telemetry: false,
+
   /*
    ** Build configuration
    */
