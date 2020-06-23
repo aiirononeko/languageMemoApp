@@ -38,20 +38,18 @@ export default {
   },
 
   methods: {
-    uploadAvatar(file) {
-      if (!file) {
+    uploadAvatar(e) {
+      if (!e) {
         return this.$emit('input', undefined)
       }
 
-      const fr = new FileReader()
-      fr.readAsDataURL(file)
-      fr.onload = () => this.$emit('input', fr.result)
+      this.$emit('input', e)
     },
 
-    onChange(file) {
+    onChange(e) {
       this.change = true
 
-      this.uploadAvatar(file)
+      this.uploadAvatar(e)
     }
   },
 
