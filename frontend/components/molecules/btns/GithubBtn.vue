@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import GithubIcon from '~/components/atoms/icons/GithubIcon'
+const GithubIcon = () => import('~/components/atoms/icons/GithubIcon')
 
 export default {
   components: {

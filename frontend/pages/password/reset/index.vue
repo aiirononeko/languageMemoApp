@@ -34,7 +34,7 @@ export default {
       try {
         const { success, message } = await this.$axios.$post(`/api/v1/auth/password`, {
           email,
-          'redirect_url': `${process.env.clientUrl}/password/reset/confirm`
+          'redirect_url': `${this.$config.clientUrl}/password/reset/confirm`
         })
 
         this.success = success

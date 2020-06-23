@@ -10,7 +10,7 @@
 
 <script>
 const GuestHeader = () => import('~/components/organisms/header/GuestHeader')
-import HeaderContainer from '~/components/organisms/header/HeaderContainer'
+const HeaderContainer = () => import('~/components/organisms/header/HeaderContainer')
 const LoginHeader = () => import('~/components/organisms/header/LoginHeader')
 
 export default {
