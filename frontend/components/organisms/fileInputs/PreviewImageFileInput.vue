@@ -8,7 +8,7 @@
     <base-image-file-input
       :api-error="apiError"
       :submit-count="submitCount"
-      @input="setAvatarValue"
+      @input="onInput"
     />
   </div>
 </template>
@@ -64,17 +64,30 @@ export default {
   },
 
   methods: {
-    setAvatarValue(e) {
-      if (!e) {
+    /**
+     * @param { File } file
+     */
+    onInput(file) {
+      if (!file) {
         this.newSrc = null
-        return this.$emit('input', e)
+        return this.$emit('input', file)
       }
 
+      this.fileToDataURL(file, () => {
+        return this.$emit('input', this.newSrc)
+      })
+    },
+
+    /**
+     * @param { File } file
+     * @param { Function } onload onloadで実行する関数
+     */
+    fileToDataURL (file, onload) {
       const fr = new FileReader()
-      fr.readAsDataURL(e)
+      fr.readAsDataURL(file)
       fr.onload = () => {
         this.newSrc = fr.result
-        return this.$emit('input', this.newSrc)
+        onload()
       }
     }
   }

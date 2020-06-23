@@ -38,18 +38,24 @@ export default {
   },
 
   methods: {
-    uploadAvatar(e) {
-      if (!e) {
+    /**
+     * @param { File } file
+     */
+    uploadAvatar(file) {
+      if (!file) {
         return this.$emit('input', undefined)
       }
 
-      return this.$emit('input', e)
+      return this.$emit('input', file)
     },
 
-    onChange(e) {
+    /**
+     * @param { File } file
+     */
+    onChange(file) {
       this.change = true
 
-      this.uploadAvatar(e)
+      this.uploadAvatar(file)
     }
   },
 
