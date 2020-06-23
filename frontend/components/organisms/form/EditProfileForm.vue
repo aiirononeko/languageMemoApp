@@ -116,7 +116,7 @@ export default {
       this.submitCount++
       this.validate()
 
-      this.$emit('save', this.form)
+      return this.$emit('save', this.form)
     },
 
     setAvatarValue(e) {

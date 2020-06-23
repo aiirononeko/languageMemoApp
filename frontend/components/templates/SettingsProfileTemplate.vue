@@ -34,7 +34,7 @@ export default {
 
   methods: {
     save(userInfo) {
-      this.$emit('save', userInfo)
+      return this.$emit('save', userInfo)
     }
   }
 }

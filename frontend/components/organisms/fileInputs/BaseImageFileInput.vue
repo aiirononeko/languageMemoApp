@@ -43,7 +43,7 @@ export default {
         return this.$emit('input', undefined)
       }
 
-      this.$emit('input', e)
+      return this.$emit('input', e)
     },
 
     onChange(e) {
