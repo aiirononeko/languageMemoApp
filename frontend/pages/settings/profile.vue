@@ -49,20 +49,14 @@ export default {
 
         await this.$router.push(`/${this.username}`)
       } catch (e) {
-        //TODO: 後で消す
-        console.error(e)
-
         if (e.response && e.response.status === 422) {
           this.errors = e.response.data.errors
           return
-        } else if (e.response.status) {
-          return this.$nuxt.error({
-            statusCode: e.response.status
-          })
         }
-        return this.$nuxt.error({
-          statusCode: 500
-        })
+
+        const statusCode = (e.response && e.response.status) || 500
+
+        return this.$nuxt.error({ statusCode })
       }
     }
   },
