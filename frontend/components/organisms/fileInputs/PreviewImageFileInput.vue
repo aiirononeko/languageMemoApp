@@ -40,19 +40,17 @@ export default {
     },
 
     /**
-     * 新しい画像のパス
-     */
-    newSrc: {
-      type: String,
-      default: undefined
-    },
-
-    /**
      * 古い画像のパス
      */
     oldSrc: {
       type: String,
       default: undefined
+    }
+  },
+
+  data() {
+    return {
+      newSrc: null
     }
   },
 
@@ -66,8 +64,18 @@ export default {
   },
 
   methods: {
-    setAvatarValue(newVal) {
-      this.$emit('input', newVal)
+    setAvatarValue(e) {
+      if (!e) {
+        this.newSrc = null
+        return this.$emit('input', e)
+      }
+
+      const fr = new FileReader()
+      fr.readAsDataURL(e)
+      fr.onload = () => {
+        this.newSrc = fr.result
+        return this.$emit('input', this.newSrc)
+      }
     }
   }
 }

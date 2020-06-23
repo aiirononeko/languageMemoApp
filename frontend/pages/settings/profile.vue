@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import User from "@/types/User"
+import User from "~/types/User"
+import { objectToFormData } from "object-to-formdata"
 const SettingsProfileTemplate = () => import('~/components/templates/SettingsProfileTemplate')
 
 export default {
@@ -38,24 +39,29 @@ export default {
       this.errors = null
 
       try {
-        const { data } = await this.$axios.$put(`/api/v1/auth`, {
-          name: userInfo.name,
-          profile: userInfo.profile,
-          address: userInfo.address,
-          avatar: userInfo.avatar
-        })
+        const formData = objectToFormData(userInfo)
+        const { data } = await this.$axios.$put(`/api/v1/auth`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }})
 
         this.$store.commit("authentication/setUserInfo", new User(data))
 
         await this.$router.push(`/${this.username}`)
       } catch (e) {
+        //TODO: 後で消す
+        console.error(e)
+
         if (e.response && e.response.status === 422) {
           this.errors = e.response.data.errors
           return
+        } else if (e.response.status) {
+          return this.$nuxt.error({
+            statusCode: e.response.status
+          })
         }
-
         return this.$nuxt.error({
-          statusCode: e.response.status
+          statusCode: 500
         })
       }
     }

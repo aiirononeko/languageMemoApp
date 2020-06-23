@@ -1,5 +1,5 @@
 <template>
-  <v-form v-model="valid" @submit.prevent="onSubmit" enctype="multipart/form-data" ref="form">
+  <v-form v-model="valid" @submit.prevent="onSubmit" ref="form">
     <div class="mb-8">
       <p>プロフィール画像</p>
 
@@ -119,8 +119,13 @@ export default {
       this.$emit('save', this.form)
     },
 
-    setAvatarValue(newVal) {
-      this.form.avatar = newVal
+    setAvatarValue(e) {
+      if (!e) {
+        this.form.avatar = null
+        return
+      }
+
+      this.form.avatar = e
     },
 
     validate () {
