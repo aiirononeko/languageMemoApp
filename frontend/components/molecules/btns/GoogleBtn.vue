@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import GoogleIcon from '~/components/atoms/icons/GoogleIcon'
+const GoogleIcon = () => import('~/components/atoms/icons/GoogleIcon')
 
 export default {
   components: {

@@ -2,12 +2,17 @@ require('dotenv').config()
 
 module.exports = {
   /*
-   ** Environment Variables
+   ** Frontend Config Variables
    */
-  env: {
+  publicRuntimeConfig: {
     baseUrl: process.env.BASE_URL || "http://localhost:3000",
     clientUrl: process.env.CLIENT_URL || "http://localhost:3001",
   },
+
+  /*
+   ** Server Config Variables
+   */
+  privateRuntimeConfig: {},
 
   /*
    ** Headers of the page
@@ -41,7 +46,6 @@ module.exports = {
    ** build modules
    */
   buildModules: [
-    "@nuxtjs/dotenv",
     "@nuxtjs/style-resources",
     "@nuxtjs/vuetify",
     // "@nuxtjs/google-analytics",
@@ -120,6 +124,8 @@ module.exports = {
   styleResources: {
     scss: ["~/assets/sass/variable.scss", "~/assets/sass/functions/**.scss"],
   },
+
+  telemetry: false,
 
   /*
    ** Build configuration
