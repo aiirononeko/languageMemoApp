@@ -8,32 +8,30 @@
 
         <template v-if="existList">
           <span v-for="item in list" :key="item.id">
-            <file-list-item v-if="!!item.content" :name="item.name" :id=item.id :username="username" />
+            <file-list-item v-if="!!item.content" :name="item.name" :id="item.id" :username="username" />
             <folder-list-item v-else :name="item.name" :id="item.id" :username="username" />
           </span>
         </template>
 
-        <v-list-item v-if="isCreatingNewFolder">
-          <v-list-item-icon><v-icon>mdi-folder</v-icon></v-list-item-icon>
-
-          <v-list-item-content>
-            <v-form @submit.prevent="onSubmit">
-              <v-list-item-title><v-text-field v-model="newFolderName" dense /></v-list-item-title>
-            </v-form>
-          </v-list-item-content>
-        </v-list-item>
+        <!-- folder, file の新規作成時に表示 -->
+        <create-folder-list-item v-if="isCreatingNewFolder" v-model="newFolderName" @submit="onCreateFolder" />
+        <create-file-list-item v-if="isCreatingNewFile" v-model="newFileName" @submit="onCreateFile" />
       </v-list-item-group>
     </v-list>
   </div>
 </template>
 
 <script>
+const CreateFileListItem = () => import('~/components/organisms/list/CreateFileListItem')
+const CreateFolderListItem = () => import('~/components/organisms/list/CreateFolderListItem')
 const FileListItem = () => import('~/components/organisms/list/FileListItem')
 const FolderListItem = () => import('~/components/organisms/list/FolderListItem')
 const LinkToBackItem = () => import('~/components/organisms/list/LinkToBackItem')
 
 export default {
   components: {
+    CreateFileListItem,
+    CreateFolderListItem,
     FileListItem,
     FolderListItem,
     LinkToBackItem,
@@ -63,11 +61,17 @@ export default {
     isCreatingNewFolder: {
       type: Boolean,
       default: false
+    },
+
+    isCreatingNewFile: {
+      type: Boolean,
+      default: false
     }
   },
 
   data: () => ({
     newFolderName: "",
+    newFileName: ""
   }),
 
   computed: {
@@ -93,12 +97,15 @@ export default {
   },
 
   methods: {
-    onSubmit() {
-      let newFolderName = this.newFolderName
-      this.$emit('submit', newFolderName)
-
+    onCreateFolder() {
+      this.$emit('create-folder', this.newFolderName)
       this.newFolderName = ""
     },
+
+    onCreateFile() {
+      this.$emit('create-file', this.newFileName)
+      this.newFileName = ""
+    }
   }
 }
 </script>

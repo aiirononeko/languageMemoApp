@@ -17,7 +17,8 @@
             <h2 class="text-center">あなたのリポジトリ</h2>
           </v-col>
           <v-col cols="12" sm="4" class="text-right">
-            <blue-btn @click="$emit('triggerIsCreatingNewFolder')">フォルダーを作成する</blue-btn>
+            <blue-btn @click="onTriggerCreatingNewFolder" class="mb-4">フォルダーを作成する</blue-btn>
+            <blue-btn @click="onTriggerCreatingNewFile">ファイルを作成する</blue-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -29,12 +30,14 @@
       />
 
       <file-folder-list-with-action
-        @submit="(newFolderName) => $emit('submit' ,newFolderName)"
         :list="list"
         :ancestorFolders="ancestorFolders"
         :currentUsername="currentUsername"
         :isRepository="isRepository"
-        :isCreatingNewFolder="isCreatingNewFolder"
+        :is-creating-new-folder="isCreatingNewFolder"
+        :is-creating-new-file="isCreatingNewFile"
+        @create-file="onCreateFile"
+        @create-folder="onCreateFolder"
       />
     </template>
   </two-column-container>
@@ -68,6 +71,11 @@ export default {
     },
 
     isCreatingNewFolder: {
+      type: Boolean,
+      default: false
+    },
+
+    isCreatingNewFile: {
       type: Boolean,
       default: false
     }
@@ -132,6 +140,24 @@ export default {
     params() {
       return this.$route.params
     },
+  },
+
+  methods: {
+    onCreateFile(v) {
+      return this.$emit('create-file', v)
+    },
+
+    onCreateFolder(v) {
+      return this.$emit('create-folder', v)
+    },
+
+    onTriggerCreatingNewFolder() {
+      return this.$emit('trigger-creating-new-folder')
+    },
+
+    onTriggerCreatingNewFile() {
+      return this.$emit('trigger-creating-new-file')
+    }
   },
 }
 </script>

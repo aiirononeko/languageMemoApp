@@ -2,17 +2,20 @@
   <!-- マイページのルート -->
   <div>
     <username-index-template
-      :userInfo="userInfo"
-      :isCreatingNewFolder="isCreatingNewFolder"
-      @submit="submit"
-      @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder"
+      :user-info="userInfo"
+      :is-creating-new-folder="isCreatingNewFolder"
+      :is-creating-new-file="isCreatingNewFile"
+      @create-file="onCreateFile"
+      @create-folder="onCreateFolder"
+      @trigger-creating-new-folder="triggerCreatingNewFolder"
+      @trigger-creating-new-file="triggerCreatingNewFile"
     />
   </div>
 </template>
 
 <script>
-const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
 import User from '~/types/User'
+const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
 
 export default {
   components: {
@@ -20,7 +23,8 @@ export default {
   },
 
   data: () => ({
-    isCreatingNewFolder: false
+    isCreatingNewFolder: false,
+    isCreatingNewFile: false,
   }),
 
   computed: {
@@ -34,7 +38,7 @@ export default {
   },
 
   methods: {
-    async submit(newFolderName) {
+    async onCreateFolder(newFolderName) {
       const folderInfo = {
         name: newFolderName,
         public: false,
@@ -54,7 +58,35 @@ export default {
           updated_at: data.attributes["updated-at"],
           user_id: data.attributes["user-id"]
         })
-        this.triggerIsCreatingNewFolder()
+        this.triggerCreatingNewFolder()
+      } catch(e) {
+        console.error(e)
+      }
+    },
+
+    async onCreateFile(newFileName) {
+      const postsInfo = {
+        name: newFileName,
+        content: newFileName,
+        public: false,
+        user_id: this.id,
+        folder_id: null
+      }
+
+      try {
+        const { data } = await this.$axios.$post(`/api/v1/posts`, postsInfo)
+
+        this.userInfo.posts.push({
+          created_at: data.attributes["created-at"],
+          content: data.attributes.content,
+          id: data.id,
+          name: data.attributes.name,
+          parent_id: null,
+          public: data.attributes.public,
+          updated_at: data.attributes["updated-at"],
+          user_id: data.attributes["user-id"]
+        })
+        this.triggerCreatingNewFile()
       } catch(e) {
         console.error(e)
       }
@@ -64,15 +96,19 @@ export default {
       try {
         const { data } = await this.$axios.$get(`/api/v1/users/${this.params.username}`)
         this.userInfo = new User(data)
-        this.triggerIsCreatingNewFolder()
+        this.triggerCreatingNewFolder()
       } catch (e) {
         console.error(e)
       }
     },
 
-    triggerIsCreatingNewFolder() {
+    triggerCreatingNewFolder() {
       this.isCreatingNewFolder = !this.isCreatingNewFolder
     },
+
+    triggerCreatingNewFile() {
+      this.isCreatingNewFile = !this.isCreatingNewFile
+    }
   },
 
   async asyncData({ $axios, params, store, error }) {
