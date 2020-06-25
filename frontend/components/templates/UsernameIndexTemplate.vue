@@ -25,14 +25,14 @@
 
       <folder-breadcrumbs
         :breadCrumbs="breadCrumbs"
-        :currentUsername="currentUsername"
+        :current-username="currentUsername"
         :currentFolderName="isRepository ? '' : currentFolderName"
       />
 
       <file-folder-list-with-action
         :list="list"
-        :ancestorFolders="ancestorFolders"
-        :currentUsername="currentUsername"
+        :ancestor-folders="ancestorFolders"
+        :current-username="currentUsername"
         :folders-info="foldersInfo"
         :isRepository="isRepository"
         :is-creating-new-folder="isCreatingNewFolder"
@@ -52,6 +52,21 @@ const TwoColumnContainer = () => import('~/components/molecules/containers/TwoCo
 const UserIntroCard = () => import('~/components/organisms/cards/UserIntroCard')
 const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
 
+/**
+ * パンくずリストの作成
+ */
+const generateBreadcrumbs = (username, ancestorFolders) => {
+  const rootBreadCrumbs = [{ to: username, name: `${username}`, isRepo: true }]
+  const reAncestorFolders = Object.assign([], ancestorFolders).reverse()
+
+  const ancestorBreadCrumbs = reAncestorFolders.map(
+    (folder) => ({ to: folder.id , name: `${folder.name}`, isRepo: false })
+  )
+
+  const breadCrumbs = [...rootBreadCrumbs, ...ancestorBreadCrumbs]
+  return breadCrumbs
+}
+
 export default {
   components: {
     FileFolderListWithAction,
@@ -62,6 +77,11 @@ export default {
   },
 
   props: {
+    currentUsername: {
+      type: String,
+      required: true
+    },
+
     userInfo: {
       type: Object,
       default: undefined
@@ -92,15 +112,14 @@ export default {
     /**
      * 祖先のフォルダの情報を配列形式で返す
      *
-     * @returns { Object[] }
+     * @returns { Array<import('~/types/Folder').default> }
      */
     ancestorFolders() {
-      return (
-        this.foldersInfo
-        && this.foldersInfo.attributes
-        && this.foldersInfo.attributes["ancestor-folders"]
-        || []
-      )
+      if (!this.foldersInfo) {
+        return undefined
+      }
+
+      return this.foldersInfo.ancestorFolders
     },
 
     /**
@@ -109,23 +128,11 @@ export default {
      * @returns { { to: Number , name: String, isRepo: Boolean }[] }
      */
     breadCrumbs() {
-      const rootBreadCrumbs = [{ to: this.currentUsername, name: `${this.currentUsername}`, isRepo: true }]
-      const reAncestorFolders = Object.assign([], this.ancestorFolders).reverse()
-
-      const ancestorBreadCrumbs = reAncestorFolders.map(
-        (folder) => ({ to: folder.id , name: `${folder.name}`, isRepo: false })
-      )
-
-      const breadCrumbs = [...rootBreadCrumbs, ...ancestorBreadCrumbs]
-      return breadCrumbs
+      return generateBreadcrumbs(this.currentUsername, this.ancestorFolders)
     },
 
     currentFolderName() {
-      return this.foldersInfo && this.foldersInfo.attributes.name
-    },
-
-    currentUsername() {
-      return this.$route.params.username
+      return this.foldersInfo && this.foldersInfo.name
     },
 
     isRepository() {
@@ -133,15 +140,9 @@ export default {
     },
 
     list() {
-      if(this.isRepository) {
-        const folders = this.userInfo.folders || []
-        const posts = this.userInfo.posts || []
-        return [...folders, ...posts]
-      } else {
-        const folders = this.foldersInfo.attributes["child-folders"] || []
-        const posts = this.foldersInfo.attributes.posts || []
-        return [...folders, ...posts]
-      }
+      return this.foldersInfo
+        ? [...this.foldersInfo.childFolders, ...this.foldersInfo.posts]
+        : [...this.userInfo.folders, ...this.userInfo.posts]
     },
 
     params() {

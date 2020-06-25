@@ -56,13 +56,13 @@ class Folder {
     this.createdAt = new Date(attributes['created-at'])
     this.updatedAt = new Date(attributes['updated-at'])
 
-    if (attributes["ancestor-folders"]) {
+    if (attributes["ancestor-folders"] && attributes["ancestor-folders"].length > 0) {
       /** @type String */
       this.parentID = attributes["ancestor-folders"][0].id
       this.ancestorFolders = attributes["ancestor-folders"].map((folder) => new Folder(folder))
     }
 
-    if (attributes["child-folders"]) {
+    if (attributes["child-folders"] && attributes["child-folders"].length > 0) {
       this.childFolders = attributes["child-folders"].map((folder) => new Folder(folder))
     }
 
@@ -83,6 +83,24 @@ class Folder {
     this.createdAt = new Date(folder.created_at)
     this.updatedAt = new Date(folder.updated_at)
     this.parentID = folder.parent_id
+  }
+
+  pushPost (post) {
+    if (post instanceof Post) {
+      this.posts.push(post)
+      return
+    }
+
+    this.post.push(new Post(post))
+  }
+
+  pushChildFolder (folder) {
+    if (folder instanceof Folder) {
+      this.childFolders.push(folder)
+      return
+    }
+
+    this.childFolders.push(new Folder(folder))
   }
 }
 

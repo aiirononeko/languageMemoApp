@@ -42,6 +42,24 @@ class User {
     this.posts = attributes.posts && attributes.posts.length > 0 ?
       attributes.posts.map((post) => new Post(post)) : []
   }
+
+  pushPost (post) {
+    if (post instanceof Post) {
+      this.posts.push(post)
+      return
+    }
+
+    this.post.push(new Post(post))
+  }
+
+  pushFolder (folder) {
+    if (folder instanceof Folder) {
+      this.folders.push(folder)
+      return
+    }
+
+    this.folders.push(new Folder(folder))
+  }
 }
 
 export default User
