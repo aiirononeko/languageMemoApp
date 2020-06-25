@@ -33,9 +33,11 @@
         :list="list"
         :ancestorFolders="ancestorFolders"
         :currentUsername="currentUsername"
+        :folders-info="foldersInfo"
         :isRepository="isRepository"
         :is-creating-new-folder="isCreatingNewFolder"
         :is-creating-new-file="isCreatingNewFile"
+        :parent-params="parentParams"
         @create-file="onCreateFile"
         @create-folder="onCreateFolder"
       />
@@ -67,6 +69,11 @@ export default {
 
     foldersInfo: {
       type: Object,
+      default: undefined
+    },
+
+    parentParams: {
+      type: String,
       default: undefined
     },
 

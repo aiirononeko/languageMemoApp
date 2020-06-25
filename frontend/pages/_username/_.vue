@@ -6,6 +6,7 @@
       :folders-info="foldersInfo"
       :is-creating-new-folder="isCreatingNewFolder"
       :is-creating-new-file="isCreatingNewFile"
+      :parent-params="parentParams"
       @create-file="onCreateFile"
       @create-folder="onCreateFolder"
       @trigger-creating-new-folder="triggerCreatingNewFolder"
@@ -16,6 +17,7 @@
 
 <script>
 import User from '~/types/User'
+import { pathToArr, getDirname } from '~/utils/path'
 const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
 
 export default {
@@ -48,7 +50,7 @@ export default {
         name: newFolderName,
         public: false,
         user_id: this.id,
-        parent_id: this.parentParams
+        parent_id: this.foldersInfo.id
       }
 
       try {
@@ -62,8 +64,32 @@ export default {
       }
     },
 
-    async onCreateFile(newFolderName) {
+    async onCreateFile(newFileName) {
+      const postsInfo = {
+        name: newFileName,
+        content: newFileName,
+        public: false,
+        user_id: this.id,
+        folder_id: null
+      }
+
+      try {
+        const { data } = await this.$axios.$post(`/api/v1/posts`, postsInfo)
+
+        this.userInfo.posts.push({
+          created_at: data.attributes["created-at"],
+          content: data.attributes.content,
+          id: data.id,
+          name: data.attributes.name,
+          parent_id: null,
+          public: data.attributes.public,
+          updated_at: data.attributes["updated-at"],
+          user_id: data.attributes["user-id"]
+        })
         this.triggerCreatingNewFile()
+      } catch(e) {
+        console.error(e)
+      }
     },
 
     async fetchData() {
@@ -86,15 +112,38 @@ export default {
   },
 
   async asyncData({ $axios, params, store, error }) {
+    const folder_id = getDirname(params.pathMatch)
+    const ancestor_folder_id = pathToArr(params.pathMatch)
+    let userInfo, foldersInfo
+
     try {
-      const userInfo = await $axios.$get(`/api/v1/users/${params.username}`)
-      const foldersInfo = await $axios.$get(`/api/v1/folders/${params.pathMatch}`)
-      return { userInfo: new User(userInfo.data), foldersInfo: foldersInfo.data }
+      userInfo = await $axios.$get(`/api/v1/users/${params.username}`)
+
+      foldersInfo = await $axios.$get(`/api/v1/folders/${folder_id}`)
     } catch (e) {
+      if (e.response && e.response.status) {
+        return error({
+          statusCode: e.response.status
+        })
+      }
+
       return error({
-        statusCode: e.response.status
+        statusCode: 500
       })
     }
+
+      console.log(ancestor_folder_id)
+      console.log(foldersInfo.data.attributes["ancestor-folders"])
+    for (const apiAncestorFolder of foldersInfo.data.attributes["ancestor-folders"]) {
+      const str = ancestor_folder_id.pop()
+      if (str !== String(apiAncestorFolder.id)) {
+        return error({
+          statusCode: 404
+        })
+      }
+    }
+
+    return { userInfo: new User(userInfo.data), foldersInfo: foldersInfo.data }
   },
 }
 </script>

@@ -8,8 +8,8 @@
 
         <template v-if="existList">
           <span v-for="item in list" :key="item.id">
-            <file-list-item v-if="!!item.content" :name="item.name" :id="item.id" :username="username" />
-            <folder-list-item v-else :name="item.name" :id="item.id" :username="username" />
+            <file-list-item v-if="!!item.content" :name="item.name" :to="`${nowLink}/${item.id}`" />
+            <folder-list-item v-else :name="item.name" :to="`${nowLink}/${item.id}`" />
           </span>
         </template>
 
@@ -48,6 +48,16 @@ export default {
       default: ""
     },
 
+    foldersInfo: {
+      type: Object,
+      default: undefined
+    },
+
+    parentParams: {
+      type: String,
+      default: undefined
+    },
+
     list: {
       type: Array,
       default: () => []
@@ -83,16 +93,22 @@ export default {
       return this.$store.getters["authentication/username"]
     },
 
-    parentId() {
-      return !!this.ancestorFolders.length && this.ancestorFolders[0].id
+    // 一つ前のリンク
+    toBackFolder() {
+      if (this.parentParams) {
+        return this.nowLink.substr( 0, this.nowLink.lastIndexOf("/") )
+      }
+
+      return this.nowLink
     },
 
-    toBackFolder() {
-      if(this.parentId) {
-        return `/${this.currentUsername}/${this.parentId}`
-      }else {
-        return `/${this.currentUsername}`
+    // 現在のリンク
+    nowLink() {
+      if (this.parentParams) {
+        return `/${this.currentUsername}/${this.parentParams}`
       }
+
+      return `/${this.currentUsername}`
     }
   },
 
