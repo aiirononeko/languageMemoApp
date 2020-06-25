@@ -70,18 +70,18 @@ export default {
         content: newFileName,
         public: false,
         user_id: this.id,
-        folder_id: null
+        folder_id:  this.foldersInfo.id
       }
 
       try {
         const { data } = await this.$axios.$post(`/api/v1/posts`, postsInfo)
 
-        this.userInfo.posts.push({
+        this.foldersInfo.attributes.posts.push({
           created_at: data.attributes["created-at"],
           content: data.attributes.content,
           id: data.id,
           name: data.attributes.name,
-          parent_id: null,
+          parent_id: data.attributes["parent-id"],
           public: data.attributes.public,
           updated_at: data.attributes["updated-at"],
           user_id: data.attributes["user-id"]
@@ -132,8 +132,6 @@ export default {
       })
     }
 
-      console.log(ancestor_folder_id)
-      console.log(foldersInfo.data.attributes["ancestor-folders"])
     for (const apiAncestorFolder of foldersInfo.data.attributes["ancestor-folders"]) {
       const str = ancestor_folder_id.pop()
       if (str !== String(apiAncestorFolder.id)) {
