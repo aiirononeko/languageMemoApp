@@ -1,3 +1,6 @@
+import Folder from "./Folder"
+import Post from "./Post"
+
 /**
  * @typedef UserAttributes
  * @property {String} address
@@ -26,15 +29,18 @@ class User {
     this.type = type
     this.address = attributes.address
     this.createdAt = new Date(attributes['created-at'])
-    this.folders = attributes.folders
     this.githubLink = attributes['github-link']
     this.image = attributes.image
     this.name = attributes.name
-    this.posts = attributes.posts
     this.profile = attributes.profile
     this.twitterLink = attributes['twitter-link']
     this.updatedAt = new Date(attributes['updated-at'])
     this.username = attributes.username
+
+    this.folders = attributes.folders && attributes.folders.length > 0 ?
+      attributes.folders.map((folder) => new Folder(folder)) : []
+    this.posts = attributes.posts && attributes.posts.length > 0 ?
+      attributes.posts.map((post) => new Post(post)) : []
   }
 }
 
