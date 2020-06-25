@@ -1,16 +1,18 @@
 <template>
-  <v-card max-width="355px" class="text-center pt-4">
+  <v-card class="text-center pt-4 py-2">
     <div>
-      <div>
+      <div class="mb-4">
         <v-img src="https://picsum.photos/510/300?random" class="user-icon" />
       </div>
 
-      <p class="name">{{ getName }}</p>
+      <p v-if="getName" class="name mb-4">{{ getName }}</p>
 
-      <p class="profile">{{ getProfile }}</p>
+      <p v-if="getProfile" class="text-center mb-4 px-8 px-sm-12">{{ getProfile }}</p>
 
-      <div class="mt-3">
-        <p>FROM: {{ getAddress }}</p>
+      <div class="my-3">
+        <p v-if="getAddress">
+          <span class="text-uppercase">FROM</span>: {{ getAddress }}
+        </p>
 
         <user-sns-btn-group />
       </div>
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-import UserSnsBtnGroup from "~/components/organisms/btnGroup/UserSnsBtnGroup"
+const UserSnsBtnGroup = () => import("~/components/organisms/btnGroup/UserSnsBtnGroup")
 
 export default {
   components: {
@@ -35,7 +37,11 @@ export default {
 
   computed: {
     getName() {
-      return this.userInfo && this.userInfo.name
+      if (!this.userInfo) {
+        return undefined
+      }
+
+      return this.userInfo.name || this.userInfo.username
     },
     getProfile() {
       return this.userInfo && this.userInfo.profile
@@ -57,12 +63,7 @@ export default {
 }
 
 .name {
-  font-size: 28px;
+  font-size: 1.5rem;
   font-weight: bold;
-}
-
-.profile {
-  width: 80%;
-  margin: 0 auto;
 }
 </style>

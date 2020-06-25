@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app clipped-left color="amber lighten-2" dense fixed>
-    <v-app-bar-nav-icon @click="onClick()" />
+    <v-app-bar-nav-icon @click="onClick()"  />
 
     <v-toolbar-title>
       <nuxt-link to="/" class="text--secondary text-decoration-none">
@@ -24,7 +24,7 @@ export default {
 
   methods: {
     onClick() {
-      return this.$emit('click')
+      this.$store.commit('sidebar/onDrawer')
     }
   },
 
