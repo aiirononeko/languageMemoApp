@@ -2,6 +2,7 @@
   <!-- マイページのルート -->
   <div>
     <username-index-template
+      :current-username="currentUsername"
       :user-info="userInfo"
       :is-creating-new-folder="isCreatingNewFolder"
       :is-creating-new-file="isCreatingNewFile"
@@ -28,13 +29,13 @@ export default {
   }),
 
   computed: {
-    id() {
+    userID() {
       return this.$store.getters["authentication/id"]
     },
 
-    params() {
-      return this.$route.params
-    }
+    currentUsername() {
+      return this.$route.params.username
+    },
   },
 
   methods: {
@@ -42,22 +43,16 @@ export default {
       const folderInfo = {
         name: newFolderName,
         public: false,
-        user_id: this.id,
+        user_id: this.userID,
         parent_id: null
       }
 
       try {
         const { data } = await this.$axios.$post(`/api/v1/folders`, folderInfo)
 
-        this.userInfo.folders.push({
-          created_at: data.attributes["created-at"],
-          id: data.id,
-          name: data.attributes.name,
-          parent_id: null,
-          public: data.attributes.public,
-          updated_at: data.attributes["updated-at"],
-          user_id: data.attributes["user-id"]
-        })
+        // 既存の配列を更新
+        this.userInfo.pushFolder(data)
+
         this.triggerCreatingNewFolder()
       } catch(e) {
         console.error(e)
@@ -69,23 +64,16 @@ export default {
         name: newFileName,
         content: newFileName,
         public: false,
-        user_id: this.id,
+        user_id: this.userID,
         folder_id: null
       }
 
       try {
         const { data } = await this.$axios.$post(`/api/v1/posts`, postsInfo)
 
-        this.userInfo.posts.push({
-          created_at: data.attributes["created-at"],
-          content: data.attributes.content,
-          id: data.id,
-          name: data.attributes.name,
-          parent_id: null,
-          public: data.attributes.public,
-          updated_at: data.attributes["updated-at"],
-          user_id: data.attributes["user-id"]
-        })
+        // 既存のデータを更新
+        this.userInfo.pushPost(data)
+
         this.triggerCreatingNewFile()
       } catch(e) {
         console.error(e)
@@ -114,10 +102,17 @@ export default {
   async asyncData({ $axios, params, store, error }) {
     try {
       const { data } = await $axios.$get(`/api/v1/users/${params.username}`)
+
       return { userInfo: new User(data) }
     } catch (e) {
-      error({
-        statusCode: e.response.status
+      if (e.response && e.response.status) {
+        return error({
+          statusCode: e.response.status
+        })
+      }
+
+      return error({
+        statusCode: 500
       })
     }
   },

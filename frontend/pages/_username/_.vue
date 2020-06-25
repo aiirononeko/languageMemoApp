@@ -2,6 +2,7 @@
   <!-- マイページの２階層以下 -->
   <div>
     <username-index-template
+      :current-username="currentUsername"
       :user-info="userInfo"
       :folders-info="foldersInfo"
       :is-creating-new-folder="isCreatingNewFolder"
@@ -17,6 +18,7 @@
 
 <script>
 import User from '~/types/User'
+import Folder from '~/types/Folder'
 import { pathToArr, getDirname } from '~/utils/path'
 const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
 
@@ -39,9 +41,13 @@ export default {
       return this.params.pathMatch
     },
 
-    id() {
+    userID() {
       return this.$store.getters["authentication/id"]
-    }
+    },
+
+    currentUsername() {
+      return this.$route.params.username
+    },
   },
 
   methods: {
@@ -49,7 +55,7 @@ export default {
       const folderInfo = {
         name: newFolderName,
         public: false,
-        user_id: this.id,
+        user_id: this.userID,
         parent_id: this.foldersInfo.id
       }
 
@@ -69,23 +75,16 @@ export default {
         name: newFileName,
         content: newFileName,
         public: false,
-        user_id: this.id,
+        user_id: this.userID,
         folder_id:  this.foldersInfo.id
       }
 
       try {
         const { data } = await this.$axios.$post(`/api/v1/posts`, postsInfo)
 
-        this.foldersInfo.attributes.posts.push({
-          created_at: data.attributes["created-at"],
-          content: data.attributes.content,
-          id: data.id,
-          name: data.attributes.name,
-          parent_id: data.attributes["parent-id"],
-          public: data.attributes.public,
-          updated_at: data.attributes["updated-at"],
-          user_id: data.attributes["user-id"]
-        })
+        // 既存の配列を更新
+        this.foldersInfo.pushPost(data)
+
         this.triggerCreatingNewFile()
       } catch(e) {
         console.error(e)
@@ -141,7 +140,7 @@ export default {
       }
     }
 
-    return { userInfo: new User(userInfo.data), foldersInfo: foldersInfo.data }
+    return { userInfo: new User(userInfo.data), foldersInfo: new Folder(foldersInfo.data) }
   },
 }
 </script>
