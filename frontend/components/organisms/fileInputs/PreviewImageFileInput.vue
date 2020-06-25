@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import BaseImageFileInput from '~/components/organisms/fileInputs/BaseImageFileInput'
+const BaseImageFileInput = () => import('~/components/organisms/fileInputs/BaseImageFileInput')
 
 export default {
   components: {

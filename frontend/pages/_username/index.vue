@@ -1,17 +1,17 @@
 <template>
   <!-- マイページのルート -->
   <div>
-    <username-index-template 
-      :userInfo="userInfo" 
+    <username-index-template
+      :userInfo="userInfo"
       :isCreatingNewFolder="isCreatingNewFolder"
-      @submit="submit" 
-      @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder" 
+      @submit="submit"
+      @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder"
     />
   </div>
 </template>
 
 <script>
-import UsernameIndexTemplate from '~/components/templates/UsernameIndexTemplate'
+const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
 import User from '~/types/User'
 
 export default {
@@ -39,18 +39,28 @@ export default {
         name: newFolderName,
         public: false,
         user_id: this.id,
-        parent_id: null 
+        parent_id: null
       }
+
       try {
-        await this.$axios.post(`/api/v1/folders`, folderInfo)
-        await this.$store.dispatch("authentication/fetchUser")
+        const { data } = await this.$axios.$post(`/api/v1/folders`, folderInfo)
+
+        this.userInfo.folders.push({
+          created_at: data.attributes["created-at"],
+          id: data.id,
+          name: data.attributes.name,
+          parent_id: null,
+          public: data.attributes.public,
+          updated_at: data.attributes["updated-at"],
+          user_id: data.attributes["user-id"]
+        })
+        this.triggerIsCreatingNewFolder()
       } catch(e) {
         console.error(e)
       }
-      this.fetchData()
     },
 
-     async fetchData() {
+    async fetchData() {
       try {
         const { data } = await this.$axios.$get(`/api/v1/users/${this.params.username}`)
         this.userInfo = new User(data)
@@ -65,12 +75,14 @@ export default {
     },
   },
 
-  async asyncData({ $axios, params, store }) {
+  async asyncData({ $axios, params, store, error }) {
     try {
       const { data } = await $axios.$get(`/api/v1/users/${params.username}`)
       return { userInfo: new User(data) }
     } catch (e) {
-      console.error(e)
+      error({
+        statusCode: e.response.status
+      })
     }
   },
 }

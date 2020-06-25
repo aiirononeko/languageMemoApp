@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import AboutIndexTemplate from '~/components/templates/AboutIndexTemplate'
+const AboutIndexTemplate = () => import('~/components/templates/AboutIndexTemplate')
 
 export default {
   components: {

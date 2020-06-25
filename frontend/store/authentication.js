@@ -26,6 +26,7 @@ export const state = () => ({
 
 export const getters = {
   accessToken: (state) => state.accessToken,
+  canFetchUser: (state) => !!state.uid && !state.userInfo,
   client: (state) => state.client,
   uid: (state) => state.uid,
   id: (state) => state.id,
@@ -77,12 +78,14 @@ export const actions = {
    *
    * 目的: cookieのdataからUserInfoを取得する
    */
-  async fetchUser ({ commit, getters }) {
+  async fetchUser ({ commit, dispatch, getters }) {
     try {
       const { data } = await this.$axios.$get(`/api/v1/users/${getters.username}`)
 
       commit('setUserInfo', new User(data))
     } catch (e) {
+      dispatch("removeUserData")
+
       if (e.response && e.response.status === 401) {
         throw new Error("Bad credentials")
       }
@@ -99,31 +102,42 @@ export const actions = {
     commit("setUser", { headers, data })
 
     // Cookieにセット
-    cookies.set("access-token", getters.accessToken)
-    cookies.set("client", getters.client)
-    cookies.set("id", getters.id)
-    cookies.set("uid", getters.uid)
-    cookies.set("username", getters.username)
+    cookies.set("access-token", getters.accessToken, { path: "/" })
+    cookies.set("client", getters.client, { path: "/" })
+    cookies.set("id", getters.id, { path: "/" })
+    cookies.set("uid", getters.uid, { path: "/" })
+    cookies.set("username", getters.username, { path: "/" })
   },
 
   // ログアウト
-  async logout ({ commit, getters }) {
+  async logout ({ dispatch }) {
     try {
-      await this.$axios.delete(
-        `/api/v1/auth/sign_out`,
-        {
-          headers: {
-            "access-token": getters.accessToken,
-            client: getters.client,
-            uid: getters.uid
-          }
-        }
-      )
+      await this.$axios.$delete(`/api/v1/auth/sign_out`)
 
-      commit("clearUser")
-      cookies.removeAll(["access-token", "client", "id", "uid", "username"])
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
+      dispatch("removeUserData")
+    } catch (e) {
+      dispatch("removeUserData")
+
+      if (e.response && e.response.status === 401) {
+        throw new Error("Bad credentials")
+      }
+      throw new Error("Internal Server Error")
+    }
+  },
+
+  // アカウント削除
+  async deactivate ({ dispatch }) {
+    try {
+      const data = await this.$axios.$delete(`/api/v1/auth`)
+
+      dispatch("removeUserData")
+
+      return data
+    } catch (e) {
+
+      dispatch("removeUserData")
+
+      if (e.response && e.response.status === 401) {
         throw new Error("Bad credentials")
       }
       throw new Error("Internal Server Error")
@@ -131,10 +145,20 @@ export const actions = {
   },
 
   /**
+   * User情報を削除する
+   */
+  removeUserData ({ commit }) {
+    commit("clearUser")
+    cookies.removeAll(["access-token", "client", "id", "uid", "username"], {
+      path: "/",
+    })
+  },
+
+  /**
    * username を更新する
    */
   updateUsername ({ commit, getters }, username) {
     commit("setUsername", username)
-    cookies.set("username", getters.username)
+    cookies.set("username", getters.username, { path: "/" })
   }
 }

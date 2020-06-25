@@ -12,10 +12,7 @@ export const actions = {
       }
 
       commit("authentication/setHeader", { headers: cookies.cookies })
-      if (
-        getters["authentication/isAuthenticated"] &&
-        !getters["authentication/userInfo"]
-      ) {
+      if (getters["authentication/canFetchUser"]) {
         await dispatch("authentication/fetchUser")
       }
     }

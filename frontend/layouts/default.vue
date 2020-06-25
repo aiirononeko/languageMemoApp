@@ -1,8 +1,8 @@
 <template>
   <v-app id="inspire">
-    <the-header @click="onDrawer()" />
+    <the-header />
 
-    <the-sidebar :drawer="drawer" />
+    <the-sidebar />
 
     <v-card class="overflow-hidden header box-shadow-none">
       <v-sheet
@@ -19,26 +19,13 @@
 </template>
 
 <script>
-import TheHeader from '~/components/organisms/header/TheHeader'
+const TheHeader = () => import('~/components/organisms/header/TheHeader')
 const TheSidebar = () => import('~/components/organisms/sidebar/TheSidebar')
 
 export default {
   components: {
     TheHeader,
     TheSidebar
-  },
-
-  data: () => ({
-    drawer: true
-  }),
-
-  methods: {
-    onDrawer() {
-      this.drawer = !this.drawer
-    }
   }
 }
 </script>
-
-<style scoped>
-</style>

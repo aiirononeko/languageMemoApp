@@ -7,9 +7,9 @@
 </template>
 
 <script>
-// import FileListItem from '~/components/organisms/list/FileListItem'
-import FileFolderListTitleItem from '~/components/organisms/list/FileFolderListTitleItem'
-// import FolderListItem from '~/components/organisms/list/FolderListItem'
+// const FileListItem = () => import('~/components/organisms/list/FileListItem')
+const FileFolderListTitleItem = () => import('~/components/organisms/list/FileFolderListTitleItem')
+// const FolderListItem = () => import('~/components/organisms/list/FolderListItem')
 
 export default {
   components: {
