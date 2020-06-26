@@ -86,10 +86,6 @@ export default {
       return this.$route.params
     },
 
-    parentParams() {
-      return this.params.pathMatch
-    },
-
     userID() {
       return this.$store.getters["authentication/id"]
     }
@@ -132,16 +128,6 @@ export default {
 
         this.triggerCreatingNewPost()
       } catch(e) {
-        console.error(e)
-      }
-    },
-
-    async fetchData() {
-      try {
-        const { data } = await this.$axios.$get(`/api/v1/folders/${this.parentParams}`)
-        this.foldersInfo = new Folder(data)
-        this.triggerCreatingNewFolder()
-      } catch (e) {
         console.error(e)
       }
     },

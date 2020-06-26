@@ -20,7 +20,7 @@
       </v-list-item>
     </v-col>
 
-    <v-col cols="1" class="pa-0 d-flex justify-center align-center">
+    <v-col v-if="canAction" cols="1" class="pa-0 d-flex justify-center align-center">
       <v-menu bottom left>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
