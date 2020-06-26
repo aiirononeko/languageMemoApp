@@ -134,7 +134,7 @@ class Folder {
    *
    * @param {*} id
    */
-  static isvalidFolderID (id) {
+  static isValidFolderID (id) {
     const num = isNumber(id) ? id : Number(id)
     return Number.isInteger(num) && num > 0
   }
