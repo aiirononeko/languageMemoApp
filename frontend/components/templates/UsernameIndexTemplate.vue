@@ -25,20 +25,17 @@
 
       <folder-breadcrumbs
         :breadCrumbs="breadCrumbs"
-        :current-username="currentUsername"
         :currentFolderName="isRepository ? '' : currentFolderName"
       />
 
       <file-folder-list-with-action
         v-if="canAction"
         :list="list"
-        :ancestor-folders="ancestorFolders"
+        :current-path="currentPath"
         :current-username="currentUsername"
-        :folders-info="foldersInfo"
-        :isRepository="isRepository"
+        :is-root="isRepository"
         :is-creating-new-folder="isCreatingNewFolder"
         :is-creating-new-file="isCreatingNewFile"
-        :parent-params="parentParams"
         @create-file="onCreateFile"
         @create-folder="onCreateFolder"
         @change-file-name="onChangeFileName"
@@ -50,11 +47,9 @@
       <file-folder-list
         v-else
         :list="list"
-        :ancestor-folders="ancestorFolders"
+        :current-path="currentPath"
         :current-username="currentUsername"
-        :folders-info="foldersInfo"
-        :isRepository="isRepository"
-        :parent-params="parentParams"
+        :is-root="isRepository"
       />
     </template>
   </two-column-container>
@@ -72,15 +67,19 @@ const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
  * パンくずリストの作成
  */
 const generateBreadcrumbs = (username, ancestorFolders) => {
-  const rootBreadCrumbs = [{ to: username, name: `${username}`, isRepo: true }]
+  let pastLink = `/${username}`
+
+  const rootBreadCrumbs = [{ to: pastLink, name: `${username}`, isRepo: true }]
   const reAncestorFolders = Object.assign([], ancestorFolders).reverse()
 
   const ancestorBreadCrumbs = reAncestorFolders.map(
-    (folder) => ({ to: folder.id , name: `${folder.name}`, isRepo: false })
+    (folder) => {
+      pastLink += `/${folder.id}`
+      return { to: pastLink , name: `${folder.name}`, isRepo: false }
+    }
   )
 
-  const breadCrumbs = [...rootBreadCrumbs, ...ancestorBreadCrumbs]
-  return breadCrumbs
+  return [...rootBreadCrumbs, ...ancestorBreadCrumbs]
 }
 
 export default {
@@ -96,6 +95,11 @@ export default {
     canAction: {
       type: Boolean,
       default: false
+    },
+
+    currentPath: {
+      type: String,
+      required: true
     },
 
     currentUsername: {
@@ -146,7 +150,7 @@ export default {
     /**
      * ルートから親フォルダまでの各idとisRepoを返す
      *
-     * @returns { { to: Number , name: String, isRepo: Boolean }[] }
+     * @returns { { to: Number , name: String }[] }
      */
     breadCrumbs() {
       return generateBreadcrumbs(this.currentUsername, this.ancestorFolders)
@@ -177,19 +181,19 @@ export default {
     },
 
     onChangeFileName(v) {
-      this.$emit('change-file-name', v)
+      return this.$emit('change-file-name', v)
     },
 
     onChangeFolderName(v) {
-      this.$emit('change-folder-name', v)
+      return this.$emit('change-folder-name', v)
     },
 
     onDeleteFile(v) {
-      this.$emit('delete-file', v)
+      return this.$emit('delete-file', v)
     },
 
     onDeleteFolder(v) {
-      this.$emit('delete-folder', v)
+      return this.$emit('delete-folder', v)
     },
 
     onTriggerCreatingNewFolder() {

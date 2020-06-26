@@ -1,35 +1,34 @@
 <template>
   <div>
-    <p v-if="!existList">フォルダやファイルは存在しません。作成してください</p>
+    <p v-if="!list">フォルダやファイルは存在しません。作成してください</p>
 
     <v-list>
       <v-list-item-group>
-        <link-to-back-item v-if="!isRepository" :to="toBackFolder" />
+        <link-to-back-item v-if="!isRoot" :to="toBackFolder" />
 
-        <template v-if="existList">
-          <template v-for="(item, key) in list" >
-            <file-list-item
-              v-if="!!item.content"
-              :can-action="true"
-              :name="item.name"
-              :id="item.id"
-              :to="`${nowLink}/${item.id}`"
-              :key="key"
-              @change-name="onChangeFileName"
-              @delete="onDeleteFile"
-            />
+        <!-- 登録済みのファイルやフォルダー -->
+        <template v-for="(item, key) in list" >
+          <file-list-item
+            v-if="item.type === 'posts'"
+            :can-action="true"
+            :name="item.name"
+            :id="item.id"
+            :to="`${currentPath}/${item.id}`"
+            :key="key"
+            @change-name="onChangeFileName"
+            @delete="onDeleteFile"
+          />
 
-            <folder-list-item
-              v-else
-              :can-action="true"
-              :name="item.name"
-              :to="`${nowLink}/${item.id}`"
-              :id="item.id"
-              :key="key"
-              @change-name="onChangeFolderName"
-              @delete="onDeleteFolder"
-            />
-          </template>
+          <folder-list-item
+            v-else
+            :can-action="true"
+            :name="item.name"
+            :to="`${currentPath}/${item.id}`"
+            :id="item.id"
+            :key="key"
+            @change-name="onChangeFolderName"
+            @delete="onDeleteFolder"
+          />
         </template>
 
         <!-- folder, file の新規作成時に表示 -->
@@ -57,32 +56,31 @@ export default {
   },
 
   props: {
-    ancestorFolders: {
-      type: Array,
-      default: () => []
-    },
-
     currentUsername: {
       type: String,
       default: ""
     },
 
-    foldersInfo: {
-      type: Object,
-      default: undefined
-    },
-
-    parentParams: {
+    /**
+     * 現在アクセスしているパス
+     */
+    currentPath: {
       type: String,
-      default: undefined
+      default: "/"
     },
 
+    /**
+     * ファイルやフォルダーの一覧
+     */
     list: {
       type: Array,
       default: () => []
     },
 
-    isRepository: {
+    /**
+     * 最上位層か (user 直下か)
+     */
+    isRoot: {
       type: Boolean,
       default: undefined
     },
@@ -104,31 +102,14 @@ export default {
   }),
 
   computed: {
-    existList() {
-      return !!this.list.length
-    },
-
-    username() {
-      return this.$store.getters["authentication/username"]
-    },
-
     // 一つ前のリンク
     toBackFolder() {
-      if (this.parentParams) {
-        return this.nowLink.substr( 0, this.nowLink.lastIndexOf("/") )
+      if (this.isRoot) {
+        return undefined
       }
 
-      return this.nowLink
+      return this.currentPath.substr( 0, this.currentPath.lastIndexOf("/") )
     },
-
-    // 現在のリンク
-    nowLink() {
-      if (this.parentParams) {
-        return `/${this.currentUsername}/${this.parentParams}`
-      }
-
-      return `/${this.currentUsername}`
-    }
   },
 
   methods: {
@@ -143,19 +124,19 @@ export default {
     },
 
     onChangeFileName(v) {
-      this.$emit('change-file-name', v)
+      return this.$emit('change-file-name', v)
     },
 
     onChangeFolderName(v) {
-      this.$emit('change-folder-name', v)
+      return this.$emit('change-folder-name', v)
     },
 
     onDeleteFile(v) {
-      this.$emit('delete-file', v)
+      return this.$emit('delete-file', v)
     },
 
     onDeleteFolder(v) {
-      this.$emit('delete-folder', v)
+      return this.$emit('delete-folder', v)
     }
   }
 }

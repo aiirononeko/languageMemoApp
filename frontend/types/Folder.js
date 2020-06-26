@@ -77,6 +77,7 @@ class Folder {
    */
   toFolder (folder) {
     this.id = folder.id
+    this.type = "folders"
     this.name = folder.name
     this.userID = folder.user_id
     this.public = folder.public

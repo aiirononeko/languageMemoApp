@@ -3,6 +3,7 @@
   <div>
     <username-index-template
       :can-action="canAction"
+      :current-path="currentPath"
       :current-username="currentUsername"
       :user-info="userInfo"
       :is-creating-new-folder="isCreatingNewFolder"
@@ -44,6 +45,10 @@ export default {
         : false
     },
 
+    currentPath() {
+      return this.$route.path
+    },
+
     currentUsername() {
       return this.$route.params.username
     },
@@ -72,7 +77,7 @@ export default {
         // 既存の配列を更新
         this.userInfo = User.pushFolder(this.userInfo, data)
 
-        this.triggerCreatingNewFolder()
+        this.isCreatingNewFolder = false
       } catch(e) {
         console.error(e)
       }
@@ -91,9 +96,9 @@ export default {
         const { data } = await this.$axios.$post(`/api/v1/posts`, postsInfo)
 
         // 既存のデータを更新
-        this,userInfo = User.pushPost(this.userInfo, data)
+        this.userInfo = User.pushPost(this.userInfo, data)
 
-        this.triggerCreatingNewFile()
+        this.isCreatingNewFile = false
       } catch(e) {
         console.error(e)
       }

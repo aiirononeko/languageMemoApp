@@ -76,7 +76,7 @@ class User {
       return newUser
     }
 
-    newUser.post.push(new Post(post))
+    newUser.posts.push(new Post(post))
     return newUser
   }
 

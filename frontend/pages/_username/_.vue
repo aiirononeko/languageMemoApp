@@ -3,6 +3,7 @@
   <div>
     <username-index-template
       :can-action="canAction"
+      :current-path="currentPath"
       :current-username="currentUsername"
       :user-info="userInfo"
       :folders-info="foldersInfo"
@@ -50,6 +51,10 @@ export default {
 
     currentUsername() {
       return this.params.username
+    },
+
+    currentPath() {
+      return this.$route.path
     },
 
     isAuthenticated() {

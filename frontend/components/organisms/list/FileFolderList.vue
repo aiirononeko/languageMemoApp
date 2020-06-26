@@ -1,29 +1,28 @@
 <template>
   <div>
-    <p v-if="!existList">フォルダやファイルは存在しません。作成してください</p>
+    <p v-if="!list">フォルダやファイルは存在しません。</p>
 
     <v-list>
       <v-list-item-group>
-        <link-to-back-item v-if="!isRepository" :to="toBackFolder" />
+        <link-to-back-item v-if="!isRoot" :to="toBackFolder" />
 
-        <template v-if="existList">
-          <template v-for="(item, key) in list" >
-            <file-list-item
-              v-if="!!item.content"
-              :name="item.name"
-              :id="item.id"
-              :to="`${nowLink}/${item.id}`"
-              :key="key"
-            />
+        <!-- 登録済みのファイルやフォルダー -->
+        <template v-for="(item, key) in list" >
+          <file-list-item
+            v-if="!!item.content"
+            :name="item.name"
+            :id="item.id"
+            :to="`${currentPath}/${item.id}`"
+            :key="key"
+          />
 
-            <folder-list-item
-              v-else
-              :name="item.name"
-              :to="`${nowLink}/${item.id}`"
-              :id="item.id"
-              :key="key"
-            />
-          </template>
+          <folder-list-item
+            v-else
+            :name="item.name"
+            :to="`${currentPath}/${item.id}`"
+            :id="item.id"
+            :key="key"
+          />
         </template>
       </v-list-item-group>
     </v-list>
@@ -43,65 +42,46 @@ export default {
   },
 
   props: {
-    ancestorFolders: {
-      type: Array,
-      default: () => []
-    },
-
     currentUsername: {
       type: String,
       default: ""
     },
 
-    foldersInfo: {
-      type: Object,
-      default: undefined
-    },
-
-    parentParams: {
+    /**
+     * 現在アクセスしているパス
+     */
+    currentPath: {
       type: String,
-      default: undefined
+      default: "/"
     },
 
+    /**
+     * ファイルやフォルダーの一覧
+     */
     list: {
       type: Array,
       default: () => []
     },
 
-    isRepository: {
+    /**
+     * 最上位層か (user 直下か)
+     */
+    isRoot: {
       type: Boolean,
       default: undefined
-    }
+    },
   },
 
-  data: () => ({
-    newFolderName: "",
-    newFileName: ""
-  }),
-
   computed: {
-    existList() {
-      return !!this.list.length
-    },
-
     // 一つ前のリンク
     toBackFolder() {
-      if (this.parentParams) {
-        return this.nowLink.substr( 0, this.nowLink.lastIndexOf("/") )
+      if (this.isRoot) {
+        return undefined
       }
 
-      return this.nowLink
+      return this.currentPath.substr( 0, this.currentPath.lastIndexOf("/") )
     },
-
-    // 現在のリンク
-    nowLink() {
-      if (this.parentParams) {
-        return `/${this.currentUsername}/${this.parentParams}`
-      }
-
-      return `/${this.currentUsername}`
-    }
-  }
+  },
 }
 </script>
 
