@@ -14,7 +14,7 @@
       <v-container>
         <v-row>
           <v-col cols="12" sm="8">
-            <h2 class="text-center">あなたのリポジトリ</h2>
+            <h2 class="text-center">{{ canAction ? 'あなた' : currentUsername }}のリポジトリ</h2>
           </v-col>
           <v-col v-if="canAction" cols="12" sm="4" class="text-right">
             <blue-btn @click="onTriggerCreatingNewFolder" class="mb-4">フォルダーを作成する</blue-btn>
@@ -74,13 +74,13 @@ const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
 const generateBreadcrumbs = (username, ancestorFolders) => {
   let pastLink = `/${username}`
 
-  const rootBreadCrumbs = [{ to: pastLink, name: `${username}`, isRepo: true }]
+  const rootBreadCrumbs = [{ to: pastLink, name: `${username}` }]
   const reAncestorFolders = Object.assign([], ancestorFolders).reverse()
 
   const ancestorBreadCrumbs = reAncestorFolders.map(
     (folder) => {
       pastLink += `/${folder.id}`
-      return { to: pastLink , name: `${folder.name}`, isRepo: false }
+      return { to: pastLink , name: `${folder.name}` }
     }
   )
 
@@ -90,6 +90,7 @@ const generateBreadcrumbs = (username, ancestorFolders) => {
 export default {
   components: {
     PostFolderListWithAction,
+    PostFolderList,
     FolderBreadcrumbs,
     TwoColumnContainer,
     UserIntroCard,
@@ -140,7 +141,7 @@ export default {
      * @returns { Array<import('~/types/Folder').default> }
      */
     ancestorFolders() {
-      if (!this.foldersInfo) {
+      if (this.isRoot) {
         return undefined
       }
 

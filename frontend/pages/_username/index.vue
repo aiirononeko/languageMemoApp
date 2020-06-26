@@ -104,16 +104,6 @@ export default {
       }
     },
 
-    async fetchData() {
-      try {
-        const { data } = await this.$axios.$get(`/api/v1/users/${this.params.username}`)
-        this.userInfo = new User(data)
-        this.triggerCreatingNewFolder()
-      } catch (e) {
-        console.error(e)
-      }
-    },
-
     async onChangeFileName({ id, name }) {
       try {
         const { data } = await this.$axios.$put(`/api/v1/posts/${id}`, {
