@@ -40,7 +40,7 @@
 </template>
 
 <script>
-const CreateFileListItem = () => import('~/components/organisms/list/CreateFileListItem')
+const CreatePostListItem = () => import('~/components/organisms/list/CreatePostListItem')
 const CreateFolderListItem = () => import('~/components/organisms/list/CreateFolderListItem')
 const PostListItem = () => import('~/components/organisms/list/PostListItem')
 const FolderListItem = () => import('~/components/organisms/list/FolderListItem')
@@ -48,7 +48,7 @@ const LinkToBackItem = () => import('~/components/organisms/list/LinkToBackItem'
 
 export default {
   components: {
-    CreateFileListItem,
+    CreatePostListItem,
     CreateFolderListItem,
     PostListItem,
     FolderListItem,
