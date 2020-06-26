@@ -18,7 +18,7 @@
           </v-col>
           <v-col v-if="canAction" cols="12" sm="4" class="text-right">
             <blue-btn @click="onTriggerCreatingNewFolder" class="mb-4">フォルダーを作成する</blue-btn>
-            <blue-btn @click="onTriggerCreatingNewFile">ファイルを作成する</blue-btn>
+            <blue-btn @click="onTriggerCreatingNewPost">ファイルを作成する</blue-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -28,23 +28,23 @@
         :currentFolderName="isRoot ? '' : currentFolderName"
       />
 
-      <file-folder-list-with-action
+      <post-folder-list-with-action
         v-if="canAction"
         :list="list"
         :current-path="currentPath"
         :current-username="currentUsername"
         :is-root="isRoot"
         :is-creating-new-folder="isCreatingNewFolder"
-        :is-creating-new-file="isCreatingNewFile"
-        @create-file="onCreateFile"
+        :is-creating-new-post="isCreatingNewPost"
         @create-folder="onCreateFolder"
-        @change-file-name="onChangeFileName"
+        @create-post="onCreatePost"
         @change-folder-name="onChangeFolderName"
-        @delete-file="onDeleteFile"
+        @change-post-name="onChangeFileName"
         @delete-folder="onDeleteFolder"
+        @delete-post="onDeletePost"
       />
 
-      <file-folder-list
+      <post-folder-list
         v-else
         :list="list"
         :current-path="currentPath"
@@ -56,8 +56,8 @@
 </template>
 
 <script>
-const FileFolderListWithAction = () => import('~/components/organisms/list/FileFolderListWithAction')
-const FileFolderList = () => import('~/components/organisms/list/FileFolderList')
+const PostFolderListWithAction = () => import('~/components/organisms/list/PostFolderListWithAction')
+const PostFolderList = () => import('~/components/organisms/list/PostFolderList')
 const FolderBreadcrumbs = () => import('~/components/organisms/breadcrumbs/FolderBreadcrumbs')
 const TwoColumnContainer = () => import('~/components/molecules/containers/TwoColumnContainer')
 const UserIntroCard = () => import('~/components/organisms/cards/UserIntroCard')
@@ -89,7 +89,7 @@ const generateBreadcrumbs = (username, ancestorFolders) => {
 
 export default {
   components: {
-    FileFolderListWithAction,
+    PostFolderListWithAction,
     FolderBreadcrumbs,
     TwoColumnContainer,
     UserIntroCard,
@@ -127,7 +127,7 @@ export default {
       default: false
     },
 
-    isCreatingNewFile: {
+    isCreatingNewPost: {
       type: Boolean,
       default: false
     }
@@ -187,8 +187,8 @@ export default {
   },
 
   methods: {
-    onCreateFile(v) {
-      return this.$emit('create-file', v)
+    onCreatePost(v) {
+      return this.$emit('create-post', v)
     },
 
     onCreateFolder(v) {
@@ -196,15 +196,15 @@ export default {
     },
 
     onChangeFileName(v) {
-      return this.$emit('change-file-name', v)
+      return this.$emit('change-post-name', v)
     },
 
     onChangeFolderName(v) {
       return this.$emit('change-folder-name', v)
     },
 
-    onDeleteFile(v) {
-      return this.$emit('delete-file', v)
+    onDeletePost(v) {
+      return this.$emit('delete-post', v)
     },
 
     onDeleteFolder(v) {
@@ -215,8 +215,8 @@ export default {
       return this.$emit('trigger-creating-new-folder')
     },
 
-    onTriggerCreatingNewFile() {
-      return this.$emit('trigger-creating-new-file')
+    onTriggerCreatingNewPost() {
+      return this.$emit('trigger-creating-new-post')
     }
   },
 }

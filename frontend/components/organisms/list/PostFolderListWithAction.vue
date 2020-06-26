@@ -8,7 +8,7 @@
 
         <!-- 登録済みのファイルやフォルダー -->
         <template v-for="(item, key) in list" >
-          <file-list-item
+          <post-list-item
             v-if="item.type === 'posts'"
             :can-action="true"
             :name="item.name"
@@ -16,7 +16,7 @@
             :to="`${currentPath}/${item.id}`"
             :key="key"
             @change-name="onChangeFileName"
-            @delete="onDeleteFile"
+            @delete="onDeletePost"
           />
 
           <folder-list-item
@@ -33,7 +33,7 @@
 
         <!-- folder, file の新規作成時に表示 -->
         <create-folder-list-item v-if="isCreatingNewFolder" v-model="newFolderName" @submit="onCreateFolder" />
-        <create-file-list-item v-if="isCreatingNewFile" v-model="newFileName" @submit="onCreateFile" />
+        <create-post-list-item v-if="isCreatingNewPost" v-model="newPostName" @submit="onCreatePost" />
       </v-list-item-group>
     </v-list>
   </div>
@@ -42,7 +42,7 @@
 <script>
 const CreateFileListItem = () => import('~/components/organisms/list/CreateFileListItem')
 const CreateFolderListItem = () => import('~/components/organisms/list/CreateFolderListItem')
-const FileListItem = () => import('~/components/organisms/list/FileListItem')
+const PostListItem = () => import('~/components/organisms/list/PostListItem')
 const FolderListItem = () => import('~/components/organisms/list/FolderListItem')
 const LinkToBackItem = () => import('~/components/organisms/list/LinkToBackItem')
 
@@ -50,7 +50,7 @@ export default {
   components: {
     CreateFileListItem,
     CreateFolderListItem,
-    FileListItem,
+    PostListItem,
     FolderListItem,
     LinkToBackItem,
   },
@@ -90,7 +90,7 @@ export default {
       default: false
     },
 
-    isCreatingNewFile: {
+    isCreatingNewPost: {
       type: Boolean,
       default: false
     }
@@ -98,7 +98,7 @@ export default {
 
   data: () => ({
     newFolderName: "",
-    newFileName: ""
+    newPostName: ""
   }),
 
   computed: {
@@ -118,21 +118,21 @@ export default {
       this.newFolderName = ""
     },
 
-    onCreateFile() {
-      this.$emit('create-file', this.newFileName)
-      this.newFileName = ""
+    onCreatePost() {
+      this.$emit('create-post', this.newPostName)
+      this.newPostName = ""
     },
 
     onChangeFileName(v) {
-      return this.$emit('change-file-name', v)
+      return this.$emit('change-post-name', v)
     },
 
     onChangeFolderName(v) {
       return this.$emit('change-folder-name', v)
     },
 
-    onDeleteFile(v) {
-      return this.$emit('delete-file', v)
+    onDeletePost(v) {
+      return this.$emit('delete-post', v)
     },
 
     onDeleteFolder(v) {

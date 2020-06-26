@@ -8,15 +8,15 @@
       :user-info="userInfo"
       :folders-info="foldersInfo"
       :is-creating-new-folder="isCreatingNewFolder"
-      :is-creating-new-file="isCreatingNewFile"
-      @create-file="onCreateFile"
+      :is-creating-new-post="isCreatingNewPost"
       @create-folder="onCreateFolder"
-      @change-file-name="onChangeFileName"
+      @create-post="onCreatePost"
       @change-folder-name="onChangeFolderName"
-      @delete-file="onDeleteFile"
+      @change-post-name="onChangeFileName"
       @delete-folder="onDeleteFolder"
+      @delete-post="onDeletePost"
       @trigger-creating-new-folder="triggerCreatingNewFolder"
-      @trigger-creating-new-file="triggerCreatingNewFile"
+      @trigger-creating-new-post="triggerCreatingNewPost"
     />
   </div>
 </template>
@@ -56,7 +56,7 @@ export default {
 
   data: () => ({
     isCreatingNewFolder: false,
-    isCreatingNewFile: false,
+    isCreatingNewPost: false,
   }),
 
   computed: {
@@ -115,10 +115,10 @@ export default {
       }
     },
 
-    async onCreateFile(newFileName) {
+    async onCreatePost(newPostName) {
       const postsInfo = {
-        name: newFileName,
-        content: newFileName,
+        name: newPostName,
+        content: newPostName,
         public: false,
         user_id: this.userID,
         folder_id:  this.foldersInfo.id
@@ -130,7 +130,7 @@ export default {
         // 既存の配列を更新
         this.foldersInfo = Folder.pushPost(this.foldersInfo, data)
 
-        this.triggerCreatingNewFile()
+        this.triggerCreatingNewPost()
       } catch(e) {
         console.error(e)
       }
@@ -170,7 +170,7 @@ export default {
       }
     },
 
-    async onDeleteFile({ id }) {
+    async onDeletePost({ id }) {
       try {
         await this.$axios.$delete(`/api/v1/posts/${id}`)
 
@@ -194,8 +194,8 @@ export default {
       this.isCreatingNewFolder = !this.isCreatingNewFolder
     },
 
-    triggerCreatingNewFile() {
-      this.isCreatingNewFile = !this.isCreatingNewFile
+    triggerCreatingNewPost() {
+      this.isCreatingNewPost = !this.isCreatingNewPost
     }
   },
 

@@ -8,7 +8,7 @@
 
         <!-- 登録済みのファイルやフォルダー -->
         <template v-for="(item, key) in list" >
-          <file-list-item
+          <post-list-item
             v-if="!!item.content"
             :name="item.name"
             :id="item.id"
@@ -30,13 +30,13 @@
 </template>
 
 <script>
-const FileListItem = () => import('~/components/organisms/list/FileListItem')
+const PostListItem = () => import('~/components/organisms/list/PostListItem')
 const FolderListItem = () => import('~/components/organisms/list/FolderListItem')
 const LinkToBackItem = () => import('~/components/organisms/list/LinkToBackItem')
 
 export default {
   components: {
-    FileListItem,
+    PostListItem,
     FolderListItem,
     LinkToBackItem,
   },
