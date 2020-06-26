@@ -101,6 +101,12 @@ class User {
     return newUser
   }
 
+  /**
+   *
+   * @param {User} user
+   * @param {Number} id
+   * @param {Post} newPost
+   */
   static updatePost (user, id, newPost) {
     const newUser = Object.assign({}, user)
     const idx = user.posts.findIndex((post) => post.id === id)
@@ -116,6 +122,12 @@ class User {
     return newUser
   }
 
+  /**
+   *
+   * @param {User} user
+   * @param {Number} id
+   * @param {Folder} newFolder
+   */
   static updateFolder (user, id, newFolder) {
     const newUser = Object.assign({}, user)
     const idx = user.folders.findIndex((folders) => folders.id === id)
