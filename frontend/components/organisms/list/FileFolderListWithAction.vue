@@ -7,10 +7,27 @@
         <link-to-back-item v-if="!isRepository" :to="toBackFolder" />
 
         <template v-if="existList">
-          <span v-for="item in list" :key="item.id">
-            <file-list-item v-if="!!item.content" :name="item.name" :to="`${nowLink}/${item.id}`" />
-            <folder-list-item v-else :name="item.name" :to="`${nowLink}/${item.id}`" />
-          </span>
+          <template v-for="(item, key) in list" >
+            <file-list-item
+              v-if="!!item.content"
+              :can-action="true"
+              :name="item.name"
+              :to="`${nowLink}/${item.id}`"
+              :key="key"
+              @change-name="onChangeFileName"
+              @delete="onDeleteFile"
+            />
+
+            <folder-list-item
+              v-else
+              :can-action="true"
+              :name="item.name"
+              :to="`${nowLink}/${item.id}`"
+              :key="key"
+              @change-name="onChangeFolderName"
+              @delete="onDeleteFolder"
+            />
+          </template>
         </template>
 
         <!-- folder, file の新規作成時に表示 -->
@@ -121,6 +138,22 @@ export default {
     onCreateFile() {
       this.$emit('create-file', this.newFileName)
       this.newFileName = ""
+    },
+
+    onChangeFileName() {
+      this.$emit('change-file-name')
+    },
+
+    onChangeFolderName() {
+      this.$emit('change-folder-name')
+    },
+
+    onDeleteFile() {
+      this.$emit('delete-file')
+    },
+
+    onDeleteFolder() {
+      this.$emit('delete-folder')
     }
   }
 }

@@ -2,6 +2,7 @@
   <!-- マイページのルート -->
   <div>
     <username-index-template
+      :can-action="canAction"
       :current-username="currentUsername"
       :user-info="userInfo"
       :is-creating-new-folder="isCreatingNewFolder"
@@ -29,13 +30,27 @@ export default {
   }),
 
   computed: {
-    userID() {
-      return this.$store.getters["authentication/id"]
+    authUsername() {
+      return this.$store.getters["authentication/username"]
+    },
+
+    canAction() {
+      return this.isAuthenticated
+        ? this.currentUsername === this.authUsername
+        : false
     },
 
     currentUsername() {
       return this.$route.params.username
     },
+
+    isAuthenticated() {
+      return this.$store.getters["authentication/isAuthenticated"]
+    },
+
+    userID() {
+      return this.$store.getters["authentication/id"]
+    }
   },
 
   methods: {

@@ -2,6 +2,7 @@
   <!-- マイページの２階層以下 -->
   <div>
     <username-index-template
+      :can-action="canAction"
       :current-username="currentUsername"
       :user-info="userInfo"
       :folders-info="foldersInfo"
@@ -33,6 +34,24 @@ export default {
   }),
 
   computed: {
+    authUsername() {
+      return this.$store.getters["authentication/username"]
+    },
+
+    canAction() {
+      return this.isAuthenticated
+        ? this.currentUsername === this.authUsername
+        : false
+    },
+
+    currentUsername() {
+      return this.params.username
+    },
+
+    isAuthenticated() {
+      return this.$store.getters["authentication/isAuthenticated"]
+    },
+
     params() {
       return this.$route.params
     },
@@ -43,11 +62,7 @@ export default {
 
     userID() {
       return this.$store.getters["authentication/id"]
-    },
-
-    currentUsername() {
-      return this.$route.params.username
-    },
+    }
   },
 
   methods: {
@@ -61,7 +76,7 @@ export default {
 
       try {
         const { data } = await this.$axios.$post(`/api/v1/folders`, folderInfo)
-        this.foldersInfo = data
+        this.foldersInfo = new Folder(data)
         this.triggerCreatingNewFolder()
       } catch(e) {
         return this.$nuxt.error({
