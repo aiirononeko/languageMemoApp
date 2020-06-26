@@ -63,6 +63,10 @@ class User {
     return user
   }
 
+  static isUser (v) {
+    return v instanceof User
+  }
+
   /**
    *
    * @param {User} user

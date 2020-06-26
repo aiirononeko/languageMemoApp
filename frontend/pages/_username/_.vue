@@ -32,6 +32,28 @@ export default {
     UsernameIndexTemplate
   },
 
+  middleware ({ params, error })  {
+    const folderID = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID
+
+    // 有効なフォルダーIDかどうか
+    if (!Folder.isvalidFolderID(folderID)) {
+      return error({
+        statusCode: 404
+      })
+    }
+
+    const ancestorFolderIDs = pathToArr(params.pathMatch)
+    if (ancestorFolderIDs.length === 1 && ancestorFolderIDs[0] === '.') {
+      return
+    }
+
+    if (ancestorFolderIDs.some((v) => !Folder.isvalidFolderID(v))) {
+      return error({
+        statusCode: 404
+      })
+    }
+  },
+
   data: () => ({
     isCreatingNewFolder: false,
     isCreatingNewFile: false,
@@ -177,37 +199,38 @@ export default {
     }
   },
 
-  async asyncData({ $axios, params, store, error }) {
-    const folder_id = getDirname(params.pathMatch)
-    const ancestor_folder_id = pathToArr(params.pathMatch)
+  async asyncData({ $axios, params, error }) {
+    console.log('asyncdata')
+    const folderID = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID
+    const ancestorFolderIDs = pathToArr(params.pathMatch)
     let userInfo, foldersInfo
 
     try {
-      userInfo = await $axios.$get(`/api/v1/users/${params.username}`)
+      const apiUserInfo = await $axios.$get(`/api/v1/users/${params.username}`)
+      const apiFoldersInfo = await $axios.$get(`/api/v1/folders/${folderID}`)
 
-      foldersInfo = await $axios.$get(`/api/v1/folders/${folder_id}`)
+      /** @type {User} userInfo */
+      userInfo = new User(apiUserInfo.data)
+      /** @type {Folder} foldersInfo */
+      foldersInfo = new Folder(apiFoldersInfo.data)
     } catch (e) {
-      if (e.response && e.response.status) {
-        return error({
-          statusCode: e.response.status
-        })
-      }
+      const statusCode = e.response && e.response.status || 500
 
       return error({
-        statusCode: 500
+        statusCode: statusCode
       })
     }
 
-    for (const apiAncestorFolder of foldersInfo.data.attributes["ancestor-folders"]) {
-      const str = ancestor_folder_id.pop()
-      if (str !== String(apiAncestorFolder.id)) {
+    for (const ancestorFolders of foldersInfo.ancestorFolders) {
+      const ancestorFolderID = ancestorFolderIDs.pop() // パスのファイルIDの末尾取り出し
+      if (!Folder.isEqualFolderID(ancestorFolders, ancestorFolderID)) {
         return error({
           statusCode: 404
         })
       }
     }
 
-    return { userInfo: new User(userInfo.data), foldersInfo: new Folder(foldersInfo.data) }
+    return { userInfo, foldersInfo }
   },
 }
 </script>
