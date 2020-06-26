@@ -16,7 +16,7 @@
           <v-col cols="12" sm="8">
             <h2 class="text-center">あなたのリポジトリ</h2>
           </v-col>
-          <v-col cols="12" sm="4" class="text-right">
+          <v-col v-if="canAction" cols="12" sm="4" class="text-right">
             <blue-btn @click="onTriggerCreatingNewFolder" class="mb-4">フォルダーを作成する</blue-btn>
             <blue-btn @click="onTriggerCreatingNewFile">ファイルを作成する</blue-btn>
           </v-col>
@@ -30,6 +30,7 @@
       />
 
       <file-folder-list-with-action
+        v-if="canAction"
         :list="list"
         :ancestor-folders="ancestorFolders"
         :current-username="currentUsername"
@@ -40,6 +41,20 @@
         :parent-params="parentParams"
         @create-file="onCreateFile"
         @create-folder="onCreateFolder"
+        @change-file-name="onChangeFileName"
+        @change-folder-name="onChangeFolderName"
+        @delete-file="onDeleteFile"
+        @delete-folder="onDeleteFolder"
+      />
+
+      <file-folder-list
+        v-else
+        :list="list"
+        :ancestor-folders="ancestorFolders"
+        :current-username="currentUsername"
+        :folders-info="foldersInfo"
+        :isRepository="isRepository"
+        :parent-params="parentParams"
       />
     </template>
   </two-column-container>
@@ -47,6 +62,7 @@
 
 <script>
 const FileFolderListWithAction = () => import('~/components/organisms/list/FileFolderListWithAction')
+const FileFolderList = () => import('~/components/organisms/list/FileFolderList')
 const FolderBreadcrumbs = () => import('~/components/organisms/breadcrumbs/FolderBreadcrumbs')
 const TwoColumnContainer = () => import('~/components/molecules/containers/TwoColumnContainer')
 const UserIntroCard = () => import('~/components/organisms/cards/UserIntroCard')
@@ -77,6 +93,11 @@ export default {
   },
 
   props: {
+    canAction: {
+      type: Boolean,
+      default: false
+    },
+
     currentUsername: {
       type: String,
       required: true
@@ -144,10 +165,6 @@ export default {
         ? [...this.foldersInfo.childFolders, ...this.foldersInfo.posts]
         : [...this.userInfo.folders, ...this.userInfo.posts]
     },
-
-    params() {
-      return this.$route.params
-    },
   },
 
   methods: {
@@ -157,6 +174,22 @@ export default {
 
     onCreateFolder(v) {
       return this.$emit('create-folder', v)
+    },
+
+    onChangeFileName() {
+      this.$emit('change-file-name')
+    },
+
+    onChangeFolderName() {
+      this.$emit('change-folder-name')
+    },
+
+    onDeleteFile() {
+      this.$emit('delete-file')
+    },
+
+    onDeleteFolder() {
+      this.$emit('delete-folder')
     },
 
     onTriggerCreatingNewFolder() {
