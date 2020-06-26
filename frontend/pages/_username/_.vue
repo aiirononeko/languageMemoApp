@@ -36,7 +36,7 @@ export default {
     const folderID = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID
 
     // 有効なフォルダーIDかどうか
-    if (!Folder.isvalidFolderID(folderID)) {
+    if (!Folder.isValidFolderID(folderID)) {
       return error({
         statusCode: 404
       })
@@ -47,7 +47,7 @@ export default {
       return
     }
 
-    if (ancestorFolderIDs.some((v) => !Folder.isvalidFolderID(v))) {
+    if (ancestorFolderIDs.some((v) => !Folder.isValidFolderID(v))) {
       return error({
         statusCode: 404
       })

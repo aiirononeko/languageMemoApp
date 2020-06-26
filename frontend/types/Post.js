@@ -88,7 +88,7 @@ class Post {
  *
  * @param {*} id
  */
-  static isvalidPostID (id) {
+  static isValidPostID (id) {
     const num = isNumber(id) ? id : Number(id)
     return Number.isInteger(num) && num > 0
   }
