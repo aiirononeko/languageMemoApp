@@ -85,22 +85,78 @@ class Folder {
     this.parentID = folder.parent_id
   }
 
-  pushPost (post) {
-    if (post instanceof Post) {
-      this.posts.push(post)
-      return
-    }
-
-    this.post.push(new Post(post))
+  /**
+   *
+   * @param {Folder} folder
+   * @param {String} id
+   */
+  static deletePost (folder, id) {
+    folder.posts = folder.posts.filter((post) => post.id !== id)
+    return folder
   }
 
-  pushChildFolder (folder) {
-    if (folder instanceof Folder) {
-      this.childFolders.push(folder)
-      return
+  /**
+   *
+   * @param {Folder} folders
+   * @param {String} id
+   */
+  static deleteChildFolder (folders, id) {
+    folders.childFolders = folders.childFolders.filter((folder) => folder.id !== id)
+    return folders
+  }
+
+  static pushPost (folder, post) {
+    const newFolder = Object.assign({}, folder)
+
+    if (post instanceof Post) {
+      newFolder.posts.push(post)
+      return newFolder
     }
 
-    this.childFolders.push(new Folder(folder))
+    newFolder.posts.push(new Post(post))
+    return newFolder
+  }
+
+  static pushChildFolder (folder, newChildFolder) {
+    const newFolder = Object.assign({}, folder)
+
+    if (newChildFolder instanceof Folder) {
+      newFolder.childFolders.push(newChildFolder)
+      return newFolder
+    }
+
+    newFolder.childFolders.push(new Folder(newChildFolder))
+    return newFolder
+  }
+
+  static updatePost (folder, id, post) {
+    const newFolder = Object.assign({}, folder)
+    const idx = newFolder.posts.findIndex((posts) => posts.id === id)
+
+    if (idx === -1) {
+      return newFolder
+    }
+
+    newFolder.posts[idx] = post instanceof Post
+      ? post
+      : new Folder(post)
+
+    return newFolder
+  }
+
+  static updateChildFolder (folder, id, newChildFolder) {
+    const newFolder = Object.assign({}, folder)
+    const idx = newFolder.childFolders.findIndex((folders) => folders.id === id)
+
+    if (idx === -1) {
+      return newFolder
+    }
+
+    newFolder.childFolders[idx] = newChildFolder instanceof Folder
+      ? newChildFolder
+      : new Folder(newChildFolder)
+
+    return newFolder
   }
 }
 

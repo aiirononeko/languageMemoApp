@@ -43,22 +43,88 @@ class User {
       attributes.posts.map((post) => new Post(post)) : []
   }
 
-  pushPost (post) {
-    if (post instanceof Post) {
-      this.posts.push(post)
-      return
-    }
-
-    this.post.push(new Post(post))
+  /**
+   *
+   * @param {User} user
+   * @param {String} id
+   */
+  static deletePost (user, id) {
+    user.posts = user.posts.filter((post) => post.id !== id)
+    return user
   }
 
-  pushFolder (folder) {
-    if (folder instanceof Folder) {
-      this.folders.push(folder)
-      return
+  /**
+   *
+   * @param {User} user
+   * @param {String} id
+   */
+  static deleteFolder (user, id) {
+    user.folders = user.folders.filter((folder) => folder.id !== id)
+    return user
+  }
+
+  /**
+   *
+   * @param {User} user
+   * @param {Post} post
+   */
+  static pushPost (user, post) {
+    const newUser = Object.assign({}, user)
+
+    if (post instanceof Post) {
+      newUser.posts.push(post)
+      return newUser
     }
 
-    this.folders.push(new Folder(folder))
+    newUser.post.push(new Post(post))
+    return newUser
+  }
+
+  /**
+   *
+   * @param {User} user
+   * @param {Folder} folder
+   */
+  static pushFolder (user, folder) {
+    const newUser = Object.assign({}, user)
+
+    if (folder instanceof Folder) {
+      newUser.folders.push(folder)
+      return newUser
+    }
+
+    newUser.folders.push(new Folder(folder))
+    return newUser
+  }
+
+  static updatePost (user, id, newPost) {
+    const newUser = Object.assign({}, user)
+    const idx = user.posts.findIndex((post) => post.id === id)
+
+    if (idx === -1) {
+      return newUser
+    }
+
+    newUser.posts[idx] = newPost instanceof Post
+      ? newPost
+      : new Post(newPost)
+
+    return newUser
+  }
+
+  static updateFolder (user, id, newFolder) {
+    const newUser = Object.assign({}, user)
+    const idx = user.folders.findIndex((folders) => folders.id === id)
+
+    if (idx === -1) {
+      return newUser
+    }
+
+    newUser.folders[idx] = newFolder instanceof Folder
+      ? newFolder
+      : new Folder(newFolder)
+
+    return newUser
   }
 }
 
