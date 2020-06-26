@@ -1,5 +1,5 @@
 import Post from "./Post"
-import { isNumber } from "@/utils/number"
+import { isUnsignedInteger, StrOrNumToNumber } from "@/utils/number"
 
 /**
  * @typedef FolderAttributes
@@ -9,18 +9,18 @@ import { isNumber } from "@/utils/number"
  * @property {String} name
  * @property {Array<Object>} posts
  * @property {String} public
- * @property {Number} user-id
+ * @property {String|Number} user-id
  * @property {String} updated-at
  */
 
 /**
  * @typedef FolderNormal
  * @property {String} created_at
- * @property {String} id
+ * @property {String|Number} id
  * @property {String} name
- * @property {String} parent_id
+ * @property {String|Number} parent_id
  * @property {String} public
- * @property {Number} user_id
+ * @property {String|Number} user_id
  * @property {String} updated_at
  */
 
@@ -49,18 +49,17 @@ class Folder {
    * @param {{ id: String, type: String, attributes: FolderAttributes }} param0
    */
   withAttributesToFolder ({ id, type, attributes }) {
-    /** @type Number */
-    this.id = isNumber(id) ? id : Number(id)
+    this.id = StrOrNumToNumber(id)
     this.type = type
     this.name = attributes.name
     this.public = attributes.public
-    this.userID = attributes["user-id"]
+    this.userID = StrOrNumToNumber(attributes["user-id"])
     this.createdAt = new Date(attributes['created-at'])
     this.updatedAt = new Date(attributes['updated-at'])
 
     if (attributes["ancestor-folders"] && attributes["ancestor-folders"].length > 0) {
       /** @type String */
-      this.parentID = attributes["ancestor-folders"][0].id
+      this.parentID = StrOrNumToNumber(attributes["ancestor-folders"][0].id)
       this.ancestorFolders = attributes["ancestor-folders"].map((folder) => new Folder(folder))
     }
 
@@ -78,11 +77,10 @@ class Folder {
    * @param {FolderNormal} folder
    */
   toFolder (folder) {
-    /** @type Number */
-    this.id = isNumber(folder.id) ? folder.id : Number(folder.id)
+    this.id = StrOrNumToNumber(folder.id)
     this.type = "folders"
     this.name = folder.name
-    this.userID = folder.user_id
+    this.userID = StrOrNumToNumber(folder.user_id)
     this.public = folder.public
     this.createdAt = new Date(folder.created_at)
     this.updatedAt = new Date(folder.updated_at)
@@ -92,20 +90,22 @@ class Folder {
   /**
    *
    * @param {Folder} folder
-   * @param {String} id
+   * @param {String|Number} id
    */
   static deletePost (folder, id) {
-    folder.posts = folder.posts.filter((post) => post.id !== id)
+    const num = StrOrNumToNumber(id)
+    folder.posts = folder.posts.filter((post) => post.id !== num)
     return folder
   }
 
   /**
    *
    * @param {Folder} folders
-   * @param {String} id
+   * @param {Number|String} id
    */
   static deleteChildFolder (folders, id) {
-    folders.childFolders = folders.childFolders.filter((folder) => folder.id !== id)
+    const num = StrOrNumToNumber(id)
+    folders.childFolders = folders.childFolders.filter((folder) => folder.id !== num)
     return folders
   }
 
@@ -115,17 +115,12 @@ class Folder {
    * @param {Folder} folders
    * @param {Number|String} id
    */
-  static isEqualFolderID (folders, id) {
-    const num = isNumber(id) ? id : Number(id)
-    return folders.id === num
-  }
+  static isEqualFolderID = (folders, id) => folders.id === StrOrNumToNumber(id)
 
   /**
    * @param {*} v
    */
-  static isFolder (v) {
-    return v instanceof Folder
-  }
+  static isFolder = (v) => v instanceof Folder
 
   /**
    * 正しいフォルダーIDか
@@ -134,10 +129,7 @@ class Folder {
    *
    * @param {*} id
    */
-  static isValidFolderID (id) {
-    const num = isNumber(id) ? id : Number(id)
-    return Number.isInteger(num) && num > 0
-  }
+  static isValidFolderID = (id) => isUnsignedInteger(id)
 
   /**
    *
@@ -147,7 +139,7 @@ class Folder {
   static pushPost (folder, post) {
     const newFolder = Object.assign({}, folder)
 
-    if (post instanceof Post) {
+    if (Post.isPost(post)) {
       newFolder.posts.push(post)
       return newFolder
     }
@@ -164,7 +156,7 @@ class Folder {
   static pushChildFolder (folder, newChildFolder) {
     const newFolder = Object.assign({}, folder)
 
-    if (newChildFolder instanceof Folder) {
+    if (Folder.isFolder(newChildFolder)) {
       newFolder.childFolders.push(newChildFolder)
       return newFolder
     }
@@ -181,13 +173,14 @@ class Folder {
    */
   static updatePost (folder, id, post) {
     const newFolder = Object.assign({}, folder)
-    const idx = newFolder.posts.findIndex((posts) => posts.id === id)
+    const num = StrOrNumToNumber(id)
+    const idx = newFolder.posts.findIndex((posts) => posts.id === num)
 
     if (idx === -1) {
       return newFolder
     }
 
-    newFolder.posts[idx] = post instanceof Post
+    newFolder.posts[idx] = Post.isPost(post)
       ? post
       : new Folder(post)
 
@@ -202,13 +195,14 @@ class Folder {
    */
   static updateChildFolder (folder, id, newChildFolder) {
     const newFolder = Object.assign({}, folder)
-    const idx = newFolder.childFolders.findIndex((folders) => folders.id === id)
+    const num = StrOrNumToNumber(id)
+    const idx = newFolder.childFolders.findIndex((folders) => folders.id === num)
 
     if (idx === -1) {
       return newFolder
     }
 
-    newFolder.childFolders[idx] = newChildFolder instanceof Folder
+    newFolder.childFolders[idx] = Folder.isFolder(newChildFolder)
       ? newChildFolder
       : new Folder(newChildFolder)
 

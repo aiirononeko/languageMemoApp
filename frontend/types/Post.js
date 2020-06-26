@@ -1,5 +1,5 @@
 import Folder from "./Folder"
-import { isNumber } from "@/utils/number"
+import { isUnsignedInteger, StrOrNumToNumber } from "@/utils/number"
 
 /**
  * @typedef PostAttributes
@@ -45,13 +45,12 @@ class Post {
    * @param {{ id: Number, type: String, attributes: PostAttributes }} param0
    */
   withAttributesToPost ({ id, type, attributes }) {
-    /** @type Number */
-    this.id = isNumber(id) ? id : Number(id)
+    this.id = StrOrNumToNumber(id)
     this.type = type
     this.name = attributes.name
     this.public = attributes.public
     this.content = attributes.content
-    this.userID = attributes["user-id"]
+    this.userID = StrOrNumToNumber(attributes["user-id"])
     this.createdAt = new Date(attributes['created-at'])
     this.updatedAt = new Date(attributes['updated-at'])
 
@@ -65,33 +64,27 @@ class Post {
    * @param {PostNormal} post
    */
   toPost (post) {
-    /** @type Number */
-    this.id = isNumber(post.id) ? post.id : Number(post.id)
+    this.id = StrOrNumToNumber(post.id)
     this.type = "posts"
     this.name = post.name
     this.public = post.public
     this.content = post.content
-    this.userID = post.user_id
+    this.userID = StrOrNumToNumber(post.user_id)
     this.parentID = post.parent_id
     this.createdAt = new Date(post.created_at)
     this.updatedAt = new Date(post.updated_at)
   }
 
-  static isPost (v) {
-    return v instanceof Post
-  }
+  static isPost = (v) => v instanceof Post
 
   /**
  * 正しいフォルダーIDか
  *
- * ここでは、引数が整数値か確認している。
+ * ここでは、引数が正の数か確認している。
  *
  * @param {*} id
  */
-  static isValidPostID (id) {
-    const num = isNumber(id) ? id : Number(id)
-    return Number.isInteger(num) && num > 0
-  }
+  static isValidPostID = (id) => isUnsignedInteger(id)
 }
 
 export default Post
