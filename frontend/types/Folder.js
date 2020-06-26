@@ -139,6 +139,11 @@ class Folder {
     return Number.isInteger(num) && num > 0
   }
 
+  /**
+   *
+   * @param {Folder} folder
+   * @param {Post} post
+   */
   static pushPost (folder, post) {
     const newFolder = Object.assign({}, folder)
 
@@ -151,6 +156,11 @@ class Folder {
     return newFolder
   }
 
+  /**
+   *
+   * @param {Folder} folder
+   * @param {Folder} newChildFolder
+   */
   static pushChildFolder (folder, newChildFolder) {
     const newFolder = Object.assign({}, folder)
 
@@ -163,6 +173,12 @@ class Folder {
     return newFolder
   }
 
+  /**
+   *
+   * @param {Folder} folder
+   * @param {Number} id
+   * @param {Post} post
+   */
   static updatePost (folder, id, post) {
     const newFolder = Object.assign({}, folder)
     const idx = newFolder.posts.findIndex((posts) => posts.id === id)
@@ -178,6 +194,12 @@ class Folder {
     return newFolder
   }
 
+  /**
+   *
+   * @param {Folder} folder
+   * @param {Number} id
+   * @param {Folder} newChildFolder
+   */
   static updateChildFolder (folder, id, newChildFolder) {
     const newFolder = Object.assign({}, folder)
     const idx = newFolder.childFolders.findIndex((folders) => folders.id === id)
