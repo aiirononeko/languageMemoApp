@@ -173,14 +173,10 @@ export default {
 
       return { userInfo: new User(data) }
     } catch (e) {
-      if (e.response && e.response.status) {
-        return error({
-          statusCode: e.response.status
-        })
-      }
+      const statusCode = e.response && e.response.status || 500
 
       return error({
-        statusCode: 500
+        statusCode: statusCode
       })
     }
   },

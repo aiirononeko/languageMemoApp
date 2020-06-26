@@ -1,4 +1,5 @@
 import Folder from "./Folder"
+import { isNumber } from "@/utils/number"
 
 /**
  * @typedef PostAttributes
@@ -7,7 +8,7 @@ import Folder from "./Folder"
  * @property {String} content
  * @property {String} name
  * @property {String} public
- * @property {String} user-id
+ * @property {Number} user-id
  * @property {String} updated-at
  */
 
@@ -15,7 +16,7 @@ import Folder from "./Folder"
  * @typedef PostNormal
  * @property {String} created_at
  * @property {String} content
- * @property {String} id
+ * @property {Number} id
  * @property {String} name
  * @property {String} parent_id
  * @property {String} public
@@ -41,10 +42,11 @@ class Post {
 
   /**
    *
-   * @param {{ id: String, type: String, attributes: PostAttributes }} param0
+   * @param {{ id: Number, type: String, attributes: PostAttributes }} param0
    */
   withAttributesToPost ({ id, type, attributes }) {
-    this.id = id
+    /** @type Number */
+    this.id = isNumber(id) ? id : Number(id)
     this.type = type
     this.name = attributes.name
     this.public = attributes.public
@@ -63,7 +65,8 @@ class Post {
    * @param {PostNormal} post
    */
   toPost (post) {
-    this.id = post.id
+    /** @type Number */
+    this.id = isNumber(post.id) ? post.id : Number(post.id)
     this.type = "posts"
     this.name = post.name
     this.public = post.public
@@ -72,6 +75,22 @@ class Post {
     this.parentID = post.parent_id
     this.createdAt = new Date(post.created_at)
     this.updatedAt = new Date(post.updated_at)
+  }
+
+  static isPost (v) {
+    return v instanceof Post
+  }
+
+  /**
+ * 正しいフォルダーIDか
+ *
+ * ここでは、引数が整数値か確認している。
+ *
+ * @param {*} id
+ */
+  static isvalidPostID (id) {
+    const num = isNumber(id) ? id : Number(id)
+    return Number.isInteger(num) && num > 0
   }
 }
 

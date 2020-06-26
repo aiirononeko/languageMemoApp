@@ -1,4 +1,5 @@
 import Post from "./Post"
+import { isNumber } from "@/utils/number"
 
 /**
  * @typedef FolderAttributes
@@ -8,7 +9,7 @@ import Post from "./Post"
  * @property {String} name
  * @property {Array<Object>} posts
  * @property {String} public
- * @property {String} user-id
+ * @property {Number} user-id
  * @property {String} updated-at
  */
 
@@ -19,7 +20,7 @@ import Post from "./Post"
  * @property {String} name
  * @property {String} parent_id
  * @property {String} public
- * @property {String} user_id
+ * @property {Number} user_id
  * @property {String} updated_at
  */
 
@@ -48,7 +49,8 @@ class Folder {
    * @param {{ id: String, type: String, attributes: FolderAttributes }} param0
    */
   withAttributesToFolder ({ id, type, attributes }) {
-    this.id = id
+    /** @type Number */
+    this.id = isNumber(id) ? id : Number(id)
     this.type = type
     this.name = attributes.name
     this.public = attributes.public
@@ -76,7 +78,8 @@ class Folder {
    * @param {FolderNormal} folder
    */
   toFolder (folder) {
-    this.id = folder.id
+    /** @type Number */
+    this.id = isNumber(folder.id) ? folder.id : Number(folder.id)
     this.type = "folders"
     this.name = folder.name
     this.userID = folder.user_id
@@ -104,6 +107,36 @@ class Folder {
   static deleteChildFolder (folders, id) {
     folders.childFolders = folders.childFolders.filter((folder) => folder.id !== id)
     return folders
+  }
+
+  /**
+   * フォルダーIDとidが等しいかどうか
+   *
+   * @param {Folder} folders
+   * @param {Number|String} id
+   */
+  static isEqualFolderID (folders, id) {
+    const num = isNumber(id) ? id : Number(id)
+    return folders.id === num
+  }
+
+  /**
+   * @param {*} v
+   */
+  static isFolder (v) {
+    return v instanceof Folder
+  }
+
+  /**
+   * 正しいフォルダーIDか
+   *
+   * ここでは、引数が整数値か確認している。
+   *
+   * @param {*} id
+   */
+  static isvalidFolderID (id) {
+    const num = isNumber(id) ? id : Number(id)
+    return Number.isInteger(num) && num > 0
   }
 
   static pushPost (folder, post) {
