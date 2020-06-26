@@ -54,6 +54,11 @@ export default {
       default: false
     },
 
+    id: {
+      type: [String, Number],
+      required: true
+    },
+
     name: {
       type: String,
       required: true
@@ -84,11 +89,19 @@ export default {
     },
 
     onSubmitChangeName() {
-      return this.$emit('change-name')
+      this.$emit('change-name', {
+        id: this.id,
+        name: this.newName
+      })
+
+      this.newName = null
+      this.isChangingName = false
     },
 
     onDelete() {
-      return this.$emit('delete')
+      return this.$emit('delete', {
+        id: this.id
+      })
     }
   },
 }

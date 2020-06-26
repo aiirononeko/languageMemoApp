@@ -12,6 +12,7 @@
               v-if="!!item.content"
               :can-action="true"
               :name="item.name"
+              :id="item.id"
               :to="`${nowLink}/${item.id}`"
               :key="key"
               @change-name="onChangeFileName"
@@ -23,6 +24,7 @@
               :can-action="true"
               :name="item.name"
               :to="`${nowLink}/${item.id}`"
+              :id="item.id"
               :key="key"
               @change-name="onChangeFolderName"
               @delete="onDeleteFolder"
@@ -140,20 +142,20 @@ export default {
       this.newFileName = ""
     },
 
-    onChangeFileName() {
-      this.$emit('change-file-name')
+    onChangeFileName(v) {
+      this.$emit('change-file-name', v)
     },
 
-    onChangeFolderName() {
-      this.$emit('change-folder-name')
+    onChangeFolderName(v) {
+      this.$emit('change-folder-name', v)
     },
 
-    onDeleteFile() {
-      this.$emit('delete-file')
+    onDeleteFile(v) {
+      this.$emit('delete-file', v)
     },
 
-    onDeleteFolder() {
-      this.$emit('delete-folder')
+    onDeleteFolder(v) {
+      this.$emit('delete-folder', v)
     }
   }
 }

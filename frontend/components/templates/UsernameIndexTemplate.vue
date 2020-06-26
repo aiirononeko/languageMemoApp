@@ -176,20 +176,20 @@ export default {
       return this.$emit('create-folder', v)
     },
 
-    onChangeFileName() {
-      this.$emit('change-file-name')
+    onChangeFileName(v) {
+      this.$emit('change-file-name', v)
     },
 
-    onChangeFolderName() {
-      this.$emit('change-folder-name')
+    onChangeFolderName(v) {
+      this.$emit('change-folder-name', v)
     },
 
-    onDeleteFile() {
-      this.$emit('delete-file')
+    onDeleteFile(v) {
+      this.$emit('delete-file', v)
     },
 
-    onDeleteFolder() {
-      this.$emit('delete-folder')
+    onDeleteFolder(v) {
+      this.$emit('delete-folder', v)
     },
 
     onTriggerCreatingNewFolder() {

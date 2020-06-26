@@ -9,6 +9,10 @@
       :is-creating-new-file="isCreatingNewFile"
       @create-file="onCreateFile"
       @create-folder="onCreateFolder"
+      @change-file-name="onChangeFileName"
+      @change-folder-name="onChangeFolderName"
+      @delete-file="onDeleteFile"
+      @delete-folder="onDeleteFolder"
       @trigger-creating-new-folder="triggerCreatingNewFolder"
       @trigger-creating-new-file="triggerCreatingNewFile"
     />
@@ -66,7 +70,7 @@ export default {
         const { data } = await this.$axios.$post(`/api/v1/folders`, folderInfo)
 
         // 既存の配列を更新
-        this.userInfo.pushFolder(data)
+        this.userInfo = User.pushFolder(this.userInfo, data)
 
         this.triggerCreatingNewFolder()
       } catch(e) {
@@ -87,7 +91,7 @@ export default {
         const { data } = await this.$axios.$post(`/api/v1/posts`, postsInfo)
 
         // 既存のデータを更新
-        this.userInfo.pushPost(data)
+        this,userInfo = User.pushPost(this.userInfo, data)
 
         this.triggerCreatingNewFile()
       } catch(e) {
@@ -102,6 +106,50 @@ export default {
         this.triggerCreatingNewFolder()
       } catch (e) {
         console.error(e)
+      }
+    },
+
+    async onChangeFileName({ id, name }) {
+      try {
+        const { data } = await this.$axios.$put(`/api/v1/posts/${id}`, {
+          name
+        })
+
+        this.userInfo = User.updatePost(this.userInfo, id, data)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async onChangeFolderName({ id, name }) {
+      try {
+        const { data } = await this.$axios.$put(`/api/v1/folders/${id}`, {
+          name
+        })
+
+        this.userInfo = User.updateFolder(this.userInfo, id, data)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async onDeleteFile({ id }) {
+      try {
+        await this.$axios.$delete(`/api/v1/posts/${id}`)
+
+        this.userInfo = User.deletePost(this.userInfo, id)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async onDeleteFolder({ id }) {
+      try {
+        await this.$axios.$delete(`/api/v1/folders/${id}`)
+
+        this.userInfo = User.deleteFolder(this.userInfo, id)
+      } catch (e) {
+        console.log(e)
       }
     },
 
