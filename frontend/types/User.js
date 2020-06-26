@@ -1,5 +1,6 @@
 import Folder from "./Folder"
 import Post from "./Post"
+import { StrOrNumToNumber } from "@/utils/number"
 
 /**
  * @typedef UserAttributes
@@ -22,10 +23,10 @@ import Post from "./Post"
 class User {
 
   /**
-   * @param {{ id: String, type: String, attributes: UserAttributes }} obj
+   * @param {{ id: String|Number, type: String, attributes: UserAttributes }} obj
    */
   constructor({ id, type, attributes }) {
-    this.id = id
+    this.id = StrOrNumToNumber(id)
     this.type = type
     this.address = attributes.address
     this.createdAt = new Date(attributes['created-at'])
@@ -46,26 +47,26 @@ class User {
   /**
    *
    * @param {User} user
-   * @param {String} id
+   * @param {String|Number} id
    */
   static deletePost (user, id) {
-    user.posts = user.posts.filter((post) => post.id !== id)
+    const num = StrOrNumToNumber(id)
+    user.posts = user.posts.filter((post) => post.id !== num)
     return user
   }
 
   /**
    *
    * @param {User} user
-   * @param {String} id
+   * @param {String|Number} id
    */
   static deleteFolder (user, id) {
-    user.folders = user.folders.filter((folder) => folder.id !== id)
+    const num = StrOrNumToNumber(id)
+    user.folders = user.folders.filter((folder) => folder.id !== num)
     return user
   }
 
-  static isUser (v) {
-    return v instanceof User
-  }
+  static isUser = (v) => v instanceof User
 
   /**
    *
@@ -104,12 +105,13 @@ class User {
   /**
    *
    * @param {User} user
-   * @param {Number} id
+   * @param {String|Number} id
    * @param {Post} newPost
    */
   static updatePost (user, id, newPost) {
     const newUser = Object.assign({}, user)
-    const idx = user.posts.findIndex((post) => post.id === id)
+    const num = StrOrNumToNumber(id)
+    const idx = user.posts.findIndex((post) => post.id === num)
 
     if (idx === -1) {
       return newUser
@@ -125,12 +127,13 @@ class User {
   /**
    *
    * @param {User} user
-   * @param {Number} id
+   * @param {String|Number} id
    * @param {Folder} newFolder
    */
   static updateFolder (user, id, newFolder) {
     const newUser = Object.assign({}, user)
-    const idx = user.folders.findIndex((folders) => folders.id === id)
+    const num = StrOrNumToNumber(id)
+    const idx = user.folders.findIndex((folders) => folders.id === num)
 
     if (idx === -1) {
       return newUser
