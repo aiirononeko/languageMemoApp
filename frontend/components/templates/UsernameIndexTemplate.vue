@@ -25,7 +25,7 @@
 
       <folder-breadcrumbs
         :breadCrumbs="breadCrumbs"
-        :currentFolderName="isRepository ? '' : currentFolderName"
+        :currentFolderName="isRoot ? '' : currentFolderName"
       />
 
       <file-folder-list-with-action
@@ -33,7 +33,7 @@
         :list="list"
         :current-path="currentPath"
         :current-username="currentUsername"
-        :is-root="isRepository"
+        :is-root="isRoot"
         :is-creating-new-folder="isCreatingNewFolder"
         :is-creating-new-file="isCreatingNewFile"
         @create-file="onCreateFile"
@@ -49,7 +49,7 @@
         :list="list"
         :current-path="currentPath"
         :current-username="currentUsername"
-        :is-root="isRepository"
+        :is-root="isRoot"
       />
     </template>
   </two-column-container>
@@ -62,6 +62,11 @@ const FolderBreadcrumbs = () => import('~/components/organisms/breadcrumbs/Folde
 const TwoColumnContainer = () => import('~/components/molecules/containers/TwoColumnContainer')
 const UserIntroCard = () => import('~/components/organisms/cards/UserIntroCard')
 const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
+
+/**
+ * @typedef { import('~/types/Folder').default } Folder
+ * @typedef { import('~/types/Post').default } Post
+ */
 
 /**
  * パンくずリストの作成
@@ -117,11 +122,6 @@ export default {
       default: undefined
     },
 
-    parentParams: {
-      type: String,
-      default: undefined
-    },
-
     isCreatingNewFolder: {
       type: Boolean,
       default: false
@@ -156,18 +156,33 @@ export default {
       return generateBreadcrumbs(this.currentUsername, this.ancestorFolders)
     },
 
+    /**
+     * 現在アクセスしているファルダー名
+     */
     currentFolderName() {
-      return this.foldersInfo && this.foldersInfo.name
+      if (this.isRoot) {
+        return undefined
+      }
+
+      return this.foldersInfo.name
     },
 
-    isRepository() {
+    /**
+     * 最上位層か (user 直下か)
+     */
+    isRoot() {
       return !this.foldersInfo
     },
 
+    /**
+     * ファイルやフォルダーの一覧を取得
+     *
+     * @returns { Array<Folder|Post> }
+     */
     list() {
-      return this.foldersInfo
-        ? [...this.foldersInfo.childFolders, ...this.foldersInfo.posts]
-        : [...this.userInfo.folders, ...this.userInfo.posts]
+      return this.isRoot
+        ? [...this.userInfo.folders, ...this.userInfo.posts]
+        : [...this.foldersInfo.childFolders, ...this.foldersInfo.posts]
     },
   },
 

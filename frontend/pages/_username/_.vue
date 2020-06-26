@@ -9,7 +9,6 @@
       :folders-info="foldersInfo"
       :is-creating-new-folder="isCreatingNewFolder"
       :is-creating-new-file="isCreatingNewFile"
-      :parent-params="parentParams"
       @create-file="onCreateFile"
       @create-folder="onCreateFolder"
       @change-file-name="onChangeFileName"
