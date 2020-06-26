@@ -64,6 +64,7 @@ class Post {
    */
   toPost (post) {
     this.id = post.id
+    this.type = "posts"
     this.name = post.name
     this.public = post.public
     this.content = post.content
