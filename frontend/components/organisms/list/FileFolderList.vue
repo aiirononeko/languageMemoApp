@@ -7,10 +7,23 @@
         <link-to-back-item v-if="!isRepository" :to="toBackFolder" />
 
         <template v-if="existList">
-          <span v-for="item in list" :key="item.id">
-            <file-list-item v-if="!!item.content" :name="item.name" :to="`${nowLink}/${item.id}`" />
-            <folder-list-item v-else :name="item.name" :to="`${nowLink}/${item.id}`" />
-          </span>
+          <template v-for="(item, key) in list" >
+            <file-list-item
+              v-if="!!item.content"
+              :name="item.name"
+              :id="item.id"
+              :to="`${nowLink}/${item.id}`"
+              :key="key"
+            />
+
+            <folder-list-item
+              v-else
+              :name="item.name"
+              :to="`${nowLink}/${item.id}`"
+              :id="item.id"
+              :key="key"
+            />
+          </template>
         </template>
       </v-list-item-group>
     </v-list>
