@@ -8,10 +8,10 @@ class Api::V1::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsCon
 
   def update
     if @resource
-      if params[:avatar]
+      unless params[:avatar].empty?
         upload_image(@resource, params[:avatar])
-        params.delete :avatar
       end
+      params.delete :avatar
       if @resource.send(resource_update_method, account_update_params)
         yield @resource if block_given?
         render_update_success
