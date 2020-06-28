@@ -3,6 +3,7 @@
     <settings-user-name-template
       :errors="errors"
       :username="username"
+      :is-first-time-login="isFirstTimeLogin"
       @submit="updateUsername"
     />
   </div>
@@ -28,6 +29,17 @@ export default {
   computed: {
     username() {
       return this.$store.getters["authentication/username"]
+    },
+
+    /**
+     * 初めてのログインか
+     */
+    isFirstTimeLogin() {
+      return this.queryType === 'new'
+    },
+
+    queryType() {
+      return this.$route.query.type
     }
   },
 
