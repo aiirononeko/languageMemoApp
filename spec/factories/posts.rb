@@ -3,5 +3,6 @@ FactoryBot.define do
     name { 'test' }
     content { 'example' }
     public { false }
+    uid {'fadfqfhakehfkjfahkj'}
   end
 end
