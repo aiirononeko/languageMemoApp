@@ -1,9 +1,10 @@
 class Api::V1::PostsController < ApplicationController
   before_action :authenticate_api_v1_user!, except:[:show]
-  before_action :set_post, except: [:new,:create]
+  before_action :set_post, except: [:new,:create,:show]
   before_action :correct_user?, only: [:update, :destroy]
 
   def show
+    @post = Post.find_by(uid: params[:uid])
     if @post 
       render json: @post, serializer: PostSerializer
     else
@@ -14,6 +15,7 @@ class Api::V1::PostsController < ApplicationController
   def create
     @post = current_api_v1_user.posts.build(post_params)
     if @post.save
+      @post.update(uid: Digest::MD5.hexdigest(@post.id.to_s))
       render json: @post, serializer: PostSerializer
     else
       render status: :unprocessable_entity, json: @post.errors
@@ -39,7 +41,7 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:name, :content, :public, :user_id, :folder_id)
+    params.require(:post).permit(:name, :content, :public, :user_id, :folder_id, :uid)
   end
 
   def set_post
