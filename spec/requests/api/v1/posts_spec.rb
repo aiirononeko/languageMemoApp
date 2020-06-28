@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Api::V1::Posts", type: :request do
-  describe "GET /api/v1/posts/:id" do
-    subject(:call_api){ get "/api/v1/posts/#{post.id}" }
+  describe "GET /api/v1/posts/:uid" do
+    subject(:call_api){ get "/api/v1/posts/#{post.uid}" }
 
     let(:user) { create(:confirmed_user) }
 
@@ -15,6 +15,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
         res = JSON.parse(response.body)
         expect(res["data"]["attributes"]["name"]).to eq "test"
         expect(res["data"]["attributes"]["content"]).to eq "example"
+        expect(res["data"]["attributes"]["uid"]).to eq post.uid
         expect(res["data"]["attributes"]["public"]).to eq false
         expect(res["data"]["attributes"]["user-id"]).to eq user.id
         expect(res["data"]["attributes"]["ancestor-folders"].first["id"]).to eq folder.id
