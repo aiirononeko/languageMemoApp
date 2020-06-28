@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+user = User.create(name: "ミミたる", email: "mimi@example.com", password: "password")
+Post.create(name: "ミミたるポスト", content: "ミミミタルタル", user_id: user.id, folder_id: nil)
+Folder.create(name: "ミミたるフォルダー", user_id: user.id)
