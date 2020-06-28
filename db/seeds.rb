@@ -8,5 +8,5 @@
 
 user = User.create(name: "ミミたる", email: "mimi@example.com", password: "password",
                    confirmed_at: DateTime.now, username: SecureRandom.alphanumeric(15))
-Post.create(name: "ミミたるポスト", content: "ミミミタルタル", user_id: user.id, folder_id: nil)
+Post.create(name: "ミミたるポスト", content: "ミミミタルタル", user_id: user.id, folder_id: nil, uid: Digest::MD5.hexdigest('1'))
 Folder.create(name: "ミミたるフォルダー", user_id: user.id)
