@@ -20,6 +20,34 @@ export default {
     }
   },
 
+  computed: {
+    redirectPath() {
+      return (username) => {
+        if (this.isFirstTimeLogin) {
+          return {
+            path: '/settings/user-name',
+            query: {
+              type: 'new'
+            }
+          }
+        }
+
+        return username ?  `/${username}` : `/settings/profile`
+      }
+    },
+
+    /**
+     * 初めてのログインか
+     */
+    isFirstTimeLogin() {
+      return this.queryType === 'new'
+    },
+
+    queryType() {
+      return this.$route.query.type
+    }
+  },
+
   methods: {
     async login({ email, password }) {
       this.errors = null // 前回取得したerrorの削除
@@ -31,9 +59,13 @@ export default {
 
         this.$store.dispatch("authentication/login", res)
 
-        await this.$router.push(`/settings/profile`)
+        await this.$router.push(
+          this.redirectPath(this.$store.getters["authentication/username"])
+        )
       } catch (e) {
-        if (e.response.status === 401 || e.response.status === 422) {
+        const status = e.response && e.response.status || 500
+
+        if (status === 401 || status === 422) {
           this.errors = {
             email: [
               'メールアドレスかパスワードが違います'
@@ -43,7 +75,7 @@ export default {
         }
 
         return this.$nuxt.error({
-          statusCode: e.response.status
+          statusCode: status
         })
       }
     }
