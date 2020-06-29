@@ -198,6 +198,7 @@ workflows:
     jobs:
       - api_test
       - front_test
+      - front_e2e_test
       - deploy:
           filters:
             branches:
