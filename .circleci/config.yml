@@ -158,7 +158,7 @@ jobs:
           name: e2e:jest
           command: |
             set -x
-            docker-compose run front npm test:e2e
+            docker-compose run front npm  test:e2e
       - run:
           name: docker-compose down
           command: docker-compose down
