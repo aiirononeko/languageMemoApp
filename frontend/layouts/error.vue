@@ -1,7 +1,7 @@
 <template>
   <v-container class="main-heading text-center">
     <div class="mt-2 mt-sm-4">
-      <h1 class="error-code">{{ error.statusCode }}</h1>
+      <h1 class="error-code" id="errorStatusCode">{{ error.statusCode }}</h1>
 
       <h2 class="mb-2">{{ title }}</h2>
 

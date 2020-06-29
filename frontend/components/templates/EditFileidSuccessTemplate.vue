@@ -1,6 +1,6 @@
 <template>
   <one-column-container>
-    <h1 class="text-center mb-4">投稿完了しました</h1>
+    <h1 id="p-1" class="text-center mb-4">投稿完了しました</h1>
 
     <v-row class="mb-4" justify="center">
       <twitter-share-btn :text="shareText" :hashtag="hashtag">
