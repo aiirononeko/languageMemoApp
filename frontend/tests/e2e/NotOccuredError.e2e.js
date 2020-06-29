@@ -9,7 +9,7 @@ const onlyAuthRoutes = [
 const errors = [400, 401, 402, 403, 404, 422, 500, 501, 502, 503]
 const FRONT_TEST_URL = 'http://localhost:3030'
 
-describe('認証後', () => {
+describe('未認証', () => {
   let page
 
   beforeAll(async () => {
@@ -21,7 +21,7 @@ describe('認証後', () => {
     await page.close()
   })
 
-  describe("認証後の画面が正常に見える", () => {
+  describe("認証指定ない状態で画面が正常に見える", () => {
 
     for (const route of guestRoutes) {
       it(`エラーが表示されない(${route})`, async () => {
