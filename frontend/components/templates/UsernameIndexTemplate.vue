@@ -14,42 +14,83 @@
       <v-container>
         <v-row>
           <v-col cols="12" sm="8">
-            <h2 class="text-center">あなたのリポジトリ</h2>
+            <h2 class="text-center">{{ canAction ? 'あなた' : currentUsername }}のリポジトリ</h2>
           </v-col>
-          <v-col cols="12" sm="4" class="text-right">
-            <blue-btn @click="$emit('triggerIsCreatingNewFolder')">フォルダーを作成する</blue-btn>
+          <v-col v-if="canAction" cols="12" sm="4" class="text-right">
+            <blue-btn @click="onTriggerCreatingNewFolder" class="mb-4">フォルダーを作成する</blue-btn>
+            <blue-btn @click="onTriggerCreatingNewPost">ファイルを作成する</blue-btn>
           </v-col>
         </v-row>
       </v-container>
 
       <folder-breadcrumbs
         :breadCrumbs="breadCrumbs"
-        :currentUsername="currentUsername"
-        :currentFolderName="isRepository ? '' : currentFolderName"
+        :currentFolderName="isRoot ? '' : currentFolderName"
       />
 
-      <file-folder-list-with-action
-        @submit="(newFolderName) => $emit('submit' ,newFolderName)"
+      <post-folder-list-with-action
+        v-if="canAction"
         :list="list"
-        :ancestorFolders="ancestorFolders"
-        :currentUsername="currentUsername"
-        :isRepository="isRepository"
-        :isCreatingNewFolder="isCreatingNewFolder"
+        :current-path="currentPath"
+        :current-username="currentUsername"
+        :is-root="isRoot"
+        :is-creating-new-folder="isCreatingNewFolder"
+        :is-creating-new-post="isCreatingNewPost"
+        @create-folder="onCreateFolder"
+        @create-post="onCreatePost"
+        @change-folder-name="onChangeFolderName"
+        @change-post-name="onChangeFileName"
+        @delete-folder="onDeleteFolder"
+        @delete-post="onDeletePost"
+      />
+
+      <post-folder-list
+        v-else
+        :list="list"
+        :current-path="currentPath"
+        :current-username="currentUsername"
+        :is-root="isRoot"
       />
     </template>
   </two-column-container>
 </template>
 
 <script>
-const FileFolderListWithAction = () => import('~/components/organisms/list/FileFolderListWithAction')
+const PostFolderListWithAction = () => import('~/components/organisms/list/PostFolderListWithAction')
+const PostFolderList = () => import('~/components/organisms/list/PostFolderList')
 const FolderBreadcrumbs = () => import('~/components/organisms/breadcrumbs/FolderBreadcrumbs')
 const TwoColumnContainer = () => import('~/components/molecules/containers/TwoColumnContainer')
 const UserIntroCard = () => import('~/components/organisms/cards/UserIntroCard')
 const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
 
+/**
+ * @typedef { import('~/types/Folder').default } Folder
+ * @typedef { import('~/types/Post').default } Post
+ */
+
+/**
+ * パンくずリストの作成
+ */
+const generateBreadcrumbs = (username, ancestorFolders) => {
+  let pastLink = `/${username}`
+
+  const rootBreadCrumbs = [{ to: pastLink, name: `${username}` }]
+  const reAncestorFolders = Object.assign([], ancestorFolders).reverse()
+
+  const ancestorBreadCrumbs = reAncestorFolders.map(
+    (folder) => {
+      pastLink += `/${folder.id}`
+      return { to: pastLink , name: `${folder.name}` }
+    }
+  )
+
+  return [...rootBreadCrumbs, ...ancestorBreadCrumbs]
+}
+
 export default {
   components: {
-    FileFolderListWithAction,
+    PostFolderListWithAction,
+    PostFolderList,
     FolderBreadcrumbs,
     TwoColumnContainer,
     UserIntroCard,
@@ -57,6 +98,21 @@ export default {
   },
 
   props: {
+    canAction: {
+      type: Boolean,
+      default: false
+    },
+
+    currentPath: {
+      type: String,
+      required: true
+    },
+
+    currentUsername: {
+      type: String,
+      required: true
+    },
+
     userInfo: {
       type: Object,
       default: undefined
@@ -70,6 +126,11 @@ export default {
     isCreatingNewFolder: {
       type: Boolean,
       default: false
+    },
+
+    isCreatingNewPost: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -77,61 +138,87 @@ export default {
     /**
      * 祖先のフォルダの情報を配列形式で返す
      *
-     * @returns { Object[] }
+     * @returns { Array<import('~/types/Folder').default> }
      */
     ancestorFolders() {
-      return (
-        this.foldersInfo
-        && this.foldersInfo.attributes
-        && this.foldersInfo.attributes["ancestor-folders"]
-        || []
-      )
+      if (this.isRoot) {
+        return undefined
+      }
+
+      return this.foldersInfo.ancestorFolders
     },
 
     /**
      * ルートから親フォルダまでの各idとisRepoを返す
      *
-     * @returns { { to: Number , name: String, isRepo: Boolean }[] }
+     * @returns { { to: Number , name: String }[] }
      */
     breadCrumbs() {
-      const rootBreadCrumbs = [{ to: this.currentUsername, name: `${this.currentUsername}`, isRepo: true }]
-      const reAncestorFolders = Object.assign([], this.ancestorFolders).reverse()
-
-      const ancestorBreadCrumbs = reAncestorFolders.map(
-        (folder) => ({ to: folder.id , name: `${folder.name}`, isRepo: false })
-      )
-
-      const breadCrumbs = [...rootBreadCrumbs, ...ancestorBreadCrumbs]
-      return breadCrumbs
+      return generateBreadcrumbs(this.currentUsername, this.ancestorFolders)
     },
 
+    /**
+     * 現在アクセスしているファルダー名
+     */
     currentFolderName() {
-      return this.foldersInfo && this.foldersInfo.attributes.name
+      if (this.isRoot) {
+        return undefined
+      }
+
+      return this.foldersInfo.name
     },
 
-    currentUsername() {
-      return this.$route.params.username
-    },
-
-    isRepository() {
+    /**
+     * 最上位層か (user 直下か)
+     */
+    isRoot() {
       return !this.foldersInfo
     },
 
+    /**
+     * ファイルやフォルダーの一覧を取得
+     *
+     * @returns { Array<Folder|Post> }
+     */
     list() {
-      if(this.isRepository) {
-        const folders = this.userInfo.folders || []
-        const posts = this.userInfo.posts || []
-        return [...folders, ...posts]
-      } else {
-        const folders = this.foldersInfo.attributes["child-folders"] || []
-        const posts = this.foldersInfo.attributes.posts || []
-        return [...folders, ...posts]
-      }
+      return this.isRoot
+        ? [...this.userInfo.folders, ...this.userInfo.posts]
+        : [...this.foldersInfo.childFolders, ...this.foldersInfo.posts]
+    },
+  },
+
+  methods: {
+    onCreatePost(v) {
+      return this.$emit('create-post', v)
     },
 
-    params() {
-      return this.$route.params
+    onCreateFolder(v) {
+      return this.$emit('create-folder', v)
     },
+
+    onChangeFileName(v) {
+      return this.$emit('change-post-name', v)
+    },
+
+    onChangeFolderName(v) {
+      return this.$emit('change-folder-name', v)
+    },
+
+    onDeletePost(v) {
+      return this.$emit('delete-post', v)
+    },
+
+    onDeleteFolder(v) {
+      return this.$emit('delete-folder', v)
+    },
+
+    onTriggerCreatingNewFolder() {
+      return this.$emit('trigger-creating-new-folder')
+    },
+
+    onTriggerCreatingNewPost() {
+      return this.$emit('trigger-creating-new-post')
+    }
   },
 }
 </script>
