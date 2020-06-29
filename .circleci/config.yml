@@ -105,6 +105,64 @@ jobs:
           name: docker-compose down
           command: docker-compose down
 
+  front_e2e_test:
+    machine:
+      image: circleci/classic:edge
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up --build -d
+      - run:
+          name: docker-compose stop
+          command: |
+            set -x
+            docker-compose stop
+      - run:
+          name: docker-compose up
+          command: |
+            set -x
+            docker-compose up -d
+      - run:
+          name: bundle Install
+          command: |
+            set -x
+            docker-compose exec api bin/bundle install --path=vendor/bundle
+      - run:
+          name: database migration
+          command: |
+            set -x
+            docker-compose exec api bin/rails db:create
+            docker-compose exec api bin/rails db:migrate
+            docker-compose exec api bin/rails db:seed
+      - run:
+          name: remove node_modules
+          command: |
+            set -x
+            docker-compose run front rm -rf node_modules
+      - run:
+          name: npm install
+          command: |
+            set -x
+            docker-compose run front npm install
+      - run:
+          name: e2e:jest
+          command: |
+            set -x
+            docker-compose run front npm run test:e2e
+      - run:
+          name: docker-compose down
+          command: docker-compose down
+
   deploy:
     docker:
       - image: google/cloud-sdk
@@ -140,6 +198,7 @@ workflows:
     jobs:
       - api_test
       - front_test
+      - front_e2e_test
       - deploy:
           filters:
             branches:

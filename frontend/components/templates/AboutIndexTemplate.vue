@@ -2,7 +2,7 @@
   <div>
     <v-row justify="center" align="center" class="ma-0 w-100 top">
       <div class="text-center">
-        <h1 class="mb-10">TILを記録しよう</h1>
+        <h1 id="p-1" class="mb-10">TILを記録しよう</h1>
         <!-- <p><span class="hatena">?</span>TILとは</p> -->
 
         <red-btn to="/signup">

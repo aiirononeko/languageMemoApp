@@ -1,6 +1,6 @@
 <template>
   <one-column-container>
-    <h1 class="main-heading mb-8 text-center">パスワードをリセットする</h1>
+    <h1 id="p-1" class="main-heading mb-8 text-center">パスワードをリセットする</h1>
 
     <v-row justify="center">
       <v-col cols="12" sm="8">

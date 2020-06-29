@@ -1,6 +1,6 @@
 <template>
   <one-column-container>
-    <h1 class="main-heading mb-8 text-center">プロフィール編集</h1>
+    <h1 id="p-1" class="main-heading mb-8 text-center">プロフィール編集</h1>
 
     <setting-profile-card :errors="errors" :info="info" @save="save" />
   </one-column-container>
