@@ -1,5 +1,6 @@
 import Folder from "./Folder"
 import { isUnsignedInteger, StrOrNumToNumber } from "@/utils/number"
+import { isUuid } from "@/utils/string"
 
 /**
  * @typedef PostAttributes
@@ -80,13 +81,20 @@ class Post {
   static isPost = (v) => v instanceof Post
 
   /**
- * 正しいフォルダーIDか
- *
- * ここでは、引数が正の数か確認している。
- *
- * @param {*} id
- */
+   * 正しいpost IDか
+   *
+   * ここでは、引数が正の数か確認している。
+   *
+   * @param {String|Number} id
+   */
   static isValidPostID = (id) => isUnsignedInteger(id)
+
+  /**
+   * 正しいpost uidか
+   *
+   * @param {String} uid
+   */
+  static isValidPostUID = (uid) => isUuid(uid)
 }
 
 export default Post
