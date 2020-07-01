@@ -1,17 +1,18 @@
 <template>
-  <v-form v-model="valid" @submit.prevent="onSubmit" enctype="multipart/form-data" ref="form">
+  <v-form v-model="valid" @submit.prevent="onSubmit" ref="form">
     <div class="mb-8">
       <p>プロフィール画像</p>
-      <div class="d-flex align-center">
-        <div class="mr-2">
-          <v-img :src="getPreviewIcon" class="user-icon" />
-        </div>
 
-        <preview-image-file-input @input="setAvatarValue" />
-      </div>
+      <preview-image-file-input
+        :api-error="avatarApiError"
+        :submit-count="submitCount"
+        :name="form.name || info.username"
+        :new-src="form.avatar"
+        :old-src="info.image"
+        @input="setAvatarValue"
+      />
     </div>
 
-    <!-- TODO(Ropital): 各divをコンポーネントに切り出す -->
     <div class="mb-8">
       <p>名前</p>
       <name-text-field
@@ -40,7 +41,7 @@
     </div>
 
     <div class="d-flex justify-center mt-5">
-      <orange-btn type="submit">保存する</orange-btn>
+      <orange-btn type="submit" :disabled="!valid">保存する</orange-btn>
     </div>
   </v-form>
 </template>
@@ -93,15 +94,12 @@ export default {
   },
 
   computed: {
-    addressApiError() {
-      return this.errors && this.errors.address || undefined
+    avatarApiError() {
+      return this.errors && this.errors.avatar || undefined
     },
 
-    /**
-     * @returns {String}
-     */
-    getPreviewIcon() {
-      return this.form.avatar || this.info.image || 'https://picsum.photos/510/300?random'
+    addressApiError() {
+      return this.errors && this.errors.address || undefined
     },
 
     profileApiError() {
@@ -118,11 +116,16 @@ export default {
       this.submitCount++
       this.validate()
 
-      this.$emit('save', this.form)
+      return this.$emit('save', this.form)
     },
 
-    setAvatarValue(newVal) {
-      this.form.avatar = newVal
+    setAvatarValue(e) {
+      if (!e) {
+        this.form.avatar = null
+        return
+      }
+
+      this.form.avatar = e
     },
 
     validate () {
@@ -131,12 +134,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.user-icon {
-  width: 45px;
-  height: 45px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-</style>
