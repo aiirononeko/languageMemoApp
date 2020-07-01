@@ -3,21 +3,19 @@
     <v-col cols="11" class="pa-0">
       <v-list-item :to="getTo">
         <v-list-item-icon>
-          <v-icon>mdi-folder</v-icon>
+          <v-icon>mdi-file</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
-          <template v-if="!isChangingName">
-            <v-list-item-title>
-            {{ name }}
-            </v-list-item-title>
-          </template>
+          <v-list-item-title>
+            <template v-if="!isChangingName">
+              {{ name }}
+            </template>
 
-          <v-form v-else @submit.prevent="onSubmitChangeName">
-            <v-list-item-title>
+            <v-form v-else @submit.prevent="onSubmitChangeName">
               <v-text-field v-model="newName" dense />
-            </v-list-item-title>
-          </v-form>
+            </v-form>
+          </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-col>
@@ -75,7 +73,7 @@ export default {
   data() {
     return {
       isChangingName: false,
-      newName: this.name
+      newName: null
     }
   },
 
@@ -87,7 +85,6 @@ export default {
 
   methods: {
     onChangeName() {
-      this.newName = this.name
       this.isChangingName = !this.isChangingName
     },
 

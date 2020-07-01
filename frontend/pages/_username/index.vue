@@ -2,17 +2,27 @@
   <!-- マイページのルート -->
   <div>
     <username-index-template
-      :userInfo="userInfo"
-      :isCreatingNewFolder="isCreatingNewFolder"
-      @submit="submit"
-      @triggerIsCreatingNewFolder="triggerIsCreatingNewFolder"
+      :can-action="canAction"
+      :current-path="currentPath"
+      :current-username="currentUsername"
+      :user-info="userInfo"
+      :is-creating-new-folder="isCreatingNewFolder"
+      :is-creating-new-post="isCreatingNewPost"
+      @create-post="onCreatePost"
+      @create-folder="onCreateFolder"
+      @change-post-name="onChangeFileName"
+      @change-folder-name="onChangeFolderName"
+      @delete-post="onDeletePost"
+      @delete-folder="onDeleteFolder"
+      @trigger-creating-new-folder="triggerCreatingNewFolder"
+      @trigger-creating-new-post="triggerCreatingNewPost"
     />
   </div>
 </template>
 
 <script>
-const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
 import User from '~/types/User'
+const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
 
 export default {
   components: {
@@ -20,68 +30,143 @@ export default {
   },
 
   data: () => ({
-    isCreatingNewFolder: false
+    isCreatingNewFolder: false,
+    isCreatingNewPost: false,
   }),
 
   computed: {
-    id() {
-      return this.$store.getters["authentication/id"]
+    authUsername() {
+      return this.$store.getters["authentication/username"]
     },
 
-    params() {
-      return this.$route.params
+    canAction() {
+      return this.isAuthenticated
+        ? this.currentUsername === this.authUsername
+        : false
+    },
+
+    currentPath() {
+      return this.$route.path
+    },
+
+    currentUsername() {
+      return this.$route.params.username
+    },
+
+    isAuthenticated() {
+      return this.$store.getters["authentication/isAuthenticated"]
+    },
+
+    userID() {
+      return this.$store.getters["authentication/id"]
     }
   },
 
   methods: {
-    async submit(newFolderName) {
+    async onCreateFolder(newFolderName) {
       const folderInfo = {
         name: newFolderName,
         public: false,
-        user_id: this.id,
+        user_id: this.userID,
         parent_id: null
       }
 
       try {
         const { data } = await this.$axios.$post(`/api/v1/folders`, folderInfo)
 
-        this.userInfo.folders.push({
-          created_at: data.attributes["created-at"],
-          id: data.id,
-          name: data.attributes.name,
-          parent_id: null,
-          public: data.attributes.public,
-          updated_at: data.attributes["updated-at"],
-          user_id: data.attributes["user-id"]
-        })
-        this.triggerIsCreatingNewFolder()
+        // 既存の配列を更新
+        this.userInfo = User.pushFolder(this.userInfo, data)
+
+        this.isCreatingNewFolder = false
       } catch(e) {
         console.error(e)
       }
     },
 
-    async fetchData() {
+    async onCreatePost(newPostName) {
+      const postsInfo = {
+        name: newPostName,
+        content: newPostName,
+        public: false,
+        user_id: this.userID,
+        folder_id: null
+      }
+
       try {
-        const { data } = await this.$axios.$get(`/api/v1/users/${this.params.username}`)
-        this.userInfo = new User(data)
-        this.triggerIsCreatingNewFolder()
-      } catch (e) {
+        const { data } = await this.$axios.$post(`/api/v1/posts`, postsInfo)
+
+        // 既存のデータを更新
+        this.userInfo = User.pushPost(this.userInfo, data)
+
+        this.isCreatingNewPost = false
+      } catch(e) {
         console.error(e)
       }
     },
 
-    triggerIsCreatingNewFolder() {
+    async onChangeFileName({ id, name }) {
+      try {
+        const { data } = await this.$axios.$put(`/api/v1/posts/${id}`, {
+          name
+        })
+
+        this.userInfo = User.updatePost(this.userInfo, id, data)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async onChangeFolderName({ id, name }) {
+      try {
+        const { data } = await this.$axios.$put(`/api/v1/folders/${id}`, {
+          name
+        })
+
+        this.userInfo = User.updateFolder(this.userInfo, id, data)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async onDeletePost({ id }) {
+      try {
+        await this.$axios.$delete(`/api/v1/posts/${id}`)
+
+        this.userInfo = User.deletePost(this.userInfo, id)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async onDeleteFolder({ id }) {
+      try {
+        await this.$axios.$delete(`/api/v1/folders/${id}`)
+
+        this.userInfo = User.deleteFolder(this.userInfo, id)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    triggerCreatingNewFolder() {
       this.isCreatingNewFolder = !this.isCreatingNewFolder
     },
+
+    triggerCreatingNewPost() {
+      this.isCreatingNewPost = !this.isCreatingNewPost
+    }
   },
 
   async asyncData({ $axios, params, store, error }) {
     try {
       const { data } = await $axios.$get(`/api/v1/users/${params.username}`)
+
       return { userInfo: new User(data) }
     } catch (e) {
-      error({
-        statusCode: e.response.status
+      const statusCode = e.response && e.response.status || 500
+
+      return error({
+        statusCode: statusCode
       })
     }
   },
