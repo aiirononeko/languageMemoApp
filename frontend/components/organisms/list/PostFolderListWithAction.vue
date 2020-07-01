@@ -13,7 +13,7 @@
             :can-action="true"
             :name="item.name"
             :id="item.id"
-            :to="`${currentPath}/${item.id}`"
+            :to="`${currentPath}/${item.uid}`"
             :key="key"
             @change-name="onChangeFileName"
             @delete="onDeletePost"

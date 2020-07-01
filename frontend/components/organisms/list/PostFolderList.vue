@@ -12,7 +12,7 @@
             v-if="!!item.content"
             :name="item.name"
             :id="item.id"
-            :to="`${currentPath}/${item.id}`"
+            :to="`${currentPath}/${item.uid}`"
             :key="key"
           />
 

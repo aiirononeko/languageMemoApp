@@ -10,7 +10,7 @@
       </v-col>
     </v-row>
 
-    <edit-markdown v-model="md" :fileid="fileid" :isView="isView" :subfield="isBoth" @post="post" />
+    <edit-markdown v-model="md" :post-uid="postUid" :isView="isView" :subfield="isBoth" @post="post" />
 
     <div :class="{ 'text-right': !$device.isDesktopOrTablet }">
       <blue-btn
@@ -40,7 +40,7 @@ export default {
   },
 
   props: {
-    fileid: {
+    postUid: {
       type: String,
       default: "new"
     },

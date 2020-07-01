@@ -4,7 +4,7 @@
       v-model="content"
       :name.sync="name"
       :pub.sync="pub"
-      :fileid="fileID"
+      :post-uid="postUID"
       :is-both="isBoth"
       :is-edit="isEdit"
       :is-view="isView"
@@ -14,15 +14,16 @@
 </template>
 
 <script>
-import {isValidFileID} from "~/utils/fileID"
+// import {isValidFileID} from "~/utils/fileID"
+import Post from '~/types/Post'
 const EditFileidTemplate = () => import('~/components/templates/EditFileidTemplate')
 
 // 不正な fileID だったら、APIの送信に辿り着く前に弾く
 const checkValidFileID = ({ params, redirect }) => {
   // 不正な fileID (数値以外) ではないことを確認
-  if (!isValidFileID(params.fileID)) {
-    return redirect('/edit/new') // 新規作成ページにリダイレクト
-  }
+  // if (!isValidFileID(params.fileID)) {
+  //   return redirect('/edit/new') // 新規作成ページにリダイレクト
+  // }
 }
 
 const DEFAULT_STATUS = 'both'
@@ -36,7 +37,6 @@ export default {
     content: "" /** markdown */,
     name: null /** ファイル名 */,
     pub: false /** 公開の有無 */,
-    folderID: null
   }),
 
   middleware: [
@@ -45,12 +45,14 @@ export default {
   ],
 
   computed: {
-    defaultStatus() {
-      return DEFAULT_STATUS
+    defaultStatus: () => DEFAULT_STATUS,
+
+    postUID() {
+      return this.$route.params.postUID
     },
 
-    fileID() {
-      return this.$route.params.fileID
+    folderID() {
+      return this.$route.query.folderid || this.postInfo.folderID
     },
 
     isBoth() {
@@ -74,32 +76,30 @@ export default {
 
   async asyncData({ $axios, redirect, params }) {
     try {
-      const { data } = await $axios.$get(`/api/v1/posts/${params.fileID}`)
-      return { data }
+      const { data } = await $axios.$get(`/api/v1/posts/${params.postUID}`)
+      return { postInfo: new Post(data) }
     } catch (e) {
       return redirect('/edit/new') // ファイルがなかったら、新規作成ページにリダイレクト
     }
   },
 
   created() {
-    if (this.data && this.data.attributes) {
-      this.content = this.data.attributes.content
-      this.name = this.data.attributes.name
-      this.pub = this.data.attributes.public
-      this.folderID = this.data.attributes.folderID
-    }
+    this.content = this.postInfo.content
+    this.name = this.postInfo.name
+    this.pub = this.postInfo.public
   },
 
   methods: {
     async post(){
-      const { data } = await this.$axios.$put(`/api/v1/posts/${this.fileID}`, {
+      const { data } = await this.$axios.$put(`/api/v1/posts/${this.postInfo.id}`, {
         name: this.name,
         content: this.content,
-        public: this.pub
+        public: this.pub,
+        folder_id: this.folderID
       })
 
       await this.$router.push({ path: '/edit/success', query: {
-        fileid: this.fileID
+        postuid: this.postUID
       }})
     }
   },
