@@ -1,3 +1,4 @@
+import DEFAULT_AVATAR from '~/assets/images/default_avatar_icon1.png'
 import Folder from "./Folder"
 import Post from "./Post"
 import { StrOrNumToNumber } from "@/utils/number"
@@ -31,7 +32,8 @@ class User {
     this.address = attributes.address
     this.createdAt = new Date(attributes['created-at'])
     this.githubLink = attributes['github-link']
-    this.image = attributes.image
+    /** @type {String} */
+    this.image = attributes.image || DEFAULT_AVATAR
     this.name = attributes.name
     this.profile = attributes.profile
     this.twitterLink = attributes['twitter-link']

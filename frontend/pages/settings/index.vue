@@ -10,6 +10,12 @@ export default {
     SettingsIndexTemplate
   },
 
-  middleware: "authenticated"
+  middleware: "authenticated",
+
+  head() {
+    return {
+      title: "設定"
+    }
+  }
 }
 </script>
