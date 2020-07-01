@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import Post from '../../types/Post'
 const EditFileidTemplate = () => import('~/components/templates/EditFileidTemplate')
 
 const DEFAULT_STATUS = 'both'
@@ -26,7 +27,6 @@ export default {
     content: "" /** markdown */,
     name: null /** ファイル名 */,
     pub: false /** 公開の有無 */,
-    folderID: null
   }),
 
   middleware: "authenticated",
@@ -34,6 +34,10 @@ export default {
   computed: {
     defaultStatus() {
       return DEFAULT_STATUS
+    },
+
+    folderID() {
+      return this.$route.query.folderid
     },
 
     userID() {
@@ -67,11 +71,13 @@ export default {
           content: this.content,
           public: this.pub,
           user_id: this.userID,
-          folder_id: null // TODO folder_idを設定できるようにする
+          folder_id: this.folderID
         })
 
+        const postInfo = new Post(data)
+
         await this.$router.push({ path: '/edit/success', query: {
-          fileid: data.id
+          postuid: postInfo.uid
         }})
       } catch (e) {}
     }

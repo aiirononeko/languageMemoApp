@@ -9,7 +9,7 @@
     </v-row>
 
     <v-row class="mb-4" justify="center">
-      <orange-btn class="mr-2" :to="`/edit/${fileid}`">
+      <orange-btn class="mr-2" :to="`/edit/${postUid}`">
         編集する
       </orange-btn>
 
@@ -33,7 +33,7 @@ export default {
   },
 
   props: {
-    fileid: {
+    postUid: {
       type: String,
       required: true
     }

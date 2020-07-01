@@ -186,7 +186,6 @@ export default {
   },
 
   async asyncData({ $axios, params, error }) {
-    console.log('asyncdata')
     const folderID = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID
     const ancestorFolderIDs = pathToArr(params.pathMatch)
     let userInfo, foldersInfo

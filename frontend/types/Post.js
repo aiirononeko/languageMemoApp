@@ -50,6 +50,7 @@ class Post {
     this.name = attributes.name
     this.public = attributes.public
     this.content = attributes.content
+    this.uid = attributes.uid
     this.userID = StrOrNumToNumber(attributes["user-id"])
     this.createdAt = new Date(attributes['created-at'])
     this.updatedAt = new Date(attributes['updated-at'])
@@ -70,6 +71,7 @@ class Post {
     this.public = post.public
     this.content = post.content
     this.userID = StrOrNumToNumber(post.user_id)
+    this.uid = post.uid
     this.parentID = post.parent_id
     this.createdAt = new Date(post.created_at)
     this.updatedAt = new Date(post.updated_at)
