@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <edit-fileid-template
-      v-model="content"
-      :name.sync="name"
-      :pub.sync="pub"
-      :is-both="isBoth"
-      :is-edit="isEdit"
-      :is-view="isView"
-      @post="post"
-    />
-  </div>
+  <edit-fileid-template
+    v-model="content"
+    :name.sync="name"
+    :pub.sync="pub"
+    :is-both="isBoth"
+    :is-edit="isEdit"
+    :is-view="isView"
+    @post="post"
+  />
 </template>
 
 <script>
-import Post from '../../types/Post'
+import Post from '~/types/Post'
 const EditFileidTemplate = () => import('~/components/templates/EditFileidTemplate')
 
 const DEFAULT_STATUS = 'both'

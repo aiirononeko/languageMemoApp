@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <edit-fileid-success-template :post-uid="postUID" />
-  </div>
+  <edit-fileid-success-template :post-uid="postUID" :username="username" />
 </template>
 
 <script>
@@ -29,7 +27,11 @@ export default {
   computed: {
     postUID() {
       return this.$route.query.postuid
-    }
+    },
+
+    username() {
+      return this.$store.getters["authentication/username"]
+    },
   },
 
   head() {

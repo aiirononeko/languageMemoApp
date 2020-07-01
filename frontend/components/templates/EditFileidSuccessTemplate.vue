@@ -13,7 +13,7 @@
         編集する
       </orange-btn>
 
-      <orange-btn>
+      <orange-btn :to="`/${username}/${postUid}`">
         投稿を見る
       </orange-btn>
     </v-row>
@@ -34,6 +34,11 @@ export default {
 
   props: {
     postUid: {
+      type: String,
+      required: true
+    },
+
+    username: {
       type: String,
       required: true
     }
