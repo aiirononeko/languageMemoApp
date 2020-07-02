@@ -118,7 +118,9 @@ export default {
 
       try {
         const { data } = await this.$axios.$post(`/api/v1/folders`, folderInfo)
-        this.foldersInfo = new Folder(data)
+
+        // 既存の配列に新しいフォルダーを追加
+        this.foldersInfo = Folder.pushChildFolder(this.foldersInfo, data)
         this.triggerCreatingNewFolder()
       } catch(e) {
         return this.$nuxt.error({
