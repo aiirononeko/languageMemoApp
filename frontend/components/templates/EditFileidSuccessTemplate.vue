@@ -59,8 +59,8 @@ export default {
       }
 
       const link = this.postInfo.ancestorFolders.reduce((str, folder) => {
-        link += `/${folder.id}`
-        return link
+        str += `/${folder.id}`
+        return str
       }, `/${this.username}`)
 
       return `${link}/${this.postInfo.uid}`
