@@ -3,6 +3,7 @@ import Folder from "./Folder"
 import Post from "./Post"
 import { StrOrNumToNumber, isUnsignedInteger } from "@/utils/number"
 import { isAlphaNumUnderScore } from '@/utils/string'
+import cloneDeep from 'lodash.clonedeep'
 
 /**
  * @typedef UserAttributes
@@ -24,10 +25,16 @@ import { isAlphaNumUnderScore } from '@/utils/string'
  */
 class User {
 
+  constructor(user) {
+    if (user.attributes) {
+      this.withAttributesToUser(user)
+    }
+  }
+
   /**
    * @param {{ id: String|Number, type: String, attributes: UserAttributes }} obj
    */
-  constructor({ id, type, attributes }) {
+  withAttributesToUser = ({ id, type, attributes }) => {
     this.id = StrOrNumToNumber(id)
     this.type = type
     this.address = attributes.address
@@ -91,7 +98,7 @@ class User {
    * @param {Post} post
    */
   static pushPost (user, post) {
-    const newUser = Object.assign({}, user)
+    const newUser = cloneDeep(user)
 
     if (post instanceof Post) {
       newUser.posts.push(post)
@@ -108,7 +115,7 @@ class User {
    * @param {Folder} folder
    */
   static pushFolder (user, folder) {
-    const newUser = Object.assign({}, user)
+    const newUser = cloneDeep(user)
 
     if (folder instanceof Folder) {
       newUser.folders.push(folder)
