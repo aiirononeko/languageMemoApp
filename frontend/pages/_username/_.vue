@@ -52,7 +52,7 @@ export default {
     }
 
     // 有効なフォルダーIDかどうか
-    if (!Folder.isValidFolderID(folderID)) {
+    if (!Folder.isValidFolderID(lastPath)) {
       return error({
         statusCode: 404
       })
