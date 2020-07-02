@@ -2,6 +2,20 @@ module Api::V1::Auth
   class OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
     include Devise::Controllers::Rememberable
 
+    def redirect_callbacks
+      @count = 0
+      # derive target redirect route from 'resource_class' param, which was set
+      # before authentication.
+      devise_mapping = get_devise_mapping
+      redirect_route = get_redirect_route(devise_mapping, @count)
+      request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/signin"})
+      # preserve omniauth info for success route. ignore 'extra' in twitter
+      # auth response to avoid CookieOverflow.
+      session['dta.omniauth.auth'] = request.env['omniauth.auth'].except('extra')
+      session['dta.omniauth.params'] = request.env['omniauth.params']
+      redirect_to redirect_route
+    end
+
     def omniauth_success
       if current_api_v1_user
         assign_provider_attrs_for_current_user(current_api_v1_user, auth_hash)
@@ -59,6 +73,5 @@ module Api::V1::Auth
       
       user.assign_attributes(extra_info)
     end
-
   end
 end
