@@ -9,11 +9,11 @@
     </v-row>
 
     <v-row class="mb-4" justify="center">
-      <orange-btn class="mr-2" :to="`/edit/${postUid}`">
+      <orange-btn class="mr-2" :to="`/edit/${postInfo.uid}`">
         編集する
       </orange-btn>
 
-      <orange-btn :to="`/${username}/${postUid}`">
+      <orange-btn :to="getViewLink">
         投稿を見る
       </orange-btn>
     </v-row>
@@ -33,8 +33,8 @@ export default {
   },
 
   props: {
-    postUid: {
-      type: String,
+    postInfo: {
+      type: Object,
       required: true
     },
 
@@ -51,6 +51,19 @@ export default {
 
     hashtag() {
       return "til,poeta,駆け出しエンジニアとつながりたい"
+    },
+
+    getViewLink() {
+      if (this.postInfo.ancestorFolders.length === 0) {
+        return `/${this.username}/${this.postInfo.uid}`
+      }
+
+      const link = this.postInfo.ancestorFolders.reduce((str, folder) => {
+        link += `/${folder.id}`
+        return link
+      }, `/${this.username}`)
+
+      return `${link}/${this.postInfo.uid}`
     }
   }
 }
