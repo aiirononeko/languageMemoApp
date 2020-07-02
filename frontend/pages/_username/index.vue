@@ -1,7 +1,7 @@
 <template>
   <!-- マイページのルート -->
   <div>
-    <username-index-template
+    <username-folder-template
       :can-action="canAction"
       :current-path="currentPath"
       :current-username="currentUsername"
@@ -22,11 +22,11 @@
 
 <script>
 import User from '~/types/User'
-const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
+const UsernameFolderTemplate = () => import('~/components/templates/UsernameFolderTemplate')
 
 export default {
   components: {
-    UsernameIndexTemplate
+    UsernameFolderTemplate
   },
 
   data: () => ({

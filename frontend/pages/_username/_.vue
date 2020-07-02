@@ -1,7 +1,7 @@
 <template>
   <!-- マイページの２階層以下 -->
   <div>
-    <username-index-template
+    <username-folder-template
       v-if="foldersInfo"
       :can-action="canAction"
       :current-path="currentPath"
@@ -34,12 +34,12 @@ import User from '~/types/User'
 import Post from '~/types/Post'
 import Folder from '~/types/Folder'
 import { pathToArr, getDirname } from '~/utils/path'
-const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
+const UsernameFolderTemplate = () => import('~/components/templates/UsernameFolderTemplate')
 const UsernamePostTemplate = () => import('~/components/templates/UsernamePostTemplate')
 
 export default {
   components: {
-    UsernameIndexTemplate,
+    UsernameFolderTemplate,
     UsernamePostTemplate
   },
 
