@@ -5,7 +5,7 @@
     <v-list-item-content>
       <v-form @submit.prevent="onSubmit">
         <v-list-item-title>
-          <v-text-field v-model="model" dense />
+          <post-name-text-field v-model="model" dense />
         </v-list-item-title>
       </v-form>
     </v-list-item-content>
@@ -13,7 +13,13 @@
 </template>
 
 <script>
+const PostNameTextField = () => import('~/components/organisms/textFields/PostNameTextField')
+
 export default {
+  components: {
+    PostNameTextField
+  },
+
   props: {
     value: {
       type: String,

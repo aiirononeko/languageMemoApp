@@ -5,7 +5,7 @@
     <v-list-item-content>
       <v-form @submit.prevent="onSubmit">
         <v-list-item-title>
-          <v-text-field v-model="model" dense />
+          <folder-name-text-field v-model="model" />
         </v-list-item-title>
       </v-form>
     </v-list-item-content>
@@ -13,7 +13,13 @@
 </template>
 
 <script>
+const FolderNameTextField = () => import('~/components/organisms/textFields/FolderNameTextField')
+
 export default {
+  components: {
+    FolderNameTextField
+  },
+
   props: {
     value: {
       type: String,
