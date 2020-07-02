@@ -1,6 +1,6 @@
 <template>
   <div>
-    <edit-fileid-template
+    <edit-post-template
       v-if="!success"
       v-model="content"
       :name.sync="name"
@@ -12,7 +12,7 @@
       @post="post"
     />
 
-    <edit-fileid-success-template
+    <edit-post-success-template
       v-else
       :post-info="postInfo"
       :username="username"
@@ -22,11 +22,11 @@
 
 <script>
 import Post from '~/types/Post'
-const EditFileidTemplate = () => import('~/components/templates/EditFileidTemplate')
-const EditFileidSuccessTemplate = () => import('~/components/templates/EditFileidSuccessTemplate')
+const EditPostTemplate = () => import('~/components/templates/EditPostTemplate')
+const EditPostSuccessTemplate = () => import('~/components/templates/EditPostSuccessTemplate')
 
 // 不正な PostUID だったら、APIの送信に辿り着く前に弾く
-const checkValidFileID = ({ params, redirect }) => {
+const checkValidPostUID = ({ params, redirect }) => {
   if (!Post.isValidPostUID(params.postUID)) {
     return redirect('/edit/new') // 新規作成ページにリダイレクト
   }
@@ -36,8 +36,8 @@ const DEFAULT_STATUS = 'both'
 
 export default {
   components: {
-    EditFileidTemplate,
-    EditFileidSuccessTemplate
+    EditPostTemplate,
+    EditPostSuccessTemplate
   },
 
   data: () => ({
@@ -51,7 +51,7 @@ export default {
 
   middleware: [
     "authenticated",
-    checkValidFileID
+    checkValidPostUID
   ],
 
   computed: {
