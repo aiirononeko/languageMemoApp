@@ -1,6 +1,6 @@
 <template>
   <div>
-    <edit-fileid-template
+    <edit-post-template
       v-if="!success"
       v-model="content"
       :name.sync="name"
@@ -11,7 +11,7 @@
       @post="post"
     />
 
-    <edit-fileid-success-template
+    <edit-post-success-template
       v-else
       :post-info="postInfo"
       :username="username"
@@ -21,13 +21,13 @@
 
 <script>
 import Post from '~/types/Post'
-const EditFileidTemplate = () => import('~/components/templates/EditFileidTemplate')
+const EditPostTemplate = () => import('~/components/templates/EditPostTemplate')
 
 const DEFAULT_STATUS = 'both'
 
 export default {
   components: {
-    EditFileidTemplate
+    EditPostTemplate
   },
 
   data: () => ({
