@@ -109,6 +109,25 @@ class Folder {
     return folders
   }
 
+
+  /**
+   * MyPageへのリンクを生成する
+   *
+   * @param {Folder} folder
+   * @param {String} username
+   */
+  static generateViewLink = (folder, username) => {
+    if (folder.ancestorFolders.length === 0) {
+      return `/${username}/${folder.id}`
+    }
+
+    // 先祖フォルダのデータを使い、階層構造を再現する
+    return folder.ancestorFolders.reduce((str, folder) => {
+      str += `/${folder.id}`
+      return str
+    }, `/${username}`)
+  }
+
   /**
    * フォルダーIDとidが等しいかどうか
    *
@@ -135,8 +154,10 @@ class Folder {
    *
    * @param {Folder} folder
    * @param {Post} post
+   * @returns {Folder}
    */
   static pushPost (folder, post) {
+    /** @type Folder */
     const newFolder = Object.assign({}, folder)
 
     if (Post.isPost(post)) {
@@ -154,6 +175,7 @@ class Folder {
    * @param {Folder} newChildFolder
    */
   static pushChildFolder (folder, newChildFolder) {
+    /** @type Folder */
     const newFolder = Object.assign({}, folder)
 
     if (Folder.isFolder(newChildFolder)) {

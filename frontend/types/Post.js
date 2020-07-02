@@ -9,18 +9,21 @@ import { isUuid } from "@/utils/string"
  * @property {String} content
  * @property {String} name
  * @property {String} public
+ * @property {String} uid
  * @property {Number} user-id
  * @property {String} updated-at
  */
 
 /**
  * @typedef PostNormal
+ * @property {Array<Object>} ancestor_folders
  * @property {String} created_at
  * @property {String} content
  * @property {Number} id
  * @property {String} name
  * @property {String} parent_id
  * @property {String} public
+ * @property {String} uid
  * @property {String} user_id
  * @property {String} updated_at
  */
@@ -76,6 +79,10 @@ class Post {
     this.parentID = post.parent_id
     this.createdAt = new Date(post.created_at)
     this.updatedAt = new Date(post.updated_at)
+
+    if (post.ancestor_folders && post.ancestor_folders.length > 0) {
+      this.ancestorFolders = post.ancestor_folders.map((folder) => new Folder(folder))
+    }
   }
 
   static isPost = (v) => v instanceof Post
@@ -95,6 +102,26 @@ class Post {
    * @param {String} uid
    */
   static isValidPostUID = (uid) => isUuid(uid)
+
+  /**
+   * MyPageへのリンクを生成する
+   *
+   * @param {Post} post
+   * @param {String} username
+   */
+  static generateViewLink = (post, username) => {
+    if (post.ancestorFolders.length === 0) {
+      return `/${username}/${post.uid}`
+    }
+
+    // 先祖フォルダのデータを使い、階層構造を再現する
+    const link = post.ancestorFolders.reduce((str, folder) => {
+      str += `/${folder.id}`
+      return str
+    }, `/${username}`)
+
+    return `${link}/${post.uid}`
+  }
 }
 
 export default Post
