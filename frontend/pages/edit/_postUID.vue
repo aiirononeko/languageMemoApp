@@ -1,6 +1,7 @@
 <template>
   <div>
     <edit-fileid-template
+      v-if="!success"
       v-model="content"
       :name.sync="name"
       :pub.sync="pub"
@@ -10,33 +11,42 @@
       :is-view="isView"
       @post="post"
     />
+
+    <edit-fileid-success-template
+      v-else
+      :post-info="postInfo"
+      :username="username"
+    />
   </div>
 </template>
 
 <script>
-// import {isValidFileID} from "~/utils/fileID"
 import Post from '~/types/Post'
 const EditFileidTemplate = () => import('~/components/templates/EditFileidTemplate')
+const EditFileidSuccessTemplate = () => import('~/components/templates/EditFileidSuccessTemplate')
 
-// 不正な fileID だったら、APIの送信に辿り着く前に弾く
+// 不正な PostUID だったら、APIの送信に辿り着く前に弾く
 const checkValidFileID = ({ params, redirect }) => {
-  // 不正な fileID (数値以外) ではないことを確認
-  // if (!isValidFileID(params.fileID)) {
-  //   return redirect('/edit/new') // 新規作成ページにリダイレクト
-  // }
+  if (!Post.isValidPostUID(params.postUID)) {
+    return redirect('/edit/new') // 新規作成ページにリダイレクト
+  }
 }
 
 const DEFAULT_STATUS = 'both'
 
 export default {
   components: {
-    EditFileidTemplate
+    EditFileidTemplate,
+    EditFileidSuccessTemplate
   },
 
   data: () => ({
     content: "" /** markdown */,
     name: null /** ファイル名 */,
     pub: false /** 公開の有無 */,
+    errors: null /** バリデーションエラー */,
+    success: false,
+    postInfo: null
   }),
 
   middleware: [
@@ -71,6 +81,10 @@ export default {
       const LABEL = 'view'
       const status = this.$route.query.status
       return status ? status === LABEL : this.defaultStatus === LABEL
+    },
+
+    username() {
+      return this.$store.getters["authentication/username"]
     }
   },
 
@@ -91,16 +105,30 @@ export default {
 
   methods: {
     async post(){
-      const { data } = await this.$axios.$put(`/api/v1/posts/${this.postInfo.id}`, {
-        name: this.name,
-        content: this.content,
-        public: this.pub,
-        folder_id: this.folderID
-      })
+      this.errors = null
 
-      await this.$router.push({ path: '/edit/success', query: {
-        postuid: this.postUID
-      }})
+      try {
+        const { data } = await this.$axios.$put(`/api/v1/posts/${this.postInfo.id}`, {
+          name: this.name,
+          content: this.content,
+          public: this.pub,
+          folder_id: this.folderID
+        })
+
+        this.postInfo = new Post(data)
+        this.success = true
+      } catch (e) {
+        const statusCode = e.response && e.response.status || 500
+
+        if (statusCode === 422) {
+          this.errors = e.response.data.errors
+          return
+        }
+
+        return this.$nuxt.error({
+          statusCode
+        })
+      }
     }
   },
 

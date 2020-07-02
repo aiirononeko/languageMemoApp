@@ -1,13 +1,22 @@
 <template>
-  <edit-fileid-template
-    v-model="content"
-    :name.sync="name"
-    :pub.sync="pub"
-    :is-both="isBoth"
-    :is-edit="isEdit"
-    :is-view="isView"
-    @post="post"
-  />
+  <div>
+    <edit-fileid-template
+      v-if="!success"
+      v-model="content"
+      :name.sync="name"
+      :pub.sync="pub"
+      :is-both="isBoth"
+      :is-edit="isEdit"
+      :is-view="isView"
+      @post="post"
+    />
+
+    <edit-fileid-success-template
+      v-else
+      :post-info="postInfo"
+      :username="username"
+    />
+  </div>
 </template>
 
 <script>
@@ -25,6 +34,9 @@ export default {
     content: "" /** markdown */,
     name: null /** ファイル名 */,
     pub: false /** 公開の有無 */,
+    errors: null /** バリデーションエラ */,
+    success: false,
+    postInfo: null
   }),
 
   middleware: "authenticated",
@@ -40,6 +52,10 @@ export default {
 
     userID() {
       return this.$store.getters["authentication/id"]
+    },
+
+    username() {
+      return this.$store.getters["authentication/username"]
     },
 
     isBoth() {
@@ -63,6 +79,8 @@ export default {
 
   methods: {
     async post(){
+      this.errors = null
+
       try {
         const { data } = await this.$axios.$post(`/api/v1/posts`, {
           name: this.name,
@@ -72,12 +90,20 @@ export default {
           folder_id: this.folderID
         })
 
-        const postInfo = new Post(data)
+        this.postInfo = new Post(data)
+        this.success = true
+      } catch (e) {
+        const statusCode = e.response && e.response.status || 500
 
-        await this.$router.push({ path: '/edit/success', query: {
-          postuid: postInfo.uid
-        }})
-      } catch (e) {}
+        if (statusCode === 422) {
+          this.errors = e.response.data.errors
+          return
+        }
+
+        return this.$nuxt.error({
+          statusCode
+        })
+      }
     }
   },
 
