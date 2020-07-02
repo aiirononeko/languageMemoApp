@@ -1,7 +1,8 @@
 import DEFAULT_AVATAR from '~/assets/images/default_avatar_icon1.png'
 import Folder from "./Folder"
 import Post from "./Post"
-import { StrOrNumToNumber } from "@/utils/number"
+import { StrOrNumToNumber, isUnsignedInteger } from "@/utils/number"
+import { isAlphaNumUnderScore } from '@/utils/string'
 
 /**
  * @typedef UserAttributes
@@ -69,6 +70,20 @@ class User {
   }
 
   static isUser = (v) => v instanceof User
+
+  /**
+   * 有効なUserIDか
+   *
+   * @param {String|Number} id
+   */
+  static isValidID = (id) => isUnsignedInteger(id)
+
+  /**
+   * 有効なusernameか
+   *
+   * @param {String} username
+   */
+  static isValidUsername = (username) => isAlphaNumUnderScore(username) && username.length < 31
 
   /**
    *
