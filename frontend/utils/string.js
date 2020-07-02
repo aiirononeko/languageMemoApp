@@ -35,6 +35,13 @@ export const pascalCase = (str) => {
 }
 
 /**
+ * アルファベット(大文字小文字)か数字か_(アンダースコア)かどうかを確認
+ *
+ * @param {String} v
+ */
+export const isAlphaNumUnderScore = (v) => isString(v) && /[a-zA-Z_0-9]+/.test(v)
+
+/**
  * 文字列型か
  *
  * @param {any} v
@@ -45,6 +52,6 @@ export const isString = (v) => typeof v === 'string'
 /**
  * 32文字のハイフン無しのuuidかどうかを確認
  *
- * @param {*} v
+ * @param {String} v
  */
 export const isUuid = (v) => isString(v) && /[0-9a-f]{32}/.test(v)
