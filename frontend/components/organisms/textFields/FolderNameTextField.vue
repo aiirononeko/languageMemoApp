@@ -8,7 +8,7 @@
     :outlined="outlined"
     :rules="[rules.required]"
     dense
-    placeholder="ファイル名"
+    placeholder="フォルダ名"
   />
 </template>
 
@@ -22,7 +22,7 @@ export default {
 
     maxlength: {
       type: Number,
-      default: 100
+      default: 50
     },
 
     rounded: {

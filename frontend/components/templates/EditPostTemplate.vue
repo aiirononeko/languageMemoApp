@@ -2,7 +2,7 @@
   <one-column-container class="pos-relative" fluid>
     <v-row>
       <v-col class="py-0" cols="12" sm="6" md="3">
-        <post-name-text-field v-model="nameModel" />
+        <post-name-text-field v-model="nameModel" rounded outlined />
       </v-col>
       <v-spacer />
       <v-col class="py-0" cols="12" sm="3" md="3">
