@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import Post from '~/types/Post'
 const TwitterShareBtn = () => import('~/components/molecules/btns/TwitterShareBtn')
 const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
 const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
@@ -54,16 +55,7 @@ export default {
     },
 
     getViewLink() {
-      if (this.postInfo.ancestorFolders.length === 0) {
-        return `/${this.username}/${this.postInfo.uid}`
-      }
-
-      const link = this.postInfo.ancestorFolders.reduce((str, folder) => {
-        str += `/${folder.id}`
-        return str
-      }, `/${this.username}`)
-
-      return `${link}/${this.postInfo.uid}`
+      return Post.generateViewLink(this.postInfo, this.username)
     }
   }
 }
