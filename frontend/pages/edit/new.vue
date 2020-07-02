@@ -15,6 +15,7 @@
       v-else
       :post-info="postInfo"
       :username="username"
+      @to-edit="success = !success"
     />
   </div>
 </template>

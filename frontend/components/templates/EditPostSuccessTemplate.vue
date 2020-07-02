@@ -9,7 +9,7 @@
     </v-row>
 
     <v-row class="mb-4" justify="center">
-      <orange-btn class="mr-2" :to="`/edit/${postInfo.uid}`">
+      <orange-btn class="mr-2" @click="toEdit">
         編集する
       </orange-btn>
 
@@ -57,7 +57,13 @@ export default {
     getViewLink() {
       return Post.generateViewLink(this.postInfo, this.username)
     }
-  }
+  },
+
+  methods: {
+    toEdit() {
+      return this.$emit('to-edit')
+    }
+  },
 }
 </script>
 
