@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Post from '~/types/Post'
+import Post from '@/types/Post'
 const EditPostTemplate = () => import('~/components/templates/EditPostTemplate')
 
 const DEFAULT_STATUS = 'both'

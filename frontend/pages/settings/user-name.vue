@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import User from '~/types/User'
+import User from '@/types/User'
 const SettingsUserNameTemplate = () => import('~/components/templates/SettingsUserNameTemplate')
 
 export default {

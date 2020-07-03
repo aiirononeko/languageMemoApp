@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import User from "~/types/User"
+import User from "@/types/User"
 import { objectToFormData } from "object-to-formdata"
 const SettingsProfileTemplate = () => import('~/components/templates/SettingsProfileTemplate')
 
@@ -33,7 +33,7 @@ export default {
   methods: {
 
     /**
-     * @param {import('~/types/User').default} userInfo
+     * @param {import('@/types/User').default} userInfo
      */
     async save(userInfo) {
       this.errors = null
