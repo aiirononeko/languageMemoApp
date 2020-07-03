@@ -39,10 +39,12 @@ describe('utils/string', () => {
       { message: 'アルファベット小文字のみ、trueである', arg: 'abc', bool: true },
       { message: 'アルファベット大文字のみ、trueである', arg: 'ABC', bool: true },
       { message: '数字のみ、trueである', arg: '123', bool: true },
+      { message: '日本語は、falseである', arg: 'あああ', bool: false },
+      { message: '日本語は、falseである', arg: 'あああabc', bool: false },
     ]
 
     for (const testCase of testCases) {
-      it(testCase.message, () => {
+      it(`${ testCase.message } (${testCase.arg})`, () => {
         expect(stringFunc.isAlphaNumUnderScore(testCase.arg)).toBe(testCase.bool)
       })
     }

@@ -1,10 +1,12 @@
 <template>
   <v-text-field
     v-model="valueModel"
+    :counter="isVisibledCounter"
     :error="!change ? !!apiError : false"
     :error-messages="getErrorMessage"
     :required="required"
     :rules="getRule"
+    :maxlength="maxlength"
     :persistent-hint="persistentHint"
     @change="onChange"
     label="ユーザーID"
@@ -16,6 +18,8 @@
 </template>
 
 <script>
+import User from '@/types/User'
+
 export default {
   props: {
     apiError: {
@@ -26,6 +30,11 @@ export default {
     persistentHint: {
       type: Boolean,
       default: true
+    },
+
+    maxlength: {
+      type: Number,
+      default: 30
     },
 
     submitCount: {
@@ -50,8 +59,8 @@ export default {
       required: (v) => {
         return !!v || "入力してください"
       },
-      maxLength: (v) => {
-        return (v && v.length <= 30) || "30文字以内で入力してください"
+      username: (v) => {
+        return (!!v && User.isValidUsername(v)) || "半角英数字とアンダーバー(_)のみ使用可能です"
       }
     },
   }),
@@ -69,9 +78,27 @@ export default {
       const ret = []
 
       this.required && ret.push(this.rules.required)
-      ret.push(this.rules.maxLength)
+      ret.push(this.rules.username)
 
       return ret
+    },
+
+    /**
+     * counterを表示するかどうか
+     */
+    isVisibledCounter() {
+      if (!this.value) {
+        return false
+      }
+
+      return this.value.length > this.visibledLength
+    },
+
+    /**
+     * counterを表示するサイズ
+     */
+    visibledLength () {
+      return this.maxlength * 0.8
     },
 
     valueModel: {
