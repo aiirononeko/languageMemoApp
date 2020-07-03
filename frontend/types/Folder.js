@@ -1,5 +1,6 @@
 import Post from "./Post"
 import { isUnsignedInteger, StrOrNumToNumber } from "@/utils/number"
+import { cloneDeep } from "@/utils/Helper"
 
 /**
  * @typedef FolderAttributes
@@ -93,20 +94,24 @@ class Folder {
    * @param {String|Number} id
    */
   static deletePost (folder, id) {
+    const newFolder = cloneDeep(folder)
     const num = StrOrNumToNumber(id)
-    folder.posts = folder.posts.filter((post) => post.id !== num)
-    return folder
+
+    newFolder.posts = newFolder.posts.filter((post) => post.id !== num)
+    return newFolder
   }
 
   /**
    *
-   * @param {Folder} folders
+   * @param {Folder} folder
    * @param {Number|String} id
    */
-  static deleteChildFolder (folders, id) {
+  static deleteChildFolder (folder, id) {
+    const newFolder = cloneDeep(folder)
     const num = StrOrNumToNumber(id)
-    folders.childFolders = folders.childFolders.filter((folder) => folder.id !== num)
-    return folders
+
+    newFolder.childFolders = newFolder.childFolders.filter((folder) => folder.id !== num)
+    return newFolder
   }
 
 
@@ -146,19 +151,19 @@ class Folder {
    *
    * ここでは、引数が整数値か確認している。
    *
-   * @param {*} id
+   * @param {String|Number} id
    */
   static isValidFolderID = (id) => isUnsignedInteger(id)
 
   /**
+   * Postを追加する
    *
    * @param {Folder} folder
    * @param {Post} post
    * @returns {Folder}
    */
   static pushPost (folder, post) {
-    /** @type Folder */
-    const newFolder = Object.assign({}, folder)
+    const newFolder = cloneDeep(folder)
 
     if (Post.isPost(post)) {
       newFolder.posts.push(post)
@@ -170,13 +175,13 @@ class Folder {
   }
 
   /**
+   * 子フォルダーを追加する
    *
    * @param {Folder} folder
    * @param {Folder} newChildFolder
    */
   static pushChildFolder (folder, newChildFolder) {
-    /** @type Folder */
-    const newFolder = Object.assign({}, folder)
+    const newFolder = cloneDeep(folder)
 
     if (Folder.isFolder(newChildFolder)) {
       newFolder.childFolders.push(newChildFolder)
@@ -188,13 +193,14 @@ class Folder {
   }
 
   /**
+   * Post を更新する
    *
    * @param {Folder} folder
    * @param {Number} id
    * @param {Post} post
    */
   static updatePost (folder, id, post) {
-    const newFolder = Object.assign({}, folder)
+    const newFolder = cloneDeep(folder)
     const num = StrOrNumToNumber(id)
     const idx = newFolder.posts.findIndex((posts) => posts.id === num)
 
@@ -204,19 +210,20 @@ class Folder {
 
     newFolder.posts[idx] = Post.isPost(post)
       ? post
-      : new Folder(post)
+      : new Post(post)
 
     return newFolder
   }
 
   /**
+   * Child Folder を更新する
    *
    * @param {Folder} folder
    * @param {Number} id
    * @param {Folder} newChildFolder
    */
   static updateChildFolder (folder, id, newChildFolder) {
-    const newFolder = Object.assign({}, folder)
+    const newFolder = cloneDeep(folder)
     const num = StrOrNumToNumber(id)
     const idx = newFolder.childFolders.findIndex((folders) => folders.id === num)
 
