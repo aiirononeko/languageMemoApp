@@ -107,7 +107,7 @@ class User {
   static pushPost (user, post) {
     const newUser = cloneDeep(user)
 
-    if (post instanceof Post) {
+    if (Post.isPost(post)) {
       newUser.posts.push(post)
       return newUser
     }
@@ -125,7 +125,7 @@ class User {
   static pushFolder (user, folder) {
     const newUser = cloneDeep(user)
 
-    if (folder instanceof Folder) {
+    if (Folder.isFolder(folder)) {
       newUser.folders.push(folder)
       return newUser
     }
@@ -150,7 +150,7 @@ class User {
       return newUser
     }
 
-    newUser.posts[idx] = newPost instanceof Post
+    newUser.posts[idx] = Post.isPost(newPost)
       ? newPost
       : new Post(newPost)
 
@@ -173,7 +173,7 @@ class User {
       return newUser
     }
 
-    newUser.folders[idx] = newFolder instanceof Folder
+    newUser.folders[idx] = Folder.isFolder(newFolder)
       ? newFolder
       : new Folder(newFolder)
 

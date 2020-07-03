@@ -136,10 +136,10 @@ class Folder {
   /**
    * フォルダーIDとidが等しいかどうか
    *
-   * @param {Folder} folders
+   * @param {Folder} folder
    * @param {Number|String} id
    */
-  static isEqualFolderID = (folders, id) => folders.id === StrOrNumToNumber(id)
+  static isEqualFolderID = (folder, id) => folder.id === StrOrNumToNumber(id)
 
   /**
    * @param {*} v
