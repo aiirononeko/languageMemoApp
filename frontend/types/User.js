@@ -55,25 +55,31 @@ class User {
   }
 
   /**
+   * 指定した id の Post を削除する
    *
    * @param {User} user
    * @param {String|Number} id
    */
   static deletePost (user, id) {
+    const newUser = cloneDeep(user)
     const num = StrOrNumToNumber(id)
-    user.posts = user.posts.filter((post) => post.id !== num)
-    return user
+
+    newUser.posts = newUser.posts.filter((post) => post.id !== num)
+    return newUser
   }
 
   /**
+   * 指定した id のフォルダーを削除する
    *
    * @param {User} user
    * @param {String|Number} id
    */
   static deleteFolder (user, id) {
+    const newUser = cloneDeep(user)
     const num = StrOrNumToNumber(id)
-    user.folders = user.folders.filter((folder) => folder.id !== num)
-    return user
+
+    newUser.folders = newUser.folders.filter((folder) => folder.id !== num)
+    return newUser
   }
 
   static isUser = (v) => v instanceof User
@@ -93,6 +99,7 @@ class User {
   static isValidUsername = (username) => isAlphaNumUnderScore(username) && username.length < 31
 
   /**
+   * Post を追加する
    *
    * @param {User} user
    * @param {Post} post
@@ -110,6 +117,7 @@ class User {
   }
 
   /**
+   * フォルダー を追加
    *
    * @param {User} user
    * @param {Folder} folder
@@ -127,13 +135,14 @@ class User {
   }
 
   /**
+   * 指定した id のPostを更新する
    *
    * @param {User} user
    * @param {String|Number} id
    * @param {Post} newPost
    */
   static updatePost (user, id, newPost) {
-    const newUser = Object.assign({}, user)
+    const newUser = cloneDeep(user)
     const num = StrOrNumToNumber(id)
     const idx = user.posts.findIndex((post) => post.id === num)
 
@@ -149,13 +158,14 @@ class User {
   }
 
   /**
+   * 指定した id のフォルダーを更新する
    *
    * @param {User} user
    * @param {String|Number} id
    * @param {Folder} newFolder
    */
   static updateFolder (user, id, newFolder) {
-    const newUser = Object.assign({}, user)
+    const newUser = cloneDeep(user)
     const num = StrOrNumToNumber(id)
     const idx = user.folders.findIndex((folders) => folders.id === num)
 
