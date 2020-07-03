@@ -1,4 +1,4 @@
-import * as stringFunc from '~/utils/string'
+import * as stringFunc from '@/utils/string'
 
 describe('utils/string', () => {
 
