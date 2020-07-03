@@ -3,7 +3,7 @@ import Folder from "./Folder"
 import Post from "./Post"
 import { StrOrNumToNumber, isUnsignedInteger } from "@/utils/number"
 import { isAlphaNumUnderScore } from '@/utils/string'
-import cloneDeep from 'lodash.clonedeep'
+import { cloneDeep } from '@/utils/Helper'
 
 /**
  * @typedef UserAttributes

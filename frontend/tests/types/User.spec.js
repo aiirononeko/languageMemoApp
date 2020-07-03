@@ -89,7 +89,6 @@ describe('types/User', () => {
       expect(expectUser).toBeInstanceOf(User)          // Objectにキャストされていないか
       expect(expectUser.posts).toHaveLength(2)
       expect(expectUser.posts.every(v => Post.isPost(v))).toBeTruthy()
-
     })
   })
 
