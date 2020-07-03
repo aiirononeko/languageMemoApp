@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: 画像のプレビューを追加したい -->
   <div class="d-flex align-center">
     <div class="mr-2">
       <avatar-icon :src="getPreviewSrc" :alt="`${name} - avatar`" />
