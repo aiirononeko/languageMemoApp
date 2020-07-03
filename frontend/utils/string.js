@@ -54,4 +54,4 @@ export const isString = (v) => typeof v === 'string'
  *
  * @param {String} v
  */
-export const isUuid = (v) => isString(v) && /[0-9a-f]{32}/.test(v)
+export const isUuid = (v) => isString(v) && /^[0-9a-f]{32}$/.test(v)

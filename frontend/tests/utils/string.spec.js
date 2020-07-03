@@ -73,17 +73,21 @@ describe('utils/string', () => {
   })
 
   describe("isUuid", () => {
+    const EXAMPLE_UUID = '51daf51cce174884a703cb8e9b37f1f2'
+    const EXAMPLE_INVALID_UUID_31 = '51daf51cce174884a703cb8e9b37f1f'
+
     const testCases = [
-      { message: '32文字のuuid (ハイフン無し)、trueである', arg: '51daf51cce174884a703cb8e9b37f1f2', bool: true },
+      { message: '32文字のuuid (ハイフン無し)、trueである', arg: EXAMPLE_UUID, bool: true },
+      { message: '32文字の日本語まじり、falseである', arg: `${EXAMPLE_INVALID_UUID_31}あ`, bool: false },
       { message: '36文字のuuid (ハイフンあり)である', arg: '51daf51c-ce17-4884-a703-cb8e9b37f1f2', bool: false },
-      { message: '33文字の文字列のとき、falseである', arg: 'abcdefghijklmnopqrstuvwxyz0123456', bool: false },
-      { message: '31文字の文字列のとき、falseである', arg: 'abcdefghijklmnopqrstuvwxyz01234', bool: false },
+      { message: '33文字の文字列のとき、falseである', arg: `${EXAMPLE_UUID}a`, bool: false },
+      { message: '31文字の文字列のとき、falseである', arg: EXAMPLE_INVALID_UUID_31, bool: false },
       { message: '数字のとき、falseである', arg: "1", bool: false },
       { message: '数字のとき、falseである', arg: 1, bool: false },
     ]
 
     for (const testCase of testCases) {
-      it(testCase.message, () => {
+      it(`${testCase.message} (${testCase.arg})`, () => {
         expect(stringFunc.isUuid(testCase.arg)).toBe(testCase.bool)
       })
     }
