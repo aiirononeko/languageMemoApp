@@ -39,7 +39,7 @@ export const pascalCase = (str) => {
  *
  * @param {String} v
  */
-export const isAlphaNumUnderScore = (v) => isString(v) && /[a-zA-Z_0-9]+/.test(v)
+export const isAlphaNumUnderScore = (v) => isString(v) && /^[\w]+$/.test(v)
 
 /**
  * 文字列型か
