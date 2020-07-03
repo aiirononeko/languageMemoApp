@@ -92,29 +92,29 @@ module.exports = {
     // sitemap options
     hostname: process.env.BASE_URL || "http://localhost:3000",
     gzip: true,
-    exclude: [
-      "/",
-      "/password/reset/confirm",
-      "/edit/success"
-    ]
+    exclude: ["/", "/password/reset/confirm", "/edit/success"],
   },
 
   /*
    ** PWA configuration
    */
   pwa: {
+    /* icon options */
+    icon: {
+      iconSrc: "poeta-icon.png"
+    },
     /* workbox options */
     workbox: {
       runtimeCaching: [
         {
-          urlPattern: '^https://cdn.jsdelivr.net/(.*)',
-          handler: 'cacheFirst'
+          urlPattern: "^https://cdn.jsdelivr.net/(.*)",
+          handler: "cacheFirst",
         },
         {
-          urlPattern: '^https://fonts.googleapis.com/(.*)',
-          handler: 'cacheFirst'
-        }
-      ]
+          urlPattern: "^https://fonts.googleapis.com/(.*)",
+          handler: "cacheFirst",
+        },
+      ],
     },
   },
 
@@ -142,8 +142,8 @@ module.exports = {
           test: /\.(js|vue)$/,
           loader: "eslint-loader",
           exclude: /(node_modules)/,
-        })
+        });
       }
     },
   },
-}
+};
