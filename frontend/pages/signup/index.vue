@@ -53,7 +53,6 @@ export default {
     },
 
     async snsauth(provider) {
-      // TODO: sns認証の処理を書く
       document.location.href = `${process.env.baseUrl}/api/v1/auth/${provider}`
     }
   },
