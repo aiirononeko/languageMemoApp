@@ -23,12 +23,14 @@
 <script>
 import Post from '~/types/Post'
 const EditPostTemplate = () => import('~/components/templates/EditPostTemplate')
+const EditPostSuccessTemplate = () => import('~/components/templates/EditPostSuccessTemplate')
 
 const DEFAULT_STATUS = 'both'
 
 export default {
   components: {
-    EditPostTemplate
+    EditPostTemplate,
+    EditPostSuccessTemplate
   },
 
   data: () => ({
