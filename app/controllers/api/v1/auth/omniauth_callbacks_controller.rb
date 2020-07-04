@@ -3,12 +3,18 @@ module Api::V1::Auth
     include Devise::Controllers::Rememberable
 
     def redirect_callbacks
-      @count = 0
       # derive target redirect route from 'resource_class' param, which was set
       # before authentication.
       devise_mapping = get_devise_mapping
-      redirect_route = get_redirect_route(devise_mapping, @count)
-      request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/signin"})
+      redirect_route = get_redirect_route(devise_mapping)
+      case params[:provider]
+      when "google_oauth2"
+        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/google_oauth2"})
+      when "twitter"
+        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/twitter"})
+      when "github"
+        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/github"})
+      end
       # preserve omniauth info for success route. ignore 'extra' in twitter
       # auth response to avoid CookieOverflow.
       session['dta.omniauth.auth'] = request.env['omniauth.auth'].except('extra')
