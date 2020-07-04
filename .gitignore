@@ -33,3 +33,5 @@
 .env
 .env.production
 .env.testing
+
+gcp_keyfile.json
