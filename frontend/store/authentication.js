@@ -57,7 +57,9 @@ export const mutations = {
   setUserWithSns (state, { userInfo }) {
     state.accessToken = userInfo.authToken
     state.client = userInfo.clientId
+    state.id = userInfo.id
     state.uid = userInfo.uid
+    state.username = userInfo.username
   },
 
   setUserInfo (state, userInfo) {
