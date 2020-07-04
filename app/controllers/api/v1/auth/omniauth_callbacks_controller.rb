@@ -96,7 +96,7 @@ module Api::V1::Auth
       elsif auth_origin_url # default to same-window implementation, which forwards back to auth_origin_url
 
         # build and redirect to destination url
-        redirect_to "#{DeviseTokenAuth::Url.generate(auth_origin_url, data.merge(blank: true))}?username=#{current_api_v1_user.username}&id=#{current_api_v1_user.id}"
+        redirect_to "#{DeviseTokenAuth::Url.generate(auth_origin_url, data.merge(blank: true))}&username=#{current_api_v1_user.username}&id=#{current_api_v1_user.id}"
       else
 
         # there SHOULD always be an auth_origin_url, but if someone does something silly
