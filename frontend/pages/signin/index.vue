@@ -29,7 +29,7 @@ export default {
           email, password
         })
 
-        this.$store.dispatch("authentication/login", res)
+        this.$store.dispatch("authentication/loginWithEmail", res)
 
         await this.$router.push(`/settings/profile`)
       } catch (e) {
