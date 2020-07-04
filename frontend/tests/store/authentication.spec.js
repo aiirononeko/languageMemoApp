@@ -56,7 +56,7 @@ describe('store/authentication.js', () => {
       expect(store.getters.isAuthenticated).toBeTruthy()
     })
 
-    it('setUserとclearUserの正常系', () => {
+    it('setUserWithEmailとclearUserの正常系', () => {
       expect(store.getters.accessToken).toBeNull()
       expect(store.getters.client).toBeNull()
       expect(store.getters.id).toBeNull()
@@ -71,7 +71,7 @@ describe('store/authentication.js', () => {
         },
         data: { data: { id: "1", attributes: { username: "ApeE8e4ka" } } }
       }
-      store.commit('setUser', res)
+      store.commit('setUserWithEmail', res)
 
       expect(store.getters.accessToken).toBe("2RvvBof6HGQ-C__vaMQ5Wq")
       expect(store.getters.client).toBe("NQqnvItfl_4F9V_l2gzIla")
