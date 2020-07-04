@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_28_122241) do
+ActiveRecord::Schema.define(version: 2020_07_04_232318) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_122241) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "folder_id"
+    t.string "uid"
     t.index ["folder_id"], name: "index_posts_on_folder_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -95,7 +96,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_122241) do
     t.string "github_link"
     t.string "github_token"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["email", "provider"], name: "index_users_on_email_and_provider", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
