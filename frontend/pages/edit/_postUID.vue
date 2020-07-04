@@ -5,6 +5,7 @@
       v-model="content"
       :name.sync="name"
       :pub.sync="pub"
+      :post-uid="postUID"
       :is-both="isBoth"
       :is-edit="isEdit"
       :is-view="isView"
@@ -25,6 +26,13 @@ import Post from '~/types/Post'
 const EditPostTemplate = () => import('~/components/templates/EditPostTemplate')
 const EditPostSuccessTemplate = () => import('~/components/templates/EditPostSuccessTemplate')
 
+// 不正な PostUID だったら、APIの送信に辿り着く前に弾く
+const checkValidPostUID = ({ params, redirect }) => {
+  if (!Post.isValidPostUID(params.postUID)) {
+    return redirect('/edit/new') // 新規作成ページにリダイレクト
+  }
+}
+
 const DEFAULT_STATUS = 'both'
 
 export default {
@@ -37,28 +45,25 @@ export default {
     content: "" /** markdown */,
     name: null /** ファイル名 */,
     pub: false /** 公開の有無 */,
-    errors: null /** バリデーションエラ */,
+    errors: null /** バリデーションエラー */,
     success: false,
     postInfo: null
   }),
 
-  middleware: "authenticated",
+  middleware: [
+    "authenticated",
+    checkValidPostUID
+  ],
 
   computed: {
-    defaultStatus() {
-      return DEFAULT_STATUS
+    defaultStatus: () => DEFAULT_STATUS,
+
+    postUID() {
+      return this.$route.params.postUID
     },
 
     folderID() {
-      return this.$route.query.folderid
-    },
-
-    userID() {
-      return this.$store.getters["authentication/id"]
-    },
-
-    username() {
-      return this.$store.getters["authentication/username"]
+      return this.$route.query.folderid || this.postInfo.folderID
     },
 
     isBoth() {
@@ -77,7 +82,26 @@ export default {
       const LABEL = 'view'
       const status = this.$route.query.status
       return status ? status === LABEL : this.defaultStatus === LABEL
+    },
+
+    username() {
+      return this.$store.getters["authentication/username"]
     }
+  },
+
+  async asyncData({ $axios, redirect, params }) {
+    try {
+      const { data } = await $axios.$get(`/api/v1/posts/${params.postUID}`)
+      return { postInfo: new Post(data) }
+    } catch (e) {
+      return redirect('/edit/new') // ファイルがなかったら、新規作成ページにリダイレクト
+    }
+  },
+
+  created() {
+    this.content = this.postInfo.content
+    this.name = this.postInfo.name
+    this.pub = this.postInfo.public
   },
 
   methods: {
@@ -85,11 +109,10 @@ export default {
       this.errors = null
 
       try {
-        const { data } = await this.$axios.$post(`/api/v1/posts`, {
+        const { data } = await this.$axios.$put(`/api/v1/posts/${this.postInfo.id}`, {
           name: this.name,
           content: this.content,
           public: this.pub,
-          user_id: this.userID,
           folder_id: this.folderID
         })
 
@@ -112,7 +135,7 @@ export default {
 
   head() {
     return {
-      title: "新規ファイル作成"
+      title: `ファイル編集 (${this.name})`
     }
   }
 }

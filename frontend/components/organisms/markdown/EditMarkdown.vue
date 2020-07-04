@@ -86,7 +86,7 @@ export default {
       default: undefined
     },
 
-    fileid: {
+    postUid: {
       type: String,
       default: "new"
     },
@@ -139,13 +139,13 @@ export default {
     },
 
     onPreviewToggle(status) {
-      return this.$router.push({ path: `/edit/${this.fileid}`, query: {
+      return this.$router.push({ path: `/edit/${this.postUid}`, query: {
         status: status ? 'view' : 'edit'
       }})
     },
 
     onSubfieldToggle() {
-      return this.$router.push({ path: `/edit/${this.fileid}`, query: {
+      return this.$router.push({ path: `/edit/${this.postUid}`, query: {
         status: 'both'
       }})
     }

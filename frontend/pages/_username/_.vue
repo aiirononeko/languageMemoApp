@@ -1,7 +1,8 @@
 <template>
   <!-- マイページの２階層以下 -->
   <div>
-    <username-index-template
+    <username-folder-template
+      v-if="foldersInfo"
       :can-action="canAction"
       :current-path="currentPath"
       :current-username="currentUsername"
@@ -18,25 +19,40 @@
       @trigger-creating-new-folder="triggerCreatingNewFolder"
       @trigger-creating-new-post="triggerCreatingNewPost"
     />
+
+    <username-post-template
+      v-else
+      :can-action="canAction"
+      :user-info="userInfo"
+      :post-info="postInfo"
+    />
   </div>
 </template>
 
 <script>
 import User from '~/types/User'
+import Post from '~/types/Post'
 import Folder from '~/types/Folder'
 import { pathToArr, getDirname } from '~/utils/path'
-const UsernameIndexTemplate = () => import('~/components/templates/UsernameIndexTemplate')
+const UsernameFolderTemplate = () => import('~/components/templates/UsernameFolderTemplate')
+const UsernamePostTemplate = () => import('~/components/templates/UsernamePostTemplate')
 
 export default {
   components: {
-    UsernameIndexTemplate
+    UsernameFolderTemplate,
+    UsernamePostTemplate
   },
 
   middleware ({ params, error })  {
-    const folderID = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID
+    const lastPath = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID (post の UID)
+
+    // 有効なPOSTのUIDか
+    if (Post.isValidPostUID(lastPath)) {
+      return
+    }
 
     // 有効なフォルダーIDかどうか
-    if (!Folder.isValidFolderID(folderID)) {
+    if (!Folder.isValidFolderID(lastPath)) {
       return error({
         statusCode: 404
       })
@@ -102,7 +118,9 @@ export default {
 
       try {
         const { data } = await this.$axios.$post(`/api/v1/folders`, folderInfo)
-        this.foldersInfo = new Folder(data)
+
+        // 既存の配列に新しいフォルダーを追加
+        this.foldersInfo = Folder.pushChildFolder(this.foldersInfo, data)
         this.triggerCreatingNewFolder()
       } catch(e) {
         return this.$nuxt.error({
@@ -186,19 +204,25 @@ export default {
   },
 
   async asyncData({ $axios, params, error }) {
-    console.log('asyncdata')
-    const folderID = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID
     const ancestorFolderIDs = pathToArr(params.pathMatch)
-    let userInfo, foldersInfo
+    const lastPath = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID (postのUID)
+    let userInfo, foldersInfo, postInfo
 
     try {
       const apiUserInfo = await $axios.$get(`/api/v1/users/${params.username}`)
-      const apiFoldersInfo = await $axios.$get(`/api/v1/folders/${folderID}`)
 
       /** @type {User} userInfo */
       userInfo = new User(apiUserInfo.data)
-      /** @type {Folder} foldersInfo */
-      foldersInfo = new Folder(apiFoldersInfo.data)
+
+      if (Folder.isValidFolderID(lastPath)) {
+        const apiFoldersInfo = await $axios.$get(`/api/v1/folders/${lastPath}`)
+        /** @type {Folder} foldersInfo */
+        foldersInfo = new Folder(apiFoldersInfo.data)
+      } else {
+        const apiPostInfo = await $axios.$get(`/api/v1/posts/${lastPath}`)
+        /** @type {Post} postInfo */
+        postInfo = new Post(apiPostInfo.data)
+      }
     } catch (e) {
       const statusCode = e.response && e.response.status || 500
 
@@ -207,16 +231,20 @@ export default {
       })
     }
 
-    for (const ancestorFolders of foldersInfo.ancestorFolders) {
-      const ancestorFolderID = ancestorFolderIDs.pop() // パスのファイルIDの末尾取り出し
-      if (!Folder.isEqualFolderID(ancestorFolders, ancestorFolderID)) {
-        return error({
-          statusCode: 404
-        })
+    if (foldersInfo) {
+      for (const ancestorFolders of foldersInfo.ancestorFolders) {
+        const ancestorFolderID = ancestorFolderIDs.pop() // パスのファイルIDの末尾取り出し
+        if (!Folder.isEqualFolderID(ancestorFolders, ancestorFolderID)) {
+          return error({
+            statusCode: 404
+          })
+        }
       }
+
+      return { userInfo, foldersInfo, postInfo: undefined }
     }
 
-    return { userInfo, foldersInfo }
+    return { userInfo, foldersInfo: undefined, postInfo }
   },
 }
 </script>

@@ -41,3 +41,10 @@ export const pascalCase = (str) => {
  * @return {boolean}
  */
 export const isString = (v) => typeof v === 'string'
+
+/**
+ * 32文字のハイフン無しのuuidかどうかを確認
+ *
+ * @param {*} v
+ */
+export const isUuid = (v) => isString(v) && /[0-9a-f]{32}/.test(v)

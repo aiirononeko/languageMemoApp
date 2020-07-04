@@ -5,7 +5,9 @@
         <avatar-icon :src="getAvatar" :alt="`${getName} - avatar`" />
       </v-row>
 
-      <p v-if="getName" class="name mb-4">{{ getName }}</p>
+      <p v-if="getName" class="name mb-4">
+        <nuxt-link :to="`/${username}`" class="black--text text-decoration-none">{{ getName }}</nuxt-link>
+      </p>
 
       <p v-if="getProfile" class="text-center mb-4 px-8 px-sm-12">{{ getProfile }}</p>
 
@@ -56,6 +58,10 @@ export default {
 
     getAvatar() {
       return this.userInfo && this.userInfo.image
+    },
+
+    username() {
+      return this.userInfo && this.userInfo.username
     }
   },
 }
