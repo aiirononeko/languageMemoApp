@@ -2,7 +2,7 @@
   <one-column-container class="pos-relative" fluid>
     <v-row>
       <v-col class="py-0" cols="12" sm="6" md="3">
-        <file-name-text-field v-model="nameModel" />
+        <post-name-text-field v-model="nameModel" rounded outlined />
       </v-col>
       <v-spacer />
       <v-col class="py-0" cols="12" sm="3" md="3">
@@ -10,7 +10,7 @@
       </v-col>
     </v-row>
 
-    <edit-markdown v-model="md" :fileid="fileid" :isView="isView" :subfield="isBoth" @post="post" />
+    <edit-markdown v-model="md" :post-uid="postUid" :isView="isView" :subfield="isBoth" @post="post" />
 
     <div :class="{ 'text-right': !$device.isDesktopOrTablet }">
       <blue-btn
@@ -28,19 +28,19 @@
 <script>
 const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
 const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
-const FileNameTextField = () => import('~/components/organisms/textFields/FileNameTextField')
+const PostNameTextField = () => import('~/components/organisms/textFields/PostNameTextField')
 const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
 
 export default {
   components: {
     BlueBtn,
     EditMarkdown,
-    FileNameTextField,
+    PostNameTextField,
     OneColumnContainer
   },
 
   props: {
-    fileid: {
+    postUid: {
       type: String,
       default: "new"
     },
