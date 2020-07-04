@@ -10,11 +10,11 @@ module Api::V1::Auth
 
       case params[:provider]
       when "google_oauth2"
-        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/google_oauth2"})
+        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/oauth"})
       when "twitter"
-        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/twitter"})
+        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/oauth"})
       when "github"
-        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/github"})
+        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/oauth"})
       end
       # preserve omniauth info for success route. ignore 'extra' in twitter
       # auth response to avoid CookieOverflow.

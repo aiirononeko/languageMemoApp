@@ -14,9 +14,9 @@ services:
     depends_on:
       - db
     # 初回コンテナ起動時のみコメントインする（それ以外の時はコメントアウト）
-    # entrypoint: ./wait-for-it.sh db:3306
+    entrypoint: ./wait-for-it.sh db:3306
     # entrypointコメントイン時のみコメントアウトする（通常は基本コメントインしておく）
-    command: /bin/sh -c "rm -f tmp/pids/server.pid && rails s -p 3000 -b '0.0.0.0'"
+    # command: /bin/sh -c "rm -f tmp/pids/server.pid && rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/languageMemoApp
     ports:
