@@ -8,14 +8,7 @@ module Api::V1::Auth
       devise_mapping = get_devise_mapping
       redirect_route = get_redirect_route(devise_mapping)
 
-      case params[:provider]
-      when "google_oauth2"
-        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/oauth"})
-      when "twitter"
-        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/oauth"})
-      when "github"
-        request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/oauth"})
-      end
+      request.env['omniauth.params'] = request.env['omniauth.params'].merge({auth_origin_url: "http://localhost:3001/auth/oauth"})
       # preserve omniauth info for success route. ignore 'extra' in twitter
       # auth response to avoid CookieOverflow.
       session['dta.omniauth.auth'] = request.env['omniauth.auth'].except('extra')
