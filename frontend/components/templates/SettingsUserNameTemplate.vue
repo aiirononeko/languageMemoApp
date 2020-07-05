@@ -1,12 +1,13 @@
 <template>
   <one-column-container>
-    <h1 class="main-heading mb-8 text-center">ユーザーIDの変更</h1>
+    <h1 class="main-heading mb-8 text-center">{{ pageTitle }}</h1>
 
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
         <change-username-card
           :errors="errors"
           :username="username"
+          :is-first-time-login="isFirstTimeLogin"
           @submit="onSubmit"
         />
       </v-col>
@@ -30,9 +31,20 @@ export default {
       default: undefined
     },
 
+    isFirstTimeLogin: {
+      type: Boolean,
+      default: false
+    },
+
     username: {
       type: String,
       default: undefined
+    }
+  },
+
+  computed: {
+    pageTitle() {
+      return this.isFirstTimeLogin ? 'ユーザーIDを決めよう' : 'ユーザーIDの変更'
     }
   },
 

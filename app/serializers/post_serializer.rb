@@ -1,5 +1,5 @@
 class PostSerializer < ActiveModel::Serializer
-  attributes :id, :name, :content, :public, :user_id, :ancestor_folders, :created_at, :updated_at
+  attributes :id, :name, :content, :uid, :public, :user_id, :ancestor_folders, :created_at, :updated_at
 
   def ancestor_folders
     ancestor_folders = []

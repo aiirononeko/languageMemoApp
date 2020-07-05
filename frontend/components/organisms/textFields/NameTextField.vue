@@ -1,7 +1,9 @@
 <template>
   <v-text-field
     v-model.trim="valueModel"
+    :counter="isVisibledCounter"
     :label="getLabel"
+    :maxlength="maxlength"
     :rules="getRule"
     :required="required"
     :error="!change ? !!apiError : false"
@@ -9,7 +11,6 @@
     @change="onChange"
     dense
     name="name"
-    maxlength="50"
     outlined
   />
 </template>
@@ -30,6 +31,11 @@ export default {
     label: {
       type: String,
       default: '名前'
+    },
+
+    maxlength: {
+      type: Number,
+      default: 50
     },
 
     value: {
@@ -69,6 +75,24 @@ export default {
       this.required && ret.push(this.rules.required)
 
       return ret
+    },
+
+    /**
+     * counterを表示するかどうか
+     */
+    isVisibledCounter() {
+      if (!this.value) {
+        return false
+      }
+
+      return this.value.length > this.visibledLength
+    },
+
+    /**
+     * counterを表示するサイズ
+     */
+    visibledLength () {
+      return this.maxlength * 0.8
     },
 
     valueModel: {

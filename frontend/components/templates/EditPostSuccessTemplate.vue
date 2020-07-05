@@ -9,11 +9,11 @@
     </v-row>
 
     <v-row class="mb-4" justify="center">
-      <orange-btn class="mr-2" :to="`/edit/${fileid}`">
+      <orange-btn class="mr-2" @click="toEdit">
         編集する
       </orange-btn>
 
-      <orange-btn>
+      <orange-btn :to="getViewLink">
         投稿を見る
       </orange-btn>
     </v-row>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import Post from '~/types/Post'
 const TwitterShareBtn = () => import('~/components/molecules/btns/TwitterShareBtn')
 const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
 const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
@@ -33,7 +34,12 @@ export default {
   },
 
   props: {
-    fileid: {
+    postInfo: {
+      type: Object,
+      required: true
+    },
+
+    username: {
       type: String,
       required: true
     }
@@ -46,8 +52,18 @@ export default {
 
     hashtag() {
       return "til,poeta,駆け出しエンジニアとつながりたい"
+    },
+
+    getViewLink() {
+      return Post.generateViewLink(this.postInfo, this.username)
     }
-  }
+  },
+
+  methods: {
+    toEdit() {
+      return this.$emit('to-edit')
+    }
+  },
 }
 </script>
 

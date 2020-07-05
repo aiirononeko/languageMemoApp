@@ -1,22 +1,22 @@
 import * as path from '~/utils/path'
 
 describe('utils/path', () => {
-  it('getDirArr 正常系', () => {
-    expect(path.getDirArr('aaa/bbb/ccc/ddd/eee')).toEqual(
-      ['aaa', 'bbb', 'ccc', 'ddd']
-      )
-      expect(path.getDirArr('/aaa/bbb/ccc/ddd/eee/')).toEqual(
-        ['aaa', 'bbb', 'ccc', 'ddd']
-      )
-    expect(path.getDirArr('aaa/bbb/ccc/ddd/eee.cpp')).toEqual(
-      ['aaa', 'bbb', 'ccc', 'ddd']
-    )
-    expect(path.getDirArr('/aaa/bbb/ccc/ddd/eee.cpp')).toEqual(
-      ['aaa', 'bbb', 'ccc', 'ddd']
-    )
-    expect(path.getDirArr('/aaa/bbb/ccc/ddd/.gitignore')).toEqual(
-      ['aaa', 'bbb', 'ccc', 'ddd']
-    )
+
+  describe('pathToArr', () => {
+    const testCases = [
+      { message: '空のとき', arg: '', result: ['.'] },
+      { message: 'パターン1', arg: 'aaa/bbb/ccc/ddd/eee', result: ['aaa', 'bbb', 'ccc', 'ddd'] },
+      { message: 'パターン2', arg: '/aaa/bbb/ccc/ddd/eee/', result: ['aaa', 'bbb', 'ccc', 'ddd'] },
+      { message: 'パターン3', arg: 'aaa/bbb/ccc/ddd/eee.cpp', result: ['aaa', 'bbb', 'ccc', 'ddd'] },
+      { message: 'パターン4', arg: '/aaa/bbb/ccc/ddd/eee.cpp', result: ['aaa', 'bbb', 'ccc', 'ddd'] },
+      { message: 'パターン4', arg: '/aaa/bbb/ccc/ddd/.gitignore', result: ['aaa', 'bbb', 'ccc', 'ddd'] },
+    ]
+
+    for (const testCase of testCases) {
+      it(testCase.message, () => {
+        expect(path.pathToArr(testCase.arg)).toEqual(testCase.result)
+      })
+    }
   })
 
   it('getDirname & getFilename & getExt & isDir& isFile 正常系', () => {
