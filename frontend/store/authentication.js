@@ -45,13 +45,21 @@ export const mutations = {
     state.userInfo = null
   },
 
-  setUser (state, { headers, data }) {
+  setUserWithEmail (state, { headers, data }) {
     state.accessToken = headers["access-token"]
     state.client = headers["client"]
     state.id = data.data.id
     state.uid = headers["uid"]
     state.username = data.data.attributes.username
     state.userInfo = new User(data.data)
+  },
+
+  setUserWithSns (state, { userInfo }) {
+    state.accessToken = userInfo.authToken
+    state.client = userInfo.clientId
+    state.id = userInfo.id
+    state.uid = userInfo.uid
+    state.username = userInfo.username
   },
 
   setUserInfo (state, userInfo) {
@@ -98,10 +106,20 @@ export const actions = {
    *
    * バリデーション結果を画面上に表示させたいので、apiとの通信を入れていない。
    */
-  login ({ commit, getters }, { headers, data }) {
-    commit("setUser", { headers, data })
+  loginWithEmail ({ commit, getters }, { headers, data }) {
+    commit("setUserWithEmail", { headers, data })
 
     // Cookieにセット
+    cookies.set("access-token", getters.accessToken, { path: "/" })
+    cookies.set("client", getters.client, { path: "/" })
+    cookies.set("id", getters.id, { path: "/" })
+    cookies.set("uid", getters.uid, { path: "/" })
+    cookies.set("username", getters.username, { path: "/" })
+  },
+
+  loginWithSns ({ commit, getters }, { userInfo }) {
+    commit("setUserWithSns", { userInfo })
+
     cookies.set("access-token", getters.accessToken, { path: "/" })
     cookies.set("client", getters.client, { path: "/" })
     cookies.set("id", getters.id, { path: "/" })

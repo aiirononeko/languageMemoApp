@@ -5,6 +5,7 @@
       :success="success"
       :message="message"
       @signup="signup"
+      @snsauth="snsauth"
     />
   </div>
 </template>
@@ -50,6 +51,10 @@ export default {
         })
       }
     },
+
+    async snsauth(provider) {
+      document.location.href = `${process.env.baseUrl}/api/v1/auth/${provider}`
+    }
   },
 
   head() {

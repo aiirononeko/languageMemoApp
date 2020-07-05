@@ -4,7 +4,7 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
-        <signup-card v-if="!success" :errors="errors" @signup="onSignup" />
+        <signup-card v-if="!success" :errors="errors" @signup="onSignup" @snsauth="onSnsauth" />
 
         <v-alert
           border="top"
@@ -53,6 +53,10 @@ export default {
   methods: {
     onSignup(value) {
       this.$emit('signup', value)
+    },
+
+    onSnsauth(value) {
+      this.$emit('snsauth', value)
     }
   }
 }
