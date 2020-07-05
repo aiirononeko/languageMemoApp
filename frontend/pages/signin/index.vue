@@ -1,6 +1,6 @@
 <template>
   <div>
-    <signin-template @signin="login" :errors="errors" />
+    <signin-template :errors="errors" @signin="login" @snsauth="snsauth" />
   </div>
 </template>
 
@@ -57,7 +57,7 @@ export default {
           email, password
         })
 
-        this.$store.dispatch("authentication/login", res)
+        this.$store.dispatch("authentication/loginWithEmail", res)
 
         await this.$router.push(
           this.redirectPath(this.$store.getters["authentication/username"])
@@ -78,6 +78,10 @@ export default {
           statusCode: status
         })
       }
+    },
+
+    async snsauth(provider) {
+      document.location.href = `${this.$config.baseUrl}/api/v1/auth/${provider}`
     }
   },
 
