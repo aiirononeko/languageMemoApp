@@ -1,4 +1,4 @@
-# README
+# Poeta
 
 ## 全体として
 
@@ -6,30 +6,33 @@
 
 <!-- ・パブリックな記事モード -->
 
-### ログイン機能関連(Gem 使用) かねぞう
+## 各機能について
 
-- [x] メールアドレス・パスワード認証(マスト)
-- [x] Twitter 認証(優先度高)
-- [x] GitHub 認証(優先度高)
+### ログイン機能
 
-- [x] Google アカウント認証(優先度中)
+- [x] メールアドレス・パスワード認証
+- [x] Twitter 認証
+- [x] GitHub 認証
+- [x] Google アカウント認証
 
 - [ ] Instagram 認証(優先度低)
-- [ ] FaceBook 認証(優先度低)
+- [ ] Facebook 認証(優先度低)
 
-### 投稿機能関連 クレヘイ
+### 投稿機能関連
 
-#### メモのCRUD
+#### TIL (Markdown) のCRUD
 
-- [ ] メモ作成 機能(マークダウン)
-- [ ] メモ編集 機能
-- [ ] メモ削除 機能
-- [ ] メモ管理 機能
+- [x] TIL 作成機能
+- [x] TIL 編集機能
+- [x] TIL 削除機能
+- [x] TIL 管理機能
 
-### 言語実行機能関連 ロピタル
+### 言語実行機能関連
 
-- [ ] コード実行 機能
-- [ ] コード保存 機能？
+> 担当: ロピタル
+
+- [ ] コード実行機能
+- [ ] コード保存機能？
 
 #### 実装方法
 
@@ -57,7 +60,13 @@ create アクションなどにとばして、そこで以下のことを行う
 
 `docker-compose up`
 
-### フロント コンテナの中に入る
+### 各コンテナの中に入る
+
+#### APIコンテナ
+
+`docker-compose run api sh`
+
+#### フロントコンテナ
 
 `docker-compose run front sh`
 
@@ -75,7 +84,7 @@ docker-compose exec api rails db:create
 docker-compose exec api rails db:migrate
 ```
 
-### Windows10 Home
+### Windows 10 Home
 
 ``` shell
 cp frontend/.env.win-home.example frontend/.env # .envのコピー
@@ -114,7 +123,7 @@ docker-compose exec api rails db:migrate
 - Repsonaに実行するタスクを貼る
 - タスクごとにブランチを切って作業する
 - その作業でエンドポイントが増えたらその都度API仕様書に追記する、記法が独特なので既存コードをコピペして
-文面や値だけ変えるのが分かりやすい。追記が終わったら最後にHTML形式に整形する。
+文面や値だけ変えるのが分かりやすい。追記が終わったら最後にHTML形式へ整形する。
 
 ``` shell
 npm install -g aglio # aglioがインストールされていなければ
