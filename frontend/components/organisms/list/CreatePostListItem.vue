@@ -1,0 +1,51 @@
+<template>
+  <v-list-item>
+    <v-list-item-icon><v-icon>mdi-file</v-icon></v-list-item-icon>
+
+    <v-list-item-content>
+      <v-form @submit.prevent="onSubmit">
+        <v-list-item-title>
+          <post-name-text-field v-model="model" dense />
+        </v-list-item-title>
+      </v-form>
+    </v-list-item-content>
+  </v-list-item>
+</template>
+
+<script>
+const PostNameTextField = () => import('~/components/organisms/textFields/PostNameTextField')
+
+export default {
+  components: {
+    PostNameTextField
+  },
+
+  props: {
+    value: {
+      type: String,
+      default: undefined
+    }
+  },
+
+  computed: {
+    model: {
+      get() {
+        return this.value
+      },
+      set(newVal) {
+        return this.$emit('input', newVal)
+      }
+    }
+  },
+
+  methods: {
+    onSubmit() {
+      return this.$emit('submit')
+    }
+  },
+}
+</script>
+
+<style>
+
+</style>

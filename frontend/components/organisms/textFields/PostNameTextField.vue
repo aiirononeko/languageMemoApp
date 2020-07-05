@@ -1,11 +1,13 @@
 <template>
   <v-text-field
     v-model.trim="valueModel"
+    :counter="isVisibledCounter"
+    :maxlength="maxlength"
     :required="required"
+    :rounded="rounded"
+    :outlined="outlined"
     :rules="[rules.required]"
     dense
-    rounded
-    outlined
     placeholder="ファイル名"
   />
 </template>
@@ -16,6 +18,21 @@ export default {
     value: {
       type: String,
       default: ""
+    },
+
+    maxlength: {
+      type: Number,
+      default: 100
+    },
+
+    rounded: {
+      type: Boolean,
+      default: false
+    },
+
+    outlined: {
+      type: Boolean,
+      default: false
     },
 
     required: {
@@ -35,6 +52,24 @@ export default {
   },
 
   computed: {
+
+    /**
+     * counterを表示するかどうか
+     */
+    isVisibledCounter() {
+      if (!this.value) {
+        return false
+      }
+      return this.value.length > this.visibledLength
+    },
+
+    /**
+     * counterを表示するサイズ
+     */
+    visibledLength () {
+      return this.maxlength * 0.8
+    },
+
     valueModel: {
       get() {
         return this.value

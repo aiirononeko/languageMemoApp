@@ -9,7 +9,7 @@ import { dirname, extname, basename } from 'path'
  * @param { String } p パス
  * @returns { String[] }
  */
-export const getDirArr = (p) => {
+export const pathToArr = (p) => {
   p = p.startsWith("/") ? p.slice(1) : p
   return dirname(p).split("/")
 }
