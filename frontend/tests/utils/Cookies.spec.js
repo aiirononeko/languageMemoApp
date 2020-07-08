@@ -1,4 +1,4 @@
-import Cookies from "~/utils/Cookies"
+import Cookies from "@/utils/Cookies"
 
 describe('getMultiple', () => {
   it('指定されたkeyの値を取得できるか', () => {

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import User from '~/types/User'
+import User from '@/types/User'
 const UsernameFolderTemplate = () => import('~/components/templates/UsernameFolderTemplate')
 
 export default {
