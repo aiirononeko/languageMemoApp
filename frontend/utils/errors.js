@@ -1,4 +1,4 @@
-import { isString } from "~/utils/string"
+import { isString } from "@/utils/string"
 
 export const defaultErrorMessages = {
   401: {

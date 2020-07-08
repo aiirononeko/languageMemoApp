@@ -13,7 +13,7 @@
       @create-folder="onCreateFolder"
       @create-post="onCreatePost"
       @change-folder-name="onChangeFolderName"
-      @change-post-name="onChangeFileName"
+      @change-post-name="onChangePostName"
       @delete-folder="onDeleteFolder"
       @delete-post="onDeletePost"
       @trigger-creating-new-folder="triggerCreatingNewFolder"
@@ -30,10 +30,10 @@
 </template>
 
 <script>
-import User from '~/types/User'
-import Post from '~/types/Post'
-import Folder from '~/types/Folder'
-import { pathToArr, getDirname } from '~/utils/path'
+import User from '@/types/User'
+import Post from '@/types/Post'
+import Folder from '@/types/Folder'
+import { pathToArr, getDirname } from '@/utils/path'
 const UsernameFolderTemplate = () => import('~/components/templates/UsernameFolderTemplate')
 const UsernamePostTemplate = () => import('~/components/templates/UsernamePostTemplate')
 
@@ -150,7 +150,7 @@ export default {
       }
     },
 
-    async onChangeFileName({ id, name }) {
+    async onChangePostName({ id, name }) {
       try {
         const { data } = await this.$axios.$put(`/api/v1/posts/${id}`, {
           name

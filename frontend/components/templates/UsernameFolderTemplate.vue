@@ -64,8 +64,8 @@ const UserIntroCard = () => import('~/components/organisms/cards/UserIntroCard')
 const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
 
 /**
- * @typedef { import('~/types/Folder').default } Folder
- * @typedef { import('~/types/Post').default } Post
+ * @typedef { import('@/types/Folder').default } Folder
+ * @typedef { import('@/types/Post').default } Post
  */
 
 /**
@@ -138,7 +138,7 @@ export default {
     /**
      * 祖先のフォルダの情報を配列形式で返す
      *
-     * @returns { Array<import('~/types/Folder').default> }
+     * @returns { Array<import('@/types/Folder').default> }
      */
     ancestorFolders() {
       if (this.isRoot) {

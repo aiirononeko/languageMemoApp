@@ -1,5 +1,5 @@
-import Cookies from "~/utils/Cookies"
-import User from "~/types/User"
+import Cookies from "@/utils/Cookies"
+import User from "@/types/User"
 const cookies = new Cookies()
 
 /**

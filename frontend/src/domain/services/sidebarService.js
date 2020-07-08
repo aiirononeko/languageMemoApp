@@ -1,4 +1,4 @@
-import { pascalCase } from '~/utils/string'
+import { pascalCase } from '@/utils/string'
 import { getSidebarJson } from '~/src/infra/sidebarJsonInfra'
 import SidebarModel from "~/src/domain/models/sidebarModel"
 

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { getErrorMessage } from "~/utils/errors"
+import { getErrorMessage } from "@/utils/errors"
 
 export default {
   props: ['error'],

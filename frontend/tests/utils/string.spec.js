@@ -1,4 +1,4 @@
-import * as stringFunc from '~/utils/string'
+import * as stringFunc from '@/utils/string'
 
 describe('utils/string', () => {
 
@@ -30,5 +30,66 @@ describe('utils/string', () => {
       expect(stringFunc.snakeCase("sampleString")).toBe("sample_string")
       expect(stringFunc.snakeCase("SampleString")).toBe("sample_string")
     })
+  })
+
+  describe("isAlphaNumUnderScore", () => {
+    const testCases = [
+      { message: 'アルファベットと数字混じりのとき、trueである', arg: 'abcABC123', bool: true },
+      { message: 'アルファベットと数字、アンダースコアのとき、trueである', arg: 'abc_ABC_123', bool: true },
+      { message: 'アルファベット小文字のみ、trueである', arg: 'abc', bool: true },
+      { message: 'アルファベット大文字のみ、trueである', arg: 'ABC', bool: true },
+      { message: '数字のみ、trueである', arg: '123', bool: true },
+      { message: '日本語は、falseである', arg: 'あああ', bool: false },
+      { message: '日本語は、falseである', arg: 'あああabc', bool: false },
+    ]
+
+    for (const testCase of testCases) {
+      it(`${ testCase.message } (${testCase.arg})`, () => {
+        expect(stringFunc.isAlphaNumUnderScore(testCase.arg)).toBe(testCase.bool)
+      })
+    }
+  })
+
+  describe("isString", () => {
+    const testCases = [
+      { message: '文字列のとき、trueか', arg: 'aaa', bool: true },
+      { message: '文字列のとき、trueか', arg: '123', bool: true },
+      { message: '空の文字列のとき、trueか', arg: '', bool: true },
+      { message: '数字のとき、falseか', arg: 123, bool: false },
+      { message: 'Booleanのとき、falseか', arg: true, bool: false },
+      { message: 'Objectのとき、falseか', arg: {}, bool: false },
+      { message: 'Objectのとき、falseか', arg: { name: 'hoge' }, bool: false },
+      { message: '配列のとき、falseか', arg: [], bool: false },
+      { message: '配列のとき、falseか', arg: ['hoge'], bool: false },
+      { message: 'nullのとき、falseか', arg: null, bool: false },
+      { message: 'undefinedのとき、falseか', arg: undefined, bool: false },
+    ]
+
+    for (const testCase of testCases) {
+      it(testCase.message, () => {
+        expect(stringFunc.isString(testCase.arg)).toBe(testCase.bool)
+      })
+    }
+  })
+
+  describe("isUuid", () => {
+    const EXAMPLE_UUID = '51daf51cce174884a703cb8e9b37f1f2'
+    const EXAMPLE_INVALID_UUID_31 = '51daf51cce174884a703cb8e9b37f1f'
+
+    const testCases = [
+      { message: '32文字のuuid (ハイフン無し)、trueである', arg: EXAMPLE_UUID, bool: true },
+      { message: '32文字の日本語まじり、falseである', arg: `${EXAMPLE_INVALID_UUID_31}あ`, bool: false },
+      { message: '36文字のuuid (ハイフンあり)である', arg: '51daf51c-ce17-4884-a703-cb8e9b37f1f2', bool: false },
+      { message: '33文字の文字列のとき、falseである', arg: `${EXAMPLE_UUID}a`, bool: false },
+      { message: '31文字の文字列のとき、falseである', arg: EXAMPLE_INVALID_UUID_31, bool: false },
+      { message: '数字のとき、falseである', arg: "1", bool: false },
+      { message: '数字のとき、falseである', arg: 1, bool: false },
+    ]
+
+    for (const testCase of testCases) {
+      it(`${testCase.message} (${testCase.arg})`, () => {
+        expect(stringFunc.isUuid(testCase.arg)).toBe(testCase.bool)
+      })
+    }
   })
 })
