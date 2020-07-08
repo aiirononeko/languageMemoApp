@@ -1,4 +1,4 @@
-import * as path from '~/utils/path'
+import * as path from '@/utils/path'
 
 describe('utils/path', () => {
 
