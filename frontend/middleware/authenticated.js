@@ -1,6 +1,6 @@
-export default ({ store, redirect }) => {
+export default ({ store: { getters }, redirect }) => {
     // ユーザーが認証されていないとき
-  if (!store.getters["authentication/isAuthenticated"]) {
+  if (!getters["authentication/isAuthenticated"]) {
     return redirect('/signin')
   }
 }
