@@ -6,7 +6,7 @@ import Cookies from '@/utils/Cookies'
  * プログラムの事故で undefined が入っていないかを確認する
  */
 export default () => {
-  if (process.browser) {
+  if (process.client) {
     const cookies = new Cookies()
     const checkCookieName = ['access-token', 'client', 'uid', 'id', 'username']
 

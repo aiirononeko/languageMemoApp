@@ -1,6 +1,6 @@
-require('dotenv').config()
-
 module.exports = {
+  mode: 'spa',
+
   /*
    ** Frontend Config Variables
    */
@@ -56,8 +56,9 @@ module.exports = {
    ** plugins
    */
   plugins: [
+    '~/plugins/nuxt-client-init.client.js',
     "~/plugins/axios",
-    { src: "~/plugins/vue-mavon-editor", ssr: false },
+    "~/plugins/vue-mavon-editor.client.js",
   ],
 
   /*
