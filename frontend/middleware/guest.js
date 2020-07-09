@@ -1,6 +1,6 @@
-export default ({ store, redirect }) => {
+export default ({ store: { getters }, redirect }) => {
   // ユーザーが認証されているとき
-  if (store.getters["authentication/isAuthenticated"]) {
+  if (getters["authentication/isAuthenticated"]) {
     return redirect('/settings/profile')
   }
 }
