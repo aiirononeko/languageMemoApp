@@ -72,35 +72,19 @@ create アクションなどにとばして、そこで以下のことを行う
 
 ## 環境構築
 
-Macでは以下のコマンドでできます
-
 ``` shell
-cd frontend && npm i
+# コンテナ立ち上げ
+$docker-compose up -d
 
-docker-compose up -d
+# DB テーブル作成
+$docker-compose run api rails db:create
 
-docker-compose exec api rails db:create
+# DB マイグレーション
+$docker-compose run api rails db:migrate
 
-docker-compose exec api rails db:migrate
+# フロント ライブラリインストール
+$docker-compose run front npm install
 ```
-
-### Windows 10 Home
-
-``` shell
-cp frontend/.env.win-home.example frontend/.env # .envのコピー
-
-docker-compose run front npm i --no-bin-link # npm iの際にシンボリックリンクを作成しないようにする。
-
-docker-compose up -d
-
-docker-compose exec api rails db:create
-
-docker-compose exec api rails db:migrate
-```
-
-※環境構築中に失敗したときは以下を参照、追記することを推奨  
-
-[Windows Home環境でのDocker](https://github.com/aiirononeko/languageMemoApp/issues/80)
 
 ## Git Commit Guidelines
 
