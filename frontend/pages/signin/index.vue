@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <signin-template :errors="errors" @signin="login" @snsauth="snsauth" />
-  </div>
+  <SigninTemplate
+    :errors="errors"
+    @signin="login"
+    @snsauth="snsauth"
+  />
 </template>
 
 <script>

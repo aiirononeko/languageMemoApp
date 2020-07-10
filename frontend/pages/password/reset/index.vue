@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <password-reset-index-template
-      :errors="errors"
-      :success="success"
-      :message="message"
-      @submit="reset"
-    />
-  </div>
+  <PasswordResetIndexTemplate
+    :errors="errors"
+    :success="success"
+    :message="message"
+    @submit="reset"
+  />
 </template>
 
 <script>

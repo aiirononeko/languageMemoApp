@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <settings-user-name-template
-      :errors="errors"
-      :username="username"
-      :is-first-time-login="isFirstTimeLogin"
-      @submit="updateUsername"
-    />
-  </div>
+  <SettingsUserNameTemplate
+    :errors="errors"
+    :username="username"
+    :is-first-time-login="isFirstTimeLogin"
+    @submit="updateUsername"
+  />
 </template>
 
 <script>

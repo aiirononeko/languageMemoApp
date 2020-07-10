@@ -1,7 +1,7 @@
 <template>
   <!-- マイページのルート -->
   <div>
-    <username-folder-template
+    <UsernameFolderTemplate
       :can-action="canAction"
       :current-path="currentPath"
       :current-username="currentUsername"

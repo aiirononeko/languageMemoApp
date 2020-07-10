@@ -1,5 +1,5 @@
 <template>
-  <settings-profile-template :errors="errors" :info="info" @save="save"/>
+  <SettingsProfileTemplate :errors="errors" :info="info" @save="save"/>
 </template>
 
 <script>
