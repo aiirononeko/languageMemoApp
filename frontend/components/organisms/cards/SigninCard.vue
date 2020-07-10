@@ -26,15 +26,7 @@
 </template>
 
 <script>
-const LoginSnsBtnGroup = () => import('~/components/organisms/btnGroup/LoginSnsBtnGroup')
-const SigninForm = () => import('~/components/organisms/form/SigninForm')
-
 export default {
-  components: {
-    LoginSnsBtnGroup,
-    SigninForm
-  },
-
   props: {
     errors: {
       type: Object,

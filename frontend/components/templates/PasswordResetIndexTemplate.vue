@@ -21,15 +21,7 @@
 </template>
 
 <script>
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const PasswordResetCard = () => import('~/components/organisms/cards/PasswordResetCard')
-
 export default {
-  components: {
-    OneColumnContainer,
-    PasswordResetCard
-  },
-
   props: {
     errors: {
       type: Object,

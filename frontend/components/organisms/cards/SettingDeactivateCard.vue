@@ -11,13 +11,7 @@
 </template>
 
 <script>
-const DeactivateForm = () => import('~/components/organisms/form/DeactivateForm')
-
 export default {
-  components: {
-    DeactivateForm
-  },
-
   props: {
     errors: {
       type: Object,

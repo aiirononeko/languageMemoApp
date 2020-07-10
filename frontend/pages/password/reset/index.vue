@@ -10,13 +10,7 @@
 </template>
 
 <script>
-const PasswordResetIndexTemplate = () => import('~/components/templates/PasswordResetIndexTemplate')
-
 export default {
-  components: {
-    PasswordResetIndexTemplate
-  },
-
   middleware: "guest",
 
   data() {

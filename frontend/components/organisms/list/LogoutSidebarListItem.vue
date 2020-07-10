@@ -6,13 +6,7 @@
 </template>
 
 <script>
-const BaseSidebarListItem = () => import('~/components/organisms/list/BaseSidebarListItem')
-
 export default {
-  components: {
-    BaseSidebarListItem
-  },
-
   props: {
     data: {
       type: Object,

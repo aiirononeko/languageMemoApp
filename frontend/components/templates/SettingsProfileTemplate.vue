@@ -11,9 +11,6 @@
 </template>
 
 <script>
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const SettingProfileCard = () => import('~/components/organisms/cards/SettingProfileCard')
-
 export default {
   props: {
     errors: {
@@ -25,11 +22,6 @@ export default {
       type: Object,
       default: undefined
     }
-  },
-
-  components: {
-    OneColumnContainer,
-    SettingProfileCard
   },
 
   methods: {

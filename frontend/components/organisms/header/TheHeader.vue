@@ -3,28 +3,16 @@
     <v-spacer />
 
     <keep-alive>
-      <component :is="getComponentName" />
+      <LoginHeader v-if="isLogin" />
+
+      <GuestHeader v-else />
     </keep-alive>
   </header-container>
 </template>
 
 <script>
-const GuestHeader = () => import('~/components/organisms/header/GuestHeader')
-const HeaderContainer = () => import('~/components/organisms/header/HeaderContainer')
-const LoginHeader = () => import('~/components/organisms/header/LoginHeader')
-
 export default {
-  components: {
-    GuestHeader,
-    HeaderContainer,
-    LoginHeader
-  },
-
   computed: {
-    getComponentName() {
-      return this.isLogin ? 'LoginHeader' : 'GuestHeader'
-    },
-
     isLogin() {
       return this.$store.getters["authentication/isAuthenticated"]
     }

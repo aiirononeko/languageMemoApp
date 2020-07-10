@@ -6,13 +6,7 @@
 </template>
 
 <script>
-const GithubIcon = () => import('~/components/atoms/icons/GithubIcon')
-
 export default {
-  components: {
-    GithubIcon
-  },
-
   props: {
     dark: {
       type: Boolean,

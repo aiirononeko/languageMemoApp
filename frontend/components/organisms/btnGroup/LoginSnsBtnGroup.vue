@@ -7,17 +7,7 @@
 </template>
 
 <script>
-const TwitterBtn = () => import('~/components/molecules/btns/TwitterBtn')
-const GoogleBtn = () => import('~/components/molecules/btns/GoogleBtn')
-const GithubBtn = () => import('~/components/molecules/btns/GithubBtn')
-
 export default {
-  components: {
-    TwitterBtn,
-    GoogleBtn,
-    GithubBtn
-  },
-
   methods: {
     onClick(value) {
       return this.$emit('snsauth', value)

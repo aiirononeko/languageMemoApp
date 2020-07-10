@@ -26,19 +26,7 @@
 </template>
 
 <script>
-const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
-const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
-const PostNameTextField = () => import('~/components/organisms/textFields/PostNameTextField')
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-
 export default {
-  components: {
-    BlueBtn,
-    EditMarkdown,
-    PostNameTextField,
-    OneColumnContainer
-  },
-
   props: {
     postUid: {
       type: String,

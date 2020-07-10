@@ -5,13 +5,7 @@
 </template>
 
 <script>
-const EditProfileForm = () => import('~/components/organisms/form/EditProfileForm')
-
 export default {
-  components: {
-    EditProfileForm
-  },
-
   props: {
     errors: {
       type: Object,

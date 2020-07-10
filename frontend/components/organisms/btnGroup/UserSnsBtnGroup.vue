@@ -7,15 +7,7 @@
 </template>
 
 <script>
-const TwitterBtn = () => import('~/components/molecules/btns/TwitterBtn')
-const GithubBtn = () => import('~/components/molecules/btns/GithubBtn')
-
 export default {
-  components: {
-    TwitterBtn,
-    GithubBtn
-  },
-
   computed: {
     twitterLinkIsExists() {
       // TODO(Ropital): Twitterリンクが存在したらtrueを返す

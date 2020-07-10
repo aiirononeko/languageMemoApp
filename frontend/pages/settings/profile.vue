@@ -5,13 +5,8 @@
 <script>
 import User from "@/types/User"
 import { objectToFormData } from "object-to-formdata"
-const SettingsProfileTemplate = () => import('~/components/templates/SettingsProfileTemplate')
 
 export default {
-  components: {
-    SettingsProfileTemplate
-  },
-
   middleware: "authenticated",
 
   data() {

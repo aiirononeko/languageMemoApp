@@ -7,13 +7,7 @@
 </template>
 
 <script>
-const SettingsDeactivateTemplate = () => import('~/components/templates/SettingsDeactivateTemplate')
-
 export default {
-  components: {
-    SettingsDeactivateTemplate
-  },
-
   middleware: "authenticated",
 
   data() {

@@ -61,6 +61,8 @@ module.exports = {
     "~/plugins/vue-mavon-editor.client.js",
   ],
 
+  components: true,
+
   /*
    ** Global css
    */

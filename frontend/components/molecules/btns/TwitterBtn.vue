@@ -17,13 +17,7 @@
 </template>
 
 <script>
-const TwitterIcon = () => import('~/components/atoms/icons/TwitterIcon')
-
 export default {
-  components: {
-    TwitterIcon
-  },
-
   props: {
     dark: {
       type: Boolean,

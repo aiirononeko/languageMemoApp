@@ -47,21 +47,7 @@
 </template>
 
 <script>
-const AddressTextField = () => import('~/components/organisms/textFields/AddressTextField')
-const ProfileTextarea = () => import('~/components/organisms/textarea/ProfileTextarea')
-const NameTextField = () => import('~/components/organisms/textFields/NameTextField')
-const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/PreviewImageFileInput')
-const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
-
 export default {
-  components: {
-    AddressTextField,
-    ProfileTextarea,
-    NameTextField,
-    PreviewImageFileInput,
-    OrangeBtn
-  },
-
   props: {
     errors: {
       type: Object,

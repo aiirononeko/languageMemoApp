@@ -56,12 +56,6 @@
 </template>
 
 <script>
-const PostFolderListWithAction = () => import('~/components/organisms/list/PostFolderListWithAction')
-const PostFolderList = () => import('~/components/organisms/list/PostFolderList')
-const FolderBreadcrumbs = () => import('~/components/organisms/breadcrumbs/FolderBreadcrumbs')
-const TwoColumnContainer = () => import('~/components/molecules/containers/TwoColumnContainer')
-const UserIntroCard = () => import('~/components/organisms/cards/UserIntroCard')
-const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
 
 /**
  * @typedef { import('@/types/Folder').default } Folder
@@ -88,15 +82,6 @@ const generateBreadcrumbs = (username, ancestorFolders) => {
 }
 
 export default {
-  components: {
-    PostFolderListWithAction,
-    PostFolderList,
-    FolderBreadcrumbs,
-    TwoColumnContainer,
-    UserIntroCard,
-    BlueBtn
-  },
-
   props: {
     canAction: {
       type: Boolean,

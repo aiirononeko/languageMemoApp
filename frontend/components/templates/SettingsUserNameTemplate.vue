@@ -16,15 +16,7 @@
 </template>
 
 <script>
-const ChangeUsernameCard = () => import('~/components/organisms/cards/ChangeUsernameCard')
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-
 export default {
-  components: {
-    ChangeUsernameCard,
-    OneColumnContainer
-  },
-
   props: {
     errors: {
       type: Object,

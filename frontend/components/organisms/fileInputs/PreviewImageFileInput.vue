@@ -13,15 +13,7 @@
 </template>
 
 <script>
-const AvatarIcon = () => import("~/components/atoms/icons/AvatarIcon")
-const BaseImageFileInput = () => import('~/components/organisms/fileInputs/BaseImageFileInput')
-
 export default {
-  components: {
-    AvatarIcon,
-    BaseImageFileInput
-  },
-
   props: {
     apiError: {
       type: Array,

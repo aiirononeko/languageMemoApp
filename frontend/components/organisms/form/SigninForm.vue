@@ -18,17 +18,7 @@
 </template>
 
 <script>
-const EmailTextField = () => import("~/components/organisms/textFields/EmailTextField")
-const PasswordTextField = () => import("~/components/organisms/textFields/PasswordTextField")
-const OrangeBtn = () => import("~/components/atoms/btns/OrangeBtn")
-
 export default {
-  components: {
-    EmailTextField,
-    PasswordTextField,
-    OrangeBtn,
-  },
-
   props: {
     errors: {
       type: Object,

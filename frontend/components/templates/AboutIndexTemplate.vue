@@ -48,18 +48,11 @@
 </template>
 
 <script>
-const RedBtn = () => import('~/components/atoms/btns/RedBtn')
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
 import POST_TIL_PAGE_IMAGE from '~/assets/images/post-TIL-page.png'
 import FOLEDER_TIL_PAGE_IMAGE from '~/assets/images/folder-TIL-page.png'
 import VIEW_TIL_PAGE_IMAGE from '~/assets/images/view-TIL-page.png'
 
 export default {
-  components: {
-    RedBtn,
-    OneColumnContainer
-  },
-
   computed: {
     /**
      * @return {{ [x: string]: string }}

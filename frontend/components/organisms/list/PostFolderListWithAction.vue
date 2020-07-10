@@ -40,21 +40,7 @@
 </template>
 
 <script>
-const CreatePostListItem = () => import('~/components/organisms/list/CreatePostListItem')
-const CreateFolderListItem = () => import('~/components/organisms/list/CreateFolderListItem')
-const PostListItem = () => import('~/components/organisms/list/PostListItem')
-const FolderListItem = () => import('~/components/organisms/list/FolderListItem')
-const LinkToBackItem = () => import('~/components/organisms/list/LinkToBackItem')
-
 export default {
-  components: {
-    CreatePostListItem,
-    CreateFolderListItem,
-    PostListItem,
-    FolderListItem,
-    LinkToBackItem,
-  },
-
   props: {
     currentUsername: {
       type: String,

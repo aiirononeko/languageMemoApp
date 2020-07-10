@@ -32,13 +32,7 @@
 </template>
 
 <script>
-const RedBtn = () => import('~/components/atoms/btns/RedBtn')
-
 export default {
-  components: {
-    RedBtn
-  },
-
   data() {
     return {
       check: false

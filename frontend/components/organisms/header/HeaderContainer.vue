@@ -14,14 +14,9 @@
 </template>
 
 <script>
-const HeaderTitleText = () => import('~/components/atoms/text/HeaderTitleText')
 const SITE_TITLE = 'poeta'
 
 export default {
-  components: {
-    HeaderTitleText
-  },
-
   methods: {
     onClick() {
       this.$store.commit('sidebar/onDrawer')

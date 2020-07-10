@@ -27,19 +27,7 @@
 </template>
 
 <script>
-const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
-const TwoColumnContainer = () => import('~/components/molecules/containers/TwoColumnContainer')
-const OnlyViewMarkdown = () => import('~/components/organisms/markdown/OnlyViewMarkdown')
-const UserIntroCard = () => import('~/components/organisms/cards/UserIntroCard')
-
 export default {
-  components: {
-    BlueBtn,
-    TwoColumnContainer,
-    OnlyViewMarkdown,
-    UserIntroCard
-  },
-
   props: {
     canAction: {
       type: Boolean,
