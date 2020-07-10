@@ -1,7 +1,7 @@
 <template>
   <!-- マイページの２階層以下 -->
   <div>
-    <username-folder-template
+    <UsernameFolderTemplate
       v-if="foldersInfo"
       :can-action="canAction"
       :current-path="currentPath"
@@ -20,7 +20,7 @@
       @trigger-creating-new-post="triggerCreatingNewPost"
     />
 
-    <username-post-template
+    <UsernamePostTemplate
       v-else
       :can-action="canAction"
       :user-info="userInfo"

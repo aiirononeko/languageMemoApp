@@ -1,5 +1,5 @@
 <template>
-  <settings-index-template />
+  <SettingsIndexTemplate />
 </template>
 
 <script>

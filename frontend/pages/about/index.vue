@@ -1,5 +1,5 @@
 <template>
-  <about-index-template />
+  <AboutIndexTemplate />
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <settings-deactivate-template
+  <SettingsDeactivateTemplate
     :success="success"
     :message="message"
     @deactivate="onDeactivate"

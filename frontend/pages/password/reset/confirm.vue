@@ -1,5 +1,5 @@
 <template>
-  <password-reset-confirm-template
+  <PasswordResetConfirmTemplate
     :errors="errors"
     :success="success"
     :message="message"

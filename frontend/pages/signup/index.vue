@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <signup-template
-      :errors="errors"
-      :success="success"
-      :message="message"
-      @signup="signup"
-      @snsauth="snsauth"
-    />
-  </div>
+  <SignupTemplate
+    :errors="errors"
+    :success="success"
+    :message="message"
+    @signup="signup"
+    @snsauth="snsauth"
+  />
 </template>
 
 <script>

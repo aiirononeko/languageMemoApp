@@ -1,6 +1,6 @@
 <template>
   <div>
-    <edit-post-template
+    <EditPostTemplate
       v-if="!success"
       v-model="content"
       :name.sync="name"
@@ -11,7 +11,7 @@
       @post="post"
     />
 
-    <edit-post-success-template
+    <EditPostSuccessTemplate
       v-else
       :post-info="postInfo"
       :username="username"
