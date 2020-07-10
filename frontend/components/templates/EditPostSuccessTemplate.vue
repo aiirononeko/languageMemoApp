@@ -22,17 +22,8 @@
 
 <script>
 import Post from '@/types/Post'
-const TwitterShareBtn = () => import('~/components/molecules/btns/TwitterShareBtn')
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
 
 export default {
-  components: {
-    TwitterShareBtn,
-    OneColumnContainer,
-    OrangeBtn
-  },
-
   props: {
     postInfo: {
       type: Object,

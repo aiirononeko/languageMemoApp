@@ -11,13 +11,7 @@
 </template>
 
 <script>
-const SignupTemplate = () => import('~/components/templates/SignupTemplate')
-
 export default {
-  components: {
-    SignupTemplate
-  },
-
   middleware: 'guest',
 
   data() {

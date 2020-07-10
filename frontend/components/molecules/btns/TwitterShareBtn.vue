@@ -10,14 +10,9 @@
 
 <script>
 import { isString } from "@/utils/string"
-const TwitterBtn = () => import('~/components/molecules/btns/TwitterBtn')
 const TWITTER_TWEET_URL = "https://twitter.com/intent/tweet"
 
 export default {
-  components: {
-    TwitterBtn
-  },
-
   props: {
     hashtag: {
       type: [String, Array],

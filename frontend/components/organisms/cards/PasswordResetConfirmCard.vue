@@ -9,13 +9,7 @@
 </template>
 
 <script>
-const PasswordResetConfirmForm = () => import('~/components/organisms/form/PasswordResetConfirmForm')
-
 export default {
-  components: {
-    PasswordResetConfirmForm
-  },
-
   props: {
     errors: {
       type: Object,

@@ -13,13 +13,7 @@
 </template>
 
 <script>
-const ChangeUsernameForm = () => import('~/components/organisms/form/ChangeUsernameForm')
-
 export default {
-  components: {
-    ChangeUsernameForm
-  },
-
   props: {
     errors: {
       type: Object,

@@ -9,15 +9,7 @@
 </template>
 
 <script>
-const BaseListItem = () => import('~/components/molecules/list/BaseListItem')
-const SidebarActionBtn = () => import('~/components/molecules/btns/SidebarActionBtn')
-
 export default {
-  components: {
-    BaseListItem,
-    SidebarActionBtn
-  },
-
   props:  {
     data: {
       type: Object,

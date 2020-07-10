@@ -13,13 +13,7 @@
 </template>
 
 <script>
-const PostNameTextField = () => import('~/components/organisms/textFields/PostNameTextField')
-
 export default {
-  components: {
-    PostNameTextField
-  },
-
   props: {
     value: {
       type: String,

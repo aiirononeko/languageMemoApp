@@ -6,13 +6,7 @@
 </template>
 
 <script>
-const HeaderActionBtn = () => import('~/components/molecules/btns/HeaderActionBtn')
-
 export default {
-  components: {
-    HeaderActionBtn
-  },
-
   methods: {
     async logout() {
       try {

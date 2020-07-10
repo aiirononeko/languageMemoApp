@@ -17,15 +17,7 @@
 </template>
 
 <script>
-const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
-const PasswordConfirmationTextField = () => import('~/components/organisms/textFields/PasswordConfirmationTextField')
-
 export default {
-  components: {
-    BlueBtn,
-    PasswordConfirmationTextField
-  },
-
   props: {
     errors: {
       type: Object,

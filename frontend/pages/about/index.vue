@@ -3,13 +3,7 @@
 </template>
 
 <script>
-const AboutIndexTemplate = () => import('~/components/templates/AboutIndexTemplate')
-
 export default {
-  components: {
-    AboutIndexTemplate
-  },
-
   head() {
     return {
       title: "Poetaについて"

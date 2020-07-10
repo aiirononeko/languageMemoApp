@@ -17,15 +17,3 @@
     </v-card>
   </v-app>
 </template>
-
-<script>
-const TheHeader = () => import('~/components/organisms/header/TheHeader')
-const TheSidebar = () => import('~/components/organisms/sidebar/TheSidebar')
-
-export default {
-  components: {
-    TheHeader,
-    TheSidebar
-  }
-}
-</script>

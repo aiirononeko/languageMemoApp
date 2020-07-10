@@ -6,13 +6,7 @@
 </template>
 
 <script>
-const GoogleIcon = () => import('~/components/atoms/icons/GoogleIcon')
-
 export default {
-  components: {
-    GoogleIcon
-  },
-
   props: {
     dark: {
       type: Boolean,

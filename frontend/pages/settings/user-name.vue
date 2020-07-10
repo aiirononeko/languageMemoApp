@@ -11,13 +11,8 @@
 
 <script>
 import User from '@/types/User'
-const SettingsUserNameTemplate = () => import('~/components/templates/SettingsUserNameTemplate')
 
 export default {
-  components: {
-    SettingsUserNameTemplate
-  },
-
   middleware: "authenticated",
 
   data() {

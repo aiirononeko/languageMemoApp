@@ -11,15 +11,7 @@
 </template>
 
 <script>
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const SigninCard = () => import('~/components/organisms/cards/SigninCard')
-
 export default {
-  components: {
-    OneColumnContainer,
-    SigninCard
-  },
-
   props: {
     errors: {
       type: Object,

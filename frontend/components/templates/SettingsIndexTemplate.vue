@@ -9,15 +9,3 @@
     </v-row>
   </one-column-container>
 </template>
-
-<script>
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const SettingIndexCard = () => import('~/components/organisms/cards/SettingIndexCard')
-
-export default {
-  components: {
-    OneColumnContainer,
-    SettingIndexCard
-  }
-}
-</script>

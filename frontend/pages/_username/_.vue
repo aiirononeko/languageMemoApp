@@ -34,15 +34,8 @@ import User from '@/types/User'
 import Post from '@/types/Post'
 import Folder from '@/types/Folder'
 import { pathToArr, getDirname } from '@/utils/path'
-const UsernameFolderTemplate = () => import('~/components/templates/UsernameFolderTemplate')
-const UsernamePostTemplate = () => import('~/components/templates/UsernamePostTemplate')
 
 export default {
-  components: {
-    UsernameFolderTemplate,
-    UsernamePostTemplate
-  },
-
   middleware ({ params, error })  {
     const lastPath = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID (post の UID)
 

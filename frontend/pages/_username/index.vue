@@ -22,13 +22,8 @@
 
 <script>
 import User from '@/types/User'
-const UsernameFolderTemplate = () => import('~/components/templates/UsernameFolderTemplate')
 
 export default {
-  components: {
-    UsernameFolderTemplate
-  },
-
   data: () => ({
     isCreatingNewFolder: false,
     isCreatingNewPost: false,

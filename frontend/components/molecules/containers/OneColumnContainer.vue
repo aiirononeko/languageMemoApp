@@ -9,13 +9,7 @@
 </template>
 
 <script>
-const BaseContainer = () => import('~/components/molecules/containers/BaseContainer')
-
 export default {
-  components: {
-    BaseContainer
-  },
-
   props: {
     cols: {
       type: [Boolean, String, Number],

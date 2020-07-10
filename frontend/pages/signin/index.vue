@@ -5,13 +5,7 @@
 </template>
 
 <script>
-const SigninTemplate = () => import('~/components/templates/SigninTemplate')
-
 export default {
-  components: {
-    SigninTemplate
-  },
-
   middleware: 'guest',
 
   data() {

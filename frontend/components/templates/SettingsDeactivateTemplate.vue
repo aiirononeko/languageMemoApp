@@ -21,15 +21,7 @@
 </template>
 
 <script>
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const SettingDeactivateCard = () => import('~/components/organisms/cards/SettingDeactivateCard')
-
 export default {
-  components: {
-    OneColumnContainer,
-    SettingDeactivateCard
-  },
-
   props: {
     success: {
       type: Boolean,

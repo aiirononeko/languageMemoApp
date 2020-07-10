@@ -13,13 +13,7 @@
 </template>
 
 <script>
-const FolderNameTextField = () => import('~/components/organisms/textFields/FolderNameTextField')
-
 export default {
-  components: {
-    FolderNameTextField
-  },
-
   props: {
     value: {
       type: String,

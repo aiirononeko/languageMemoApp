@@ -23,15 +23,7 @@
 </template>
 
 <script>
-const AvatarIcon = () => import("~/components/atoms/icons/AvatarIcon")
-const UserSnsBtnGroup = () => import("~/components/organisms/btnGroup/UserSnsBtnGroup")
-
 export default {
-  components: {
-    AvatarIcon,
-    UserSnsBtnGroup
-  },
-
   props: {
     userInfo: {
       type: Object,
