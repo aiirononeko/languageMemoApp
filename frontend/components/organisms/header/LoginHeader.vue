@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ログインしたユーザーに見せるもの -->
-    <header-action-btn v-if="$device.isDesktop" text="ログアウト" @click="logout" />
+    <HeaderActionBtn v-if="$device.isDesktop" text="ログアウト" @click="logout" />
   </div>
 </template>
 

@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-row v-if="btn" justify="center">
-      <sidebar-action-btn :text="name" :to="to" @click="onClick" class="mt-4" />
+      <SidebarActionBtn :text="name" :to="to" @click="onClick" class="mt-4" />
     </v-row>
 
-    <base-list-item v-else :exact="exact" :icon="icon" :name="name" :to="to" @click="onClick" />
+    <BaseListItem v-else :exact="exact" :icon="icon" :name="name" :to="to" @click="onClick" />
   </div>
 </template>
 

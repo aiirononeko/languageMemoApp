@@ -1,15 +1,15 @@
 <template>
   <v-form ref="form" v-model="valid" @submit.prevent="onSubmit">
-    <username-text-field
+    <UsernameTextField
       v-model="vUserName"
       :api-error="apiError"
       :submit-count="submitCount"
     />
 
     <div class="d-flex justify-end">
-      <blue-btn type="submit" :disabled="!valid">
+      <BlueBtn type="submit" :disabled="!valid">
         変更
-      </blue-btn>
+      </BlueBtn>
     </div>
   </v-form>
 </template>

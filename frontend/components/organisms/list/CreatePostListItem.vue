@@ -5,7 +5,7 @@
     <v-list-item-content>
       <v-form @submit.prevent="onSubmit">
         <v-list-item-title>
-          <post-name-text-field v-model="model" dense />
+          <PostNameTextField v-model="model" dense />
         </v-list-item-title>
       </v-form>
     </v-list-item-content>

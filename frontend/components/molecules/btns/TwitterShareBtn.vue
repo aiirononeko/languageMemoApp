@@ -1,11 +1,11 @@
 <template>
-  <twitter-btn
+  <TwitterBtn
     :href="twitterLink"
     target="_target"
     rel="nofollow"
   >
     <slot />
-  </twitter-btn>
+  </TwitterBtn>
 </template>
 
 <script>

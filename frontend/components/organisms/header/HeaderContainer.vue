@@ -4,7 +4,7 @@
 
     <v-toolbar-title>
       <nuxt-link to="/" class="text--secondary text-decoration-none">
-        <header-title-text :elment="getTitleElement" :text="siteTitle" />
+        <HeaderTitleText :elment="getTitleElement" :text="siteTitle" />
       </nuxt-link>
     </v-toolbar-title>
 

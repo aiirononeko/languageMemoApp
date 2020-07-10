@@ -1,23 +1,23 @@
 <template>
-  <one-column-container>
+  <OneColumnContainer>
     <h1 class="text-center mb-4">投稿完了しました</h1>
 
     <v-row class="mb-4" justify="center">
-      <twitter-share-btn :text="shareText" :hashtag="hashtag">
+      <TwitterShareBtn :text="shareText" :hashtag="hashtag">
         <span class="ml-2">Twitterに投稿する</span>
-      </twitter-share-btn>
+      </TwitterShareBtn>
     </v-row>
 
     <v-row class="mb-4" justify="center">
-      <orange-btn class="mr-2" @click="toEdit">
+      <OrangeBtn class="mr-2" @click="toEdit">
         編集する
-      </orange-btn>
+      </OrangeBtn>
 
-      <orange-btn :to="getViewLink">
+      <OrangeBtn :to="getViewLink">
         投稿を見る
-      </orange-btn>
+      </OrangeBtn>
     </v-row>
-  </one-column-container>
+  </OneColumnContainer>
 </template>
 
 <script>

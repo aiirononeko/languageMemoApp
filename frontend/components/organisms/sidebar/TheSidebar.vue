@@ -1,9 +1,9 @@
 <template>
-  <sidebar-container>
+  <SidebarContainer>
     <LoginSidebar v-if="isLogin" />
 
     <GuestSidebar v-else />
-  </sidebar-container>
+  </SidebarContainer>
 </template>
 
 <script>

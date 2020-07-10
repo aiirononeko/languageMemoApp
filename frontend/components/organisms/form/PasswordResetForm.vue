@@ -1,11 +1,11 @@
 <template>
   <v-form ref="form" v-model="valid" @submit.prevent="onSubmit">
-    <email-text-field v-model="email" :api-error="emailApiError" :submit-count="submitCount" />
+    <EmailTextField v-model="email" :api-error="emailApiError" :submit-count="submitCount" />
 
     <div class="d-flex justify-end">
-      <blue-btn type="submit" :disabled="!valid">
+      <BlueBtn type="submit" :disabled="!valid">
         送信
-      </blue-btn>
+      </BlueBtn>
     </div>
   </v-form>
 </template>

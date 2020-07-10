@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" @submit.prevent="onSubmit">
-    <password-confirmation-text-field
+    <PasswordConfirmationTextField
       v-model="password"
       :password_confirmation.sync="password_confirmation"
       :password-api-error="passwordApiError"
@@ -9,9 +9,9 @@
     />
 
     <div class="d-flex justify-end">
-      <blue-btn type="submit" :disabled="!valid">
+      <BlueBtn type="submit" :disabled="!valid">
         送信
-      </blue-btn>
+      </BlueBtn>
     </div>
   </v-form>
 </template>

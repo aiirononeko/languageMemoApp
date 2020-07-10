@@ -1,6 +1,6 @@
 <template>
   <v-btn :dark="dark" :href="href" :to="to" @click="onClick" :fab="fab" :x-small="xSmall" color="#171515" class="white--text" >
-    <github-icon />
+    <GithubIcon />
     <slot />
   </v-btn>
 </template>

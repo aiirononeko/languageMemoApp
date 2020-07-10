@@ -1,5 +1,5 @@
 <template>
-  <two-column-container
+  <TwoColumnContainer
     :left-cols="12"
     :left-sm="4"
     :rightCols="12"
@@ -7,7 +7,7 @@
     bottom-class="flex-column-reverse flex-sm-row"
   >
     <template #left>
-      <user-intro-card :userInfo="userInfo" class="mt-10" />
+      <UserIntroCard :userInfo="userInfo" class="mt-10" />
     </template>
 
     <template #right>
@@ -17,18 +17,18 @@
             <h2 class="text-center">{{ canAction ? 'あなた' : currentUsername }}のリポジトリ</h2>
           </v-col>
           <v-col v-if="canAction" cols="12" sm="4" class="text-right">
-            <blue-btn @click="onTriggerCreatingNewFolder" class="mb-4">フォルダーを作成する</blue-btn>
-            <blue-btn @click="onTriggerCreatingNewPost">ファイルを作成する</blue-btn>
+            <BlueBtn @click="onTriggerCreatingNewFolder" class="mb-4">フォルダーを作成する</BlueBtn>
+            <BlueBtn @click="onTriggerCreatingNewPost">ファイルを作成する</BlueBtn>
           </v-col>
         </v-row>
       </v-container>
 
-      <folder-breadcrumbs
+      <FolderBreadcrumbs
         :breadCrumbs="breadCrumbs"
         :currentFolderName="isRoot ? '' : currentFolderName"
       />
 
-      <post-folder-list-with-action
+      <PostFolderListWithAction
         v-if="canAction"
         :list="list"
         :current-path="currentPath"
@@ -44,7 +44,7 @@
         @delete-post="onDeletePost"
       />
 
-      <post-folder-list
+      <PostFolderList
         v-else
         :list="list"
         :current-path="currentPath"
@@ -52,7 +52,7 @@
         :is-root="isRoot"
       />
     </template>
-  </two-column-container>
+  </TwoColumnContainer>
 </template>
 
 <script>

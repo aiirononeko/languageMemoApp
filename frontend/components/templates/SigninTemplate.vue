@@ -1,13 +1,13 @@
 <template>
-  <one-column-container>
+  <OneColumnContainer>
     <h1 class="main-heading mb-8 text-center">ログイン</h1>
 
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
-        <signin-card :errors="errors" @signin="onSignin" @snsauth="onSnsauth" />
+        <SigninCard :errors="errors" @signin="onSignin" @snsauth="onSnsauth" />
       </v-col>
     </v-row>
-  </one-column-container>
+  </OneColumnContainer>
 </template>
 
 <script>
