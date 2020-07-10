@@ -2,7 +2,7 @@
   <v-card class="text-center pt-4 py-2">
     <div>
       <v-row justify="center" class="mb-4">
-        <avatar-icon :src="getAvatar" :alt="`${getName} - avatar`" />
+        <AvatarIcon :src="getAvatar" :alt="`${getName} - avatar`" />
       </v-row>
 
       <p v-if="getName" class="name mb-4">
@@ -16,7 +16,7 @@
           <span class="text-uppercase">FROM</span>: {{ getAddress }}
         </p>
 
-        <user-sns-btn-group />
+        <UserSnsBtnGroup />
       </div>
     </div>
   </v-card>

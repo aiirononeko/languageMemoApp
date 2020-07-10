@@ -1,10 +1,10 @@
 <template>
-  <one-column-container>
+  <OneColumnContainer>
     <h1 class="main-heading mb-8 text-center">アカウント削除</h1>
 
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
-        <setting-deactivate-card v-if="!success" @deactivate="onDeactivate" />
+        <SettingDeactivateCard v-if="!success" @deactivate="onDeactivate" />
 
         <v-alert
           border="top"
@@ -17,7 +17,7 @@
         </v-alert>
       </v-col>
     </v-row>
-  </one-column-container>
+  </OneColumnContainer>
 </template>
 
 <script>

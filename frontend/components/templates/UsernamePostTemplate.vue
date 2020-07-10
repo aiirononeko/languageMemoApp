@@ -1,5 +1,5 @@
 <template>
-  <two-column-container
+  <TwoColumnContainer
     :left-cols="12"
     :left-sm="4"
     :rightCols="12"
@@ -7,23 +7,23 @@
     bottom-class="flex-column-reverse flex-sm-row"
   >
     <template #left>
-      <user-intro-card :userInfo="userInfo" />
+      <UserIntroCard :userInfo="userInfo" />
     </template>
 
     <template #right>
       <div class="mb-6">
         <h1 class="mb-4">{{ postInfo.name }}</h1>
 
-        <only-view-markdown :value="postInfo.content" :post-uid="postInfo.uid" />
+        <OnlyViewMarkdown :value="postInfo.content" :post-uid="postInfo.uid" />
       </div>
 
       <v-row justify="end">
-        <blue-btn v-if="canAction" :to="`/edit/${postInfo.uid}`">
+        <BlueBtn v-if="canAction" :to="`/edit/${postInfo.uid}`">
           編集する
-        </blue-btn>
+        </BlueBtn>
       </v-row>
     </template>
-  </two-column-container>
+  </TwoColumnContainer>
 </template>
 
 <script>

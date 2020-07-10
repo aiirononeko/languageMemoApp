@@ -1,5 +1,5 @@
 <template>
-  <header-container @click="onClick">
+  <HeaderContainer @click="onClick">
     <v-spacer />
 
     <keep-alive>
@@ -7,7 +7,7 @@
 
       <GuestHeader v-else />
     </keep-alive>
-  </header-container>
+  </HeaderContainer>
 </template>
 
 <script>

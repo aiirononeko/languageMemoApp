@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex align-center">
     <div class="mr-2">
-      <avatar-icon :src="getPreviewSrc" :alt="`${name} - avatar`" />
+      <AvatarIcon :src="getPreviewSrc" :alt="`${name} - avatar`" />
     </div>
 
-    <base-image-file-input
+    <BaseImageFileInput
       :api-error="apiError"
       :submit-count="submitCount"
       @input="onInput"

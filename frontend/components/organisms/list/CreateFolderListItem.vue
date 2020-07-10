@@ -5,7 +5,7 @@
     <v-list-item-content>
       <v-form @submit.prevent="onSubmit">
         <v-list-item-title>
-          <folder-name-text-field v-model="model" />
+          <FolderNameTextField v-model="model" />
         </v-list-item-title>
       </v-form>
     </v-list-item-content>

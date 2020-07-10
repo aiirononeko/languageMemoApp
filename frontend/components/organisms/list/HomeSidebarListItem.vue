@@ -1,5 +1,5 @@
 <template>
-  <base-sidebar-list-item
+  <BaseSidebarListItem
     :data="newData"
   />
 </template>

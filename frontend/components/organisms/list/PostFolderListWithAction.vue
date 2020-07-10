@@ -4,11 +4,11 @@
 
     <v-list>
       <v-list-item-group>
-        <link-to-back-item v-if="!isRoot" :to="toBackFolder" />
+        <LinkToBackItem v-if="!isRoot" :to="toBackFolder" />
 
         <!-- 登録済みのファイルやフォルダー -->
         <template v-for="(item, key) in list" >
-          <post-list-item
+          <PostListItem
             v-if="item.type === 'posts'"
             :can-action="true"
             :name="item.name"
@@ -19,7 +19,7 @@
             @delete="onDeletePost"
           />
 
-          <folder-list-item
+          <FolderListItem
             v-else
             :can-action="true"
             :name="item.name"
@@ -32,8 +32,8 @@
         </template>
 
         <!-- folder, file の新規作成時に表示 -->
-        <create-folder-list-item v-if="isCreatingNewFolder" v-model="newFolderName" @submit="onCreateFolder" />
-        <create-post-list-item v-if="isCreatingNewPost" v-model="newPostName" @submit="onCreatePost" />
+        <CreateFolderListItem v-if="isCreatingNewFolder" v-model="newFolderName" @submit="onCreateFolder" />
+        <CreatePostListItem v-if="isCreatingNewPost" v-model="newPostName" @submit="onCreatePost" />
       </v-list-item-group>
     </v-list>
   </div>

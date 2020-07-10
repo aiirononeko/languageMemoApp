@@ -1,13 +1,13 @@
 <template>
-  <one-column-container>
+  <OneColumnContainer>
     <h1 class="main-heading mb-8 text-center">プロフィール編集</h1>
 
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
-        <setting-profile-card :errors="errors" :info="info" @save="save" />
+        <SettingProfileCard :errors="errors" :info="info" @save="save" />
       </v-col>
     </v-row>
-  </one-column-container>
+  </OneColumnContainer>
 </template>
 
 <script>

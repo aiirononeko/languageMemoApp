@@ -1,5 +1,5 @@
 <template>
-  <base-container :fluid="fluid" :no-gutters="noGutters">
+  <BaseContainer :fluid="fluid" :no-gutters="noGutters">
     <v-row>
       <slot name="top" />
     </v-row>
@@ -13,7 +13,7 @@
         <slot name="right" />
       </v-col>
     </v-row>
-  </base-container>
+  </BaseContainer>
 </template>
 
 <script>

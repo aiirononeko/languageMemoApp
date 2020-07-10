@@ -1,13 +1,13 @@
 <template>
   <v-form ref="form" v-model="valid" :lazy-validation="lazy" @submit.prevent="onSubmit">
-    <email-text-field v-model="email" :api-error="emailApiError" :submit-count="submitCount" />
+    <EmailTextField v-model="email" :api-error="emailApiError" :submit-count="submitCount" />
 
-    <password-text-field v-model="password" :api-error="passwordApiError" :submit-count="submitCount" />
+    <PasswordTextField v-model="password" :api-error="passwordApiError" :submit-count="submitCount" />
 
     <div class="text-center mt-4">
-      <orange-btn type="submit" :disabled="!valid">
+      <OrangeBtn type="submit" :disabled="!valid">
         新規登録
-      </orange-btn>
+      </OrangeBtn>
     </div>
   </v-form>
 </template>

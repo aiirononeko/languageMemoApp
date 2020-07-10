@@ -4,7 +4,7 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="8">
-        <password-reset-form :errors="errors" @submit="onSubmit" />
+        <PasswordResetForm :errors="errors" @submit="onSubmit" />
       </v-col>
 
       <v-col cols="12" sm="8">

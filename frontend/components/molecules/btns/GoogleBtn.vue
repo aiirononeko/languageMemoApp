@@ -1,6 +1,6 @@
 <template>
   <v-btn :dark="dark" :href="href" :to="to" @click="onClick" color="#DB4A39" class="white--text">
-    <google-icon />
+    <GoogleIcon />
     <slot />
   </v-btn>
 </template>

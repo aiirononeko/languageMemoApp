@@ -4,7 +4,7 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6">
-        <change-username-form :errors="errors" :username="username" @submit="onSubmit" />
+        <ChangeUsernameForm :errors="errors" :username="username" @submit="onSubmit" />
 
         <nuxt-link v-if="isFirstTimeLogin" :to="`/settings/profile`">後で決める</nuxt-link>
       </v-col>
