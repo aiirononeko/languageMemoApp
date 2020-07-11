@@ -1,7 +1,7 @@
 <template>
   <div class="mavonEditor">
     <client-only>
-      <MavonEditor
+      <mavon-editor
         v-model="md"
         :default-open="defaultOpen"
         :subfield="vSubfield"
