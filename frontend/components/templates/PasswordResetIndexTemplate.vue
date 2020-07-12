@@ -1,10 +1,10 @@
 <template>
-  <one-column-container>
+  <OneColumnContainer>
     <h1 class="main-heading mb-8 text-center">パスワードをリセットする</h1>
 
     <v-row justify="center">
       <v-col cols="12" sm="8">
-        <password-reset-card v-if="!success" :errors="errors" @submit="onSubmit" />
+        <PasswordResetCard v-if="!success" :errors="errors" @submit="onSubmit" />
 
         <v-alert
           border="top"
@@ -17,19 +17,11 @@
         </v-alert>
       </v-col>
     </v-row>
-  </one-column-container>
+  </OneColumnContainer>
 </template>
 
 <script>
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const PasswordResetCard = () => import('~/components/organisms/cards/PasswordResetCard')
-
 export default {
-  components: {
-    OneColumnContainer,
-    PasswordResetCard
-  },
-
   props: {
     errors: {
       type: Object,

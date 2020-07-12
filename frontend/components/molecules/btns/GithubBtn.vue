@@ -1,18 +1,12 @@
 <template>
   <v-btn :dark="dark" :href="href" :to="to" @click="onClick" :fab="fab" :x-small="xSmall" color="#171515" class="white--text" >
-    <github-icon />
+    <GithubIcon />
     <slot />
   </v-btn>
 </template>
 
 <script>
-const GithubIcon = () => import('~/components/atoms/icons/GithubIcon')
-
 export default {
-  components: {
-    GithubIcon
-  },
-
   props: {
     dark: {
       type: Boolean,

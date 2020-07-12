@@ -1,6 +1,6 @@
 <template>
   <div>
-    <edit-post-template
+    <EditPostTemplate
       v-if="!success"
       v-model="content"
       :name.sync="name"
@@ -11,7 +11,7 @@
       @post="post"
     />
 
-    <edit-post-success-template
+    <EditPostSuccessTemplate
       v-else
       :post-info="postInfo"
       :username="username"
@@ -22,17 +22,10 @@
 
 <script>
 import Post from '@/types/Post'
-const EditPostTemplate = () => import('~/components/templates/EditPostTemplate')
-const EditPostSuccessTemplate = () => import('~/components/templates/EditPostSuccessTemplate')
 
 const DEFAULT_STATUS = 'both'
 
 export default {
-  components: {
-    EditPostTemplate,
-    EditPostSuccessTemplate
-  },
-
   data: () => ({
     content: "" /** markdown */,
     name: null /** ファイル名 */,

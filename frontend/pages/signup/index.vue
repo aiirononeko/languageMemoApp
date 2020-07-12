@@ -1,23 +1,15 @@
 <template>
-  <div>
-    <signup-template
-      :errors="errors"
-      :success="success"
-      :message="message"
-      @signup="signup"
-      @snsauth="snsauth"
-    />
-  </div>
+  <SignupTemplate
+    :errors="errors"
+    :success="success"
+    :message="message"
+    @signup="signup"
+    @snsauth="snsauth"
+  />
 </template>
 
 <script>
-const SignupTemplate = () => import('~/components/templates/SignupTemplate')
-
 export default {
-  components: {
-    SignupTemplate
-  },
-
   middleware: 'guest',
 
   data() {

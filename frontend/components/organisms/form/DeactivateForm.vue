@@ -11,16 +11,16 @@
           戻る
         </v-btn>
 
-        <red-btn @click="onFirstProceedClick" class="mr-4" large>
+        <RedBtn @click="onFirstProceedClick" class="mr-4" large>
           削除
-        </red-btn>
+        </RedBtn>
       </template>
 
       <template v-else>
         <v-form @submit.prevent="onSubmit">
-          <red-btn  class="mr-4" type="submit" large>
+          <RedBtn  class="mr-4" type="submit" large>
             アカウント削除
-          </red-btn>
+          </RedBtn>
 
           <v-btn @click="onSecondBackClick" class="mr-4" large>
             やめる
@@ -32,13 +32,7 @@
 </template>
 
 <script>
-const RedBtn = () => import('~/components/atoms/btns/RedBtn')
-
 export default {
-  components: {
-    RedBtn
-  },
-
   data() {
     return {
       check: false

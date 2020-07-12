@@ -1,5 +1,5 @@
 <template>
-  <password-reset-confirm-template
+  <PasswordResetConfirmTemplate
     :errors="errors"
     :success="success"
     :message="message"
@@ -8,13 +8,7 @@
 </template>
 
 <script>
-const PasswordResetConfirmTemplate = () => import('~/components/templates/PasswordResetConfirmTemplate')
-
 export default {
-  components: {
-    PasswordResetConfirmTemplate
-  },
-
   middleware: "guest",
 
   validate({ query }) {

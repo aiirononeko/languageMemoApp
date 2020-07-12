@@ -3,7 +3,7 @@
     <div class="mb-8">
       <p>プロフィール画像</p>
 
-      <preview-image-file-input
+      <PreviewImageFileInput
         :api-error="avatarApiError"
         :submit-count="submitCount"
         :name="form.name || info.username"
@@ -15,7 +15,7 @@
 
     <div class="mb-8">
       <p>名前</p>
-      <name-text-field
+      <NameTextField
         v-model="form.name"
         :api-error="nameApiError"
         :submit-count="submitCount"
@@ -24,7 +24,7 @@
 
     <div class="mb-8">
       <p>自己紹介</p>
-      <profile-textarea
+      <ProfileTextarea
         v-model="form.profile"
         :api-error="profileApiError"
         :submit-count="submitCount"
@@ -33,7 +33,7 @@
 
     <div class="mb-8">
       <p>出身</p>
-      <address-text-field
+      <AddressTextField
         v-model="form.address"
         :api-error="addressApiError"
         :submit-count="submitCount"
@@ -41,27 +41,13 @@
     </div>
 
     <div class="d-flex justify-center mt-5">
-      <orange-btn type="submit" :disabled="!valid">保存する</orange-btn>
+      <OrangeBtn type="submit" :disabled="!valid">保存する</OrangeBtn>
     </div>
   </v-form>
 </template>
 
 <script>
-const AddressTextField = () => import('~/components/organisms/textFields/AddressTextField')
-const ProfileTextarea = () => import('~/components/organisms/textarea/ProfileTextarea')
-const NameTextField = () => import('~/components/organisms/textFields/NameTextField')
-const PreviewImageFileInput = () => import('~/components/organisms/fileInputs/PreviewImageFileInput')
-const OrangeBtn = () => import('~/components/atoms/btns/OrangeBtn')
-
 export default {
-  components: {
-    AddressTextField,
-    ProfileTextarea,
-    NameTextField,
-    PreviewImageFileInput,
-    OrangeBtn
-  },
-
   props: {
     errors: {
       type: Object,

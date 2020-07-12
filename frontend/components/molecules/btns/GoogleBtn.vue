@@ -1,18 +1,12 @@
 <template>
   <v-btn :dark="dark" :href="href" :to="to" @click="onClick" color="#DB4A39" class="white--text">
-    <google-icon />
+    <GoogleIcon />
     <slot />
   </v-btn>
 </template>
 
 <script>
-const GoogleIcon = () => import('~/components/atoms/icons/GoogleIcon')
-
 export default {
-  components: {
-    GoogleIcon
-  },
-
   props: {
     dark: {
       type: Boolean,

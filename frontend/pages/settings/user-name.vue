@@ -1,23 +1,16 @@
 <template>
-  <div>
-    <settings-user-name-template
-      :errors="errors"
-      :username="username"
-      :is-first-time-login="isFirstTimeLogin"
-      @submit="updateUsername"
-    />
-  </div>
+  <SettingsUserNameTemplate
+    :errors="errors"
+    :username="username"
+    :is-first-time-login="isFirstTimeLogin"
+    @submit="updateUsername"
+  />
 </template>
 
 <script>
 import User from '@/types/User'
-const SettingsUserNameTemplate = () => import('~/components/templates/SettingsUserNameTemplate')
 
 export default {
-  components: {
-    SettingsUserNameTemplate
-  },
-
   middleware: "authenticated",
 
   data() {

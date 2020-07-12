@@ -1,8 +1,8 @@
 <template>
   <v-form ref="form" v-model="valid" :lazy-validation="lazy" @submit.prevent="onSubmit">
-    <email-text-field v-model="email" :api-error="emailApiError" :submit-count="submitCount" />
+    <EmailTextField v-model="email" :api-error="emailApiError" :submit-count="submitCount" />
 
-    <password-text-field
+    <PasswordTextField
       v-model="password"
       :api-error="passwordApiError"
       :persistent-hint="false"
@@ -10,25 +10,15 @@
     />
 
     <div class="text-center">
-      <orange-btn type="submit" :disabled="!valid">
+      <OrangeBtn type="submit" :disabled="!valid">
         ログイン
-      </orange-btn>
+      </OrangeBtn>
     </div>
   </v-form>
 </template>
 
 <script>
-const EmailTextField = () => import("~/components/organisms/textFields/EmailTextField")
-const PasswordTextField = () => import("~/components/organisms/textFields/PasswordTextField")
-const OrangeBtn = () => import("~/components/atoms/btns/OrangeBtn")
-
 export default {
-  components: {
-    EmailTextField,
-    PasswordTextField,
-    OrangeBtn,
-  },
-
   props: {
     errors: {
       type: Object,

@@ -4,11 +4,11 @@
 
     <v-list>
       <v-list-item-group>
-        <link-to-back-item v-if="!isRoot" :to="toBackFolder" />
+        <LinkToBackItem v-if="!isRoot" :to="toBackFolder" />
 
         <!-- 登録済みのファイルやフォルダー -->
         <template v-for="(item, key) in list" >
-          <post-list-item
+          <PostListItem
             v-if="!!item.content"
             :name="item.name"
             :id="item.id"
@@ -16,7 +16,7 @@
             :key="key"
           />
 
-          <folder-list-item
+          <FolderListItem
             v-else
             :name="item.name"
             :to="`${currentPath}/${item.id}`"
@@ -30,17 +30,7 @@
 </template>
 
 <script>
-const PostListItem = () => import('~/components/organisms/list/PostListItem')
-const FolderListItem = () => import('~/components/organisms/list/FolderListItem')
-const LinkToBackItem = () => import('~/components/organisms/list/LinkToBackItem')
-
 export default {
-  components: {
-    PostListItem,
-    FolderListItem,
-    LinkToBackItem,
-  },
-
   props: {
     currentUsername: {
       type: String,

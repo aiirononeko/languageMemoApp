@@ -4,20 +4,14 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="8">
-        <deactivate-form @submit="onSubmit" />
+        <DeactivateForm @submit="onSubmit" />
       </v-col>
     </v-row>
   </v-card>
 </template>
 
 <script>
-const DeactivateForm = () => import('~/components/organisms/form/DeactivateForm')
-
 export default {
-  components: {
-    DeactivateForm
-  },
-
   props: {
     errors: {
       type: Object,

@@ -4,7 +4,7 @@
 
     <v-toolbar-title>
       <nuxt-link to="/" class="text--secondary text-decoration-none">
-        <header-title-text :elment="getTitleElement" :text="siteTitle" />
+        <HeaderTitleText :elment="getTitleElement" :text="siteTitle" />
       </nuxt-link>
     </v-toolbar-title>
 
@@ -14,14 +14,9 @@
 </template>
 
 <script>
-const HeaderTitleText = () => import('~/components/atoms/text/HeaderTitleText')
 const SITE_TITLE = 'poeta'
 
 export default {
-  components: {
-    HeaderTitleText
-  },
-
   methods: {
     onClick() {
       this.$store.commit('sidebar/onDrawer')

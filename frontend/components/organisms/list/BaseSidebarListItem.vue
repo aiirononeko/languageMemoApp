@@ -1,23 +1,15 @@
 <template>
   <div>
     <v-row v-if="btn" justify="center">
-      <sidebar-action-btn :text="name" :to="to" @click="onClick" class="mt-4" />
+      <SidebarActionBtn :text="name" :to="to" @click="onClick" class="mt-4" />
     </v-row>
 
-    <base-list-item v-else :exact="exact" :icon="icon" :name="name" :to="to" @click="onClick" />
+    <BaseListItem v-else :exact="exact" :icon="icon" :name="name" :to="to" @click="onClick" />
   </div>
 </template>
 
 <script>
-const BaseListItem = () => import('~/components/molecules/list/BaseListItem')
-const SidebarActionBtn = () => import('~/components/molecules/btns/SidebarActionBtn')
-
 export default {
-  components: {
-    BaseListItem,
-    SidebarActionBtn
-  },
-
   props:  {
     data: {
       type: Object,
