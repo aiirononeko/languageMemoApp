@@ -14,7 +14,7 @@
       <v-container>
         <v-row>
           <v-col cols="12" sm="8">
-            <h2 class="text-center">{{ canAction ? 'あなた' : currentUsername }}のリポジトリ</h2>
+            <h2 class="text-center">{{ canAction ? 'あなた' : currentName }}のフォルダ</h2>
           </v-col>
           <v-col v-if="canAction" cols="12" sm="4" class="text-right">
             <BlueBtn @click="onTriggerCreatingNewFolder" class="mb-4">フォルダーを作成する</BlueBtn>
@@ -65,10 +65,10 @@
 /**
  * パンくずリストの作成
  */
-const generateBreadcrumbs = (username, ancestorFolders) => {
+const generateBreadcrumbs = (username, displayName, ancestorFolders) => {
   let pastLink = `/${username}`
 
-  const rootBreadCrumbs = [{ to: pastLink, name: `${username}` }]
+  const rootBreadCrumbs = [{ to: pastLink, name: `${displayName}` }]
   const reAncestorFolders = Object.assign([], ancestorFolders).reverse()
 
   const ancestorBreadCrumbs = reAncestorFolders.map(
@@ -139,7 +139,7 @@ export default {
      * @returns { { to: Number , name: String }[] }
      */
     breadCrumbs() {
-      return generateBreadcrumbs(this.currentUsername, this.ancestorFolders)
+      return generateBreadcrumbs(this.currentUsername, this.currentName, this.ancestorFolders)
     },
 
     /**
@@ -151,6 +151,13 @@ export default {
       }
 
       return this.foldersInfo.name
+    },
+
+    /**
+     * 現在アクセスしているユーザーの名前
+     */
+    currentName() {
+      return this.userInfo.name || this.currentUsername
     },
 
     /**
