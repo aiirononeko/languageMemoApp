@@ -1,22 +1,14 @@
 <template>
-  <div>
-    <password-reset-index-template
-      :errors="errors"
-      :success="success"
-      :message="message"
-      @submit="reset"
-    />
-  </div>
+  <PasswordResetIndexTemplate
+    :errors="errors"
+    :success="success"
+    :message="message"
+    @submit="reset"
+  />
 </template>
 
 <script>
-const PasswordResetIndexTemplate = () => import('~/components/templates/PasswordResetIndexTemplate')
-
 export default {
-  components: {
-    PasswordResetIndexTemplate
-  },
-
   middleware: "guest",
 
   data() {

@@ -1,8 +1,8 @@
 <template>
-  <one-column-container class="pos-relative" fluid>
+  <OneColumnContainer class="pos-relative" fluid>
     <v-row>
       <v-col class="py-0" cols="12" sm="6" md="3">
-        <post-name-text-field v-model="nameModel" rounded outlined />
+        <PostNameTextField v-model="nameModel" rounded outlined />
       </v-col>
       <v-spacer />
       <v-col class="py-0" cols="12" sm="3" md="3">
@@ -10,35 +10,23 @@
       </v-col>
     </v-row>
 
-    <edit-markdown v-model="md" :post-uid="postUid" :isView="isView" :subfield="isBoth" @post="post" />
+    <EditMarkdown v-model="md" :post-uid="postUid" :isView="isView" :subfield="isBoth" @post="post" />
 
     <div :class="{ 'text-right': !$device.isDesktopOrTablet }">
-      <blue-btn
+      <BlueBtn
         :class="{ 'post-btn' : $device.isDesktopOrTablet  }"
         :disabled="isDisabled"
         large
         @click="post"
       >
         投稿する
-      </blue-btn>
+      </BlueBtn>
     </div>
-  </one-column-container>
+  </OneColumnContainer>
 </template>
 
 <script>
-const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
-const EditMarkdown = () => import('~/components/organisms/markdown/EditMarkdown')
-const PostNameTextField = () => import('~/components/organisms/textFields/PostNameTextField')
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-
 export default {
-  components: {
-    BlueBtn,
-    EditMarkdown,
-    PostNameTextField,
-    OneColumnContainer
-  },
-
   props: {
     postUid: {
       type: String,

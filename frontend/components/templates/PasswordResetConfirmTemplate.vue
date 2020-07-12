@@ -1,5 +1,5 @@
 <template>
-  <one-column-container>
+  <OneColumnContainer>
     <h1 class="main-heading mb-8 text-center">新しいパスワードを入力してください</h1>
 
     <v-row justify="center">
@@ -20,19 +20,11 @@
         </v-alert>
       </v-col>
     </v-row>
-  </one-column-container>
+  </OneColumnContainer>
 </template>
 
 <script>
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const PasswordResetConfirmCard = () => import('~/components/organisms/cards/PasswordResetConfirmCard')
-
 export default {
-  components: {
-    OneColumnContainer,
-    PasswordResetConfirmCard
-  },
-
   props: {
     errors: {
       type: Object,

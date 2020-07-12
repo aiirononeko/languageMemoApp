@@ -1,10 +1,10 @@
 <template>
-  <one-column-container>
+  <OneColumnContainer>
     <h1 class="main-heading mb-8 text-center">{{ pageTitle }}</h1>
 
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
-        <change-username-card
+        <ChangeUsernameCard
           :errors="errors"
           :username="username"
           :is-first-time-login="isFirstTimeLogin"
@@ -12,19 +12,11 @@
         />
       </v-col>
     </v-row>
-  </one-column-container>
+  </OneColumnContainer>
 </template>
 
 <script>
-const ChangeUsernameCard = () => import('~/components/organisms/cards/ChangeUsernameCard')
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-
 export default {
-  components: {
-    ChangeUsernameCard,
-    OneColumnContainer
-  },
-
   props: {
     errors: {
       type: Object,

@@ -1,5 +1,5 @@
 <template>
-  <settings-deactivate-template
+  <SettingsDeactivateTemplate
     :success="success"
     :message="message"
     @deactivate="onDeactivate"
@@ -7,13 +7,7 @@
 </template>
 
 <script>
-const SettingsDeactivateTemplate = () => import('~/components/templates/SettingsDeactivateTemplate')
-
 export default {
-  components: {
-    SettingsDeactivateTemplate
-  },
-
   middleware: "authenticated",
 
   data() {

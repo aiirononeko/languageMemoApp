@@ -1,29 +1,21 @@
 <template>
   <v-form ref="form" v-model="valid" @submit.prevent="onSubmit">
-    <username-text-field
+    <UsernameTextField
       v-model="vUserName"
       :api-error="apiError"
       :submit-count="submitCount"
     />
 
     <div class="d-flex justify-end">
-      <blue-btn type="submit" :disabled="!valid">
+      <BlueBtn type="submit" :disabled="!valid">
         変更
-      </blue-btn>
+      </BlueBtn>
     </div>
   </v-form>
 </template>
 
 <script>
-const BlueBtn = () => import('~/components/atoms/btns/BlueBtn')
-const UsernameTextField = () => import('~/components/organisms/textFields/UsernameTextField')
-
 export default {
-  components: {
-    BlueBtn,
-    UsernameTextField
-  },
-
   props: {
     errors: {
       type: Object,

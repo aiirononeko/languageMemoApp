@@ -1,17 +1,13 @@
 <template>
-  <div>
-    <signin-template :errors="errors" @signin="login" @snsauth="snsauth" />
-  </div>
+  <SigninTemplate
+    :errors="errors"
+    @signin="login"
+    @snsauth="snsauth"
+  />
 </template>
 
 <script>
-const SigninTemplate = () => import('~/components/templates/SigninTemplate')
-
 export default {
-  components: {
-    SigninTemplate
-  },
-
   middleware: 'guest',
 
   data() {

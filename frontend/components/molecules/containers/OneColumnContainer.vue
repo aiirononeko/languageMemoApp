@@ -1,21 +1,15 @@
 <template>
-  <base-container :fluid="fluid" :no-gutters="noGutters">
+  <BaseContainer :fluid="fluid" :no-gutters="noGutters">
     <v-row justify="center">
       <v-col :cols="cols" :sm="sm" :md="md" :lg="lg" :xl="xl">
         <slot />
       </v-col>
     </v-row>
-  </base-container>
+  </BaseContainer>
 </template>
 
 <script>
-const BaseContainer = () => import('~/components/molecules/containers/BaseContainer')
-
 export default {
-  components: {
-    BaseContainer
-  },
-
   props: {
     cols: {
       type: [Boolean, String, Number],

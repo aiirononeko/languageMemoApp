@@ -11,19 +11,13 @@
     color="#00AEEF"
     class="white--text"
   >
-    <twitter-icon />
+    <TwitterIcon />
     <slot />
   </v-btn>
 </template>
 
 <script>
-const TwitterIcon = () => import('~/components/atoms/icons/TwitterIcon')
-
 export default {
-  components: {
-    TwitterIcon
-  },
-
   props: {
     dark: {
       type: Boolean,

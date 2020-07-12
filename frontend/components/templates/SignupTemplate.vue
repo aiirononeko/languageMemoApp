@@ -1,10 +1,10 @@
 <template>
-  <one-column-container>
+  <OneColumnContainer>
     <h1 class="main-heading mb-8 text-center">新規登録</h1>
 
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
-        <signup-card v-if="!success" :errors="errors" @signup="onSignup" @snsauth="onSnsauth" />
+        <SignupCard v-if="!success" :errors="errors" @signup="onSignup" @snsauth="onSnsauth" />
 
         <v-alert
           border="top"
@@ -17,19 +17,11 @@
         </v-alert>
       </v-col>
     </v-row>
-  </one-column-container>
+  </OneColumnContainer>
 </template>
 
 <script>
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
-const SignupCard = () => import('~/components/organisms/cards/SignupCard')
-
 export default {
-  components: {
-    OneColumnContainer,
-    SignupCard
-  },
-
   props: {
     errors: {
       type: Object,

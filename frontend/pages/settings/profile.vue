@@ -1,17 +1,12 @@
 <template>
-  <settings-profile-template :errors="errors" :info="info" @save="save"/>
+  <SettingsProfileTemplate :errors="errors" :info="info" @save="save"/>
 </template>
 
 <script>
 import User from "@/types/User"
 import { objectToFormData } from "object-to-formdata"
-const SettingsProfileTemplate = () => import('~/components/templates/SettingsProfileTemplate')
 
 export default {
-  components: {
-    SettingsProfileTemplate
-  },
-
   middleware: "authenticated",
 
   data() {

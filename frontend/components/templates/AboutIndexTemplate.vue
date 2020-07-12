@@ -5,13 +5,13 @@
         <h1 class="mb-10">TILを記録しよう</h1>
         <!-- <p><span class="hatena">?</span>TILとは</p> -->
 
-        <red-btn to="/signup">
+        <RedBtn to="/signup">
           すぐに始める
-        </red-btn>
+        </RedBtn>
       </div>
     </v-row>
 
-    <one-column-container>
+    <OneColumnContainer>
       <div class="mb-lg">
         <h2 class="text-center">MarkDown形式で書ける</h2>
 
@@ -38,28 +38,21 @@
 
       <div class="mb-lg">
         <v-row justify="center">
-          <red-btn to="/signup">
+          <RedBtn to="/signup">
             すぐに始める
-          </red-btn>
+          </RedBtn>
         </v-row>
       </div>
-    </one-column-container>
+    </OneColumnContainer>
   </div>
 </template>
 
 <script>
-const RedBtn = () => import('~/components/atoms/btns/RedBtn')
-const OneColumnContainer = () => import('~/components/molecules/containers/OneColumnContainer')
 import POST_TIL_PAGE_IMAGE from '~/assets/images/post-TIL-page.png'
 import FOLEDER_TIL_PAGE_IMAGE from '~/assets/images/folder-TIL-page.png'
 import VIEW_TIL_PAGE_IMAGE from '~/assets/images/view-TIL-page.png'
 
 export default {
-  components: {
-    RedBtn,
-    OneColumnContainer
-  },
-
   computed: {
     /**
      * @return {{ [x: string]: string }}

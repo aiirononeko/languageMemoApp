@@ -1,15 +1,9 @@
 <template>
-  <settings-index-template />
+  <SettingsIndexTemplate />
 </template>
 
 <script>
-const SettingsIndexTemplate = () => import('~/components/templates/SettingsIndexTemplate')
-
 export default {
-  components: {
-    SettingsIndexTemplate
-  },
-
   middleware: "authenticated",
 
   head() {

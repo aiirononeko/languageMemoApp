@@ -1,7 +1,7 @@
 <template>
   <!-- マイページのルート -->
   <div>
-    <username-folder-template
+    <UsernameFolderTemplate
       :can-action="canAction"
       :current-path="currentPath"
       :current-username="currentUsername"
@@ -22,13 +22,8 @@
 
 <script>
 import User from '@/types/User'
-const UsernameFolderTemplate = () => import('~/components/templates/UsernameFolderTemplate')
 
 export default {
-  components: {
-    UsernameFolderTemplate
-  },
-
   data: () => ({
     isCreatingNewFolder: false,
     isCreatingNewPost: false,
