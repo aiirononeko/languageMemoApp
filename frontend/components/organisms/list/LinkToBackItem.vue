@@ -1,9 +1,16 @@
 <template>
-  <v-list-item :to="to">
-    <v-list-item-icon>
-      <v-icon>mdi-arrow-left-circle</v-icon>
-    </v-list-item-icon>
-  </v-list-item>
+  <v-row>
+    <v-col cols="11" class="pa-0">
+      <v-list-item :to="to" exact>
+        <v-list-item-icon>
+          <v-icon>mdi-arrow-left-circle</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title />
+        </v-list-item-content>
+      </v-list-item>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
