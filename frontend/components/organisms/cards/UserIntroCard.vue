@@ -16,7 +16,7 @@
           <span class="text-uppercase">FROM</span>: {{ getAddress }}
         </p>
 
-        <v-btn v-if="lookFolderValidPath" :to="`/${username}`" text color="primary">{{ getName }}のページを見る</v-btn>
+        <v-btn v-if="canLookFolderPath" :to="`/${username}`" text color="primary">{{ getName }}のページを見る</v-btn>
         <UserSnsBtnGroup />
       </div>
     </div>
@@ -57,7 +57,7 @@ export default {
       return this.userInfo && this.userInfo.username
     },
 
-    lookFolderValidPath() {
+    canLookFolderPath() {
       return this.$route.name === 'username-all'
     }
   },
