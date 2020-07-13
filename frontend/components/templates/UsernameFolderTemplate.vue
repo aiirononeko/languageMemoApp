@@ -65,10 +65,10 @@
 /**
  * パンくずリストの作成
  */
-const generateBreadcrumbs = (username, ancestorFolders) => {
+const generateBreadcrumbs = (name, username, ancestorFolders) => {
   let pastLink = `/${username}`
 
-  const rootBreadCrumbs = [{ to: pastLink, name: `${username}` }]
+  const rootBreadCrumbs = [{ to: pastLink, name: `${name}` }]
   const reAncestorFolders = Object.assign([], ancestorFolders).reverse()
 
   const ancestorBreadCrumbs = reAncestorFolders.map(
@@ -139,7 +139,7 @@ export default {
      * @returns { { to: Number , name: String }[] }
      */
     breadCrumbs() {
-      return generateBreadcrumbs(this.currentUsername, this.ancestorFolders)
+      return generateBreadcrumbs(this.name, this.currentUsername, this.ancestorFolders)
     },
 
     /**
@@ -151,6 +151,10 @@ export default {
       }
 
       return this.foldersInfo.name
+    },
+
+    name() {
+      return this.userInfo.name
     },
 
     /**
