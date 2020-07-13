@@ -14,7 +14,7 @@
       <v-container>
         <v-row>
           <v-col cols="12" sm="8">
-            <h2 class="text-center">{{ canAction ? 'あなた' : currentUsername }}のリポジトリ</h2>
+            <h2 class="text-center main-heading">{{ canAction ? 'あなた' : currentUsername }}のリポジトリ</h2>
           </v-col>
           <v-col v-if="canAction" cols="12" sm="4" class="text-right">
             <BlueBtn @click="onTriggerCreatingNewFolder" class="mb-4">フォルダーを作成する</BlueBtn>
