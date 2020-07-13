@@ -17,8 +17,8 @@
             <h2 class="text-center main-heading">{{ canAction ? 'あなた' : currentUsername }}のリポジトリ</h2>
           </v-col>
           <v-col v-if="canAction" cols="12" sm="4" class="text-right">
-            <BlueBtn @click="onTriggerCreatingNewFolder" class="mb-4">フォルダーを作成する</BlueBtn>
-            <BlueBtn @click="onTriggerCreatingNewPost">ファイルを作成する</BlueBtn>
+            <BlueBtn @click="onTriggerCreatingNewFolder" class="mb-4" color="#00a8ff">フォルダーを作成する</BlueBtn>
+            <BlueBtn @click="onTriggerCreatingNewPost" color="#00a8ff">ファイルを作成する</BlueBtn>
           </v-col>
         </v-row>
       </v-container>
