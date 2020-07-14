@@ -3,7 +3,7 @@
     <v-col cols="11" class="pa-0">
       <v-list-item :to="getTo">
         <v-list-item-icon>
-          <v-icon>mdi-folder</v-icon>
+          <v-icon color="#3498db">mdi-folder</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>

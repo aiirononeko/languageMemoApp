@@ -1,11 +1,11 @@
 <template>
   <v-btn
-    color="blue accent-4"
     class="btn"
     depressed
     :disabled="disabled"
     :large="large"
     :to="to"
+    :color="color"
     @click="onClick"
   >
     <slot/>
@@ -15,6 +15,11 @@
 <script>
 export default {
   props: {
+    color: {
+      type: String,
+      default: 'blue accent-4'
+    },
+
     disabled: {
       type: Boolean,
       default: false

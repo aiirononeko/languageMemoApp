@@ -12,8 +12,20 @@
       >
         <v-content>
           <nuxt />
+          <TheFooter v-if="isFooterValidPath" />
         </v-content>
       </v-sheet>
     </v-card>
   </v-app>
 </template>
+
+<script>
+export default {
+  computed: {
+    isFooterValidPath() {
+      const currentPath = this.$route.name
+      return currentPath !== 'username' && currentPath !== 'edit-new'
+    }
+  }
+}
+</script>
