@@ -2,7 +2,8 @@
   <div>
     <v-row justify="center" align="center" class="ma-0 w-100 top">
       <div class="text-center">
-        <h1 class="mb-10">TILを記録しよう</h1>
+        <h1 class="mb-2">TILを記録しよう</h1>
+        <v-btn href="#til" text class="mb-7" ><v-icon>mdi-help-circle-outline</v-icon>TILとは</v-btn><br/>
         <!-- <p><span class="hatena">?</span>TILとは</p> -->
 
         <RedBtn to="/signup">
@@ -43,6 +44,7 @@
           </RedBtn>
         </v-row>
       </div>
+      <p id="til">TILとは: 「Today I learned」の略。「今日学んだこと」をMarkdownファイルでまとめたもの。</p>
     </OneColumnContainer>
   </div>
 </template>

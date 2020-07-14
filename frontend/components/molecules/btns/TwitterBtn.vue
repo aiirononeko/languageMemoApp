@@ -1,6 +1,7 @@
 <template>
   <v-btn
     :dark="dark"
+    :depressed="depressed"
     :fab="fab"
     :href="href"
     :target="vTarget"
@@ -20,6 +21,11 @@
 export default {
   props: {
     dark: {
+      type: Boolean,
+      default: false
+    },
+
+    depressed: {
       type: Boolean,
       default: false
     },
