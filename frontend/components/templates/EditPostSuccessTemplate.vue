@@ -42,7 +42,7 @@ export default {
     },
 
     hashtag() {
-      return "til,poeta,駆け出しエンジニアとつながりたい"
+      return "til,poeta,駆け出しエンジニアと繋がりたい"
     },
 
     getViewLink() {
