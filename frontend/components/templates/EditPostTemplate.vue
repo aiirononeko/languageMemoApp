@@ -1,10 +1,9 @@
 <template>
   <OneColumnContainer class="pos-relative" fluid>
     <v-row>
-      <v-col class="py-0" cols="12" sm="6" md="3">
-        <PostNameTextField v-model="nameModel" rounded outlined />
+      <v-col class="py-0 mr-sm-4" cols="12" sm="6" md="3">
+        <PostNameTextField v-model="nameModel" outlined />
       </v-col>
-      <v-spacer />
       <v-col class="py-0" cols="12" sm="3" md="3">
         <v-switch v-model="pubModel" class="mt-0 mt-sm-2" color="primary" flat :label="`${pub ? '公開' : '非公開'}`" />
       </v-col>

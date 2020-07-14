@@ -14,7 +14,7 @@
       <v-container>
         <v-row>
           <v-col cols="12" sm="8">
-            <h2 class="text-center main-heading">{{ canAction ? 'あなた' : currentUsername }}のリポジトリ</h2>
+            <h2 class="text-center main-heading">{{ canAction ? 'あなた' : currentName }}のフォルダ</h2>
           </v-col>
           <v-col v-if="canAction" cols="12" sm="4" class="text-right">
             <BlueBtn @click="onTriggerCreatingNewFolder" class="mb-4" color="#00a8ff">フォルダーを作成する</BlueBtn>
@@ -155,6 +155,13 @@ export default {
 
     name() {
       return this.userInfo.name
+    },
+
+    /**
+     * 現在アクセスしているユーザーの名前
+     */
+    currentName() {
+      return this.userInfo.name || this.currentUsername
     },
 
     /**

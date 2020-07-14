@@ -1,16 +1,11 @@
 <template>
   <TwoColumnContainer
     :left-cols="12"
-    :left-sm="4"
+    :left-sm="8"
     :rightCols="12"
-    :right-sm="8"
-    bottom-class="flex-column-reverse flex-sm-row"
+    :right-sm="4"
   >
     <template #left>
-      <UserIntroCard :userInfo="userInfo" />
-    </template>
-
-    <template #right>
       <div class="mb-6">
         <h1 class="mb-4">{{ postInfo.name }}</h1>
 
@@ -22,6 +17,14 @@
           編集する
         </BlueBtn>
       </v-row>
+    </template>
+
+    <template #right>
+      <div class="mb-4">
+        <UserIntroCard :userInfo="userInfo" />
+      </div>
+
+      <OtherPostList :userInfo="userInfo" :postList="userInfo.posts" />
     </template>
   </TwoColumnContainer>
 </template>
