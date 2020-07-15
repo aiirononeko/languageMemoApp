@@ -1,5 +1,5 @@
 import Folder from "./Folder"
-import { isUnsignedInteger, StrOrNumToNumber } from "@/utils/number"
+import { isUnsignedInteger, strOrNumToNumber } from "@/utils/number"
 import { isUuid } from "@/utils/string"
 
 /**
@@ -49,13 +49,13 @@ class Post {
    * @param {{ id: Number, type: String, attributes: PostAttributes }} param0
    */
   withAttributesToPost ({ id, type, attributes }) {
-    this.id = StrOrNumToNumber(id)
+    this.id = strOrNumToNumber(id)
     this.type = type
     this.name = attributes.name
     this.public = attributes.public
     this.content = attributes.content
     this.uid = attributes.uid
-    this.userID = StrOrNumToNumber(attributes["user-id"])
+    this.userID = strOrNumToNumber(attributes["user-id"])
     this.createdAt = new Date(attributes['created-at'])
     this.updatedAt = new Date(attributes['updated-at'])
 
@@ -69,12 +69,12 @@ class Post {
    * @param {PostNormal} post
    */
   toPost (post) {
-    this.id = StrOrNumToNumber(post.id)
+    this.id = strOrNumToNumber(post.id)
     this.type = "posts"
     this.name = post.name
     this.public = post.public
     this.content = post.content
-    this.userID = StrOrNumToNumber(post.user_id)
+    this.userID = strOrNumToNumber(post.user_id)
     this.uid = post.uid
     this.parentID = post.parent_id
     this.createdAt = new Date(post.created_at)
