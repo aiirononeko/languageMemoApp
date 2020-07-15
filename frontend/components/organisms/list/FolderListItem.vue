@@ -24,7 +24,7 @@
 
     <v-col v-if="canAction" cols="1" class="pa-0 d-flex justify-center align-center">
       <v-menu bottom left>
-        <template v-slot:activator="{ on, attrs }">
+        <template #activator="{ on, attrs }">
           <v-btn
             icon
             v-bind="attrs"
