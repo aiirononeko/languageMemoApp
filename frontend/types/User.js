@@ -1,7 +1,7 @@
 import DEFAULT_AVATAR from '~/assets/images/default_avatar_icon1.png'
 import Folder from "./Folder"
 import Post from "./Post"
-import { StrOrNumToNumber, isUnsignedInteger } from "@/utils/number"
+import { strOrNumToNumber, isUnsignedInteger } from "@/utils/number"
 import { isAlphaNumUnderScore } from '@/utils/string'
 import { cloneDeep } from '@/utils/Helper'
 
@@ -35,7 +35,7 @@ class User {
    * @param {{ id: String|Number, type: String, attributes: UserAttributes }} obj
    */
   withAttributesToUser = ({ id, type, attributes }) => {
-    this.id = StrOrNumToNumber(id)
+    this.id = strOrNumToNumber(id)
     this.type = type
     this.address = attributes.address
     this.createdAt = new Date(attributes['created-at'])
@@ -62,7 +62,7 @@ class User {
    */
   static deletePost (user, id) {
     const newUser = cloneDeep(user)
-    const num = StrOrNumToNumber(id)
+    const num = strOrNumToNumber(id)
 
     newUser.posts = newUser.posts.filter((post) => post.id !== num)
     return newUser
@@ -76,7 +76,7 @@ class User {
    */
   static deleteFolder (user, id) {
     const newUser = cloneDeep(user)
-    const num = StrOrNumToNumber(id)
+    const num = strOrNumToNumber(id)
 
     newUser.folders = newUser.folders.filter((folder) => folder.id !== num)
     return newUser
@@ -143,7 +143,7 @@ class User {
    */
   static updatePost (user, id, newPost) {
     const newUser = cloneDeep(user)
-    const num = StrOrNumToNumber(id)
+    const num = strOrNumToNumber(id)
     const idx = user.posts.findIndex((post) => post.id === num)
 
     if (idx === -1) {
@@ -166,7 +166,7 @@ class User {
    */
   static updateFolder (user, id, newFolder) {
     const newUser = cloneDeep(user)
-    const num = StrOrNumToNumber(id)
+    const num = strOrNumToNumber(id)
     const idx = user.folders.findIndex((folders) => folders.id === num)
 
     if (idx === -1) {

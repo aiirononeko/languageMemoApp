@@ -14,7 +14,7 @@ export const isNumber = (v) => typeof v === 'number'
  * @return {boolean}
  */
 export const isUnsignedInteger = (v) => {
-  const num = StrOrNumToNumber(v)
+  const num = strOrNumToNumber(v)
   return !!num && Number.isInteger(num) && num > 0
 }
 
@@ -26,7 +26,7 @@ export const isUnsignedInteger = (v) => {
  * @param {String|Number} v
  * @returns {Number}
  */
-export const StrOrNumToNumber = (v) => {
+export const strOrNumToNumber = (v) => {
   if (isNumber(v)) {
     return v
   }
