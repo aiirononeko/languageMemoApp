@@ -3,7 +3,6 @@ jobs:
   api_test:
     machine:
       image: circleci/classic:edge
-    resource_class: large
     working_directory: ~/repo
     steps:
       - checkout
