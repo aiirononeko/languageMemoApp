@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-menu top offset-x transition="scroll-x-transition">
-      <template v-slot:activator="{ on, attrs }">
+      <template #activator="{ on, attrs }">
         <v-card outlined v-bind="attrs" v-on="on">
           <v-list-item three-line @click="menu = !menu">
             <v-list-item-avatar :size="50">
