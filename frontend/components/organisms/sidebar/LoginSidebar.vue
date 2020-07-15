@@ -1,8 +1,10 @@
 <template>
-  <v-list>
+  <v-list class="h-100 pos-relative">
     <v-list-item-group color="primary">
       <component v-for="(data, key) in datas" :is="getComponentName(data)" :key="key" :data="data" />
     </v-list-item-group>
+
+    <SidebarUserCard class="card-position" />
   </v-list>
 </template>
 
@@ -25,6 +27,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.card-position {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
 </style>

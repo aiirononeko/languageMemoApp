@@ -1,9 +1,11 @@
 <template>
   <div>
-    <div v-if="!check" class="text-center">
-      <p>削除された場合、データを戻すことができません</p>
-      <p>再度ご利用いただくには、新規登録が必要となります</p>
-    </div>
+    <v-fade-transition>
+      <div v-if="!check" class="text-center">
+        <p>削除された場合、データを戻すことができません</p>
+        <p>再度ご利用いただくには、新規登録が必要となります</p>
+      </div>
+    </v-fade-transition>
 
     <v-row justify="center">
       <template v-if="!check">

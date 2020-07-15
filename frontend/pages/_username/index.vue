@@ -160,9 +160,7 @@ export default {
     } catch (e) {
       const statusCode = e.response && e.response.status || 500
 
-      return error({
-        statusCode: statusCode
-      })
+      return error({ statusCode })
     }
   },
 }

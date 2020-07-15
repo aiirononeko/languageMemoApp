@@ -44,12 +44,12 @@ export default {
 
         await this.$router.push(`/${this.username}`)
       } catch (e) {
-        if (e.response && e.response.status === 422) {
+        const statusCode = e.response && e.response.status || 500
+
+        if (statusCode === 422) {
           this.errors = e.response.data.errors
           return
         }
-
-        const statusCode = (e.response && e.response.status) || 500
 
         return this.$nuxt.error({ statusCode })
       }

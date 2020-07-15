@@ -51,14 +51,14 @@ export default {
         this.success = success
         this.message = message
       } catch (e) {
-        if (e.response && e.response.status === 422) {
+        const statusCode = e.response && e.response.status || 500
+
+        if (statusCode === 422) {
           this.errors = e.response.data.errors
           return
         }
 
-        return this.$nuxt.error({
-          statusCode: e.response.status
-        })
+        return this.$nuxt.error({ statusCode })
       }
     }
   },

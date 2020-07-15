@@ -1,5 +1,5 @@
 import Post from "./Post"
-import { isUnsignedInteger, StrOrNumToNumber } from "@/utils/number"
+import { isUnsignedInteger, strOrNumToNumber } from "@/utils/number"
 import { cloneDeep } from "@/utils/Helper"
 
 /**
@@ -50,17 +50,17 @@ class Folder {
    * @param {{ id: String, type: String, attributes: FolderAttributes }} param0
    */
   withAttributesToFolder ({ id, type, attributes }) {
-    this.id = StrOrNumToNumber(id)
+    this.id = strOrNumToNumber(id)
     this.type = type
     this.name = attributes.name
     this.public = attributes.public
-    this.userID = StrOrNumToNumber(attributes["user-id"])
+    this.userID = strOrNumToNumber(attributes["user-id"])
     this.createdAt = new Date(attributes['created-at'])
     this.updatedAt = new Date(attributes['updated-at'])
 
     if (attributes["ancestor-folders"] && attributes["ancestor-folders"].length > 0) {
       /** @type String */
-      this.parentID = StrOrNumToNumber(attributes["ancestor-folders"][0].id)
+      this.parentID = strOrNumToNumber(attributes["ancestor-folders"][0].id)
       this.ancestorFolders = attributes["ancestor-folders"].map((folder) => new Folder(folder))
     }
 
@@ -78,10 +78,10 @@ class Folder {
    * @param {FolderNormal} folder
    */
   toFolder (folder) {
-    this.id = StrOrNumToNumber(folder.id)
+    this.id = strOrNumToNumber(folder.id)
     this.type = "folders"
     this.name = folder.name
-    this.userID = StrOrNumToNumber(folder.user_id)
+    this.userID = strOrNumToNumber(folder.user_id)
     this.public = folder.public
     this.createdAt = new Date(folder.created_at)
     this.updatedAt = new Date(folder.updated_at)
@@ -95,7 +95,7 @@ class Folder {
    */
   static deletePost (folder, id) {
     const newFolder = cloneDeep(folder)
-    const num = StrOrNumToNumber(id)
+    const num = strOrNumToNumber(id)
 
     newFolder.posts = newFolder.posts.filter((post) => post.id !== num)
     return newFolder
@@ -108,7 +108,7 @@ class Folder {
    */
   static deleteChildFolder (folder, id) {
     const newFolder = cloneDeep(folder)
-    const num = StrOrNumToNumber(id)
+    const num = strOrNumToNumber(id)
 
     newFolder.childFolders = newFolder.childFolders.filter((folder) => folder.id !== num)
     return newFolder
@@ -139,7 +139,7 @@ class Folder {
    * @param {Folder} folder
    * @param {Number|String} id
    */
-  static isEqualFolderID = (folder, id) => folder.id === StrOrNumToNumber(id)
+  static isEqualFolderID = (folder, id) => folder.id === strOrNumToNumber(id)
 
   /**
    * @param {*} v
@@ -201,7 +201,7 @@ class Folder {
    */
   static updatePost (folder, id, post) {
     const newFolder = cloneDeep(folder)
-    const num = StrOrNumToNumber(id)
+    const num = strOrNumToNumber(id)
     const idx = newFolder.posts.findIndex((posts) => posts.id === num)
 
     if (idx === -1) {
@@ -224,7 +224,7 @@ class Folder {
    */
   static updateChildFolder (folder, id, newChildFolder) {
     const newFolder = cloneDeep(folder)
-    const num = StrOrNumToNumber(id)
+    const num = strOrNumToNumber(id)
     const idx = newFolder.childFolders.findIndex((folders) => folders.id === num)
 
     if (idx === -1) {
