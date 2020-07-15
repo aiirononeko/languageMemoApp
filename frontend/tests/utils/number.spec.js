@@ -1,4 +1,4 @@
-import { isUnsignedInteger, isNumber, StrOrNumToNumber } from "@/utils/number"
+import { isUnsignedInteger, isNumber, strOrNumToNumber } from "@/utils/number"
 
 describe("is", () => {
   describe("isNumber", () => {
@@ -49,7 +49,7 @@ describe("is", () => {
     }
   })
 
-  describe("StrOrNumToNumber", () => {
+  describe("strOrNumToNumber", () => {
     const testCases = [
       { expect: 'Number型のとき、Number型のままである', arg: 10, retVal: 10 },
       { expect: 'String型 (中身は数字) のとき、Number型になる', arg: "10", retVal: 10 },
@@ -65,7 +65,7 @@ describe("is", () => {
 
     for (const test of testCases) {
       it(`${test.expect} arg: ${test.arg}`, () => {
-        expect(StrOrNumToNumber(test.arg)).toBe(test.retVal)
+        expect(strOrNumToNumber(test.arg)).toBe(test.retVal)
       })
     }
   })
