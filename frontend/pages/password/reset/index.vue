@@ -19,6 +19,16 @@ export default {
     }
   },
 
+  computed: {
+    notFoundErrorObj() {
+      return {
+        email: [
+          'メールアドレスが間違っているかもしれません'
+        ]
+      }
+    }
+  },
+
   methods: {
     async reset(email) {
       this.errors = null
@@ -32,23 +42,20 @@ export default {
         this.success = success
         this.message = message
       } catch (e) {
-        if (e.response && e.response.status === 404) {
-          this.errors = {
-            email: [
-              'メールアドレスが間違ってるかもしれません'
-            ]
-          }
+        const statusCode = e.response && e.response.status || 500
+
+        if (statusCode === 404) {
+          this.errors = Object.assign({}, this.notFoundErrorObj)
           return
         }
 
-        if (e.response && e.response.status === 422) {
+        if (statusCode === 422) {
           this.errors = e.response.data.errors
           return
         }
 
-        return this.$nuxt.error({
-          statusCode: e.response.status
-        })
+
+        return this.$nuxt.error({ statusCode })
       }
     }
   },

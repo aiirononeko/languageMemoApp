@@ -33,14 +33,15 @@ export default {
         this.success = true
         this.message = "新規登録ありがとうございます。登録したメールアドレスを確認してください"
       } catch (e) {
-        if (e.response && e.response.status === 422) {
+        const statusCode = e.response && e.response.status || 500
+
+        if (statusCode === 422) {
           this.errors = e.response.data.errors
           return
         }
 
-        return this.$nuxt.error({
-          statusCode: e.response.status
-        })
+
+        return this.$nuxt.error({ statusCode })
       }
     },
 
