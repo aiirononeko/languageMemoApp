@@ -1,7 +1,7 @@
 {
   "data": {
     "guest": ["about", "login", "register"],
-    "login": ["home", "post", "profile", "settings", "logout"]
+    "login": ["home", "post", "profile", "settings"]
   },
   "items": {
     "home": { "name": "Home", "event": "home", "icon": "mdi-home" },
@@ -10,12 +10,6 @@
       "name": "ログイン",
       "to": "/signin",
       "icon": "mdi-account-arrow-right",
-      "btn": true
-    },
-    "logout": {
-      "name": "ログアウト",
-      "icon": "mdi-account-cancel-outline",
-      "event": "logout",
       "btn": true
     },
     "register": {
