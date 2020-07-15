@@ -116,8 +116,10 @@ export default {
         this.foldersInfo = Folder.pushChildFolder(this.foldersInfo, data)
         this.triggerCreatingNewFolder()
       } catch(e) {
+        const statusCode = e.response && e.response.status || 500
+
         return this.$nuxt.error({
-          statusCode: e.response.status
+          statusCode
         })
       }
     },
@@ -219,9 +221,7 @@ export default {
     } catch (e) {
       const statusCode = e.response && e.response.status || 500
 
-      return error({
-        statusCode: statusCode
-      })
+      return error({ statusCode })
     }
 
     if (foldersInfo) {
