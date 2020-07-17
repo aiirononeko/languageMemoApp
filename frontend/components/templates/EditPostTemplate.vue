@@ -9,7 +9,14 @@
       </v-col>
     </v-row>
 
-    <EditMarkdown v-model="md" :post-uid="postUid" :isView="isView" :subfield="isBoth" @post="post" />
+    <EditMarkdown
+      v-model="md"
+      :post-uid="postUid"
+      :isView="isView"
+      :subfield="isBoth"
+      class="mb-4"
+      @post="post"
+    />
 
     <div :class="{ 'text-right': !$device.isDesktopOrTablet }">
       <BlueBtn
