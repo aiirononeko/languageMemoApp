@@ -29,7 +29,10 @@ module.exports = {
       { hid: "og:url", property: "og:url", content: process.env.clientUrl },
       { hid: "og:title", property: "og:title", content: "Poeta" },
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Marck+Script" }
+    ],
   },
 
   /*
