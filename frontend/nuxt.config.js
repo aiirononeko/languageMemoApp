@@ -120,6 +120,10 @@ module.exports = {
           urlPattern: "^https://fonts.googleapis.com/(.*)",
           handler: "cacheFirst",
         },
+        {
+          urlPattern: "^https://fonts.gstatic.com/(.*)",
+          handler: "cacheFirst",
+        }
       ],
     },
   },
