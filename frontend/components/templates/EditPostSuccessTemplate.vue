@@ -18,11 +18,7 @@
       </OrangeBtn>
     </v-row>
 
-    <div class="max-width-600 mb-4 mx-auto">
-      <p class="font-marck-script text-proverb text-center">Given enough eyeballs, all bugs are shallow.</p>
-
-      <p class="text-right text-small">大勢の目があれば、すべてのバグは大した問題ではない</p>
-    </div>
+    <ProverbText />
   </OneColumnContainer>
 </template>
 
