@@ -24,7 +24,9 @@ export default {
   computed: {
     isFooterValidPath() {
       const currentPath = this.$route.name
-      return currentPath !== 'username' && currentPath !== 'edit-new'
+      return  currentPath !== 'username' &&
+              currentPath !== 'edit-new' &&
+              currentPath !== 'username-all'
     }
   }
 }
