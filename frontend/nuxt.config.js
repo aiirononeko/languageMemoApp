@@ -123,7 +123,11 @@ module.exports = {
         {
           urlPattern: "^https://fonts.gstatic.com/(.*)",
           handler: "cacheFirst",
-        }
+        },
+        {
+          urlPattern: "^https://docs.google.com/spreadsheets/(.*)",
+          handler: "cacheFirst",
+        },
       ],
     },
   },
