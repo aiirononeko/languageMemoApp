@@ -12,10 +12,12 @@
         <OnlyViewMarkdown :value="postInfo.content" :post-uid="postInfo.uid" />
       </div>
 
-      <v-row justify="end">
-        <BlueBtn v-if="canAction" :to="`/edit/${postInfo.uid}`">
-          編集する
-        </BlueBtn>
+      <v-row>
+        <v-col cols="12" class="text-right">
+          <BlueBtn v-if="canAction" :to="`/edit/${postInfo.uid}`">
+            編集する
+          </BlueBtn>
+        </v-col>
       </v-row>
     </template>
 

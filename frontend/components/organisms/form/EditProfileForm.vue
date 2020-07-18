@@ -4,11 +4,12 @@
       <p>プロフィール画像</p>
 
       <PreviewImageFileInput
+        v-if="getImage"
         :api-error="avatarApiError"
         :submit-count="submitCount"
         :name="form.name || info.username"
         :new-src="form.avatar"
-        :old-src="info.image"
+        :old-src="getImage"
         @input="setAvatarValue"
       />
     </div>
@@ -95,6 +96,10 @@ export default {
     nameApiError() {
       return this.errors && this.errors.name || undefined
     },
+
+    getImage() {
+      return this.info && this.info.image || undefined
+    }
   },
 
   methods: {
