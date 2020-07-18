@@ -19,6 +19,15 @@ export const isUnsignedInteger = (v) => {
 }
 
 /**
+ * ランダムな数 (整数) の取得
+ * 0 <= rand <= max - 1
+ *
+ * @param {Number} max
+ * @returns {Number}
+ */
+export const randNumber = (max) => Math.floor(Math.random() * max)
+
+/**
  * String型とNumber型をNumber型に変換する
  *
  * それ以外の方は、undefinedにする
