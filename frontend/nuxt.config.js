@@ -128,6 +128,10 @@ module.exports = {
           urlPattern: "^https://docs.google.com/spreadsheets/(.*)",
           handler: "cacheFirst",
         },
+        {
+          urlPattern: "^https://cdnjs.cloudflare.com/(.*)",
+          handler: "cacheFirst",
+        }
       ],
     },
   },
