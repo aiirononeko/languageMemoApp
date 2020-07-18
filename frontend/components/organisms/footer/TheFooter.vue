@@ -1,7 +1,9 @@
 <template>
   <v-card height="150">
     <v-footer
+      app
       absolute
+      inset
       class="font-weight-medium"
     >
       <v-col
