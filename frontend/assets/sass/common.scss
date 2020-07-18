@@ -6,20 +6,21 @@
   box-shadow: none !important;
 }
 
-.text-decoration-none {
-  text-decoration: none !important;
+// Marck Script
+.font-marck-script {
+  font-family: "Marck Script" !important;
 }
 
 .h-100 {
   height: 100%;
 }
 
-.w-100 {
-  width: 100%;
+.letter-narrow {
+  letter-spacing: 0.0073529412em !important;
 }
 
-.pos-relative {
-  position: relative;
+.list-style-none {
+  list-style: none;
 }
 
 .main-heading {
@@ -30,6 +31,34 @@
   max-width: 300px;
 }
 
-.list-style-none {
-  list-style: none;
+.max-width-600 {
+  max-width: 600px;
+}
+
+.pos-relative {
+  position: relative;
+}
+
+.text-decoration-none {
+  text-decoration: none !important;
+}
+
+// 格言用の大きさ display-1を参考にした
+.text-proverb {
+  font-size: 2rem !important;
+  letter-spacing: 0.0073529412em !important;
+  line-height: 2.5rem;
+  word-spacing: -0.25rem;
+
+  @include mq(sm) {
+    font-size: 2.125rem !important;
+  }
+}
+
+.text-small {
+  font-size: 0.8rem;
+}
+
+.w-100 {
+  width: 100%;
 }

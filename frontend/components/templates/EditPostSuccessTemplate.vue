@@ -1,6 +1,6 @@
 <template>
   <OneColumnContainer>
-    <h1 class="text-center mb-4">投稿完了しました</h1>
+    <h1 class="text-center main-heading mb-4">投稿完了しました</h1>
 
     <v-row class="mb-4" justify="center">
       <TwitterShareBtn :text="shareText" :hashtag="hashtag">
@@ -8,7 +8,7 @@
       </TwitterShareBtn>
     </v-row>
 
-    <v-row class="mb-4" justify="center">
+    <v-row class="mb-12" justify="center">
       <OrangeBtn class="mr-2" @click="toEdit">
         編集する
       </OrangeBtn>
@@ -17,6 +17,8 @@
         投稿を見る
       </OrangeBtn>
     </v-row>
+
+    <ProverbText />
   </OneColumnContainer>
 </template>
 
