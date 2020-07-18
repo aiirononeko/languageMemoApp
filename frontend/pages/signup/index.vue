@@ -46,7 +46,7 @@ export default {
     },
 
     async snsauth(provider) {
-      document.location.href = `${process.env.baseUrl}/api/v1/auth/${provider}`
+      document.location.href = `${this.$config.baseUrl}/api/v1/auth/${provider}`
     }
   },
 
