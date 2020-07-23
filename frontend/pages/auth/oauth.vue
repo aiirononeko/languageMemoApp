@@ -15,8 +15,12 @@ export default {
 
   computed: {
     redirectPath() {
+      if (window.localStorage) {
         const isFromSecondTimeLogin = window.localStorage.getItem('isFromSecondTimeLogin')
         return isFromSecondTimeLogin !== 'true' ? '/settings/user-name' : '/settings/profile'
+      } else {
+        return '/settings/profile'
+      }
     }
   },
 
