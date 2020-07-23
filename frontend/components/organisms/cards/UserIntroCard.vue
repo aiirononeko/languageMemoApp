@@ -54,7 +54,6 @@ export default {
     },
 
     getTwitterLink() {
-      console.log(this.userInfo)
       return this.userInfo.twitterLink
     },
 
