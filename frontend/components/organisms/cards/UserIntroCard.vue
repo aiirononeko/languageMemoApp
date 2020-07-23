@@ -17,7 +17,7 @@
         </p>
 
         <v-btn v-if="canLookFolderPath" :to="`/${username}`" text color="primary">{{ getName }}のページを見る</v-btn>
-        <UserSnsBtnGroup />
+        <UserSnsBtnGroup :twitterLink="getTwitterLink" :githubLink="getGithubLink" />
       </div>
     </div>
   </v-card>
@@ -51,6 +51,14 @@ export default {
 
     getAvatar() {
       return this.userInfo && this.userInfo.image
+    },
+
+    getTwitterLink() {
+      return this.userInfo.twitterLink
+    },
+
+    getGithubLink() {
+      return this.userInfo.githubLink
     },
 
     username() {
