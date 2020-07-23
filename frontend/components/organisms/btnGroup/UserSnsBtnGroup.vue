@@ -1,21 +1,31 @@
 <template>
   <div>
     <!-- 各ユーザーのsnsへのリンク -->
-    <TwitterBtn fab v-if="twitterLinkIsExists"/>
-    <GithubBtn fab v-if="githubLinkIsExists"/>
+    <TwitterBtn fab v-if="twitterLinkIsExists" :href="twitterLink" depressed />
+    <GithubBtn fab v-if="githubLinkIsExists" :href="githubLink" depressed />
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    twitterLink: {
+      type: String,
+      default: '',
+    },
+
+    githubLink: {
+      type: String,
+      default: '',
+    },
+  },
+
   computed: {
     twitterLinkIsExists() {
-      // TODO(Ropital): Twitterリンクが存在したらtrueを返す
-      return false
+      return !!this.twitterLink
     },
     githubLinkIsExists() {
-      // TODO(Ropital): Githubリンクが存在したらtrueを返す
-      return false
+      return !!this.githubLink
     },
   }
 }
