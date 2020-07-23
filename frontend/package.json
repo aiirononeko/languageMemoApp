@@ -29,8 +29,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
-    "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@nuxtjs/google-analytics": "^2.3.0",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/vuetify": "^1.11.2",
@@ -45,7 +45,7 @@
     "babel-loader": "^8.1.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-vue": "^2.0.2",
-    "eslint": "^6.0.0",
+    "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^4.0.2",
@@ -58,7 +58,7 @@
     "node-sass": "^4.14.1",
     "nuxt-sass-resources-loader": "^2.0.5",
     "prettier": "^2.0.5",
-    "sass-loader": "^8.0.2",
+    "sass-loader": "^9.0.2",
     "vue-jest": "^3.0.6"
   }
 }
