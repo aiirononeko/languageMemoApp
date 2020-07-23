@@ -3,6 +3,9 @@
 </template>
 
 <script>
+const key = 'isFromSecondTimeLogin'
+const value = 'true'
+
 export default {
   created() {
     const { auth_token, client_id, id, uid, username } = this.$route.query
@@ -16,8 +19,8 @@ export default {
   computed: {
     redirectPath() {
       if (window.localStorage) {
-        const isFromSecondTimeLogin = window.localStorage.getItem('isFromSecondTimeLogin')
-        return isFromSecondTimeLogin !== 'true' ? '/settings/user-name' : '/settings/profile'
+        const isFromSecondTimeLogin = window.localStorage.getItem(key)
+        return isFromSecondTimeLogin !== value ? '/settings/user-name' : '/settings/profile'
       } else {
         return '/settings/profile'
       }
@@ -31,7 +34,7 @@ export default {
      */
     setFromSecondTimeLogin() {
       if (window.localStorage) {
-        window.localStorage.setItem('isFromSecondTimeLogin', 'true')
+        window.localStorage.setItem(key, value)
       }
     }
   }
