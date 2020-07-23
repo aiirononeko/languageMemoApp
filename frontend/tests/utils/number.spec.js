@@ -1,6 +1,6 @@
-import { isUnsignedInteger, isNumber, strOrNumToNumber } from "@/utils/number"
+import { isUnsignedInteger, isNumber, strOrNumToNumber, randInteger } from "@/utils/number"
 
-describe("is", () => {
+describe("number", () => {
   describe("isNumber", () => {
     const testCases = [
       { message: '数字のとき、trueか', arg: 123, bool: true },
@@ -47,6 +47,29 @@ describe("is", () => {
         expect(isUnsignedInteger(test.arg)).toBe(test.bool)
       })
     }
+  })
+
+  describe("randInteger", () => {
+    it('max = 0のとき、0が返ってくるか', () => {
+      expect(randInteger(0)).toBe(0)
+    })
+
+    it('max = 3のとき、0 ~ 3すべて取得できるか', () => {
+      const result = [0, 0, 0, 0]
+      let error = 0
+
+      for (let i = 0; i < 1e6; i++) {
+        const rand = randInteger(3)
+        if ([0, 1, 2, 3].includes(rand)) {
+          result[rand]++
+        } else {
+          error++
+        }
+      }
+
+      expect(result.every(num => num > 0)).toBeTruthy() // すべて 0 ~ 3の値は、1回は出現したか
+      expect(error).toBe(0) // 余計な数字が出ていないか (小数とか)
+    })
   })
 
   describe("strOrNumToNumber", () => {
