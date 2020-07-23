@@ -24,6 +24,10 @@
 import User from '@/types/User'
 
 export default {
+  validate({ params, query, store }) {
+    return User.isValidUsername(params.username)
+  },
+
   data: () => ({
     isCreatingNewFolder: false,
     isCreatingNewPost: false,
@@ -42,6 +46,10 @@ export default {
 
     currentPath() {
       return this.$route.path
+    },
+
+    currentName() {
+      return this.userInfo && this.userInfo.name || this.currentUsername
     },
 
     currentUsername() {
@@ -163,6 +171,12 @@ export default {
       return error({ statusCode })
     }
   },
+
+  head() {
+    return {
+      title: this.currentName
+    }
+  }
 }
 </script>
 

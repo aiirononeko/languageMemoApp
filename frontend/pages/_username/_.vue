@@ -36,31 +36,28 @@ import Folder from '@/types/Folder'
 import { pathToArr, getDirname } from '@/utils/path'
 
 export default {
-  middleware ({ params, error })  {
-    const lastPath = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID (post の UID)
-
-    // 有効なPOSTのUIDか
-    if (Post.isValidPostUID(lastPath)) {
-      return
+  validate ({ params, error })  {
+    if (!User.isValidUsername(params.username)) {
+      return false
     }
 
-    // 有効なフォルダーIDかどうか
-    if (!Folder.isValidFolderID(lastPath)) {
-      return error({
-        statusCode: 404
-      })
+    const lastPath = getDirname(params.pathMatch) // 現在アクセスしているフォルダーのID (post の UID)
+
+    // 有効なPOSTのUIDか、有効なフォルダーIDかどうか
+    if (!Post.isValidPostUID(lastPath) && !Folder.isValidFolderID(lastPath)) {
+      return false
     }
 
     const ancestorFolderIDs = pathToArr(params.pathMatch)
     if (ancestorFolderIDs.length === 1 && ancestorFolderIDs[0] === '.') {
-      return
+      return true
     }
 
     if (ancestorFolderIDs.some((v) => !Folder.isValidFolderID(v))) {
-      return error({
-        statusCode: 404
-      })
+      return false
     }
+
+    return true
   },
 
   data: () => ({
@@ -77,6 +74,15 @@ export default {
       return this.isAuthenticated
         ? this.currentUsername === this.authUsername
         : false
+    },
+
+    currentHeadName() {
+      return (
+        this.foldersInfo && this.foldersInfo.name ||
+        this.postInfo && this.postInfo.name ||
+        this.userInfo && this.userInfo.name ||
+        this.currentUsername
+      )
     },
 
     currentUsername() {
@@ -239,6 +245,12 @@ export default {
 
     return { userInfo, foldersInfo: undefined, postInfo }
   },
+
+  head() {
+    return {
+      title: this.currentHeadName
+    }
+  }
 }
 </script>
 
