@@ -56,7 +56,7 @@ describe("number", () => {
 
     it('max = 3のとき、0 ~ 3すべて取得できるか', () => {
       const result = [0, 0, 0, 0]
-      const error = 0
+      let error = 0
 
       for (let i = 0; i < 1e6; i++) {
         const rand = randInteger(3)
