@@ -154,7 +154,7 @@ export default {
     },
 
     name() {
-      return this.userInfo.name
+      return this.userInfo.name || this.userInfo.username
     },
 
     /**

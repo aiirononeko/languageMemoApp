@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { randNumber } from './number'
+import { randInteger } from './number'
 
 const DEFAULT_CONTENT = "Done is better than perfect."
 const DEFAULT_EXPLANATION = "完璧を目指すよりまず終わらせろ"
@@ -68,7 +68,7 @@ class Proverb {
     try {
       const csvData = await getDataFromCSV()
       const proverbObj = CSVtoObject(csvData)
-      const randObj = proverbObj[randNumber(proverbObj.length)]
+      const randObj = proverbObj[randInteger(proverbObj.length - 1)]
 
       this.content = randObj[0]
       this.explanation = randObj[1]
