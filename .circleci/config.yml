@@ -1,149 +1,76 @@
-version: 2
-jobs:
-  api_test:
-    machine:
-      image: circleci/classic:edge
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - run:
-          name: Install Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - run:
-          name: docker-compose up
-          command: |
-            set -x
-            docker-compose up --build -d
-      - run:
-          name: docker-compose stop
-          command: |
-            set -x
-            docker-compose stop
-      - run:
-          name: docker-compose up
-          command: |
-            set -x
-            docker-compose up -d
-      - run:
-          name: bundle Install
-          command: |
-            set -x
-            docker-compose exec api bin/bundle install --path=vendor/bundle
-      - run:
-          name: database migration
-          command: |
-            set -x
-            docker-compose exec api bin/rails db:create
-            docker-compose exec api bin/rails db:migrate
-      - run:
-          name: rspec
-          command: |
-            set -x
-            TEST_FILES=$(circleci tests glob spec/**/*_spec.rb | circleci tests split)
-            echo $TEST_FILES > TEST_FILES
-            docker-compose exec api rspec
-      # - run:
-      #     name: rubocop
-      #     command: |
-      #       set -x
-      #       docker-compose exec api rubocop
-      - run:
-          name: docker-compose down
-          command: docker-compose down
-
-  front_test:
-    machine:
-      image: circleci/classic:edge
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - run:
-          name: Install Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - run:
-          name: docker-compose up
-          command: |
-            set -x
-            docker-compose up --build -d
-      - run:
-          name: docker-compose stop
-          command: |
-            set -x
-            docker-compose stop
-      - run:
-          name: docker-compose up
-          command: |
-            set -x
-            docker-compose up -d
-      - run:
-          name: remove node_modules
-          command: |
-            set -x
-            docker-compose run front rm -rf node_modules
-      - run:
-          name: npm install
-          command: |
-            set -x
-            docker-compose run front npm install
-      - run:
-          name: jest
-          command: |
-            set -x
-            docker-compose run front npm test
-      - run:
-          name: lint
-          command: |
-            set -x
-            docker-compose run front npm run lintfix
-      - run:
-          name: docker-compose down
-          command: docker-compose down
-
-  deploy:
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@0.1.13
+executors:
+  builder:
     docker:
-      - image: google/cloud-sdk
-    environment:
-      PROJECT_NAME: 'poeta'
-      GOOGLE_PROJECT_ID: 'poeta-276706'
-      GOOGLE_COMPUTE_ZONE: 'asia-northeast1-a'
-      GOOGLE_CLUSTER_NAME: 'poeta'
+      - image: circleci/buildpack-deps
+
+commands:
+  init:
     steps:
       - checkout
+      - aws-cli/install
+      - install_ecs-cli
       - setup_remote_docker
+  install_ecs-cli:
+    steps:
       - run:
-          name: Docker build
+          name: Install ECS-CLI
           command: |
-            docker build -t asia.gcr.io/poeta-276706/poeta-api:latest .
-            docker build -f ./frontend/Dockerfile.gke -t asia.gcr.io/poeta-276706/poeta-front:latest ./frontend/.
+            sudo curl -o /usr/local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
+            sudo chmod +x /usr/local/bin/ecs-cli
+
+jobs:
+  build:
+    executor: builder
+    steps:
+      - init
       - run:
-          name: Deploy application Docker image
+          name: Build application Docker image
           command: |
-            apt-get install -qq -y gettext
-            gcloud auth activate-service-account --key-file=./account-auth.json
-            gcloud --quiet config set project $GOOGLE_PROJECT_ID
-            gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
-            gcloud --quiet container clusters get-credentials $GOOGLE_CLUSTER_NAME
-            gcloud docker -- push asia.gcr.io/poeta-276706/poeta-api:latest
-            gcloud docker -- push asia.gcr.io/poeta-276706/poeta-front:latest
-            envsubst < ./deployment.yml > patched_deployment.yml
-            kubectl replace -f patched_deployment.yml
+            docker build -f Dockerfile --rm=false -t 139465735782.dkr.ecr.ap-northeast-1.amazonaws.com/poeta-api .
+      - run:
+          name: Save image
+          command: |
+            mkdir -p /tmp/docker
+            docker save 139465735782.dkr.ecr.ap-northeast-1.amazonaws.com/poeta-api -o /tmp/docker/image
+      - persist_to_workspace:
+          root: /tmp/docker
+          paths:
+            - image
+  deploy:
+    executor: builder
+    steps:
+      - init
+      - attach_workspace:
+          at: /tmp/docker
+      - run: docker load -i /tmp/docker/image
+      - run:
+          name: Assets precompile and Push Docker image
+          command: |
+            docker build -f Dockerfile --build-arg RAILS_MASTER_KEY=${RAILS_MASTER_KEY} --rm=false -t 139465735782.dkr.ecr.ap-northeast-1.amazonaws.com/poeta-api .
+      - run:
+          name: Push Docker image
+          command: |
+            ecs-cli push 139465735782.dkr.ecr.ap-northeast-1.amazonaws.com/poeta-api
+      - run:
+          name: ECS Config
+          command: |
+            ecs-cli configure \
+            --cluster poeta-cluster-${CIRCLE_BRANCH} \
+            --region ${AWS_DEFAULT_REGION} \
+            --config-name poeta-${CIRCLE_BRANCH}
 
 workflows:
   version: 2
-  test_and_deploy:
+  build-deploy:
     jobs:
-      - api_test
-      - front_test
+      - build
       - deploy:
+          requires:
+            - build
           filters:
             branches:
-              only: "master"
-          requires:
-            - api_test
-            - front_test
+              only:
+                - master
