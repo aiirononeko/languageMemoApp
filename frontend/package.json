@@ -16,7 +16,8 @@
     "precommit": "npm run lint",
     "test": "jest --config jest.config.js",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "generate": "nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.0",
