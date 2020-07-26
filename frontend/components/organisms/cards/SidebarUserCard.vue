@@ -10,7 +10,7 @@
 
             <v-list-item-content>
               <div class="mb-2 overline">MYPAGE</div>
-              <v-list-item-title class="headline mb-1">{{ displayName }}</v-list-item-title>
+              <v-list-item-title class="display-name mb-1">{{ displayName }}</v-list-item-title>
             </v-list-item-content>
 
             <v-list-item-action>
@@ -71,6 +71,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.display-name {
+  width: 7rem;
+}
 </style>
