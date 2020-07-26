@@ -1,35 +1,19 @@
-FROM ruby:2.5.3-alpine
+FROM ruby:2.5.3
 
-RUN cd /tmp \
-    && apk --no-cache add \
-    curl \
-    curl-dev \
-    nodejs \
-    libstdc++ \
-    libxml2-dev \
-    libxslt-dev \
-    linux-headers \
-    mysql-client \
-    mysql-dev \
-    pcre \
-    ruby-dev \
-    ruby-json \
-    tzdata \
-    yaml \
-    yaml-dev \
-    bash \
-    build-base \
-    zlib-dev
+RUN apt-get update -qq && \
+    apt-get install -y build-essential \ 
+    libpq-dev \        
+    nodejs           
 
-RUN mkdir /myapp
-WORKDIR /myapp
+RUN mkdir /languageMemoApp
+ENV APP_ROOT /languageMemoApp
+WORKDIR $APP_ROOT
 
-COPY Gemfile /myapp/Gemfile
-COPY Gemfile.lock /myapp/Gemfile.lock
+ADD ./Gemfile $APP_ROOT/Gemfile
+ADD ./Gemfile.lock $APP_ROOT/Gemfile.lock
 
 RUN bundle install
-COPY . /myapp
-
+ADD . $APP_ROOT
 RUN mkdir -p tmp/sockets
 
 VOLUME $APP_ROOT/public
