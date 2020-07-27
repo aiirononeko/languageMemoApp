@@ -9,12 +9,10 @@ RUN apk update && \
     npm install -g @nuxtjs/auth && \
     npm install -g @nuxtjs/dotenv
 
-ADD ./frontend .
+ADD . .
 
 RUN npm install
-RUN npm run generate
-
-COPY ./frontend .
+RUN npm run build
 
 ENV BASE_URL http://poeta-lb-1208516177.ap-northeast-1.elb.amazonaws.com
 
