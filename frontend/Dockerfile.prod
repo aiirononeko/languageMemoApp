@@ -9,7 +9,7 @@ RUN apk update && \
     npm install -g @nuxtjs/auth && \
     npm install -g @nuxtjs/dotenv
 
-ADD . .
+ADD ./frontend/ .
 
 RUN npm install
 RUN npm run build
