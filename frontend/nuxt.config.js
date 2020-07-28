@@ -5,8 +5,8 @@ module.exports = {
    ** Frontend Config Variables
    */
   publicRuntimeConfig: {
-    baseUrl: process.env.BASE_URL || "http://localhost:3000",
-    clientUrl: process.env.CLIENT_URL || "http://localhost:3001",
+    baseUrl: process.env.BASE_URL ? process.env.BASE_URL : "http://localhost:3000",
+    clientUrl: process.env.CLIENT_URL ? process.env.CLIENT_URL : "http://localhost:3001",
   },
 
   /*
@@ -80,7 +80,7 @@ module.exports = {
    */
   axios: {
     // axios options
-    baseURL: process.env.BASE_URL || "http://localhost:3000",
+    baseURL: process.env.BASE_URL ? process.env.BASE_URL : "http://localhost:3000",
   },
 
   /*
@@ -96,7 +96,7 @@ module.exports = {
    */
   sitemap: {
     // sitemap options
-    hostname: process.env.BASE_URL || "http://localhost:3000",
+    hostname: process.env.BASE_URL ? process.env.BASE_URL : "http://localhost:3000",
     gzip: true,
     exclude: ["/", "/password/reset/confirm", "/edit/success"],
   },
