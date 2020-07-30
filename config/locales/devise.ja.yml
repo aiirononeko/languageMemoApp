@@ -1,0 +1,23 @@
+ja:
+  devise:
+    confirmations:
+      new:
+        resend_confirmation_instructions: "アカウント確認メール再送"
+    mailer:
+      confirmation_instructions:
+        subject: "メールアドレスの確認"
+        action: "アカウント確認"
+        greeting: "poetaへようこそ！\nユーザー登録ありがとうございます！"
+        instruction: "次のリンクでユーザー登録が完了します:"
+      reset_password_instructions:
+        subject: "パスワードの変更について"
+        action: "パスワード変更"
+        greeting: "こんにちは!"
+        instruction: "誰かがパスワードの再設定を希望しました。次のリンクでパスワードの再設定が出来ます。"
+        instruction_2: "あなたが希望したのではないのなら、このメールは無視してください。"
+        instruction_3: "上のリンクにアクセスして新しいパスワードを設定するまで、パスワードは変更されません。"
+      unlock_instructions:
+        action: "アカウントのロック解除"
+        greeting: "こんにちは!"
+        instruction: "アカウントのロックを解除するには下のリンクをクリックしてください。"
+        message: "ログイン失敗が繰り返されたため、アカウントはロックされています。"

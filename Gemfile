@@ -40,6 +40,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # 日本語化対応
 gem 'rails-i18n', '~> 5.1'
+gem 'devise-i18n'
 
 gem "google-cloud-storage", "~> 1.8", require: false
 
