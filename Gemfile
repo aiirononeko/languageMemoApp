@@ -43,6 +43,7 @@ gem 'rails-i18n', '~> 5.1'
 gem 'devise-i18n'
 
 gem "google-cloud-storage", "~> 1.8", require: false
+gem "aws-sdk-s3", require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
