@@ -23,6 +23,7 @@
 
 <script>
 import Post from '@/types/Post'
+import { isBothStatus, isEditStatus, isViewStatus } from '@/src/pages/edit/Status'
 
 // 不正な PostUID だったら、APIの送信に辿り着く前に弾く
 const checkValidPostUID = ({ params, redirect }) => {
@@ -30,8 +31,6 @@ const checkValidPostUID = ({ params, redirect }) => {
     return redirect('/edit/new') // 新規作成ページにリダイレクト
   }
 }
-
-const DEFAULT_STATUS = 'both'
 
 export default {
   data: () => ({
@@ -49,8 +48,6 @@ export default {
   ],
 
   computed: {
-    defaultStatus: () => DEFAULT_STATUS,
-
     postUID() {
       return this.$route.params.postUID
     },
@@ -60,21 +57,15 @@ export default {
     },
 
     isBoth() {
-      const LABEL = 'both'
-      const status = this.$route.query.status
-      return status ? status === LABEL : this.defaultStatus === LABEL
+      return isBothStatus(this.$route.query.status)
     },
 
     isEdit() {
-      const LABEL = 'edit'
-      const status = this.$route.query.status
-      return status ? status === LABEL : this.defaultStatus === LABEL
+      return isEditStatus(this.$route.query.status)
     },
 
     isView() {
-      const LABEL = 'view'
-      const status = this.$route.query.status
-      return status ? status === LABEL : this.defaultStatus === LABEL
+      return isViewStatus(this.$route.query.status)
     },
 
     username() {
