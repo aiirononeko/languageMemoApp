@@ -1,5 +1,5 @@
 <template>
-  <article v-if="postList">
+  <article v-if="postList.lenth > 0">
     <h2 class="main-heading mb-8 text-center">ほかの投稿を見る</h2>
 
     <v-card v-for="(post, key) in getPostList" :key="key" class="mb-4">
@@ -32,7 +32,7 @@ export default {
 
     postList: {
       type: Array,
-      default: undefined
+      default: () => []
     }
   },
 
