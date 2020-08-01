@@ -7,7 +7,6 @@ services:
       MYSQL_DATABASE: root
     ports:
       - "3306:3306"
-
   api:
     build: .
     depends_on:
@@ -23,7 +22,7 @@ services:
     tty: true
     environment:
       - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
-
+      - "RAILS_ENV=production"
   front:
     build:
       context: .
@@ -39,7 +38,6 @@ services:
       - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./frontend:/frontend
-
   selenium_chrome:
     image: selenium/standalone-chrome-debug
     logging:
