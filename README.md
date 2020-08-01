@@ -123,3 +123,33 @@ aglio -i poeta_api.apib -o poeta_api.html # html形式に整形
 
 `http://localhost:3000/letter_opener`
 にアクセスすることで送信されたメールの確認ができる。
+
+## インフラ（CDパイプライン構築までの暫定対応）
+### APIのデプロイ
+ローカルでDockerfile.prodを使用してコンテナをビルド→ECRにプッシュ→新しいデプロイの強制を選択する
+コマンドは以下の通り
+```
+docker build -f Dockerfile.prod .
+```
+```
+aws ecr get-login --no-include-email
+```
+```
+docker push 139465735782.dkr.ecr.ap-northeast-1.amazonaws.com/poeta-api:latest
+```
+
+### Clientのデプロイ
+ローカルでDockerfile.prodを使用してコンテナをビルド→コンテナのdistファイルをホストマシンにコピー→s3にアップロード
+コマンドは以下の通り
+```
+docker build -f Dockerfile.prod .
+```
+```
+# コンテナIDを調べる
+sudo docker ps
+sudo docker cp <コンテナID>:/frontend/dist frontend/
+```
+```
+aws s3 rm s3://poeta-client/ --recursive
+aws s3 sync frontend/dist/ s3://poeta-client/
+```
