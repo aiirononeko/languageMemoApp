@@ -4,31 +4,47 @@ const VIEW_LABEL = 'view'
 const DEFAULT_STATUS = BOTH_LABEL
 
 /**
+ * @typedef {'both'|'edit'|'view'} Status
+ */
+
+/**
  * Statusの状態を確認する関数
  *
- * @param {String} status 現在のstauts
- * @param {String} label 確認するラベル名
+ * @param {?Status} status 現在のstauts
+ * @param {Status} label 確認するラベル名
  * @param {String} defaultStatus デフォルトのstatus
  */
-const checkViewStatus = (status, label, defaultStatus) => status ? status === label : defaultStatus === label
+const checkViewStatus = (status, label, defaultStatus = DEFAULT_STATUS) => status ? status === label : defaultStatus === label
 
 /**
  * Both状態であるか
  *
- * @param {'both'|'edit'|'view'} status
+ * @param {?Status} status
+ * @param {Status} defaultStatus
  */
-export const isBothStatus = (status) => checkViewStatus(status, BOTH_LABEL, DEFAULT_STATUS)
+const isBothStatus = (status, defaultStatus = DEFAULT_STATUS) => checkViewStatus(status, BOTH_LABEL, defaultStatus)
 
 /**
  * Edit状態であるか
  *
- * @param {'both'|'edit'|'view'} status
+ * @param {?Status} status
+ * @param {Status} defaultStatus
  */
-export const isEditStatus = (status) => checkViewStatus(status, EDIT_LABEL, DEFAULT_STATUS)
+const isEditStatus = (status, defaultStatus = DEFAULT_STATUS) => checkViewStatus(status, EDIT_LABEL, defaultStatus)
 
 /**
  * View状態であるか
  *
- * @param {'both'|'edit'|'view'} status
+ * @param {?Status} status
+ * @param {Status} defaultStatus デフォルト値
  */
-export const isViewStatus = (status) => checkViewStatus(status, VIEW_LABEL, DEFAULT_STATUS)
+const isViewStatus = (status, defaultStatus = DEFAULT_STATUS) => checkViewStatus(status, VIEW_LABEL, defaultStatus)
+
+export {
+  BOTH_LABEL,
+  EDIT_LABEL,
+  VIEW_LABEL,
+  isBothStatus,
+  isEditStatus,
+  isViewStatus
+}

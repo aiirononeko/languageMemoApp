@@ -41,6 +41,14 @@ export default {
       return this.$route.query.folderid
     },
 
+    /**
+     * @typedef {import('@/src/pages/edit/Status').Status} Status
+     * @return { Status }
+     */
+    getStatus() {
+      return this.$route.query.status
+    },
+
     userID() {
       return this.$store.getters["authentication/id"]
     },
@@ -50,15 +58,15 @@ export default {
     },
 
     isBoth() {
-      return isBothStatus(this.$route.query.status)
+      return isBothStatus(this.getStatus)
     },
 
     isEdit() {
-      return isEditStatus(this.$route.query.status)
+      return isEditStatus(this.getStatus)
     },
 
     isView() {
-      return isViewStatus(this.$route.query.status)
+      return isViewStatus(this.getStatus)
     },
   },
 

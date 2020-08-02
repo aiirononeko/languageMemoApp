@@ -48,24 +48,32 @@ export default {
   ],
 
   computed: {
-    postUID() {
-      return this.$route.params.postUID
+    folderID() {
+      return this.$route.query.folderid || this.postInfo.parentID
     },
 
-    folderID() {
-      return this.$route.query.folderid || this.postInfo.folderID
+    /**
+     * @typedef {import('@/src/pages/edit/Status').Status} Status
+     * @return { Status }
+     */
+    getStatus() {
+      return this.$route.query.status
     },
 
     isBoth() {
-      return isBothStatus(this.$route.query.status)
+      return isBothStatus(this.getStatus)
     },
 
     isEdit() {
-      return isEditStatus(this.$route.query.status)
+      return isEditStatus(this.getStatus)
     },
 
     isView() {
-      return isViewStatus(this.$route.query.status)
+      return isViewStatus(this.getStatus)
+    },
+
+    postUID() {
+      return this.$route.params.postUID
     },
 
     username() {
