@@ -4,6 +4,7 @@ export default ({ $axios , store: { getters } }) => {
       config.headers.common["access-token"] = getters["authentication/accessToken"]
       config.headers.common["client"] = getters["authentication/client"]
       config.headers.common["uid"] = getters["authentication/uid"]
+      config.headers.common["Authorization"] = 'N_z%CUDXDYJ&nVSFPtN3VdyFei/5*t|ydHt6GYx'
     }
   })
 }
