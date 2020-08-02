@@ -100,13 +100,11 @@ export default {
 
   methods: {
     onCreateFolder() {
-      this.$emit('create-folder', this.newFolderName)
-      this.newFolderName = ""
+      return this.$emit('create-folder', this.newFolderName)
     },
 
     onCreatePost() {
-      this.$emit('create-post', this.newPostName)
-      this.newPostName = ""
+      return this.$emit('create-post', this.newPostName)
     },
 
     onChangeFileName(v) {
@@ -124,7 +122,17 @@ export default {
     onDeleteFolder(v) {
       return this.$emit('delete-folder', v)
     }
-  }
+  },
+
+  watch: {
+    isCreatingNewFolder: function() {
+      this.newFolderName = ""
+    },
+
+    isCreatingNewPost: function() {
+      this.newPostName = ""
+    }
+  },
 }
 </script>
 
