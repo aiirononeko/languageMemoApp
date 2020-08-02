@@ -1,4 +1,5 @@
 import Cookies from '@/utils/Cookies'
+import { AUTH_DATA } from '@/types/Cookie'
 
 /**
  * Cookieの整合性を確認する
@@ -8,7 +9,7 @@ import Cookies from '@/utils/Cookies'
 export default () => {
   if (process.client) {
     const cookies = new Cookies()
-    const checkCookieName = ['access-token', 'client', 'uid', 'id', 'username']
+    const checkCookieName = AUTH_DATA
 
     // Cookieにundefinedがないか確認する
     if (!cookies.isCookiesDefined(checkCookieName)) {

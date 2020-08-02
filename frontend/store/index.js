@@ -1,9 +1,10 @@
 import Cookies from '@/utils/Cookies'
+import * as typesCookie from '@/types/Cookie'
 
 export const actions = {
   async nuxtClientInit ({ getters, commit, dispatch }) {
     const cookies = new Cookies()
-    const names = ['access-token', 'client', 'uid', 'id', 'username']
+    const names = typesCookie.AUTH_DATA
     // Cookieのデータがおかしくないかを確認する
     if (!cookies.isCookiesDefined(names)) {
       cookies.removeAll(names)

@@ -1,5 +1,6 @@
 import Cookies from "@/utils/Cookies"
 import User from "@/types/User"
+import * as typesCookie from '@/types/Cookie'
 const cookies = new Cookies()
 
 /**
@@ -45,7 +46,14 @@ export const mutations = {
     state.userInfo = null
   },
 
-  setUserWithEmail (state, { headers, data }) {
+    /**
+   * @param {state} state
+   * @param {{
+   *    data: any,
+    *   headers: typesCookie.Headers
+    * }} param1
+    */
+  setUserWithEmail (state, { data, headers }) {
     state.accessToken = headers["access-token"]
     state.client = headers["client"]
     state.id = data.data.id
@@ -70,6 +78,12 @@ export const mutations = {
     state.username = username
   },
 
+  /**
+   * @param {state} state
+   * @param {{
+   *   headers: typesCookie.Headers
+   * }} param1
+   */
   setHeader (state, { headers }) {
     state.accessToken = headers["access-token"]
     state.client = headers["client"]
@@ -80,7 +94,6 @@ export const mutations = {
 }
 
 export const actions = {
-
   /**
    * User情報を取得する
    *
@@ -110,21 +123,21 @@ export const actions = {
     commit("setUserWithEmail", { headers, data })
 
     // Cookieにセット
-    cookies.set("access-token", getters.accessToken, { path: "/" })
-    cookies.set("client", getters.client, { path: "/" })
-    cookies.set("id", getters.id, { path: "/" })
-    cookies.set("uid", getters.uid, { path: "/" })
-    cookies.set("username", getters.username, { path: "/" })
+    cookies.set(typesCookie.ACCESS_TOKEN, getters.accessToken, { path: "/" })
+    cookies.set(typesCookie.CLIENT, getters.client, { path: "/" })
+    cookies.set(typesCookie.ID, getters.id, { path: "/" })
+    cookies.set(typesCookie.UID, getters.uid, { path: "/" })
+    cookies.set(typesCookie.USERNAME, getters.username, { path: "/" })
   },
 
   loginWithSns ({ commit, getters }, { userInfo }) {
     commit("setUserWithSns", { userInfo })
 
-    cookies.set("access-token", getters.accessToken, { path: "/" })
-    cookies.set("client", getters.client, { path: "/" })
-    cookies.set("id", getters.id, { path: "/" })
-    cookies.set("uid", getters.uid, { path: "/" })
-    cookies.set("username", getters.username, { path: "/" })
+    cookies.set(typesCookie.ACCESS_TOKEN, getters.accessToken, { path: "/" })
+    cookies.set(typesCookie.CLIENT, getters.client, { path: "/" })
+    cookies.set(typesCookie.ID, getters.id, { path: "/" })
+    cookies.set(typesCookie.UID, getters.uid, { path: "/" })
+    cookies.set(typesCookie.USERNAME, getters.username, { path: "/" })
   },
 
   // ログアウト
@@ -167,7 +180,7 @@ export const actions = {
    */
   removeUserData ({ commit }) {
     commit("clearUser")
-    cookies.removeAll(["access-token", "client", "id", "uid", "username"], {
+    cookies.removeAll(typesCookie.AUTH_DATA, {
       path: "/",
     })
   },
@@ -177,6 +190,6 @@ export const actions = {
    */
   updateUsername ({ commit, getters }, username) {
     commit("setUsername", username)
-    cookies.set("username", getters.username, { path: "/" })
+    cookies.set(typesCookie.USERNAME, getters.username, { path: "/" })
   }
 }
