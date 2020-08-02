@@ -115,6 +115,7 @@ export default {
 .post-btn {
   position: fixed;
 
+  z-index: 5;
   bottom: 5vh;
   right: 5vw;
 }
