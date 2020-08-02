@@ -29,7 +29,9 @@ export default {
   },
 
   data: () => ({
+    /** 新しいフォルダーを作成中かどうか */
     isCreatingNewFolder: false,
+    /** 新しいファイルを作成中かどうか */
     isCreatingNewPost: false,
   }),
 
@@ -77,10 +79,10 @@ export default {
       try {
         const { data } = await this.$axios.$post(`/api/v1/folders`, folderInfo)
 
+        // 「新しいFolderを作成中」のアイコンを非表示
+        this.isCreatingNewFolder = false
         // 既存の配列を更新
         this.userInfo = User.pushFolder(this.userInfo, data)
-
-        this.isCreatingNewFolder = false
       } catch(e) {
         console.error(e)
       }
@@ -98,10 +100,10 @@ export default {
       try {
         const { data } = await this.$axios.$post(`/api/v1/posts`, postsInfo)
 
+        // 「新しいPostを作成中」のアイコンを非表示
+        this.isCreatingNewPost = false
         // 既存のデータを更新
         this.userInfo = User.pushPost(this.userInfo, data)
-
-        this.isCreatingNewPost = false
       } catch(e) {
         console.error(e)
       }
@@ -115,7 +117,7 @@ export default {
 
         this.userInfo = User.updatePost(this.userInfo, id, data)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
 
@@ -127,7 +129,7 @@ export default {
 
         this.userInfo = User.updateFolder(this.userInfo, id, data)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
 
@@ -137,7 +139,7 @@ export default {
 
         this.userInfo = User.deletePost(this.userInfo, id)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
 
@@ -147,7 +149,7 @@ export default {
 
         this.userInfo = User.deleteFolder(this.userInfo, id)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
 

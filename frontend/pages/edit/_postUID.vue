@@ -23,6 +23,7 @@
 
 <script>
 import Post from '@/types/Post'
+import { isBothStatus, isEditStatus, isViewStatus } from '@/src/pages/edit/Status'
 
 // 不正な PostUID だったら、APIの送信に辿り着く前に弾く
 const checkValidPostUID = ({ params, redirect }) => {
@@ -30,8 +31,6 @@ const checkValidPostUID = ({ params, redirect }) => {
     return redirect('/edit/new') // 新規作成ページにリダイレクト
   }
 }
-
-const DEFAULT_STATUS = 'both'
 
 export default {
   data: () => ({
@@ -49,32 +48,32 @@ export default {
   ],
 
   computed: {
-    defaultStatus: () => DEFAULT_STATUS,
-
-    postUID() {
-      return this.$route.params.postUID
+    folderID() {
+      return this.$route.query.folderid || this.postInfo.parentID
     },
 
-    folderID() {
-      return this.$route.query.folderid || this.postInfo.folderID
+    /**
+     * @typedef {import('@/src/pages/edit/Status').Status} Status
+     * @return { Status }
+     */
+    getStatus() {
+      return this.$route.query.status
     },
 
     isBoth() {
-      const LABEL = 'both'
-      const status = this.$route.query.status
-      return status ? status === LABEL : this.defaultStatus === LABEL
+      return isBothStatus(this.getStatus)
     },
 
     isEdit() {
-      const LABEL = 'edit'
-      const status = this.$route.query.status
-      return status ? status === LABEL : this.defaultStatus === LABEL
+      return isEditStatus(this.getStatus)
     },
 
     isView() {
-      const LABEL = 'view'
-      const status = this.$route.query.status
-      return status ? status === LABEL : this.defaultStatus === LABEL
+      return isViewStatus(this.getStatus)
+    },
+
+    postUID() {
+      return this.$route.params.postUID
     },
 
     username() {

@@ -22,8 +22,7 @@
 
 <script>
 import Post from '@/types/Post'
-
-const DEFAULT_STATUS = 'both'
+import { isBothStatus, isEditStatus, isViewStatus } from '@/src/pages/edit/Status'
 
 export default {
   data: () => ({
@@ -38,12 +37,16 @@ export default {
   middleware: "authenticated",
 
   computed: {
-    defaultStatus() {
-      return DEFAULT_STATUS
-    },
-
     folderID() {
       return this.$route.query.folderid
+    },
+
+    /**
+     * @typedef {import('@/src/pages/edit/Status').Status} Status
+     * @return { Status }
+     */
+    getStatus() {
+      return this.$route.query.status
     },
 
     userID() {
@@ -55,22 +58,16 @@ export default {
     },
 
     isBoth() {
-      const LABEL = 'both'
-      const status = this.$route.query.status
-      return status ? status === LABEL : this.defaultStatus === LABEL
+      return isBothStatus(this.getStatus)
     },
 
     isEdit() {
-      const LABEL = 'edit'
-      const status = this.$route.query.status
-      return status ? status === LABEL : this.defaultStatus === LABEL
+      return isEditStatus(this.getStatus)
     },
 
     isView() {
-      const LABEL = 'view'
-      const status = this.$route.query.status
-      return status ? status === LABEL : this.defaultStatus === LABEL
-    }
+      return isViewStatus(this.getStatus)
+    },
   },
 
   methods: {

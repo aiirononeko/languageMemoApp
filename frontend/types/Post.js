@@ -60,7 +60,7 @@ class Post {
     this.updatedAt = new Date(attributes['updated-at'])
 
     if (attributes["ancestor-folders"] && attributes["ancestor-folders"].length > 0) {
-      this.parentID = attributes["ancestor-folders"][0].id
+      this.parentID = strOrNumToNumber(attributes["ancestor-folders"][0].id)
       this.ancestorFolders = attributes["ancestor-folders"].map((folder) => new Folder(folder))
     }
   }
@@ -76,7 +76,7 @@ class Post {
     this.content = post.content
     this.userID = strOrNumToNumber(post.user_id)
     this.uid = post.uid
-    this.parentID = post.parent_id
+    this.parentID = strOrNumToNumber(post.parent_id)
     this.createdAt = new Date(post.created_at)
     this.updatedAt = new Date(post.updated_at)
 

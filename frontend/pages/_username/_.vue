@@ -61,32 +61,36 @@ export default {
   },
 
   data: () => ({
+    /** 新しいフォルダーを作成中かどうか */
     isCreatingNewFolder: false,
+    /** 新しいファイルを作成中かどうか */
     isCreatingNewPost: false,
   }),
 
   computed: {
+    /**
+     * ログイン中のユーザー名
+     */
     authUsername() {
       return this.$store.getters["authentication/username"]
     },
 
+    /**
+     * アクションができるか
+     *
+     * 閲覧者とログイン者が一致するかどうか
+     */
     canAction() {
       return this.isAuthenticated
         ? this.currentUsername === this.authUsername
         : false
     },
 
-    currentHeadName() {
-      return (
-        this.foldersInfo && this.foldersInfo.name ||
-        this.postInfo && this.postInfo.name ||
-        this.userInfo && this.userInfo.name ||
-        this.currentUsername
-      )
-    },
-
+    /**
+     * このページのユーザー名
+     */
     currentUsername() {
-      return this.params.username
+      return this.$route.params.username
     },
 
     currentPath() {
@@ -97,8 +101,16 @@ export default {
       return this.$store.getters["authentication/isAuthenticated"]
     },
 
-    params() {
-      return this.$route.params
+    /**
+     * `<head>`の`<title>`用の名前
+     */
+    titleForHead() {
+      return (
+        this.foldersInfo && this.foldersInfo.name ||
+        this.postInfo && this.postInfo.name ||
+        this.userInfo && this.userInfo.name ||
+        this.currentUsername
+      )
     },
 
     userID() {
@@ -118,9 +130,10 @@ export default {
       try {
         const { data } = await this.$axios.$post(`/api/v1/folders`, folderInfo)
 
+        // 「新しいFolderを作成中」のアイコンを非表示
+        this.isCreatingNewFolder = false
         // 既存の配列に新しいフォルダーを追加
         this.foldersInfo = Folder.pushChildFolder(this.foldersInfo, data)
-        this.triggerCreatingNewFolder()
       } catch(e) {
         const statusCode = e.response && e.response.status || 500
 
@@ -142,10 +155,10 @@ export default {
       try {
         const { data } = await this.$axios.$post(`/api/v1/posts`, postsInfo)
 
+        // 「新しいPostを作成中」のアイコンを非表示
+        this.isCreatingNewPost = false
         // 既存の配列を更新
         this.foldersInfo = Folder.pushPost(this.foldersInfo, data)
-
-        this.triggerCreatingNewPost()
       } catch(e) {
         console.error(e)
       }
@@ -159,7 +172,7 @@ export default {
 
         this.foldersInfo = Folder.updatePost(this.foldersInfo, id, data)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
 
@@ -171,7 +184,7 @@ export default {
 
         this.foldersInfo = Folder.updateChildFolder(this.foldersInfo, id, data)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
 
@@ -181,7 +194,7 @@ export default {
 
         this.foldersInfo = Folder.deletePost(this.foldersInfo, id)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
 
@@ -191,7 +204,7 @@ export default {
 
         this.foldersInfo = Folder.deleteChildFolder(this.foldersInfo, id)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
 
@@ -248,7 +261,7 @@ export default {
 
   head() {
     return {
-      title: this.currentHeadName
+      title: this.titleForHead
     }
   }
 }
